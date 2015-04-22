@@ -20,7 +20,7 @@ ZSH_THEME="fishy"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -88,3 +88,4 @@ export PATH="$PATH:$HOME/computer/LightTable"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls="ls --color=auto"
 lessInfo () { info $* | less }
+lci () { /usr/local/bin/lci/lci $* }
