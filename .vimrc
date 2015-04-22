@@ -114,6 +114,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" For lolcode!
+Plugin 'Xe/lolcode.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -131,7 +134,8 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/mswin.vim
+" Ho! Removed because I need ctrl-a for tmux
+" source $VIMRUNTIME/mswin.vim
 behave mswin
 syntax on
 set showcmd
