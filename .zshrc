@@ -57,7 +57,9 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="$PATH:$HOME/Desktop/computer/intelliJ/idea-IC-141.178.9/bin" # Add intelliJ to path
 
-export EDITOR='vim' # Vim for the default editor
+export EDITOR='emacsclient' # emacs for the default editor
+export VISUAL='emacsclient'
+export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be found
 export PATH="$PATH:$HOME/Desktop/computer/clang/bin"
 
 export PATH="$PATH:$HOME/computer/LightTable"
