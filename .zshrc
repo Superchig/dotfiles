@@ -55,14 +55,10 @@ export PATH="$HOME/opt/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$PATH:$HOME/Desktop/computer/intelliJ/idea-IC-141.178.9/bin" # Add intelliJ to path
-
 export EDITOR='emacsclient' # emacs for the default editor
 export VISUAL='emacsclient'
 export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be found
-export PATH="$PATH:$HOME/Desktop/computer/clang/bin"
 
-export PATH="$PATH:$HOME/computer/LightTable"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -91,3 +87,10 @@ export PATH="$PATH:$HOME/computer/LightTable"
 alias ls="ls --color=auto"
 lessInfo () { info $* | less }
 lci () { /usr/local/bin/lci/lci $* }
+ecl () { emacsclient $* }
+monokaicolor () { ~/terminal-colors/guake/monokai/setup.sh }
+solarizeddarkcolor () { ~/terminal-colors/guake/guake-colors-solarized/set_dark.sh }
+valgrindt () { valgrind --track-origins=yes $* }
+
+# tmuxinator
+source ~/.bin/tmuxinator.zsh
