@@ -6,7 +6,8 @@
 ;; Company Mode activation and Autocomplete disabled
 (package-install 'company)
 (global-company-mode)
-(auto-complete-mode 0)
+
+(global-set-key (kbd "<backtab>") 'company-complete-common)
 
 ;; Rebind C-x C-b to buffer-menu instead of list-buffers
 (global-set-key "\C-x\C-b" 'buffer-menu)
@@ -14,7 +15,13 @@
 ;; Evil-mode activation
 (package-install 'evil)
 (require 'evil)
-(evil-mode 1)
+
+(defun my-move-key (keymap-from keymap-to key)
+     "Moves key binding from one keymap to another, deleting from the old location. "
+     (define-key keymap-to key (lookup-key keymap-from key))
+     (define-key keymap-from key nil))
+(my-move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
+(my-move-key evil-motion-state-map evil-normal-state-map " ")
 
 ;; Keychords for Evil mode rebindings
 (package-install 'key-chord)
@@ -24,18 +31,18 @@
 ;; Evil-Leader setup
 (package-install 'evil-leader)
 (require 'evil-leader)
+; Evil-mode activated due to evil-leader
+(global-evil-leader-mode)
+(evil-mode 1)
+
+(evil-leader/set-leader ",")
+(evil-leader/set-key
+  "]" 'find-tag
+  "b" 'buffer-menu)
 
 ;; Evil-Org-Mode
 (package-install 'evil-org)
 (require 'evil-org)
-
-;; Evil mode unbind space and RET
-(defun my-move-key (keymap-from keymap-to key)
-  "Moves key binding from one keymap to another, deleting from the old location. "
-  (define-key keymap-to key (lookup-key keymap-from key))
-  (define-key keymap-from key nil))
-(my-move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
-(my-move-key evil-motion-state-map evil-normal-state-map " ")
 
 ;; Evil-Mode Key Translations
 (defun make-conditional-key-translation (key-from key-to translate-keys-p)
@@ -53,15 +60,17 @@
    (or (evil-motion-state-p) (evil-normal-state-p) (evil-visual-state-p))))
 ;;(define-key evil-normal-state-map "c" nil) ;; I'm not entirely sure what this does
 ;;(define-key evil-motion-state-map "cu" 'universal-argument) ;; Or this one, either
-;;(make-conditional-key-translation (kbd "ch") (kbd "C-h") 'my-translate-keys-p)
-;;(make-conditional-key-translation (kbd "g") (kbd "C-x") 'my-translate-keys-p)')
+;; (make-conditional-key-translation (kbd "ch") (kbd "C-h") 'my-translate-keys-p)
+;; (make-conditional-key-translation (kbd "g") (kbd "C-x") 'my-translate-keys-p)')
 (make-conditional-key-translation (kbd "C-l") (kbd "C-S-w l") 'my-translate-keys-p)
 (make-conditional-key-translation (kbd "C-h") (kbd "C-S-w h") 'my-translate-keys-p)
 (make-conditional-key-translation (kbd "C-j") (kbd "C-S-w j") 'my-translate-keys-p)
 (make-conditional-key-translation (kbd "C-k") (kbd "C-S-w k") 'my-translate-keys-p)
+(define-key evil-motion-state-map (kbd "M-]") 'find-tag)
 
 ;; Evil surround
 (package-install 'evil-surround)
+(require 'evil-surround)
 (global-evil-surround-mode 1)
 
 ;; Evil match-it
@@ -84,7 +93,7 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 ;; Python-mode setup
-(el-get-install 'python-mode)
+(package-install 'python-mode)
 (setq py-install-directory "~/emacs.d/el-get/python-mode")
 (add-to-list 'load-path py-install-directory)
 (require 'python-mode)
@@ -104,10 +113,6 @@
 (setq py-split-window-on-execute-p nil)
                                         ; Try to automatically figure out indentation
 (setq py-smart-indentation t)
-
-;; Theme installation
-(package-install 'monokai-theme)
-(package-install 'solarized-theme)
 
 ;; Electric Pair time!
 (electric-pair-mode 1)
@@ -158,3 +163,12 @@
 ;; Yasnippet
 (package-install 'yasnippet)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+
+;; C Eldoc Mode
+(package-install 'c-eldoc)
+;; add in your commonly used packages/include directories here, for
+;; example, SDL or OpenGL. this shouldn't slow down cpp, even if
+;; you've got a lot of them
+(setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
+(load "c-eldoc")
+(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
