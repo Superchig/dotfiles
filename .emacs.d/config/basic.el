@@ -1,6 +1,5 @@
 ;;;; BASIC BUILT-IN EMACS SETTINGS
 
-
 ;; Line Numbers
 (global-linum-mode 1)
 
