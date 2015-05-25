@@ -49,7 +49,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/chiggie/.rvm/bin:/home/chiggie/.rvm/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/chiggie/.rvm/bin:/home/chiggie/.rvm/bin:$PATH"
 export PATH="$HOME/opt/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -88,9 +88,26 @@ alias ls="ls --color=auto"
 lessInfo () { info $* | less }
 lci () { /usr/local/bin/lci/lci $* }
 ecl () { emacsclient $* }
-monokaicolor () { ~/terminal-colors/guake/monokai/setup.sh }
+monokaicolor () { ~/terminal-colors/guake/guake-colors-monokai/setup.sh }
 solarizeddarkcolor () { ~/terminal-colors/guake/guake-colors-solarized/set_dark.sh }
 valgrindt () { valgrind --track-origins=yes $* }
+orphans() {
+	if [[ ! -n $(pacman -Qdt) ]]; then
+		echo "No orphans to remove."
+	else
+		sudo pacman -Rns $(pacman -Qdtq)
+	fi
+}
+up() {
+	if [[ $1 > 0 ]]; then
+		repeat $1 cd ..
+	else
+		cd ..
+	fi
+}
 
 # tmuxinator
 source ~/.bin/tmuxinator.zsh
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
