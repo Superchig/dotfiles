@@ -121,9 +121,17 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
+;; Enhanced ruby mode
+(package-install 'enh-ruby-mode)
+
+;; Ruby-end mode
+(package-install 'ruby-end)
+(add-hook 'enh-ruby-mode-hook 'ruby-end-mode)
+
 ;; Robe
 (package-install 'robe)
 (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'enh-ruby-mode-hook 'robe-mode)
 
 (setq electric-pair-pairs '(
                             (?\" . ?\")
