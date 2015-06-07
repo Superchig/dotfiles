@@ -62,11 +62,11 @@
 ;;(define-key evil-motion-state-map "cu" 'universal-argument) ;; Or this one, either
 ;; (make-conditional-key-translation (kbd "ch") (kbd "C-h") 'my-translate-keys-p)
 ;; (make-conditional-key-translation (kbd "g") (kbd "C-x") 'my-translate-keys-p)')
-(make-conditional-key-translation (kbd "C-l") (kbd "C-S-w l") 'my-translate-keys-p)
-(make-conditional-key-translation (kbd "C-h") (kbd "C-S-w h") 'my-translate-keys-p)
-(make-conditional-key-translation (kbd "C-j") (kbd "C-S-w j") 'my-translate-keys-p)
-(make-conditional-key-translation (kbd "C-k") (kbd "C-S-w k") 'my-translate-keys-p)
-(define-key evil-motion-state-map (kbd "M-]") 'find-tag)
+;; (make-conditional-key-translation (kbd "C-l") (kbd "C-S-w l") 'my-translate-keys-p)
+;; (make-conditional-key-translation (kbd "C-h") (kbd "C-S-w h") 'my-translate-keys-p)
+;; (make-conditional-key-translation (kbd "C-j") (kbd "C-S-w j") 'my-translate-keys-p)
+;; (make-conditional-key-translation (kbd "C-k") (kbd "C-S-w k") 'my-translate-keys-p)
+ (define-key evil-motion-state-map (kbd "M-]") 'find-tag)
 
 ;; Evil surround
 (package-install 'evil-surround)
@@ -79,7 +79,24 @@
 
 ;; Evil-nerd-commenter
 (package-install 'evil-nerd-commenter)
-(evilnc-default-hotkeys)
+
+;; Emacs key bindings
+(global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
+(global-set-key (kbd "C-c l") 'evilnc-quick-comment-or-uncomment-to-the-line)
+(global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
+(global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
+
+;; Vim key bindings
+(evil-leader/set-key
+  "ci" 'evilnc-comment-or-uncomment-lines
+  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cc" 'evilnc-copy-and-comment-lines
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "cv" 'evilnc-toggle-invert-comment-line-by-line
+  "\\" 'evilnc-comment-operator ; if you prefer backslash key
+)
 
 ;; Sublimity setup
 (package-install 'sublimity)
@@ -180,3 +197,9 @@
 (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
 (load "c-eldoc")
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+
+;; Lua!
+(package-install 'lua-mode)
+
+;; Markdown
+(package-install 'markdown-mode)

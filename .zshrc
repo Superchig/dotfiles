@@ -105,6 +105,28 @@ up() {
 		cd ..
 	fi
 }
+alias rtags="ripper-tags -R -f TAGS"
+GUAKE_SAVE_DIRECTORY=~/Desktop/computer/guake # Which directory to save
+                              # the current directory
+savedir() {
+	if (( $# == 1 )); then
+		if [[ -d "$1" ]]; then
+			cd $1
+			pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
+			cd -
+		else
+			echo "D'oh! $1 is not a directory."
+		fi
+	elif (( $# == 0 )); then
+		pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
+	else
+		echo "Usage: savedir [path]"
+	fi
+}
+opsadi() { # Stands for OPen SAved DIrectory
+	NEW_WD=$(cat $GUAKE_SAVE_DIRECTORY/save_dir.txt)
+	cd $NEW_WD
+}
 
 # tmuxinator
 source ~/.bin/tmuxinator.zsh

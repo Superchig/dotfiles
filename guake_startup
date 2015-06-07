@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Start terminal in the last saved directory
+guake -e "opsadi" -r "Terminal"
