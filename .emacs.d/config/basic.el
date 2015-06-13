@@ -30,7 +30,7 @@
 (el-get 'sync)
 
 ;; Save emacs sessions
-(desktop-save-mode 1)
+;; (desktop-save-mode 1)
 
 ;; Server-start
 (server-start)

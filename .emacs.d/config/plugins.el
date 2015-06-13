@@ -182,8 +182,8 @@
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;; Flycheck
-;; (package-install 'flycheck)
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
+(package-install 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Yasnippet
 (package-install 'yasnippet)
