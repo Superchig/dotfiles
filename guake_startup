@@ -1,4 +1,8 @@
 #!/bin/bash
+# guake_startup
 
 # Start terminal in the last saved directory
+sleep 1
 guake -e "opsadi" -r "Terminal"
+sleep 1
+clear
