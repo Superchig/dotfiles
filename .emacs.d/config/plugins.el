@@ -103,6 +103,16 @@
 (require 'sublimity-scroll)
 (sublimity-global-mode)
 
+;; Asynchronous processing?
+(package-install 'async)
+(autoload 'dired-async-mode "dired-async.el" nil t)
+(dired-async-mode 1)
+
+;; Helm
+(package-install 'helm)
+(require 'helm-config)
+(helm-mode 1)
+
 ;; Activate Org-Mode
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 (global-set-key "\C-cl" 'org-store-link)
@@ -110,26 +120,10 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 ;; Python-mode setup
-(package-install 'python-mode)
-(setq py-install-directory "~/emacs.d/el-get/python-mode")
-(add-to-list 'load-path py-install-directory)
-(require 'python-mode)
-
-;; Ipython
-(setq-default py-shell-name "ipython")
-(setq-default py-which-bufname "IPython")
-                                        ; Use the wx backend, for both mayavi and matplotlib
-(setq py-python-command-args
-      '("--gui=wx" "--pylan=wx" "-colors" "Linux"))
-(setq py-force-py-shell-name-p t)
-
-                                        ; Switch to the interpreter after executing code
-(setq py-shell-switch-buffers-on-execute-p t)
-(setq py-switch-buffers-on-execute-p t)
-                                        ; Don't split windows
-(setq py-split-window-on-execute-p nil)
-                                        ; Try to automatically figure out indentation
-(setq py-smart-indentation t)
+;; (package-install 'python-mode)
+;; (autoload 'python-mode "python-mode" "Python Mode." t)
+;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 ;; Electric Pair time!
 (electric-pair-mode 1)
@@ -158,6 +152,9 @@
 
 ;; inf-ruby
 ;; (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
+
+;; Minitest
+(package-install 'minitest)
 
 ;; Indent-Guide
 (package-install 'indent-guide)
@@ -197,6 +194,20 @@
 (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
 (load "c-eldoc")
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+
+;; Semantic-refactor, for C and lisp
+(require 'srefactor)
+(require 'srefactor-lisp)
+
+;; OPTIONAL: ADD IT ONLY IF YOU USE C/C++. 
+(semantic-mode 1) ;; -> this is optional for Lisp
+
+(define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(global-set-key (kbd "M-RET o") 'srefactor-lisp-one-line)
+(global-set-key (kbd "M-RET m") 'srefactor-lisp-format-sexp)
+(global-set-key (kbd "M-RET d") 'srefactor-lisp-format-defun)
+(global-set-key (kbd "M-RET b") 'srefactor-lisp-format-buffer)
 
 ;; Lua!
 (package-install 'lua-mode)
