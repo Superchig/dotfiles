@@ -214,3 +214,17 @@
 
 ;; Markdown
 (package-install 'markdown-mode)
+
+;; Rust
+(package-install 'rust-mode)
+
+;; flycheck-rust
+(package-install 'flycheck-rust)
+
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+;; Racer Integration
+(setq racer-rust-src-path "~/Desktop/computer/rust-src/rustc-1.0.0/src/")
+(setq racer-cmd "/home/chiggie/Desktop/computer/rust-src/racer/target/release/racer")
+(add-to-list 'load-path "/home/chiggie/Desktop/computer/rust-src/racer/editors/emacs")
+(eval-after-load "rust-mode" '(require 'racer))
