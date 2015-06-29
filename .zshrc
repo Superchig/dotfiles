@@ -51,6 +51,7 @@ plugins=(git)
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/chiggie/.rvm/bin:/home/chiggie/.rvm/bin:$PATH"
 export PATH="$HOME/opt/bin:$PATH"
+export TERM=xterm-256color
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -85,6 +86,7 @@ export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be foun
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls="ls --color=auto"
+alias edae="emacs --daemon"
 lessInfo () { info $* | less }
 lci () { /usr/local/bin/lci/lci $* }
 ecl () { emacsclient $* }
@@ -92,40 +94,40 @@ monokaicolor () { ~/terminal-colors/guake/guake-colors-monokai/setup.sh }
 solarizeddarkcolor () { ~/terminal-colors/guake/guake-colors-solarized/set_dark.sh }
 valgrindt () { valgrind --track-origins=yes $* }
 orphans() {
-	if [[ ! -n $(pacman -Qdt) ]]; then
-		echo "No orphans to remove."
-	else
-		sudo pacman -Rns $(pacman -Qdtq)
-	fi
+    if [[ ! -n $(pacman -Qdt) ]]; then
+        echo "No orphans to remove."
+    else
+        sudo pacman -Rns $(pacman -Qdtq)
+    fi
 }
 up() {
-	if [[ $1 > 0 ]]; then
-		repeat $1 cd ..
-	else
-		cd ..
-	fi
+    if [[ $1 > 0 ]]; then
+        repeat $1 cd ..
+               else
+                   cd ..
+        fi
 }
 alias rtags="ripper-tags -R -f TAGS"
 GUAKE_SAVE_DIRECTORY=~/Desktop/computer/guake # Which directory to save
-                              # the current directory
+# the current directory
 savedir() {
-	if (( $# == 1 )); then
-		if [[ -d "$1" ]]; then
-			cd $1
-			pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
-			cd -
-		else
-			echo "D'oh! $1 is not a directory."
-		fi
-	elif (( $# == 0 )); then
-		pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
-	else
-		echo "Usage: savedir [path]"
-	fi
+    if (( $# == 1 )); then
+        if [[ -d "$1" ]]; then
+            cd $1
+            pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
+            cd -
+        else
+            echo "D'oh! $1 is not a directory."
+        fi
+    elif (( $# == 0 )); then
+        pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
+    else
+        echo "Usage: savedir [path]"
+    fi
 }
 opsadi() { # Stands for OPen SAved DIrectory
-	NEW_WD=$(cat $GUAKE_SAVE_DIRECTORY/save_dir.txt)
-	cd $NEW_WD
+    NEW_WD=$(cat $GUAKE_SAVE_DIRECTORY/save_dir.txt)
+    cd $NEW_WD
 }
 
 # # tmuxinator
