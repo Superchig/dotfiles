@@ -2,6 +2,7 @@
 
 ;; Line Numbers
 (global-linum-mode 1)
+(column-number-mode 1)
 
 ;; MELPA setup
 (require 'package)
