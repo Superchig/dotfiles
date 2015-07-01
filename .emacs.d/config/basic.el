@@ -33,6 +33,32 @@
 ;; Save emacs sessions
 (desktop-save-mode 1)
 
+;; Smoother scrolling
+(setq redisplay-dont-pause t
+      scroll-margin 1
+      scroll-step 1
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
+;; Unique buffer names
+(setq uniquify-buffer-name-style 'forward)
+
+;; Prettify-Symbols-Mode
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (push '("<=" . ?≤) prettify-symbols-alist)
+			(push '(">=" . ?≥) prettify-symbols-alist)
+			(push '("->" . ?→) prettify-symbols-alist)
+			(push '("<-" . ?←) prettify-symbols-alist)))
+
+
+(global-prettify-symbols-mode)
+
+;; Disable tool-bar-mode and scroll-bar-mode
+(when (window-system)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+
 ;; Server-start
 (server-start)
 

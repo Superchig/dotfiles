@@ -30,7 +30,6 @@
 
 ;; Evil-Leader setup
 (package-install 'evil-leader)
-(require 'evil-leader)
 ; Evil-mode activated due to evil-leader
 (global-evil-leader-mode)
 (evil-mode 1)
@@ -42,7 +41,6 @@
 
 ;; Evil-Org-Mode
 (package-install 'evil-org)
-(require 'evil-org)
 
 ;; Evil-Mode Key Translations
 (defun make-conditional-key-translation (key-from key-to translate-keys-p)
@@ -70,12 +68,17 @@
 
 ;; Evil surround
 (package-install 'evil-surround)
-(require 'evil-surround)
 (global-evil-surround-mode 1)
 
 ;; Evil match-it
 (package-install 'evil-matchit)
 (global-evil-matchit-mode 1)
+
+;; Powerline
+(package-install 'powerline)
+(package-install 'powerline-evil)
+
+(powerline-evil-center-color-theme)
 
 ;; Evil-nerd-commenter
 (package-install 'evil-nerd-commenter)
@@ -98,11 +101,6 @@
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
 )
 
-;; Sublimity setup
-(package-install 'sublimity)
-(require 'sublimity-scroll)
-(sublimity-global-mode)
-
 ;; Asynchronous processing?
 (package-install 'async)
 (autoload 'dired-async-mode "dired-async.el" nil t)
@@ -110,7 +108,6 @@
 
 ;; Helm
 (package-install 'helm)
-(require 'helm-config)
 (helm-mode 1)
 
 ;; Activate Org-Mode
@@ -228,3 +225,7 @@
 (setq racer-cmd "/home/chiggie/Desktop/computer/rust-src/racer/target/release/racer")
 (add-to-list 'load-path "/home/chiggie/Desktop/computer/rust-src/racer/editors/emacs")
 (eval-after-load "rust-mode" '(require 'racer))
+
+;; Rainbow delimiters
+(package-install 'rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
