@@ -51,7 +51,6 @@
 			(push '("->" . ?→) prettify-symbols-alist)
 			(push '("<-" . ?←) prettify-symbols-alist)))
 
-
 (global-prettify-symbols-mode)
 
 ;; Disable tool-bar-mode and scroll-bar-mode
