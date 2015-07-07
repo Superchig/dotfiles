@@ -4,6 +4,10 @@
 (global-linum-mode 1)
 (column-number-mode 1)
 
+;; Add package_scripts to load-path
+(add-to-list 'load-path "~/.emacs/package_scripts/")
+(autoload 'lpc-mode  "lpc-mode" t)
+
 ;; MELPA setup
 (require 'package)
 (add-to-list 'package-archives

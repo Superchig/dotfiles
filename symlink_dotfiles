@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+DOTFILES=$(pwd)
+
+cd ~
+ln -s $DOTFILES/.tmux.conf
+ln -s $DOTFILES/.vimrc
+ln -s $DOTFILES/.zshrc
+ln -s $DOTFILES/.zshenv
+ln -s $DOTFILES/.bashrc
+ln -s $DOTFILES/.profile
+
+printf "Do you want to symlink .emacs.d? [yn] "
+read symlink
+
+if [ $symlink = "y" ]; then
+	echo "Symlinking .emacs.d..."
+	ln -s $DOTFILES/.emacs.d
+elif [ $symlink = "n" ]; then
+	echo "Ok. Not symlinking .emacs.d..."
+else
+	echo "That was not a valid choice. Not symlinking, just in case."
+fi
