@@ -180,6 +180,9 @@
 (setq-default tab-width 4 indent-tabs-mode t)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
+;; Geiser
+(package-install 'geiser)
+
 ;; Flycheck
 (package-install 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -196,16 +199,6 @@
 (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
 (load "c-eldoc")
 (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
-
-;; OPTIONAL: ADD IT ONLY IF YOU USE C/C++. 
-(semantic-mode 1) ;; -> this is optional for Lisp
-
-(define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
-(define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
-(global-set-key (kbd "M-RET o") 'srefactor-lisp-one-line)
-(global-set-key (kbd "M-RET m") 'srefactor-lisp-format-sexp)
-(global-set-key (kbd "M-RET d") 'srefactor-lisp-format-defun)
-(global-set-key (kbd "M-RET b") 'srefactor-lisp-format-buffer)
 
 ;; Lua!
 (package-install 'lua-mode)
