@@ -14,7 +14,16 @@ read symlink
 
 if [ $symlink = "y" ]; then
 	echo "Symlinking .emacs.d..."
-	ln -s $DOTFILES/.emacs.d
+
+	cd ~/.emacs.d/
+
+	ln -s $DOTFILES/.emacs.d/init.el
+
+	cd ~/.emacs.d/config
+
+	ln -s $DOTFILES/.emacs.d/config/*
+
+	echo "Done!"
 elif [ $symlink = "n" ]; then
 	echo "Ok. Not symlinking .emacs.d..."
 else
