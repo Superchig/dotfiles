@@ -38,8 +38,7 @@
 (desktop-save-mode 1)
 
 ;; Smoother scrolling
-(setq redisplay-dont-pause t
-      scroll-margin 1
+(setq scroll-margin 1
       scroll-step 1
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
@@ -62,9 +61,14 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
 
+;; Rebind C-x k so that it closes the window of the buffer it kills.
+(global-set-key (kbd "C-x k") 'kill-buffer-and-window)
+
 ;; Server-start
 (server-start)
 
 ;; Recognize zsh files and use zsh-flavor sh-mode
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
+
+(setq js-indent-level 2)
