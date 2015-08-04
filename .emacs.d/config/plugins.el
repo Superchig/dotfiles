@@ -180,6 +180,14 @@
 (setq-default tab-width 4 indent-tabs-mode t)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
+;; Objective-C Mode Configuration
+(add-to-list 'magic-mode-alist
+                `(,(lambda ()
+                     (and (string= (file-name-extension buffer-file-name) "h")
+                          (re-search-forward "@\\<interface\\>" 
+					     magic-mode-regexp-match-limit t)))
+                  . objc-mode))
+
 ;; Geiser
 (package-install 'geiser)
 
