@@ -17,9 +17,9 @@
 (require 'evil)
 
 (defun my-move-key (keymap-from keymap-to key)
-     "Moves key binding from one keymap to another, deleting from the old location. "
-     (define-key keymap-to key (lookup-key keymap-from key))
-     (define-key keymap-from key nil))
+  "Moves key binding from one keymap to another, deleting from the old location. "
+  (define-key keymap-to key (lookup-key keymap-from key))
+  (define-key keymap-from key nil))
 (my-move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
 (my-move-key evil-motion-state-map evil-normal-state-map " ")
 
@@ -30,7 +30,7 @@
 
 ;; Evil-Leader setup
 (package-install 'evil-leader)
-; Evil-mode activated due to evil-leader
+										; Evil-mode activated due to evil-leader
 (global-evil-leader-mode)
 (evil-mode 1)
 
@@ -48,8 +48,8 @@
   key-from translates to key-to, else key-from translates to itself.  translate-keys-p
   takes key-from as an argument. "
   (define-key key-translation-map key-from
-    (lambda (prompt)
-      (if (funcall translate-keys-p key-from) key-to key-from))))
+	(lambda (prompt)
+	  (if (funcall translate-keys-p key-from) key-to key-from))))
 (defun my-translate-keys-p (key-from)
   "Returns whether conditional key translations should be active.  See make-conditional-key-translation function. "
   (and
@@ -64,7 +64,7 @@
 ;; (make-conditional-key-translation (kbd "C-h") (kbd "C-S-w h") 'my-translate-keys-p)
 ;; (make-conditional-key-translation (kbd "C-j") (kbd "C-S-w j") 'my-translate-keys-p)
 ;; (make-conditional-key-translation (kbd "C-k") (kbd "C-S-w k") 'my-translate-keys-p)
- (define-key evil-motion-state-map (kbd "M-]") 'find-tag)
+(define-key evil-motion-state-map (kbd "M-]") 'find-tag)
 
 ;; Evil surround
 (package-install 'evil-surround)
@@ -99,7 +99,7 @@
   "cr" 'comment-or-uncomment-region
   "cv" 'evilnc-toggle-invert-comment-line-by-line
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
-)
+  )
 
 ;; Asynchronous processing?
 (package-install 'async)
@@ -142,10 +142,10 @@
 (add-hook 'enh-ruby-mode-hook 'robe-mode)
 
 (setq electric-pair-pairs '(
-                            (?\" . ?\")
-                            (?\{ . ?\})
-                            (?\( . ?\))
-                            ) )
+							(?\" . ?\")
+							(?\{ . ?\})
+							(?\( . ?\))
+							) )
 
 ;; inf-ruby
 ;; (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
@@ -182,11 +182,11 @@
 
 ;; Objective-C Mode Configuration
 (add-to-list 'magic-mode-alist
-                `(,(lambda ()
-                     (and (string= (file-name-extension buffer-file-name) "h")
-                          (re-search-forward "@\\<interface\\>" 
-					     magic-mode-regexp-match-limit t)))
-                  . objc-mode))
+			 `(,(lambda ()
+				  (and (string= (file-name-extension buffer-file-name) "h")
+					   (re-search-forward "@\\<interface\\>" 
+										  magic-mode-regexp-match-limit t)))
+			   . objc-mode))
 
 ;; Geiser
 (package-install 'geiser)
@@ -231,3 +231,47 @@
 ;; Rainbow delimiters
 (package-install 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;; Coffee-script
+(package-install 'coffee-mode)
+
+;; Haskell
+(package-install 'haskell-mode)
+
+(add-hook 'haskell-mode-hook 'haskell-indent-mode)
+
+(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+  (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
+  (add-to-list 'exec-path my-cabal-path))
+(custom-set-variables '(haskell-tags-on-save t))
+
+(custom-set-variables
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t))
+(eval-after-load 'haskell-mode '(progn
+								  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+								  (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+								  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+								  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+								  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
+								  (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
+								  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)))
+(eval-after-load 'haskell-cabal '(progn
+								   (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+								   (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+								   (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+								   (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+
+;; Structured Haskell Mode
+;;
+;; Unfortunately, this isn't available on MELPA.
+;; This is implemented with git submodules on my dotfiles repository.
+;; Check https://github.com/chrisdone/structured-haskell-mode
+;; and https://git-scm.com/book/en/v1/Git-Tools-Submodules
+;; for more info.
+(add-to-list 'load-path "~/dotfiles/.emacs.d/submodules/structured-haskell-mode/elisp")
+(require 'shm)
+
+(eval-after-load 'structured-haskell-mode '(progn
+											 (define-key haskell-mode-map (kbd "SPC") 'shm/newline-indent)))
