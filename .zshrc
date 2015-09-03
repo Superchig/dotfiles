@@ -45,7 +45,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(ruby git)
 
 # User configuration
 
@@ -92,7 +92,7 @@ lci () { /usr/local/bin/lci/lci $* }
 ecl () { emacsclient $* }
 monokaicolor () { ~/terminal-colors/guake/guake-colors-monokai/setup.sh }
 solarizeddarkcolor () { ~/terminal-colors/guake/guake-colors-solarized/set_dark.sh }
-valgrindt () { valgrind --track-origins=yes $* }
+alias valgrind="valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all"
 orphans() {
 	if [[ ! -n $(pacman -Qdt) ]]; then
 		echo "No orphans to remove."
