@@ -108,7 +108,21 @@
 
 ;; Helm
 (package-install 'helm)
-(helm-mode 1)
+
+(require 'helm)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+;; Change `helm-command-prefix' to "C-c h" because "C-x c" is too close to exiting.
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 ;; Activate Org-Mode
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
@@ -128,6 +142,9 @@
 ;; Show Matching Parentheses
 (show-paren-mode 1)
 (setq show-paren-delay 0)
+
+;; Projectile
+(package-install 'projectile)
 
 ;; Enhanced ruby mode
 (package-install 'enh-ruby-mode)
@@ -275,3 +292,36 @@
 
 (eval-after-load 'structured-haskell-mode '(progn
 											 (define-key haskell-mode-map (kbd "SPC") 'shm/newline-indent)))
+
+;; Semantic Refactor! Woo-hoo!
+(require 'srefactor)
+(require 'srefactor-lisp)
+
+;; OPTIONAL: ADD IT ONLY IF YOU USE C/C++. 
+(semantic-mode 1) ;; -> this is optional for Lisp
+
+(define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(global-set-key (kbd "M-RET o") 'srefactor-lisp-one-line)
+(global-set-key (kbd "M-RET m") 'srefactor-lisp-format-sexp)
+(global-set-key (kbd "M-RET d") 'srefactor-lisp-format-defun)
+(global-set-key (kbd "M-RET b") 'srefactor-lisp-format-buffer)
+
+;; Irony-Mode - C++ editing for Emacs
+(package-install 'irony)
+(package-install 'irony-eldoc)
+(package-install 'company-irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(add-hook 'irony-mode-hook 'irony-eldoc)
+(add-hook 'irony-mode-hook 'eldoc)
+
+(eval-after-load 'company
+  '(add-to-list 'company-backend 'company-irony))
