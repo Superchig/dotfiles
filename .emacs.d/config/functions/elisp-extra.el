@@ -19,7 +19,7 @@ PACKAGE-NAME - The name of the package."
 	(insert (format "(provide '%s)"
 					(substring (buffer-name)
 							   0
-							   (- (length (buffer-name)) 4))))
+							   (- (length (buffer-name)) 3))))
 	(newline)
 	(insert (format ";;; %s ends here"
 					(buffer-name)))))

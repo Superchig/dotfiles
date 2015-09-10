@@ -41,5 +41,7 @@
 	(insert text)))
 
 (load-file "~/dotfiles/.emacs.d/config/functions/rubocop-extra.el")
+(load-file "~/dotfiles/.emacs.d/config/functions/elisp-extra.el")
+(load-file "~/dotfiles/.emacs.d/config/functions/cpp-extra.el")
 
 ()
