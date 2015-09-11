@@ -124,6 +124,12 @@
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
+;; Helm-Company
+;; (eval-after-load 'company
+;;   '(progn
+;;      (define-key company-mode-map (kbd "backtab") 'helm-company)
+;;      (define-key company-active-map (kbd "backtab") 'helm-company)))
+
 ;; Activate Org-Mode
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 (global-set-key "\C-cl" 'org-store-link)
@@ -193,7 +199,6 @@
 (require 'cc-mode)
 
 ;; C indentation
-(setq-default c-basic-offset 4 c-default-style "linux")
 (setq-default tab-width 4 indent-tabs-mode t)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
@@ -315,13 +320,25 @@
 
 (defun my-irony-mode-hook ()
   (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
+	'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
+	'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 (add-hook 'irony-mode-hook 'irony-eldoc)
-(add-hook 'irony-mode-hook 'eldoc)
+(add-hook 'irony-mode-hook 'eldoc-mode)
 
 (eval-after-load 'company
   '(add-to-list 'company-backend 'company-irony))
+
+;; Custom C++ style for cc-mode
+(defconst my-cc-style
+  '("cc-mode"
+	(c-offsets-alist . ((innamespace . [0])))))
+
+(c-add-style "chiggie-style" my-cc-style)
+(setq-default c-basic-offset 4 c-default-style "chiggie-style")
+
+;; Company-C-Headers
+(package-install 'company-c-headers)
+(add-to-list 'company-backend 'company-c-headers)
