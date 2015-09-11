@@ -47,7 +47,7 @@
 (setq uniquify-buffer-name-style 'forward)
 
 ;; Prettify-Symbols-Mode
-(add-hook 'emacs-lisp-mode-hook
+(add-hook 'global-prettify-symbols-mode-hook
           (lambda ()
             (push '("<=" . ?≤) prettify-symbols-alist)
 			(push '(">=" . ?≥) prettify-symbols-alist)
