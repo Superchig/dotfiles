@@ -1,0 +1,16 @@
+;; Object company-irony-20160321.1403/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "company-irony-20160321.1403/"
+  :tables
+  (list
+    (semanticdb-table "company-irony-autoloads.el"
+      :major-mode 'emacs-lisp-mode
+      :tags nil
+      :file "company-irony-autoloads.el"
+      :pointmax 299
+      :fsize 887
+      :lastmodtime '(22261 60982 333150 999000)
+      :unmatched-syntax nil))
+  :file "!home!chiggie!dotfiles!.emacs.d!elpa!company-irony-20160321.1403!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

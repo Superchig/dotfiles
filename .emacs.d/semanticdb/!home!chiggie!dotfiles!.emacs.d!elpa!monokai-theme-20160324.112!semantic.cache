@@ -1,0 +1,16 @@
+;; Object monokai-theme-20160324.112/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "monokai-theme-20160324.112/"
+  :tables
+  (list
+    (semanticdb-table "monokai-theme-autoloads.el"
+      :major-mode 'emacs-lisp-mode
+      :tags nil
+      :file "monokai-theme-autoloads.el"
+      :pointmax 299
+      :fsize 610
+      :lastmodtime '(22261 60983 516558 999000)
+      :unmatched-syntax nil))
+  :file "!home!chiggie!dotfiles!.emacs.d!elpa!monokai-theme-20160324.112!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

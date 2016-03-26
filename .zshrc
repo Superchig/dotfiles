@@ -107,7 +107,7 @@ up() {
 		fi
 }
 alias rtags="ripper-tags -R -f TAGS"
-GUAKE_SAVE_DIRECTORY=~/Desktop/computer/guake # Which directory to save
+GUAKE_SAVE_DIRECTORY=~/temp/guake # Which directory to save
 # the current directory
 savedir() {
 	if (( $# == 1 )); then

@@ -292,13 +292,15 @@
 ;; Check https://github.com/chrisdone/structured-haskell-mode
 ;; and https://git-scm.com/book/en/v1/Git-Tools-Submodules
 ;; for more info.
-(add-to-list 'load-path "~/dotfiles/.emacs.d/submodules/structured-haskell-mode/elisp")
-(require 'shm)
+;; Disabled due to lack of interest in Haskell.
+;; (add-to-list 'load-path "~/dotfiles/.emacs.d/submodules/structured-haskell-mode/elisp")
+;; (require 'shm)
 
 (eval-after-load 'structured-haskell-mode '(progn
 											 (define-key haskell-mode-map (kbd "SPC") 'shm/newline-indent)))
 
 ;; Semantic Refactor! Woo-hoo!
+(package-install 'srefactor)
 (require 'srefactor)
 (require 'srefactor-lisp)
 
@@ -342,3 +344,10 @@
 ;; Company-C-Headers
 (package-install 'company-c-headers)
 (add-to-list 'company-backend 'company-c-headers)
+
+;; Emacs eclim, for java
+;; Remember to install eclim, not just emacs-eclim.
+;; https://github.com/senny/emacs-eclim
+(package-install 'emacs-eclim)
+(require 'eclim)
+(global-eclim-mode)
