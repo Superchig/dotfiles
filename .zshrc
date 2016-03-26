@@ -60,7 +60,6 @@ export EDITOR='emacsclient' # emacs for the default editor
 export VISUAL='emacsclient'
 export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be found
 
-
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -138,7 +137,6 @@ hnode() {
 # source ~/.bin/tmuxinator.zsh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
@@ -147,3 +145,5 @@ eval "$(pyenv virtualenv-init -)"
 
 # Cabal (Haskell package installment)
 export PATH="$PATH:$HOME/.cabal/bin"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
