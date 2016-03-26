@@ -1,0 +1,22 @@
+;; Object .emacs.d/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file ".emacs.d/"
+  :tables
+  (list
+    (semanticdb-table "init.el"
+      :major-mode 'emacs-lisp-mode
+      :tags 
+        '( ("load" code nil nil [32 67])
+            ("load" code nil nil [69 108])
+            ("load" code nil nil [110 147])
+            ("load" code nil nil [149 185])
+            ("custom-set-variables" code nil nil [213 4210])
+            ("custom-set-faces" code nil nil [4211 4568]))          
+      :file "init.el"
+      :pointmax 4569
+      :fsize 4568
+      :lastmodtime '(22261 62614 216800 999000)
+      :unmatched-syntax nil))
+  :file "!home!chiggie!dotfiles!.emacs.d!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
