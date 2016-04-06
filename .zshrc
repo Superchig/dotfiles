@@ -99,6 +99,14 @@ orphans() {
 		sudo pacman -Rns $(pacman -Qdtq)
 	fi
 }
+# Silence stdout or stderr.
+noput() {
+	if (($# >= 1)); then
+		$1 > /dev/null 2&>1 &
+	else
+		echo "Usage: noput command"
+	fi
+}
 up() {
 	if [[ $1 > 0 ]]; then
 		repeat $1 cd ..
