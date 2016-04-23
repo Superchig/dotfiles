@@ -8,20 +8,26 @@ ln -s $DOTFILES/.zshrc
 ln -s $DOTFILES/.zshenv
 ln -s $DOTFILES/.bashrc
 ln -s $DOTFILES/.profile
+ln -s $DOTFILES/.Xresources
+
+echo "Symlinking openbox config files..."
+if ! [ -d "$DIRECTORY" ]; then
+	mkdir -p ~/.config/openbox/
+fi
+cd ~/.config/openbox/
+ln -s $DOTFILES/.config/openbox/autostart
+ln -s $DOTFILES/.config/openbox/menu.xml
+ln -s $DOTFILES/.config/openbox/rc.xml
 
 printf "Do you want to symlink .emacs.d? [yn] "
 read symlink
 
 if [ $symlink = "y" ]; then
+	cd ~
+	
 	echo "Symlinking .emacs.d..."
 
-	cd ~/.emacs.d/
-
-	ln -s $DOTFILES/.emacs.d/init.el
-
-	cd ~/.emacs.d/config
-
-	ln -s $DOTFILES/.emacs.d/config/*
+	ln -s $DOTFILES/.emacs.d
 
 	echo "Done!"
 elif [ $symlink = "n" ]; then
