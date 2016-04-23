@@ -57,8 +57,8 @@
     <keepBorder>yes</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">
-      <name>DejaVu Sans</name>
-      <size>8</size>
+      <name>Sinkin Sans</name>
+      <size>9</size>
       <!-- font size in points -->
       <weight>Bold</weight>
       <!-- 'bold' or 'normal' -->
