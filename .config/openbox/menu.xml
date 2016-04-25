@@ -40,12 +40,12 @@
 	<menu id="apps-term-menu" label="Terminals">
 		<item label="Simple Terminal">
 			<action name="Execute">
-				<command>urxvt</command>
+				<command>st</command>
 			</action>
 		</item>
 		<item label="Guake">
 			<action name="Execute">
-				<command>gnome-terminal</command>
+				<command>guake</command>
 				<startupnotify>
 					<enabled>yes</enabled>
 				</startupnotify>
