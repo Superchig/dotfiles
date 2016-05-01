@@ -3,5 +3,7 @@
 *#*
 .emacs.d/.emacs.desktop
 .emacs.d/.emacs.desktop.lock
-.emacs.d/semanticdb/*
+.emacs.d/semanticdb
+.emacs.d/elpa
+.emacs.d/el-get
 .emacs.d/recentf

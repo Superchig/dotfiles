@@ -16,7 +16,7 @@
 #
 #xfce-mcs-manager &
 compton &
-cairo-dock &
+docky &
 feh --bg-center ~/Pictures/backgrounds/fsn-archer-rin.jpg &
 guake &
 palemoon &
