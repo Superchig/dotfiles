@@ -124,23 +124,14 @@
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
-;; Helm-Company
-;; (eval-after-load 'company
-;;   '(progn
-;;      (define-key company-mode-map (kbd "backtab") 'helm-company)
-;;      (define-key company-active-map (kbd "backtab") 'helm-company)))
+;; Helm-gtags
+(package-install 'helm-gtags)
 
 ;; Activate Org-Mode
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-
-;; Python-mode setup
-;; (package-install 'python-mode)
-;; (autoload 'python-mode "python-mode" "Python Mode." t)
-;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 ;; Electric Pair time!
 (electric-pair-mode 1)
@@ -169,9 +160,6 @@
 							(?\{ . ?\})
 							(?\( . ?\))
 							) )
-
-;; inf-ruby
-;; (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
 
 ;; Minitest
 (package-install 'minitest)
