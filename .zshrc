@@ -146,5 +146,3 @@ eval "$(pyenv virtualenv-init -)"
 
 # Cabal (Haskell package installment)
 export PATH="$PATH:$HOME/.cabal/bin"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
