@@ -9,7 +9,7 @@
       :file "irony-eldoc-autoloads.el"
       :pointmax 295
       :fsize 1062
-      :lastmodtime '(22261 60981 877378 999000)
+      :lastmodtime '(22318 48430 362627 555000)
       :unmatched-syntax nil))
   :file "!home!chiggie!dotfiles!.emacs.d!elpa!irony-eldoc-20141226.2219!semantic.cache"
   :semantic-tag-version "2.0"
