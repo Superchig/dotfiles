@@ -9,7 +9,7 @@
       :file "company-c-headers-autoloads.el"
       :pointmax 307
       :fsize 612
-      :lastmodtime '(22318 48431 894599 447000)
+      :lastmodtime '(22371 16065 316230 266000)
       :unmatched-syntax nil))
   :file "!home!chiggie!dotfiles!.emacs.d!elpa!company-c-headers-20150801.901!semantic.cache"
   :semantic-tag-version "2.0"
