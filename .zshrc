@@ -138,6 +138,7 @@ hnode() {
 # source ~/.bin/tmuxinator.zsh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+source ~/.rvm/scripts/rvm
 
 # Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"

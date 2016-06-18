@@ -18,21 +18,6 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
-(unless (package-installed-p 'scala-mode2)
-  (package-refresh-contents) (package-install 'scala-mode2))
-
-;; El-get basic setup
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
 
 ;; Save emacs sessions
 (desktop-save-mode 1)
@@ -72,3 +57,7 @@
 (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
 
 (setq js-indent-level 2)
+
+;; Font
+(add-to-list 'default-frame-alist '(font . "Terminus-8"))
+(set-face-attribute 'default t :font "Terminus-8")

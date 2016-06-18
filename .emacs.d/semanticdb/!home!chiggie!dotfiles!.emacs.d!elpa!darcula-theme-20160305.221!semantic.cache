@@ -9,7 +9,7 @@
       :file "darcula-theme-autoloads.el"
       :pointmax 299
       :fsize 610
-      :lastmodtime '(22318 48442 341407 774000)
+      :lastmodtime '(22371 16071 52646 758000)
       :unmatched-syntax nil))
   :file "!home!chiggie!dotfiles!.emacs.d!elpa!darcula-theme-20160305.221!semantic.cache"
   :semantic-tag-version "2.0"

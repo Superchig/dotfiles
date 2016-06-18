@@ -9,7 +9,7 @@
       :file "ample-zen-theme-autoloads.el"
       :pointmax 303
       :fsize 706
-      :lastmodtime '(22318 48443 91394 13000)
+      :lastmodtime '(22371 16071 545958 595000)
       :unmatched-syntax nil))
   :file "!home!chiggie!dotfiles!.emacs.d!elpa!ample-zen-theme-20150119.1354!semantic.cache"
   :semantic-tag-version "2.0"
