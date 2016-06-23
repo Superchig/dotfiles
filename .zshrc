@@ -145,5 +145,6 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# Cabal (Haskell package installment)
-export PATH="$PATH:$HOME/.cabal/bin"
+# nvm
+export NVM_DIR="/home/chiggie/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
