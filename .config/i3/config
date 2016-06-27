@@ -152,6 +152,9 @@ bindsym $mod+r mode "resize"
 # Use feh to set the background
 exec feh --bg-center ~/Pictures/backgrounds/fsn-archer-rin.jpg
 
+# Enable i3-lock
+exec xss-lock -- i3lock -n -i ~/Pictures/backgrounds/archlinux_os_black_blue1366x768.png
+
 # Disable window titlebars so there can be gaps between containers
 for_window [class="^.*"] border pixel 0
 
