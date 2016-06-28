@@ -5,6 +5,6 @@ IFS=$'\n\t'
 
 AUR_HELPER=pacaur
 
-sudo pacman -S zsh emacs guake chromium vlc
+sudo pacman -S zsh emacs guake chromium vlc mpv
 
 ./distro-agnostic-scripts-install.sh
