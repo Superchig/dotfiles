@@ -134,6 +134,9 @@ hnode() {
 	node --use-strict $(node --v8-options | grep harm | awk '{print $1}' | xargs) $*
 }
 alias startmpd="mpd ~/.config/mpd/mpd.conf"
+fork() {
+	($* &> /dev/null &)
+}
 
 # # tmuxinator
 # source ~/.bin/tmuxinator.zsh
