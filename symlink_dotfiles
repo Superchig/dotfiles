@@ -1,16 +1,16 @@
 #!/usr/bin/bash
 DOTFILES=$(pwd)
 
-ln -sft ~ $DOTFILES/.tmux.conf $DOTFILES.vimrc $DOTFILES.zshrc $DOTFILES.zshrnv $DOTFILES.bashrc $DOTFILES.profile $DOTFILES.Xresources
+ln -sft ~ $DOTFILES/.tmux.conf $DOTFILES/.vimrc $DOTFILES/.zshrc $DOTFILES/.zshrnv $DOTFILES/.bashrc $DOTFILES/.profile $DOTFILES/.Xresources
+mkdir -p ~/.ncmpcpp/
 ln -sft ~/.ncmpcpp/ $DOTFILES/.ncmpcpp/*
+mkdir -p ~/.config/mpd
 ln -sft ~/.config/mpd/ $DOTFILES/.config/mpd/mpd.conf
 
 cd ~
 
 echo "Symlinking openbox config files..."
-if ! [ -d "~/.config/openbox/" ]; then
-	mkdir -p ~/.config/openbox/
-fi
+mkdir -p ~/.config/openbox/
 ln -sft ~/.config/openbox $DOTFILES/.config/openbox/autostart $DOTFILES/.config/openbox/menu.xml $DOTFILES/.config/openbox/rc.xml
 
 printf "Do you want to symlink .emacs.d? [yn] "
