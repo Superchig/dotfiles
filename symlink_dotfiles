@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 DOTFILES=$(pwd)
 
-ln -sft ~ .tmux.conf .vimrc .zshrc .zshrnv .bashrc .profile .Xresources
-ln -sft ~/.ncmpcpp/ .ncmpcpp/*
-ln -sft ~/.config/mpd/ .config/mpd/mpd.conf
+ln -sft ~ $DOTFILES/.tmux.conf $DOTFILES.vimrc $DOTFILES.zshrc $DOTFILES.zshrnv $DOTFILES.bashrc $DOTFILES.profile $DOTFILES.Xresources
+ln -sft ~/.ncmpcpp/ $DOTFILES/.ncmpcpp/*
+ln -sft ~/.config/mpd/ $DOTFILES/.config/mpd/mpd.conf
 
 cd ~
 
