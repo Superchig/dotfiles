@@ -9,6 +9,6 @@ sudo pacman -S zsh emacs guake chromium vlc mpv gimp htop scrot aria2 \
 	 jre7-openjdk jdk7-openjdk jre8-openjdk jdk8-openjdk \
 	 conky mpd ncmpcpp
 
-$AUR_HELPER -S neofetch ghetto-skype
+$AUR_HELPER -S neofetch ghetto-skype neomutt urlview turtl encryptr
 
 ./distro-agnostic-scripts-install.sh
