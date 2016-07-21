@@ -152,6 +152,9 @@ bindsym $mod+r mode "resize"
 # Start compton in the background
 exec compton -b
 
+# Set wallpaper
+exec feh --bg-center ~/Pictures/wallpaper
+
 # Enable i3-lock
 exec xss-lock -- i3lock -n -i ~/Pictures/wallpaper
 
