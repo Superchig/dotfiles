@@ -30,7 +30,7 @@ font pango:Terminus 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec st
+bindsym $mod+Return exec xterm & sleep .8s && transset-df -a -m .95
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -149,11 +149,11 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Use feh to set the background
-exec feh --bg-center ~/Pictures/backgrounds/fsn-archer-rin.jpg
+# Start compton in the background
+exec compton -b
 
 # Enable i3-lock
-exec xss-lock -- i3lock -n -i ~/Pictures/backgrounds/archlinux_os_black_blue1366x768.png
+exec xss-lock -- i3lock -n -i ~/Pictures/wallpaper
 
 # Disable window titlebars so there can be gaps between containers
 for_window [class="^.*"] border pixel 0
@@ -167,6 +167,7 @@ gaps outer 3
 bar {
         status_command i3status
 		font pango:Terminus 8
+		position top
 		colors {
 			   background #012240
 			   statusline #ffffff
