@@ -336,6 +336,6 @@
 ;; Emacs eclim, for java
 ;; Remember to install eclim, not just emacs-eclim.
 ;; https://github.com/senny/emacs-eclim
-(package-install 'emacs-eclim)
-(require 'eclim)
-(global-eclim-mode)
+;; (package-install 'emacs-eclim)
+;; (require 'eclim)
+;; (global-eclim-mode)
