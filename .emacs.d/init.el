@@ -1,5 +1,12 @@
 ;; -*- lexical-binding: t -*-
 
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (load "~/.emacs.d/config/basic.el")
 
 (load "~/.emacs.d/config/functions.el")
@@ -74,6 +81,9 @@
 	(("gnu" . "http://elpa.gnu.org/packages/")
 	 ("melpa_stable" . "http://melpa-stable.org/packages/")
 	 ("melpa2" . "http://melpa.milkbox.net/packages/"))))
+ '(package-selected-packages
+   (quote
+	(jazz-theme ample-zen-theme darcula-theme solarized-theme monokai-theme irony flycheck paredit helm async powerline evil-leader evil company yasnippet srefactor rust-mode ruby-end robe rainbow-delimiters projectile powerline-evil minitest markdown-mode lua-mode key-chord irony-eldoc indent-guide helm-gtags haskell-mode geiser flycheck-rust evil-surround evil-paredit evil-org evil-nerd-commenter evil-matchit enh-ruby-mode company-irony company-c-headers coffee-mode c-eldoc)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(show-paren-mode t)
