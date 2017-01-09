@@ -40,6 +40,14 @@
 	(indent-according-to-mode)
 	(insert text)))
 
+(defun newlines-to-spaces-in-region ()
+  "Replace all newlines to spacsein the region."
+  (interactive)
+  (save-restriction
+    (narrow-to-region (point) (mark))
+    (goto-char (point-min))
+    (while (search-forward "\n" nil t) (replace-match "" nil t))))
+
 (load-file "~/dotfiles/.emacs.d/config/functions/rubocop-extra.el")
 (load-file "~/dotfiles/.emacs.d/config/functions/elisp-extra.el")
 (load-file "~/dotfiles/.emacs.d/config/functions/cpp-extra.el")
