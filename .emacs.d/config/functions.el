@@ -46,7 +46,7 @@
   (save-restriction
     (narrow-to-region (point) (mark))
     (goto-char (point-min))
-    (while (search-forward "\n" nil t) (replace-match "" nil t))))
+    (while (search-forward "\n" nil t) (replace-match " " nil t))))
 
 (load-file "~/dotfiles/.emacs.d/config/functions/rubocop-extra.el")
 (load-file "~/dotfiles/.emacs.d/config/functions/elisp-extra.el")
