@@ -59,5 +59,5 @@
 (setq js-indent-level 2)
 
 ;; Font
-(add-to-list 'default-frame-alist '(font . "Terminus-8"))
-(set-face-attribute 'default t :font "Terminus-8")
+(set-face-attribute 'default nil :font "Terminus-8")
+(set-frame-font "Terminus-8" nil t)

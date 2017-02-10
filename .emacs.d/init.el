@@ -76,6 +76,10 @@
    (quote
 	("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(magit-diff-use-overlays nil)
+ '(org-agenda-files (quote ("~/Documents/todo.org")))
+ '(org-cycle-level-faces t)
+ '(org-fontify-emphasized-text t)
+ '(org-fontify-whole-heading-line t)
  '(package-archives
    (quote
 	(("gnu" . "http://elpa.gnu.org/packages/")
@@ -120,4 +124,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "adobe" :slant normal :weight semi-bold :height 98 :width normal)))))
+ '(org-agenda-structure ((t (:height 1.0 :family "Terminus"))))
+ '(org-level-1 ((t (:foreground "#FD971F" :height 1.2 :family "Terminus"))))
+ '(org-level-2 ((t (:foreground "#A6E22E" :height 1.0 :family "Terminus"))))
+ '(org-level-3 ((t (:foreground "#66D9EF" :height 1.0 :family "Terminus"))))
+ '(org-level-4 ((t (:foreground "#E6DB74" :height 1.0 :family "Terminus"))))
+ '(org-level-5 ((t (:foreground "#A1EFE4" :height 1.0 :family "Terminus"))))
+ '(org-level-6 ((t (:foreground "#A6E22E" :height 1.0 :family "Terminus"))))
+ '(org-level-7 ((t (:foreground "#F92672" :height 1.0 :family "Terminus"))))
+ '(org-level-8 ((t (:foreground "#66D9EF" :height 1.0 :family "Terminus")))))
