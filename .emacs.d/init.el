@@ -80,6 +80,8 @@
  '(org-cycle-level-faces t)
  '(org-fontify-emphasized-text t)
  '(org-fontify-whole-heading-line t)
+ '(org-lowest-priority 68)
+ '(org-time-stamp-custom-formats (quote ("<%Y-%m-%d>" . "<%Y-%m-%d %a %I:%M%p>")))
  '(package-archives
    (quote
 	(("gnu" . "http://elpa.gnu.org/packages/")
