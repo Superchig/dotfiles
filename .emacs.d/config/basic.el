@@ -56,6 +56,9 @@
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
 
+;; Activate basic time logging for TODO items in org-mode
+(setq org-log-done 'time)
+
 (setq js-indent-level 2)
 
 ;; Font
