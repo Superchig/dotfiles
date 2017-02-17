@@ -7,3 +7,9 @@
   (local-set-key (kbd "M-j") 'org-metadown))
 
 (add-hook 'org-mode-hook 'org-evil-mode-config)
+
+;; Change evil-mode M-hjkl to match M-up, down, left, right
+(define-key key-translation-map (kbd "M-l") (kbd "M-<right>"))
+(define-key key-translation-map (kbd "M-h") (kbd "M-<left>"))
+(define-key key-translation-map (kbd "M-j") (kbd "M-<down>"))
+(define-key key-translation-map (kbd "M-k") (kbd "M-<up>"))
