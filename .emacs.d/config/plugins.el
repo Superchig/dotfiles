@@ -149,7 +149,8 @@
 ;; Make custom org-agenda commands
 (setq org-agenda-custom-commands
 	  '(("h" "Homework" tags-todo "+homework")
-		("c" "Notecards" tags-todo "+notecard")
+		("q" "Notecards" tags-todo "+notecard")
+		("c" "Chores" tags-todo "+chores")
 		("x" "Weekly agenda of scheduled items" agenda ""
 		 ((org-agenda-entry-types '(:scheduled :timestamp :sexp))))
 		("n" "Next Actions" todo "NEXT")))
