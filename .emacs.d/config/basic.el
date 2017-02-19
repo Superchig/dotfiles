@@ -11,9 +11,9 @@
 ;; MELPA setup
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+			 '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
-             '("melpa3" . "http://melpa-stable.org/packages/") t)
+			 '("melpa3" . "http://melpa-stable.org/packages/") t)
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -24,17 +24,17 @@
 
 ;; Smoother scrolling
 (setq scroll-margin 1
-      scroll-step 1
-      scroll-conservatively 10000
-      scroll-preserve-screen-position 1)
+	  scroll-step 1
+	  scroll-conservatively 10000
+	  scroll-preserve-screen-position 1)
 
 ;; Unique buffer names
 (setq uniquify-buffer-name-style 'forward)
 
 ;; Prettify-Symbols-Mode
 (add-hook 'global-prettify-symbols-mode-hook
-          (lambda ()
-            (push '("<=" . ?≤) prettify-symbols-alist)
+		  (lambda ()
+			(push '("<=" . ?≤) prettify-symbols-alist)
 			(push '(">=" . ?≥) prettify-symbols-alist)
 			(push '("->" . ?→) prettify-symbols-alist)
 			(push '("<-" . ?←) prettify-symbols-alist)))
@@ -58,6 +58,10 @@
 
 ;; Activate basic time logging for TODO items in org-mode
 (setq org-log-done 'time)
+
+;; Set up org-capture
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map (kbd "C-c c") 'org-capture)
 
 (setq js-indent-level 2)
 

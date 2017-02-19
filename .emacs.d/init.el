@@ -15,6 +15,8 @@
 
 (load "~/.emacs.d/config/themes.el")
 
+(load "~/.emacs.d/config/rebind.el")
+
 ;; Auto-set custom stuff
 
 (custom-set-variables
