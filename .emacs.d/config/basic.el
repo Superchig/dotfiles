@@ -56,13 +56,6 @@
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
 
-;; Activate basic time logging for TODO items in org-mode
-(setq org-log-done 'time)
-
-;; Set up org-capture
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(define-key global-map (kbd "C-c c") 'org-capture)
-
 (setq js-indent-level 2)
 
 ;; Font
