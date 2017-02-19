@@ -78,12 +78,15 @@
    (quote
 	("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(magit-diff-use-overlays nil)
- '(org-agenda-files (quote ("~/Documents/todo.org")))
+ '(org-agenda-files (quote ("~/org/gtd.org")))
  '(org-cycle-level-faces t)
  '(org-default-priority 67)
  '(org-fontify-emphasized-text t)
  '(org-fontify-whole-heading-line t)
  '(org-lowest-priority 68)
+ '(org-modules
+   (quote
+	(org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(org-time-stamp-custom-formats (quote ("<%Y-%m-%d>" . "<%Y-%m-%d %a %I:%M%p>")))
  '(package-archives
    (quote
