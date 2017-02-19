@@ -80,6 +80,7 @@
  '(magit-diff-use-overlays nil)
  '(org-agenda-files (quote ("~/Documents/todo.org")))
  '(org-cycle-level-faces t)
+ '(org-default-priority 67)
  '(org-fontify-emphasized-text t)
  '(org-fontify-whole-heading-line t)
  '(org-lowest-priority 68)
