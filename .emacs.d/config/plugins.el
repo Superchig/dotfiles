@@ -128,10 +128,31 @@
 (package-install 'helm-gtags)
 
 ;; Activate Org-Mode
+(require 'org)
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+
+;; Activate basic time logging for TODO items in org-mode
+(setq org-log-done 'time)
+
+;; Set up org-capture
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map (kbd "C-c c") 'org-capture)
+
+;; Make org-capture templates
+(setq org-capture-templates
+	  '(("b" "Bucket" entry (file+headline "~/org/bucket.org" "Bucket")
+		 "* %?\n %i\n")))
+
+;; Make custom org-agenda commands
+(setq org-agenda-custom-commands
+	  '(("h" "Homework" tags-todo "+homework")
+		("c" "Notecards" tags-todo "+notecard")
+		("x" "Weekly agenda of scheduled items" agenda ""
+		 ((org-agenda-entry-types '(:scheduled :timestamp :sexp))))
+		("n" "Next Actions" todo "NEXT")))
 
 ;; Electric Pair time!
 (electric-pair-mode 1)

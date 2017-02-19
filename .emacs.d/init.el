@@ -7,8 +7,6 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(load "~/.emacs.d/config/basic.el")
-
 (load "~/.emacs.d/config/functions.el")
 
 (load "~/.emacs.d/config/plugins.el")
@@ -16,6 +14,8 @@
 (load "~/.emacs.d/config/themes.el")
 
 (load "~/.emacs.d/config/rebind.el")
+
+(load "~/.emacs.d/config/basic.el")
 
 ;; Auto-set custom stuff
 
