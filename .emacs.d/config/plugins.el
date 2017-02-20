@@ -153,7 +153,8 @@
 		("c" "Chores" tags-todo "+chores")
 		("x" "Weekly agenda of scheduled items" agenda ""
 		 ((org-agenda-entry-types '(:scheduled :timestamp :sexp))))
-		("n" "Next Actions" todo "NEXT")))
+		("n" "Next Actions" todo "NEXT")
+		("p" "Projects" todo "PROJECT")))
 
 ;; Electric Pair time!
 (electric-pair-mode 1)
