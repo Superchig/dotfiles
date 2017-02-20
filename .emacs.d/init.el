@@ -133,7 +133,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-structure ((t (:height 1.0 :family "Terminus"))))
- '(org-level-1 ((t (:foreground "#FD971F" :height 1.2 :family "Terminus"))))
+ '(org-level-1 ((t (:foreground "#FD971F" :height 1.0 :family "Terminus"))))
  '(org-level-2 ((t (:foreground "#A6E22E" :height 1.0 :family "Terminus"))))
  '(org-level-3 ((t (:foreground "#66D9EF" :height 1.0 :family "Terminus"))))
  '(org-level-4 ((t (:foreground "#E6DB74" :height 1.0 :family "Terminus"))))
