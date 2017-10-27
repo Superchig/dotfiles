@@ -98,6 +98,7 @@
 	(org-evil 0blayout jazz-theme ample-zen-theme darcula-theme solarized-theme monokai-theme irony flycheck paredit helm async powerline evil-leader evil company yasnippet srefactor rust-mode ruby-end robe rainbow-delimiters projectile powerline-evil minitest markdown-mode lua-mode key-chord irony-eldoc indent-guide helm-gtags haskell-mode geiser flycheck-rust evil-surround evil-paredit evil-org evil-nerd-commenter evil-matchit enh-ruby-mode company-irony company-c-headers coffee-mode c-eldoc)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
+ '(safe-local-variable-values (quote ((flycheck-checker . tex-lacheck))))
  '(show-paren-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
