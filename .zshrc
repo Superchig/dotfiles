@@ -147,3 +147,6 @@ source ~/.rvm/scripts/rvm
 # nvm
 export NVM_DIR="/home/chiggie/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# go
+export GOPATH="$HOME/go"
