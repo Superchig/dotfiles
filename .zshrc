@@ -56,9 +56,15 @@ export TERM=xterm-256color
 
 source $ZSH/oh-my-zsh.sh
 
-export EDITOR='emacsclient' # emacs for the default editor
-export VISUAL='emacsclient'
-export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be found
+# # Emacs as default editor
+# export EDITOR='emacsclient'
+# export VISUAL='emacsclient'
+# export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be found
+
+# Neovim as default editor
+export EDITOR='nvim'
+export VISUAL='nvim'
+export ALTERNATE_EDITOR='vi'
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

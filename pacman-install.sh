@@ -5,13 +5,14 @@ IFS=$'\n\t'
 
 AUR_HELPER=yay
 
-sudo pacman -S zsh emacs guake chromium vlc mpv gimp htop scrot aria2 \
+# Removed packages: mpv scrot aria2 conky mpd ncmpcpp otf-ipafont
+sudo pacman -S zsh emacs guake chromium vlc mpv gimp htop scrot aria2 neovim \
 	 jre7-openjdk jdk7-openjdk jre8-openjdk jdk8-openjdk \
-	 conky mpd ncmpcpp adobe-source-han-sans-otc-fonts otf-ipafont
+	 adobe-source-han-sans-otc-fonts
 
 # Make sure to enable the following in /etc/locale.gen
 # ja_JP.UTF-8 zh_CN.UTF-8
 
 # $AUR_HELPER -S neofetch ghetto-skype neomutt urlview turtl encryptr
 
-./distro-agnostic-scripts-install.sh
+# ./distro-agnostic-scripts-install.sh
