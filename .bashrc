@@ -21,3 +21,7 @@ alias l='ls -lah'
 # Stops directory highlighting on Windows subsystem for Linux
 LS_COLORS=$LS_COLORS:'ow=1;34:'
 export LS_COLORS
+
+fork() {
+	($* &> /dev/null &)
+}
