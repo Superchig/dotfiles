@@ -23,15 +23,25 @@ export PATH="$PATH:~/bin"
 alias ls='ls --color=auto'
 alias l='ls -lah'
 
-alias xo='xdg-open'
+alias xo='xdg-open &> /dev/null'
 alias e='nvim'
+alias pe="ps -e | grep"
 
 # Stops directory highlighting on Windows subsystem for Linux
 LS_COLORS=$LS_COLORS:'ow=1;34:'
 export LS_COLORS
 
+# Functions
 fork() {
 	($* &> /dev/null &)
+}
+
+# Move from downloads
+# Takes one argument: number of minutes that files should be newer than
+# Ex: mvdo -120
+#       Moves files in ~/Downloads that are newer than 2 hours into directory
+mvdo() {
+  find ~/Downloads/ -mindepth 1 -mmin $1 -exec mv {} . \;
 }
 
 export LESS_TERMCAP_mb=$'\e[1;32m'
