@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# For startup programs that should be started AFTER Fluxbox itself starts
+
+sleep 1 # &
+# {
+
+# Compositing
+compton &
+
+# Visual alt-tab functionality (fluxbox's equivalents have been disabled)
+alttab &
+
+# Restore wallpaper
+# nitrogen --restore &
+
+# Use pywal to set colors
+wal -R &
+
+# Use second monitor if plugged in
+./monitor_setup.bash &
+
+# } &
