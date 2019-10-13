@@ -1,0 +1,74 @@
+# If you start a program with group 1 open, it will be in group 1.
+sticky yes
+
+# Any entry here is shown in the application menu
+command firefox firefox
+
+# Set terminal to urxvt
+command term urxvt
+
+# Key unbinds
+
+# Unbind alt-tab for use with alttab window switcher
+# unbind-key M-Tab
+
+# Unbind window key changes
+unbind-key M-h
+unbind-key M-j
+unbind-key M-k
+unbind-key M-l
+# unbind-key MS-h
+# unbind-key MS-j
+# unbind-key MS-k
+# unbind-key MS-l
+
+bind-key M-1 group-only-1
+bind-key M-2 group-only-2
+bind-key M-3 group-only-3
+bind-key M-4 group-only-4
+
+bind-key M-w "rofi -show window"
+bind-key M-r "rofi -show drun"
+
+bind-key 4-h window-hide
+bind-key 4-k window-maximize
+bind-key C-q window-delete
+
+# Key bind arrow keys to resize windows
+bind-key M-Left window-move-left
+bind-key M-Right window-move-right
+bind-key M-Up window-move-up
+bind-key M-Down window-move-down
+
+bind-key MS-Up window-move-up-big
+bind-key MS-Down window-move-down-big
+bind-key MS-Right window-move-right-big
+bind-key MS-Left window-move-left-big
+
+bind-key CM-Up window-resize-up
+bind-key CM-Down window-resize-down
+bind-key CM-Right window-resize-right
+bind-key CM-Left window-resize-left
+
+bind-key CMS-Up window-resize-up-big
+bind-key CMS-Down window-resize-down-big
+bind-key CMS-Right window-resize-right-big
+bind-key CMS-Left window-resize-left-big
+
+bind-key 4-Up window-snap-up
+bind-key 4-Down window-snap-down
+bind-key 4-Right window-snap-right
+bind-key 4-Left window-snap-left
+
+bind-key 4S-Left window-vtile
+bind-key 4S-Right window-vtile
+bind-key 4S-Up window-htile
+bind-key 4S-Down window-htile
+
+# Options for hibernate/suspend/power off
+bind-key CMS-p "/home/chiggie/dotfiles/minimalist/rofi/power_options.sh"
+
+## Window groups -- workspaces emulation
+# groups predefined
+autogroup 1 "firefox"
+autogroup 2 "urxvt"
