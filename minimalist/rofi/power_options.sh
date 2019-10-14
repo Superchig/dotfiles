@@ -19,7 +19,7 @@ case $CHOICE in
     ;;
   "Restart")
     echo "Restarting..."
-    systemctl restart
+    systemctl reboot
     ;;
   *) echo "That's not a valid choice!";;
 esac
