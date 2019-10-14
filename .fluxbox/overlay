@@ -1,0 +1,7 @@
+! The following line will prevent styles from setting the background.
+! background: none
+menu.title.font: cantarell-12:bold
+menu.frame.font: cantarell-12:bold
+toolbar.clock.font: cantarell-10:bold
+toolbar.workspace.font: cantarell-12:bold
+*font: cantarell-12
