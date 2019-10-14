@@ -18,7 +18,7 @@ export EDITOR='nvim'
 # export PATH="$PATH:$HOME/computer/LightTable"
 
 # From CPSC-298
-export PATH="$PATH:~/bin"
+export PATH="$PATH:$HOME/bin"
 
 alias ls='ls --color=auto'
 alias l='ls -lah'
