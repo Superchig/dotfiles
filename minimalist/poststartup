@@ -8,7 +8,7 @@ sleep 1 # &
 compton &
 
 # Visual alt-tab functionality (fluxbox's equivalents have been disabled)
-alttab &
+# alttab &
 
 # Restore wallpaper
 # nitrogen --restore &
@@ -17,6 +17,6 @@ alttab &
 wal -R &
 
 # Use second monitor if plugged in
-./monitor_setup.bash &
+home/chiggie/dotfiles/minimalist/monitor_setup.bash &
 
 # } &

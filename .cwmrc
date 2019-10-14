@@ -1,3 +1,5 @@
+gap 22 0 0 0
+
 # If you start a program with group 1 open, it will be in group 1.
 sticky yes
 
@@ -64,6 +66,8 @@ bind-key 4S-Left window-vtile
 bind-key 4S-Right window-vtile
 bind-key 4S-Up window-htile
 bind-key 4S-Down window-htile
+
+bind-key MS-Return term
 
 # Options for hibernate/suspend/power off
 bind-key CMS-p "/home/chiggie/dotfiles/minimalist/rofi/power_options.sh"
