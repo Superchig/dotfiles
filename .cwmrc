@@ -29,6 +29,12 @@ bind-key M-2 group-only-2
 bind-key M-3 group-only-3
 bind-key M-4 group-only-4
 
+# Keybinds to move active window to different group
+bind-key MS-1 window-movetogroup-1
+bind-key MS-2 window-movetogroup-2
+bind-key MS-3 window-movetogroup-3
+bind-key MS-4 window-movetogroup-4
+
 bind-key M-w "rofi -show window"
 bind-key M-r "rofi -show drun"
 
