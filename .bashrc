@@ -12,8 +12,8 @@ export SUDO_ASKPASS=/usr/local/bin/zenity_passphrase
 
 # Only run this if not using Windows Subsystem for Linux
 if grep -qvE "(Microsoft|WSL)" /proc/version &> /dev/null ; then
-    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-    source ~/.rvm/scripts/rvm # Rvm is now a function
+  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+  source ~/.rvm/scripts/rvm # Rvm is now a function
 fi
 
 # export PATH="$PATH:$HOME/Desktop/computer/intelliJ/idea-IC-141.178.9/bin" # Add intelliJ to path
@@ -29,14 +29,21 @@ export PATH="$PATH:$HOME/bin"
 
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
-    . /usr/share/bash-completion/bash_completion
+  . /usr/share/bash-completion/bash_completion
 
 alias ls='ls --color=auto'
-alias l='ls -lah'
+if [ -f /usr/bin/exa ]; then
+  alias l='exa --long'
+else
+  alias l='ls -lah'
+fi
 
 alias xo='xdg-open &> /dev/null'
 alias e='nvim'
 alias se="sudo nvim"
+
+alias fr="history | sk | cut -c 8-"
+
 alias pe="ps -e | grep"
 alias pi="pacman -Qi | grep Description"
 
@@ -44,13 +51,18 @@ alias mo="$HOME/dotfiles/minimalist/monitor_setup.bash"
 
 alias orphans="sudo pacman -Rns $(pacman -Qtdq)"
 
+alias gimme="sudo chown ${USER} *"
+
+alias cdc="cd $HOME/Documents/CPSC_Courses/cpsc231_a1/"
+alias cdo="cd $HOME/Downloads"
+
 # Stops directory highlighting on Windows subsystem for Linux
 LS_COLORS=$LS_COLORS:'ow=1;34:'
 export LS_COLORS
 
 # Functions
 fork() {
-	($* &> /dev/null &)
+  ($* &> /dev/null &)
 }
 
 # Move from downloads
@@ -64,13 +76,38 @@ mvdo() {
 # Package dump
 # Outputs all required packages to install a new package into text file
 pdump() {
-	if [ "$#" -ne 2 ]; then
-		echo "Error: requires 2 inputs."
-		return 1
-	fi
+  if [ "$#" -ne 2 ]; then
+    echo "Error: requires 2 inputs."
+    return 1
+  fi
 
-	pacman -Sp "$1" --print-format '%n' --needed > "$2"
-	echo "Successfully listed necessary packages for ${1} into ${2}"
+  pacman -Sp "$1" --print-format '%n' --needed > "$2"
+  echo "Successfully listed necessary packages for ${1} into ${2}"
+}
+
+# Fuzzy edit
+# Uses skim or fzf to fuzzy find a file and then open it in an editor
+fe() {
+  local FIND_RESULT
+  if [ -z "$1" ]; then
+    FIND_RESULT=$(find -type f | sk)
+  else
+    FIND_RESULT=$(find "$1" -type f | sk)
+  fi
+
+  if [ ! -z ${FIND_RESULT} ]; then
+    ${VISUAL} ${FIND_RESULT}
+  fi
+}
+
+# Multi edit
+# Fuzzy finds a file and then opens it in an editor of choice
+me() { find . | sk | xargs "$1"; }
+
+# cd today
+# cd to today's directory in the CPSC 231 directory
+cdtd() {
+  cd $HOME/Documents/CPSC_Courses/cpsc231_a1/$(date +"%_m_%e_%Y")
 }
 
 export LESS_TERMCAP_mb=$'\e[1;32m'
