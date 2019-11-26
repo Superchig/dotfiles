@@ -38,6 +38,8 @@ else
   alias l='ls -lah'
 fi
 
+alias grep='grep --color=auto'
+
 alias xo='xdg-open &> /dev/null'
 alias e='nvim'
 alias se="sudo nvim"
@@ -55,6 +57,8 @@ alias gimme="sudo chown ${USER} *"
 
 alias cdc="cd $HOME/Documents/CPSC_Courses/cpsc231_a1/"
 alias cdo="cd $HOME/Downloads"
+
+alias activate="source env/bin/activate"
 
 # Stops directory highlighting on Windows subsystem for Linux
 LS_COLORS=$LS_COLORS:'ow=1;34:'
@@ -110,6 +114,10 @@ cdtd() {
   cd $HOME/Documents/CPSC_Courses/cpsc231_a1/$(date +"%_m_%e_%Y")
 }
 
+mman() {
+  man $(man -k "$1" | fzf | awk '{print $1}')
+}
+
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -117,3 +125,19 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/chiggie/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/chiggie/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/chiggie/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/chiggie/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
