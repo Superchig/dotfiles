@@ -7,6 +7,7 @@ call plug#begin()
 " Alternatively,
 " Plug 'jiangmiao/auto-pairs'
 Plug 'https://github.com/jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2'
@@ -15,10 +16,12 @@ Plug 'artur-shaik/vim-javacomplete2'
 call plug#end()
 
 set number
-" set termguicolors
+set termguicolors
 " Synchronize unnamed register with clipboard register
 set clipboard^=unnamedplus
 set completeopt-=preview
+
+colorscheme gruvbox
 
 " Split pane navigation shortcuts
 map <C-h> <C-w>h
@@ -33,7 +36,12 @@ cabbrev ev e ~/.config/nvim/init.vim
 cabbrev eb e ~/.bashrc
 cabbrev soi source ~/.config/nvim/init.vim
 
-autocmd Filetype bash,sh,zsh set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+" Changes the present working directory to the directory of the currently open
+" file for all windows.
+cabbrev updir cd %:p:h
+
+autocmd Filetype bash,zsh set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+autocmd Filetype sh set autoindent noexpandtab tabstop=8 shiftwidth=8
 
 autocmd Filetype java set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
