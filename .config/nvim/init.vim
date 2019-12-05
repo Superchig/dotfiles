@@ -12,6 +12,7 @@ Plug 'tpope/vim-commentary'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2'
+Plug 'vim-airline/vim-airline'
 
 " Initialize plugin system
 call plug#end()
@@ -48,3 +49,6 @@ autocmd Filetype java set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smartta
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+
+autocmd Filetype markdown set textwidth=80
+autocmd Filetype markdown set colorcolumn=+
