@@ -13,6 +13,7 @@ Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-airline/vim-airline'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Initialize plugin system
 call plug#end()
@@ -31,8 +32,30 @@ map <C-l> <C-w>l
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 
+" Disable highlighting after using gd
+nnoremap <silent> gd gd:nohlsearch<cr>
+nnoremap <silent> <C-n> :nohlsearch<cr>
+
 " Make it easier to make new tabs
 cabbrev tn tabnew
+nmap gs :tabnew<cr>
+nmap <S-k> gt
+nmap <S-j> gT
+
+" " Make it easier to make new buffers
+" cabbrev tn enew
+" nmap <S-t> :enew<cr>
+" nmap gs :enew<cr>
+" 
+" nmap gt :bnext<cr>
+" nmap g<S-t> :bprevious<cr>
+ 
+" " Close the current buffer and move to the previous one
+" " This replicates the idea of closing a tab
+cabbrev bc :bp <bar> bd #<cr>
+
+" Show all open buffers and their status
+" nmap gl :ls<cr>
 
 cabbrev ev e ~/.config/nvim/init.vim
 cabbrev eb e ~/.bashrc
@@ -51,4 +74,26 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
 autocmd Filetype markdown set textwidth=80
-autocmd Filetype markdown set colorcolumn=+
+autocmd Filetype markdown set colorcolumn=+0
+
+" Automatically display all buffers when there's only one tab open
+" let g:airline#extensions#tabline#enabled = 1
+
+" Chagnges to make completion more like a typical IDE's completion
+set completeopt=longest,menuone
+inoremap <expr> <cr> pumvisible () ? "\<C-y>" : "\<C-g>u\<cr>"
+
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+
+" function! OpenCompletion()
+"     if !pumvisible() && ((v:char >= 'a' && v:char <= 'z') || (v:char >= 'A' && v:char <= 'Z')) && &ft=='go'
+"         call feedkeys("\<C-x>\<C-o>", "n")
+"     endif
+" endfunction
+" 
+" autocmd InsertCharPre * call OpenCompletion()
