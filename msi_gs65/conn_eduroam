@@ -1,0 +1,14 @@
+#!/bin/bash
+nmcli con delete eduroam
+
+read WIFI_PASS < "$HOME/projects/conn_eduroam/wifi_pass"
+read WIFI_USER < "$HOME/projects/conn_eduroam/wifi_user"
+nmcli con add type wifi ifname wlo1 con-name eduroam ssid eduroam \
+	ipv4.method auto \
+	802-1x.eap peap \
+	802-1x.phase2-auth mschapv2 \
+	802-1x.identity "$WIFI_USER" \
+	802-1x.password "$WIFI_PASS" \
+	wifi-sec.key-mgmt wpa-eap
+
+nmcli con up eduroam
