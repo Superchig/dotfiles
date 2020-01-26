@@ -14,6 +14,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'plasticboy/vim-markdown'
 
 " Initialize plugin system
 call plug#end()
@@ -23,6 +24,8 @@ set termguicolors
 " Synchronize unnamed register with clipboard register
 set clipboard^=unnamedplus
 set completeopt-=preview
+set ignorecase
+set nohlsearch
 
 colorscheme gruvbox
 
@@ -46,10 +49,12 @@ nmap <S-j> gT
 " cabbrev tn enew
 " nmap <S-t> :enew<cr>
 " nmap gs :enew<cr>
-" 
+"
 " nmap gt :bnext<cr>
 " nmap g<S-t> :bprevious<cr>
- 
+
+nmap <C-s> :w<esc>
+
 " " Close the current buffer and move to the previous one
 " " This replicates the idea of closing a tab
 cabbrev bc :bp <bar> bd #<cr>
@@ -73,8 +78,15 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
+autocmd Filetype markdown set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd Filetype markdown set textwidth=80
 autocmd Filetype markdown set colorcolumn=+0
+let g:vim_markdown_new_list_item_indent = 2
+
+autocmd Filetype yaml set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+autocmd Filetype yaml set colorcolumn=80
+
+autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Automatically display all buffers when there's only one tab open
 " let g:airline#extensions#tabline#enabled = 1
@@ -95,5 +107,5 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 "         call feedkeys("\<C-x>\<C-o>", "n")
 "     endif
 " endfunction
-" 
+"
 " autocmd InsertCharPre * call OpenCompletion()
