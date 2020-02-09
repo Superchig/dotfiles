@@ -28,6 +28,7 @@ set ignorecase
 set nohlsearch
 
 colorscheme gruvbox
+hi Normal guibg=NONE ctermbg=NONE
 
 " Split pane navigation shortcuts
 map <C-h> <C-w>h

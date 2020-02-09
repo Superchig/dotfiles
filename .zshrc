@@ -157,3 +157,5 @@ export NVM_DIR="/home/chiggie/.nvm"
 # go
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
+
+source /home/chiggie/.config/broot/launcher/bash/br
