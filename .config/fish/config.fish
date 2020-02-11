@@ -1,7 +1,7 @@
 set -x VISUAL nvim
 set -x EDITOR nvim
 
-abbr --add l exa -l
+abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
 abbr --add b br -h
