@@ -89,6 +89,8 @@ autocmd Filetype yaml set colorcolumn=80
 
 autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
+autocmd BufWritePost config.h !sudo make install
+
 " Automatically display all buffers when there's only one tab open
 " let g:airline#extensions#tabline#enabled = 1
 

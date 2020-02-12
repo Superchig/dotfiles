@@ -1,6 +1,8 @@
 set -x VISUAL nvim
 set -x EDITOR nvim
 
+set -x SUDO_ASKPASS /usr/local/bin/zenity_passphrase
+
 abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
@@ -15,6 +17,8 @@ abbr --add pm pulsemixer
 abbr --add sf source ~/.config/fish/config.fish
 abbr --add ssy sudo systemctl
 abbr --add ef nvim ~/.config/fish/config.fish
+abbr --add ea nvim ~/.config/alacritty/alacritty.yml
+abbr --add ei nvim ~/.config/i3/config
 abbr --add cdc cd ~/Documents/CPSC_Courses/cpp_interterm/
 abbr --add cdo cd ~/Downloads
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
