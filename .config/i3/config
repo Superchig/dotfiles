@@ -223,3 +223,5 @@ bar {
 exec ~/dotfiles/minimalist/monitor_setup_msi.bash
 exec ~/.fehbg
 exec picom &
+# Set the trackpad senstivity
+exec 'xinput set-prop \'SynPS/2 Synaptics TouchPad\' \'libinput Accel Speed\' 0.5'
