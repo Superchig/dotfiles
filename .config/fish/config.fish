@@ -24,6 +24,8 @@ abbr --add cdo cd ~/Downloads
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
 
+abbr --add chwm ~/dotfiles/minimalist/chwm
+
 set -x LESS_TERMCAP_mb (printf '\e[1;32m')
 set -x LESS_TERMCAP_md (printf '\e[1;32m')
 set -x LESS_TERMCAP_me (printf '\e[0m')
