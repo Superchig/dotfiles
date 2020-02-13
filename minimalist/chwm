@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# chwm Modifies ~/.nvidia-xinitrc to use a different window manager
+
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ "$#" -gt 2 ] || [ "$#" -lt 1 ]; then
+  echo "USAGE: $0 [window manager/desktop environment]"
+  exit 1
+fi
+
+WM="$1"
+if [ ${WM} != 'gnome' ] && [ ${WM} != 'i3' ]; then
+  >&2 echo "$0: invalid window manager"
+  exit 3
+fi
+
+FIRST_LINE=$(head -n 1 ${HOME}/.nvidia-xinitrc)
+
+if ! echo ${FIRST_LINE} | grep -E 'gnome|i3' > /dev/null; then
+  >&2 echo "$0: xinitrc file not set up correctly"
+  exit 2
+fi
+
+# expr ${FIRST_LINE} : '\(session=${1:-.*}\)'
+
+# Gets current window manager
+CURRENT=$(echo ${FIRST_LINE} | cut -c14- | tr -d '}\n')
+
+sed -ie "1 s/$CURRENT/$WM/" ${HOME}/.nvidia-xinitrc
