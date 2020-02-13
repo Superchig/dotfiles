@@ -67,6 +67,8 @@ cabbrev ev e ~/.config/nvim/init.vim
 cabbrev eb e ~/.bashrc
 cabbrev soi source ~/.config/nvim/init.vim
 
+cabbrev twospace set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+
 " Changes the present working directory to the directory of the currently open
 " file for all windows.
 cabbrev updir cd %:p:h
@@ -89,6 +91,8 @@ autocmd Filetype yaml set colorcolumn=80
 
 autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
+autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+
 autocmd BufWritePost config.h !sudo make install
 
 " Automatically display all buffers when there's only one tab open
@@ -103,7 +107,6 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
 
 " function! OpenCompletion()
 "     if !pumvisible() && ((v:char >= 'a' && v:char <= 'z') || (v:char >= 'A' && v:char <= 'Z')) && &ft=='go'
