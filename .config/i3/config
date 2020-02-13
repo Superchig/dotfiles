@@ -86,7 +86,8 @@ bindsym $mod+q split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+# bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -183,6 +184,7 @@ bindsym $mod+r mode "resize"
 
 mode "launch" {
         bindsym f exec firefox
+	bindsym b exec brave
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -212,6 +214,9 @@ smart_gaps on
 # Activate smart borders (always)
 smart_borders on
 
+# Start workspace 2 in tabbed mode
+for_window [workspace=$ws2] layout tabbed
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -224,4 +229,4 @@ exec ~/dotfiles/minimalist/monitor_setup_msi.bash
 exec ~/.fehbg
 exec picom &
 # Set the trackpad senstivity
-exec 'xinput set-prop \'SynPS/2 Synaptics TouchPad\' \'libinput Accel Speed\' 0.5'
+exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.5"
