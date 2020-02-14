@@ -55,6 +55,10 @@ nmap <S-j> gT
 " nmap g<S-t> :bprevious<cr>
 
 nmap <C-s> :w<esc>
+imap <C-s> <C-o>:w<esc>
+
+nmap <M-m> :make<esc><esc>
+imap <M-m> <C-o>:make<esc>
 
 " " Close the current buffer and move to the previous one
 " " This replicates the idea of closing a tab
@@ -92,6 +96,7 @@ autocmd Filetype yaml set colorcolumn=80
 autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+autocmd Filetype tex set textwidth=80 colorcolumn=+0
 
 autocmd BufWritePost config.h !sudo make install
 
