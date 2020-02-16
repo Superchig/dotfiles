@@ -56,6 +56,9 @@ bindsym $mod+q exec rofi -show drun
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# Rofi window selection
+bindsym Mod4+w exec rofi -show window
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -201,6 +204,12 @@ workspace 2 output primary
 workspace 3 output primary
 workspace 4 output primary
 
+# Start certain windows as floating
+for_window [title="Watch It Player | Cengage Learning - Mozilla Firefox"] floating enable
+for_window [class="Org.gnome.Nautilus"] floating enable
+for_window [class="Qalculate-gtk"] floating enable
+for_window [class="Pavucontrol"] floating enable
+
 # Show no border for new windows
 default_border none
 
@@ -226,8 +235,12 @@ bar {
         status_command i3status
 }
 
+exec xset s off
+exec exset -dpms
 exec ~/dotfiles/minimalist/monitor_setup_msi.bash
 exec ~/.fehbg
 exec picom &
-# Set the trackpad senstivity
-exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.5"
+# Set the touchpad senstivity
+exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6"
+# Disable tapping drag on touchpad
+exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Drag Enabled' 0"
