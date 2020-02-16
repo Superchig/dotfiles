@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Disable nvidia kernel modules and turn off nvidia card, since bbswitch
+# doesn't seem to turn off nvidia at boot
+# Note: This is modified from the nvidia-xrun script
+if lsmod | grep nvidia_drm; then
+  echo 'Unloading nvidia_drm module'
+  sudo rmmod nvidia_drm
+fi
+
+if lsmod | grep nvidia_modeset; then
+  echo 'Unloading nvidia_modeset module'
+  sudo rmmod nvidia_modeset
+fi
+
+if lsmod | grep '^nvidia'; then
+  echo 'Unloading nvidia module'
+  sudo rmmod nvidia
+fi
+
+if [ $(cut /proc/acpi/bbswitch -d' ' -f2) = "ON" ]; then
+  echo 'Turning off nvidia GPU'
+  sudo tee /proc/acpi/bbswitch <<<OFF
+fi
+
+echo -n 'Current state of nvidia GPU: '
+cat /proc/acpi/bbswitch
+
+startx
