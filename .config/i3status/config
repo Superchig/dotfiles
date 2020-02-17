@@ -6,11 +6,12 @@ general {
 
 order += "wireless wlo1"
 order += "battery 1"
+order += "volume master"
 order += "tztime local"
 
 wireless wlo1 {
-        format_up = "W: (%quality at %essid)"
-        format_down = "W: down"
+        format_up = "📶: %quality at %essid"
+        format_down = "📶: down"
 }
 
 battery 1 {
@@ -28,3 +29,10 @@ tztime local {
         format = "%b %d %Y - %a, %I:%M %p"
         # hide_if_equals_localtime = true
 }
+
+volume master {
+        format = "🔊: %volume "
+        format_muted = "🔇: %volume"
+        device = "pulse:0"
+}
+
