@@ -43,4 +43,4 @@ if status is-login
 end
 
 # Activate the default Ruby manually
-rvm default 2> /dev/null
+# rvm default 2> /dev/null
