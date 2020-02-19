@@ -43,7 +43,8 @@ floating_modifier $mod
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
 # bindsym $mod+Return exec st -e cd xcwd
-bindsym $mod+Return exec "cd $(xcwd); st"
+# bindsym $mod+Return exec "cd $(xcwd); st"
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 # bindsym $mod+Shift+q kill
@@ -245,7 +246,7 @@ exec picom &
 exec dunst &
 exec redshift &
 # Set the touchpad senstivity
-exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6"
+# exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6"
 # Disable tapping drag on touchpad
 exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Drag Enabled' 0"
 # Turn on compose key, set to right alt
