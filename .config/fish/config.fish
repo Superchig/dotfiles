@@ -13,6 +13,7 @@ abbr --add pe "ps -e | grep"
 abbr --add sps sudo pacman -S
 abbr --add pq pacman -Q
 abbr --add pm pulsemixer
+abbr --add xf xset dpms force off
 
 abbr --add sf source ~/.config/fish/config.fish
 abbr --add ssy sudo systemctl
