@@ -207,6 +207,7 @@ workspace 4 output primary
 
 # Start certain windows as floating
 for_window [title="Watch It Player | Cengage Learning - Mozilla Firefox"] floating enable
+for_window [title="Watch It - Mozilla Firefox"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
@@ -237,7 +238,7 @@ bar {
 }
 
 exec xset s off
-exec exset -dpms
+exec xset -dpms
 exec ~/dotfiles/minimalist/monitor_setup_msi.bash
 exec ~/.fehbg
 exec picom &
