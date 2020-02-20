@@ -44,7 +44,7 @@ floating_modifier $mod
 # bindsym $mod+Return exec i3-sensible-terminal
 # bindsym $mod+Return exec st -e cd xcwd
 # bindsym $mod+Return exec "cd $(xcwd); st"
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $HOME/dotfiles/multi/portable-term
 
 # kill focused window
 # bindsym $mod+Shift+q kill
@@ -245,9 +245,6 @@ exec ~/.fehbg
 exec picom &
 exec dunst &
 exec redshift &
-# Set the touchpad senstivity
-# exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.6"
-# Disable tapping drag on touchpad
-exec "xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Drag Enabled' 0"
+exec $HOME/dotfiles/multi/set-touchpad
 # Turn on compose key, set to right alt
 exec setxkbmap -option compose:ralt

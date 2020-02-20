@@ -38,7 +38,11 @@ set -x LESS_TERMCAP_us (printf '\e[1;4;31m')
 # Use custom program to start X at login
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1
-        exec startx -- -keeptty
+      if test "$hostname" = alien
+          exec startx -- -keeptty
+      else
+          $HOME/bin/nvselect
+      end
     end
 end
 
