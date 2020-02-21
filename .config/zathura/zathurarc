@@ -1,4 +1,8 @@
 # White background
 # set default-bg "#FFFFFF"
+
 # Gray background
 set default-bg "#DCDCDC"
+
+# Use clipboard for selection
+set selection-clipboard clipboard
