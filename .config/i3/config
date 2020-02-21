@@ -209,6 +209,8 @@ workspace 4 output primary
 # Start certain windows as floating
 for_window [title="Watch It Player | Cengage Learning - Mozilla Firefox"] floating enable
 for_window [title="Watch It - Mozilla Firefox"] floating enable
+for_window [title="Please Wait... - Mozilla Firefox"] floating enable
+for_window [title="Zotero Preferences"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
