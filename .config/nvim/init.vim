@@ -73,6 +73,12 @@ cabbrev soi source ~/.config/nvim/init.vim
 
 cabbrev twospace set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
+autocmd Filetype markdown nmap <buffer> <silent> <C-Left> :s/^  //<esc>
+autocmd Filetype markdown imap <buffer> <silent> <C-Left> <C-o>:s/^  //<esc>
+
+autocmd Filetype markdown nmap <buffer> <silent> <C-Right> :s/^/  /<esc>
+autocmd Filetype markdown imap <buffer> <silent> <C-Right> <C-o>:s/^/  /<esc>
+
 " Changes the present working directory to the directory of the currently open
 " file for all windows.
 cabbrev updir cd %:p:h
