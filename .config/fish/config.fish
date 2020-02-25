@@ -7,6 +7,8 @@ abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
 abbr --add b br -h
+# Uses custom mcd function
+abbr --add m mcd
 
 abbr --add pe "ps -e | grep"
 
