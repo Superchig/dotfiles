@@ -95,6 +95,7 @@ autocmd Filetype markdown set tabstop=8 softtabstop=0 expandtab shiftwidth=2 sma
 autocmd Filetype markdown set textwidth=80
 autocmd Filetype markdown set colorcolumn=+0
 let g:vim_markdown_new_list_item_indent = 2
+let g:vim_markdown_folding_level = 2
 
 autocmd Filetype yaml set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd Filetype yaml set colorcolumn=80
