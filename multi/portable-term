@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 cd $(xcwd)
-if [ "$HOSTNAME" = "alien" ]; then
-  exec alacritty
-else
-  exec st
-fi
+exec alacritty
+# if [ "$HOSTNAME" = "alien" ]; then
+#   exec alacritty
+# else
+#   exec st
+# fi
