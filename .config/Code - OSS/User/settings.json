@@ -39,6 +39,14 @@
             "commands": [
                 "workbench.action.closeFolder"
             ]
+        },
+        {
+            "before": [
+                "<C-b>"
+            ],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
+            ]
         }
     ],
     "C_Cpp.default.intelliSenseMode": "clang-x64",
