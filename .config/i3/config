@@ -37,6 +37,59 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# get color from XResource configuration - variable_name XResource fallback
+
+# special
+set_from_resource $foreground foreground #C6C6C6
+set_from_resource $background background #1C1C1C
+set_from_resource $cursorColor cursorColor #C6C6C6
+
+# black
+set_from_resource $black1 color0 #303030
+set_from_resource $black2 color8 #444444
+set $trueblack #000000
+
+# red
+set_from_resource $red1 color1 #d75f5f
+set_from_resource $red2 color9 #d75f5f
+
+# green
+set_from_resource $green1 color2 #87AF87
+set_from_resource $green2 color10 #87AF87
+
+# yellow
+set_from_resource $yellow1 color3 #ffd75f
+set_from_resource $yellow2 color11 #ffd75f
+
+# blue
+set_from_resource $blue1 color4 #87afd7
+set_from_resource $blue2 color12 #87afd7
+
+# magenta
+set_from_resource $magenta1 color5 #afafd7
+set_from_resource $magenta2 color13 #afafd7
+
+# cyan
+set_from_resource $cyan1 color6 #afd7ff
+set_from_resource $cyan2 color14 #afd7ff
+
+# white
+set_from_resource $white1 color7 #4E4E4E
+set_from_resource $white2 color15 #ffffff
+
+set $fire_purple 9b1c39
+
+# class                   border  backgr. text    indicator child_border
+# client.focused            $magenta1   $magenta1   #FFFFFF $gyan2     $magenta1
+
+## Default colors
+# class                   border  backgr. text    indicator child_border
+# client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+# client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+# client.urgent           #2f343a #900000 #ffffff #900000   #900000
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -215,6 +268,8 @@ for_window [title="Tab Style Selector - Mozilla Firefox"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [class="vlc"] floating enable
+for_window [class="Gimp"] floating enable
 
 # Show no border for new windows
 default_border none
@@ -239,6 +294,11 @@ bar {
         position top
         tray_output primary
         status_command i3status
+
+	# colors {
+	# 	# colorclass      border    background text
+	# 	focused_workspace $magenta1 $magenta1  #FFFFFF
+	# }
 }
 
 exec xset s off
