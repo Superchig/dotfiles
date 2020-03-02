@@ -26,6 +26,7 @@ abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
+abbr --add mo $HOME/dotfiles/minimalist/monitor_setup.bash
 
 abbr --add chwm ~/dotfiles/minimalist/chwm
 
@@ -41,7 +42,7 @@ set -x LESS_TERMCAP_us (printf '\e[1;4;31m')
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1
       if test "$hostname" = alien
-          exec startx -- -keeptty
+          # exec startx -- -keeptty
       else
           $HOME/bin/nvselect
       end
