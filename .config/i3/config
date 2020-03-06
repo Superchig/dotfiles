@@ -306,7 +306,7 @@ exec xset -dpms
 exec ~/dotfiles/minimalist/monitor_setup_msi.bash
 exec ~/.fehbg
 exec picom &
-exec dunst &
+exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
 exec $HOME/dotfiles/multi/set-touchpad
 # Turn on compose key, set to right alt
