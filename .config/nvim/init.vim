@@ -107,10 +107,13 @@ autocmd Filetype tex set textwidth=80 colorcolumn=+0
 
 autocmd BufWritePost config.h !sudo make install
 
+" On jrnl buffers, use a text width of 65
+autocmd BufRead,BufNewFile *jrnl*.txt set textwidth=65 colorcolumn=+0
+
 " Automatically display all buffers when there's only one tab open
 " let g:airline#extensions#tabline#enabled = 1
 
-" Chagnges to make completion more like a typical IDE's completion
+" Changes to make completion more like a typical IDE's completion
 set completeopt=longest,menuone
 inoremap <expr> <cr> pumvisible () ? "\<C-y>" : "\<C-g>u\<cr>"
 

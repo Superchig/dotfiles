@@ -26,6 +26,7 @@ abbr --add ea nvim ~/.config/alacritty/alacritty.yml
 abbr --add ei nvim ~/.config/i3/config
 abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
+abbr --add cdd cd ~/dotfiles
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
 abbr --add mo $HOME/dotfiles/minimalist/monitor_setup.bash
