@@ -303,7 +303,7 @@ bar {
 
 exec xset s off
 exec xset -dpms
-exec ~/dotfiles/minimalist/monitor_setup_msi.bash
+exec ~/dotfiles/multi/monitor_setup
 exec ~/.fehbg
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd

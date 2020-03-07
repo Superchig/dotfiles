@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+case "$HOSTNAME" in
+  "alien")
+    ~/dotfiles/multi/monitor_setup.d/alien
+    ;;
+	"msi")
+		~/dotfiles/multi/monitor_setup.d/msi
+		;;
+esac
