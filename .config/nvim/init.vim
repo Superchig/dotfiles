@@ -84,7 +84,7 @@ autocmd Filetype markdown imap <buffer> <silent> <C-Right> <C-o>:s/^/  /<esc>
 cabbrev updir cd %:p:h
 
 autocmd Filetype bash,zsh set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
-autocmd Filetype sh set autoindent noexpandtab tabstop=8 shiftwidth=8
+autocmd Filetype sh set autoindent noexpandtab tabstop=2 shiftwidth=2
 
 autocmd Filetype java set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd FileType java setlocal omnifunc=javacomplete#Complete

@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env sh
 
 # Select eDP1 or eDP2 as the built-in screen, depending on which one is
 # connected
