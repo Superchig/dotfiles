@@ -2,6 +2,7 @@ set -x VISUAL nvim
 set -x EDITOR nvim
 
 set -x SUDO_ASKPASS /usr/local/bin/zenity_passphrase
+set -x MANWIDTH 80
 
 abbr --add l exa -la
 abbr --add e nvim
@@ -29,7 +30,7 @@ abbr --add cdo cd ~/Downloads
 abbr --add cdd cd ~/dotfiles
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
-abbr --add mo $HOME/dotfiles/minimalist/monitor_setup.bash
+abbr --add mo $HOME/dotfiles/multi/monitor_setup
 
 abbr --add chwm ~/dotfiles/minimalist/chwm
 
