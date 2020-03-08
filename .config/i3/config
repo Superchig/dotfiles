@@ -111,6 +111,9 @@ bindsym $mod+q exec rofi -show drun
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# Rofi run terminal applications
+bindsym $mod+Shift+q exec rofi -show run
+
 # Rofi window selection
 bindsym Mod4+w exec rofi -show window
 
@@ -303,8 +306,8 @@ bar {
 
 exec xset s off
 exec xset -dpms
+# monitor_setup runs ~/.fehbg
 exec ~/dotfiles/multi/monitor_setup
-exec ~/.fehbg
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
