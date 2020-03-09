@@ -107,8 +107,8 @@ autocmd Filetype tex set textwidth=80 colorcolumn=+0
 
 autocmd BufWritePost config.h !sudo make install
 
-" On jrnl buffers, use a text width of 65
-autocmd BufRead,BufNewFile *jrnl*.txt set textwidth=65 colorcolumn=+0
+" On jrnl buffers, use a text width of 64
+autocmd BufRead,BufNewFile *jrnl*.txt set textwidth=64 colorcolumn=+0
 
 " Automatically display all buffers when there's only one tab open
 " let g:airline#extensions#tabline#enabled = 1
