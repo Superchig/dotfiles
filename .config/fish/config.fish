@@ -32,7 +32,11 @@ abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
 abbr --add mo $HOME/dotfiles/multi/monitor_setup
 
+abbr --add ops xo $HOME/school/span_201/tarea.pdf
+
 abbr --add chwm ~/dotfiles/minimalist/chwm
+
+abbr --add ralt setxkbmap -option compose:ralt
 
 set -x LESS_TERMCAP_mb (printf '\e[1;32m')
 set -x LESS_TERMCAP_md (printf '\e[1;32m')
