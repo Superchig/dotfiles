@@ -269,6 +269,7 @@ for_window [title="Please Wait... - Mozilla Firefox"] floating enable
 # for_window [title="Zotero Preferences"] floating enable
 # for_window [title="Quick Format Citation"] floating enable
 for_window [title="Tab Style Selector - Mozilla Firefox"] floating enable
+for_window [title="qtcreator_process_stub"] floating enable
 # Make all Zotero windows float except the main one
 for_window [title="Zotero"] floating disable
 for_window [class="Zotero"] floating enable
@@ -310,8 +311,10 @@ bar {
 
 exec xset s off
 exec xset -dpms
-# monitor_setup runs ~/.fehbg
-exec ~/dotfiles/multi/monitor_setup
+## Has been obsoleted by use of autorandr
+## monitor_setup runs ~/.fehbg
+# exec ~/dotfiles/multi/monitor_setup
+exec autorandr -c
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
