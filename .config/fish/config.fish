@@ -25,12 +25,16 @@ abbr --add ssy sudo systemctl
 abbr --add ef nvim ~/.config/fish/config.fish
 abbr --add ea nvim ~/.config/alacritty/alacritty.yml
 abbr --add ei nvim ~/.config/i3/config
+abbr --add eb nvim ~/.config/berry/autostart
+abbr --add es nvim ~/.config/sxhkd/sxhkdrc
 abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
 abbr --add cdd cd ~/dotfiles
+abbr --add cds cd ~/go/src
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
 abbr --add mo $HOME/dotfiles/multi/monitor_setup
+abbr --add sx startx ~/.xinitrc
 
 abbr --add ops xo $HOME/school/span_201/tarea.pdf
 
