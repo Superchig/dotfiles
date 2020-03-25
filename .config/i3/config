@@ -247,7 +247,7 @@ bindsym $mod+r mode "resize"
 mode "launch" {
         bindsym f exec firefox
 	bindsym b exec brave
-	bindsym n exec nautilus $(xcwd)
+	bindsym n exec nautilus "$(xcwd)"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -279,6 +279,7 @@ for_window [class="Qalculate-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="vlc"] floating enable
 for_window [class="Gimp"] floating enable
+for_window [class="Lxappearance"] floating enable
 
 # Show no border for new windows
 default_border none
