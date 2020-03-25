@@ -280,6 +280,8 @@ for_window [class="Pavucontrol"] floating enable
 for_window [class="vlc"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="Lxappearance"] floating enable
+for_window [class="Arandr"] floating enable
+for_window [class="System-config-printer.py"] floating enable
 
 # Show no border for new windows
 default_border none

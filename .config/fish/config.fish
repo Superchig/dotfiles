@@ -15,6 +15,7 @@ abbr --add pe "ps -e | grep"
 
 abbr --add sp sudo pacman
 abbr --add sps sudo pacman -S
+abbr --add spr sudo pacman -R
 abbr --add p pacman
 abbr --add pq pacman -Q
 abbr --add pm pulsemixer
