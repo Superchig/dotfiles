@@ -245,9 +245,10 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 mode "launch" {
-        bindsym f exec firefox
-	bindsym b exec brave
-	bindsym n exec nautilus "$(xcwd)"
+        bindsym f exec firefox; mode "default"
+	bindsym b exec brave; mode "default"
+	bindsym n exec nautilus "$(xcwd)"; mode "default"
+	bindsym p exec firefox --private-window; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
