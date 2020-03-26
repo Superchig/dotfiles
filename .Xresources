@@ -1,11 +1,12 @@
 Xft.dpi: 96
-/* Xft.antialias: true */
-/* Xft.hinting: true */
-/* Xft.rgba: rgb */
-/* Xft.autohint: false */
-/* Xft.hintstyle: hintslight */
-/* Xft.lcdfilter: lcddefault */
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
 
+!! Gruvbox colors
 ! hard contrast: *background: #1d2021
 *background: #282828
 ! soft contrast: *background: #32302f
@@ -34,3 +35,9 @@ Xft.dpi: 96
 ! LightGrey + White
 *color7:  #a89984
 *color15: #ebdbb2
+
+!! Xterm Options
+XTerm.vt100.faceName: Inconsolata:size=12
+Xterm.vt100.translations: #override \n\
+	Ctrl <Key>U: scroll-back() \n\
+	Ctrl <Key>D: scroll-forw()
