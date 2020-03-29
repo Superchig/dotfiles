@@ -51,6 +51,9 @@ set -x LESS_TERMCAP_so (printf '\e[01;33m')
 set -x LESS_TERMCAP_ue (printf '\e[0m')
 set -x LESS_TERMCAP_us (printf '\e[1;4;31m')
 
+# Source the file for z.fish
+. $HOME/dotfiles/z.fish
+
 # Use custom program to start X at login
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1
