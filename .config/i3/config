@@ -324,6 +324,8 @@ exec autorandr -c
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
+exec alttab &
+
 exec $HOME/dotfiles/multi/set-touchpad
 # Turn on compose key, set to right alt
 exec setxkbmap -option compose:ralt
