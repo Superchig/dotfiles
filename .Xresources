@@ -37,7 +37,7 @@ Xft.lcdfilter: lcddefault
 *color15: #ebdbb2
 
 !! Xterm Options
-XTerm.vt100.faceName: Inconsolata:size=12
+XTerm.vt100.faceName: Inconsolata Regular:size=10
 Xterm.vt100.translations: #override \n\
 	Ctrl <Key>U: scroll-back() \n\
 	Ctrl <Key>D: scroll-forw()
