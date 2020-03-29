@@ -270,6 +270,7 @@ for_window [title="Watch It - Mozilla Firefox"] floating enable
 for_window [title="Please Wait... - Mozilla Firefox"] floating enable
 # for_window [title="Zotero Preferences"] floating enable
 # for_window [title="Quick Format Citation"] floating enable
+for_window [title="Sign in - Google Accounts - Mozilla Firefox*"] floating enable
 for_window [title="Tab Style Selector - Mozilla Firefox"] floating enable
 for_window [title="qtcreator_process_stub"] floating enable
 # Make all Zotero windows float except the main one
