@@ -100,7 +100,7 @@ let g:vim_markdown_folding_level = 2
 autocmd Filetype yaml set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd Filetype yaml set colorcolumn=80
 
-autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+" autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd Filetype tex set textwidth=80 colorcolumn=+0
