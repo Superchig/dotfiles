@@ -41,3 +41,15 @@ XTerm.vt100.faceName: Inconsolata Regular:size=10
 Xterm.vt100.translations: #override \n\
 	Ctrl <Key>U: scroll-back() \n\
 	Ctrl <Key>D: scroll-forw()
+
+!! alttab options
+! Set size of icons
+alttab.icon.geometry: 64x64
+! Size of a single tile (mini-window)
+alttab.tile.geometry: 250x250
+! Font
+alttab.font: xft:Gohu GohuFont
+
+!! sxiv options
+Sxiv.foreground: #000000
+Sxiv.background: #dcdcdc

@@ -38,6 +38,7 @@ abbr --add mo $HOME/dotfiles/multi/monitor_setup
 abbr --add sx startx ~/.xinitrc
 
 abbr --add ops xo $HOME/school/span_201/tarea.pdf
+abbr --add opm xo $HOME/school/math_116/Calculus_Early_Transcendentals_8th_Editi.pdf
 
 abbr --add chwm ~/dotfiles/minimalist/chwm
 

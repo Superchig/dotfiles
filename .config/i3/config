@@ -267,7 +267,7 @@ workspace 4 output primary
 # Start certain windows as floating
 for_window [title="Watch It Player | Cengage Learning - Mozilla Firefox"] floating enable
 for_window [title="Watch It - Mozilla Firefox"] floating enable
-for_window [title="Please Wait... - Mozilla Firefox"] floating enable
+# for_window [title="Please Wait... - Mozilla Firefox"] floating enable
 # for_window [title="Zotero Preferences"] floating enable
 # for_window [title="Quick Format Citation"] floating enable
 for_window [title="Sign in - Google Accounts - Mozilla Firefox*"] floating enable
@@ -284,6 +284,8 @@ for_window [class="Gimp"] floating enable
 for_window [class="Lxappearance"] floating enable
 for_window [class="Arandr"] floating enable
 for_window [class="System-config-printer.py"] floating enable
+for_window [class="Sxiv"] floating enable
+for_window [class="Xsane"] floating enable
 
 # Show no border for new windows
 default_border none
