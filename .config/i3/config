@@ -44,38 +44,38 @@ set_from_resource $foreground foreground #C6C6C6
 set_from_resource $background background #1C1C1C
 set_from_resource $cursorColor cursorColor #C6C6C6
 
-# black
-set_from_resource $black1 color0 #303030
-set_from_resource $black2 color8 #444444
+# Black + DarkGrey
+set_from_resource $black    color0 #303030
+set_from_resource $darkgrey color8 #444444
 set $trueblack #000000
 
-# red
-set_from_resource $red1 color1 #d75f5f
-set_from_resource $red2 color9 #d75f5f
+# DarkRed + Red
+set_from_resource $darkred color1 #d75f5f
+set_from_resource $red     color9 #d75f5f
 
-# green
-set_from_resource $green1 color2 #87AF87
-set_from_resource $green2 color10 #87AF87
+# DarkGreen + Green
+set_from_resource $darkgreen color2 #87AF87
+set_from_resource $green     color10 #87AF87
 
-# yellow
-set_from_resource $yellow1 color3 #ffd75f
-set_from_resource $yellow2 color11 #ffd75f
+# DarkYellow + Yellow
+set_from_resource $darkyellow color3 #ffd75f
+set_from_resource $yellow     color11 #ffd75f
 
-# blue
-set_from_resource $blue1 color4 #87afd7
-set_from_resource $blue2 color12 #87afd7
+# DarkBlue + Blue
+set_from_resource $darkblue color4 #87afd7
+set_from_resource $blue     color12 #87afd7
 
-# magenta
-set_from_resource $magenta1 color5 #afafd7
-set_from_resource $magenta2 color13 #afafd7
+# DarkMagenta + Magenta
+set_from_resource $darkmagenta color5 #afafd7
+set_from_resource $magenta     color13 #afafd7
 
-# cyan
-set_from_resource $cyan1 color6 #afd7ff
-set_from_resource $cyan2 color14 #afd7ff
+# DarkGreen + Green
+set_from_resource $darkgreen color6 #afd7ff
+set_from_resource $green     color14 #afd7ff
 
-# white
-set_from_resource $white1 color7 #4E4E4E
-set_from_resource $white2 color15 #ffffff
+# LightGrey + White
+set_from_resource $lightgrey color7 #4E4E4E
+set_from_resource $white     color15 #ffffff
 
 set $fire_purple 9b1c39
 
@@ -83,12 +83,13 @@ set $fire_purple 9b1c39
 # client.focused            $magenta1   $magenta1   #FFFFFF $gyan2     $magenta1
 
 ## Default colors
-# class                   border  backgr. text    indicator child_border
-# client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
-# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-# client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-# client.urgent           #2f343a #900000 #ffffff #900000   #900000
-# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+# class                 border  backgr.   text    indicator child_border
+# client.focused          #4c7899 $darkblue #ffffff $yellow   $darkgrey
+client.focused          #4c7899 #285577   #ffffff $yellow   $darkgrey
+client.focused_inactive #333333 #5f676a   #ffffff #484e50   $black
+client.unfocused        #333333 $black    $grey   #292d2e   #222222
+client.urgent           #2f343a #900000   #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c   #ffffff #000000   #0c0c0c
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -249,6 +250,7 @@ mode "launch" {
 	bindsym b exec brave; mode "default"
 	bindsym n exec nautilus "$(xcwd)"; mode "default"
 	bindsym p exec firefox --private-window; mode "default"
+	bindsym d exec "$HOME/dotfiles/util/discord.sh"; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -307,14 +309,19 @@ for_window [workspace=$ws2] layout tabbed
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+	# i3bar_command i3bar --transparency
         position top
         tray_output primary
         status_command i3status
 
-	# colors {
-	# 	# colorclass      border    background text
-	# 	focused_workspace $magenta1 $magenta1  #FFFFFF
-	# }
+	colors {
+		background #000000
+		statusline #ffffff
+
+		# colorclass      border      background   text
+		# focused_workspace $background $darkblue    $black
+		# binding_mode      #2f343a     $darkgreen   #ffffff
+	}
 }
 
 exec xset s off
@@ -323,6 +330,7 @@ exec xset -dpms
 ## monitor_setup runs ~/.fehbg
 # exec ~/dotfiles/multi/monitor_setup
 exec autorandr -c
+exec ~/.fehbg
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
