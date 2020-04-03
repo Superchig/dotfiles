@@ -72,6 +72,7 @@ cabbrev eb e ~/.bashrc
 cabbrev soi source ~/.config/nvim/init.vim
 
 cabbrev twospace set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+cabbrev fulltab set tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
 
 autocmd Filetype markdown nmap <buffer> <silent> <C-Left> :s/^  //<esc>
 autocmd Filetype markdown imap <buffer> <silent> <C-Left> <C-o>:s/^  //<esc>
@@ -92,7 +93,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
 autocmd Filetype markdown set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
-autocmd Filetype markdown set textwidth=80
+autocmd Filetype markdown set textwidth=78
 autocmd Filetype markdown set colorcolumn=+0
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_folding_level = 2

@@ -47,6 +47,15 @@
             "commands": [
                 "workbench.action.toggleSidebarVisibility"
             ]
+        },
+        {
+            "before": [
+                "<C-k>",
+                "<C-t>"
+            ],
+            "commands": [
+                "workbench.action.selectTheme"
+            ]
         }
     ],
     "C_Cpp.default.intelliSenseMode": "clang-x64",

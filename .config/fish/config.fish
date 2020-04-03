@@ -18,6 +18,7 @@ abbr --add sps sudo pacman -S
 abbr --add spr sudo pacman -R
 abbr --add p pacman
 abbr --add pq pacman -Q
+abbr --add pss pacman -Ss
 abbr --add pm pulsemixer
 abbr --add xf xset dpms force off
 
@@ -32,6 +33,7 @@ abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
 abbr --add cdd cd ~/dotfiles
 abbr --add cds cd ~/go/src
+abbr --add cdu cd /run/user/1000/gvfs/
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
 abbr --add mo $HOME/dotfiles/multi/monitor_setup
