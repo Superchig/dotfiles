@@ -4,6 +4,8 @@ set -x EDITOR nvim
 set -x SUDO_ASKPASS /usr/local/bin/zenity_passphrase
 set -x MANWIDTH 80
 
+set -x XDG_CONFIG_HOME ~/.config
+
 abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
@@ -29,6 +31,7 @@ abbr --add ea nvim ~/.config/alacritty/alacritty.yml
 abbr --add ei nvim ~/.config/i3/config
 abbr --add eb nvim ~/.config/berry/autostart
 abbr --add es nvim ~/.config/sxhkd/sxhkdrc
+abbr --add ep nvim ~/dotfiles/pacman-install.sh
 abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
 abbr --add cdd cd ~/dotfiles
@@ -62,7 +65,7 @@ if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1
       if test "$hostname" = alien
           # exec startx -- -keeptty
-      else
+      else if test "$hostname" = msi && test -f $HOME/bin/nvselect
           $HOME/bin/nvselect
       end
     end
