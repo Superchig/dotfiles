@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+if [ "$HOSTNAME" = "msi" ]; then
+	xrdb -merge ~/dotfiles/high_dpi.x
+fi
