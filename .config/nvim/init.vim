@@ -22,7 +22,6 @@ Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'
-Plug 'kmarius/vim-fish'
 
 " Initialize plugin system
 call plug#end()
