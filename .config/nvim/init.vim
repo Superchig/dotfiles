@@ -22,6 +22,7 @@ Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'
+Plug 'kmarius/vim-fish'
 
 " Initialize plugin system
 call plug#end()
@@ -119,6 +120,13 @@ autocmd BufWritePost config.h !sudo make install
 autocmd BufRead,BufNewFile *jrnl*.txt set textwidth=64 colorcolumn=+0
 
 autocmd BufRead,BufNewFile .xinitrc set filetype=sh
+
+autocmd BufRead,BufNewFile init.vim set filetype=vim
+autocmd BufRead,BufNewFile COMMIT_EDITMSG set filetype=gitcommit
+
+autocmd Filetype fish compiler fish
+autocmd Filetype fish setlocal textwidth=79
+autocmd Filetype fish setlocal colorcolumn=+0
 
 " Automatically display all buffers when there's only one tab open
 " let g:airline#extensions#tabline#enabled = 1
