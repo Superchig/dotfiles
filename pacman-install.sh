@@ -23,6 +23,8 @@ cd yay
 makepkg -si
 
 # Enable git integration with gnome-keyring
+# Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of
+# https://wiki.archlinux.org/index.php/GNOME/Keyring
 git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
 
 # Return to original directory
