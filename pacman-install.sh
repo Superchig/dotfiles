@@ -22,6 +22,8 @@ git clone https://github.com/Jguer/yay
 cd yay
 makepkg -si
 
+yay -S dropbox
+
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of
 # https://wiki.archlinux.org/index.php/GNOME/Keyring
