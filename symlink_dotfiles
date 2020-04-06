@@ -1,32 +1,24 @@
 #!/usr/bin/bash
+
 DOTFILES=$(pwd)
 
-ln -sft ~ $DOTFILES/.tmux.conf $DOTFILES/.vimrc $DOTFILES/.zshrc $DOTFILES/.zshenv \
-   $DOTFILES/.bashrc $DOTFILES/.profile $DOTFILES/.Xresources
-mkdir -p ~/.ncmpcpp/
-ln -sft ~/.ncmpcpp/ $DOTFILES/.ncmpcpp/*
-mkdir -p ~/.config/mpd
-ln -sft ~/.config/mpd/ $DOTFILES/.config/mpd/mpd.conf
+mkdir ~/.config/fish
+ln -st ~/.config/fish "$DOTFILES"/.config/fish/config.fish
+ln -st ~/.config/fish "$DOTFILES"/.config/fish/functions
 
-cd ~
+mkdir ~/.config/nvim
+ln -st ~/.config/nvim "$DOTFILES"/.config/nvim/init.vim
 
-echo "Symlinking openbox config files..."
-mkdir -p ~/.config/openbox/
-ln -sft ~/.config/openbox $DOTFILES/.config/openbox/autostart $DOTFILES/.config/openbox/menu.xml $DOTFILES/.config/openbox/rc.xml
+mkdir ~/.config/i3
+ln -st ~/.config/i3 "$DOTFILES"/.config/i3/config
 
-printf "Do you want to symlink .emacs.d? [yn] "
-read symlink
+ln -st ~ "$DOTFILES"/.Xresources
 
-if [ $symlink = "y" ]; then
-	cd ~
-	
-	echo "Symlinking .emacs.d..."
+mkdir ~/.config/alacritty
+ln -st ~/.config/alacritty "$DOTFILES"/.config/alacritty/alacritty.yml
 
-	ln -s $DOTFILES/.emacs.d
+# Use default (without -t) format, so link from "$DOTFILES" to destination
+ln -s "$DOTFILES"/.config/rofi ~/.config/rofi
 
-	echo "Done!"
-elif [ $symlink = "n" ]; then
-	echo "Ok. Not symlinking .emacs.d..."
-else
-	echo "That was not a valid choice. Not symlinking, just in case."
-fi
+mkdir ~/.config/picom
+ln -st ~/.config/picom "$DOTFILES"/.config/picom/picom.conf

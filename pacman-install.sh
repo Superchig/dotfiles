@@ -3,16 +3,27 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-AUR_HELPER=yay
+ORIGDIR=$(pwd)
 
-# Removed packages: mpv scrot aria2 conky mpd ncmpcpp otf-ipafont
-sudo pacman -S zsh emacs guake chromium vlc mpv gimp htop scrot aria2 neovim \
-	 jre7-openjdk jdk7-openjdk jre8-openjdk jdk8-openjdk \
-	 adobe-source-han-sans-otc-fonts
+sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
+	firefox xorg-xrandr arandr sxiv guake gcc clang fd exa xterm \
+	i3-gaps rofi autorandr feh picom redshift alacritty mpv wget curl \
+	xss-lock vlc pulseaudio pulseaudio-alsa pavucontrol perl-file-mimeinfo \
+	discord shellcheck gnome-keyring seahorse \
+	adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts
 
-# Make sure to enable the following in /etc/locale.gen
-# ja_JP.UTF-8 zh_CN.UTF-8
+# Install yay
+if [ ! -d "$HOME"/Downloads ]; then
+	mkdir "$HOME"/Downloads
+fi
 
-# $AUR_HELPER -S neofetch ghetto-skype neomutt urlview turtl encryptr
+cd "$HOME"/Downloads
+git clone https://github.com/Jguer/yay
+cd yay
+makepkg -si
 
-# ./distro-agnostic-scripts-install.sh
+# Enable git integration with gnome-keyring
+git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
+
+# Return to original directory
+cd "$ORIGDIR"
