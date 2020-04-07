@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+# Requires feh and sxiv
+
+cd ~/Pictures/Wallpapers || exit
+WALL=$(sxiv -to *.jpg *.png | tr "\n" " ")
+
+# Exit if WALL is not set
+[ -z "$WALL" ] && exit
+
+# We actually want word-splitting in case more than one choice is made
+feh --bg-scale ${WALL}

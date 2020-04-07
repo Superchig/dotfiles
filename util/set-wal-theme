@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# Requires sxiv and pywal
+
+cd ~/Pictures/Wallpapers || exit
+WALL=$(sxiv -to *.jpg *.png)
+
+# Exit if WALL is not set
+[ -z "$WALL" ] && exit
+
+wal -i $(echo "$WALL" | head -n 1)

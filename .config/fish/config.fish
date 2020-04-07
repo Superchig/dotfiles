@@ -6,6 +6,10 @@ set -x MANWIDTH 80
 
 set -x XDG_CONFIG_HOME ~/.config
 
+if echo $fish_user_paths | grep -v --quiet util
+  set -U fish_user_paths $fish_user_paths "$HOME/dotfiles/util/"
+end
+
 abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
