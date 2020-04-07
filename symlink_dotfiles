@@ -22,3 +22,9 @@ ln -s "$DOTFILES"/.config/rofi ~/.config/rofi
 
 mkdir ~/.config/picom
 ln -st ~/.config/picom "$DOTFILES"/.config/picom/picom.conf
+
+mkdir ~/.config/zathura
+ln -st ~/.config/zathura "$DOTFILES"/.config/zathura/zathurarc
+
+mkdir -p "$HOME"/.config/Code - OSS/User
+ln -st "$HOME"/.config/Code - OSS/User "$DOTFILES"/.config/Code - OSS/User
