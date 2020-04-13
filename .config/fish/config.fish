@@ -30,6 +30,7 @@ abbr --add xf xset dpms force off
 
 abbr --add sf source ~/.config/fish/config.fish
 abbr --add ssy sudo systemctl
+abbr --add sy systemctl
 abbr --add ef nvim ~/.config/fish/config.fish
 abbr --add ea nvim ~/.config/alacritty/alacritty.yml
 abbr --add ei nvim ~/.config/i3/config
