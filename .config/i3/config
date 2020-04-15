@@ -340,3 +340,6 @@ exec $HOME/dotfiles/multi/set-touchpad
 exec $HOME/dotfiles/multi/set-dpi
 # Turn on compose key, set to right alt
 exec setxkbmap -option compose:ralt
+
+# Start more GUI-centric apps
+exec $HOME/dotfiles/multi/startup-extra-apps

@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+dropbox &
+syncthing-gtk --minimized &
+
+if [ "$HOSTNAME" = "msi" ]; then
+	discord --start-mimized &
+fi
