@@ -1,21 +1,23 @@
 # Font configuration (changes require restart)
 font:
+  font_face: &font_face Inconsolata
+
   size: 12
   # The normal (roman) font face to use.
   normal:
-    family: Inconsolata
+    family: *font_face
     # Style can be specified to pick a specific face.
     style: Regular
 
   # The bold font face
   bold:
-    family: Inconsolata
+    family: *font_face
     # Style can be specified to pick a specific face.
     # style: Bold
 
   # The italic font face
   italic:
-    family: Inconsolata
+    family: *font_face
     # Style can be specified to pick a specific face.
     # style: Italic
 
