@@ -1,10 +1,13 @@
 #!/usr/bin/env sh
 
+autorandr -c
+
 case "$HOSTNAME" in
-  "alien")
-    ~/dotfiles/multi/monitor_setup.d/alien
-    ;;
+  # "alien")
+  #   ~/dotfiles/multi/monitor_setup.d/alien
+  #   ;;
 	"msi")
-		~/dotfiles/multi/monitor_setup.d/msi
+		# ~/dotfiles/multi/monitor_setup.d/msi
+		xrandr --output eDP1-1-1 --primary
 		;;
 esac
