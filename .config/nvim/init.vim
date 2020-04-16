@@ -127,6 +127,8 @@ autocmd Filetype fish compiler fish
 autocmd Filetype fish setlocal textwidth=79
 autocmd Filetype fish setlocal colorcolumn=+0
 
+autocmd Filetype lua set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
 " Automatically display all buffers when there's only one tab open
 " let g:airline#extensions#tabline#enabled = 1
 

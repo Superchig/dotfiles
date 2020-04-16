@@ -47,4 +47,13 @@ case $CUSTOM_WM in
 	awesome)
 		exec awesome
 		;;
+	spectrwm)
+		exec spectrwm
+		;;
+	bspwm)
+		exec bspwm
+		;;
+	xmonad)
+		exec xmonad
+		;;
 esac
