@@ -4,5 +4,5 @@ dropbox &
 syncthing-gtk --minimized &
 
 if [ "$HOSTNAME" = "msi" ]; then
-	discord --start-mimized &
+	discord --start-minimized &
 fi
