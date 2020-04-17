@@ -254,6 +254,7 @@ mode "launch" {
 	bindsym p exec firefox --private-window; mode "default"
 	bindsym d exec "$HOME/dotfiles/util/discord.sh"; mode "default"
 	bindsym m exec alacritty --title pulsemixer -e pulsemixer; mode "default"
+	bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
