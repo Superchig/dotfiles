@@ -23,7 +23,7 @@ git clone https://github.com/Jguer/yay
 cd yay
 makepkg -si
 
-yay -S dropbox brave-bin
+yay -S dropbox brave-bin xcwd-git
 
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of
