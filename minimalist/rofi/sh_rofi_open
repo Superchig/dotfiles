@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# Requires rofi
+
+set -euo pipefail
+
+if [ ! -d $HOME/.local/share/rofi_open ]; then
+	mkdir -p $HOME/.local/share/rofi_open
+fi
+
+RECENT=$HOME/.local/share/rofi_open/recent
+RECENT_BAK=$HOME/.local/share/rofi_open/recent.bak
+
+if [ ! -f "$RECENT" ]; then
+	touch "$RECENT"
+fi
+
+FILE=$(cat "$RECENT" | rofi -dmenu)
+
+# Exit if no file was selected
+if [ -z "$FILE" ]; then
+	exit
+fi
+
+xdg-open "$FILE"
+
+# Update the recent file to have the most recently-opened file at the bottom (and nowhere else)
+cp $RECENT $RECENT_BAK
+RECENT_VAL=$(grep -xv "$FILE" "$RECENT")
+echo -e "$FILE\n$RECENT_VAL" > "$RECENT"

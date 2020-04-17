@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Requires rofi and xdg-open
+
+require 'fileutils'
+require 'optparse'
+require 'English'
+
+BASE_DIR = "#{ENV['HOME']}/.local/share/rofi_open"
+RECENT_LOC = "#{BASE_DIR}/recent"
+
+# Update the list of recent files
+def update_recent(file_name)
+  # Read in the list of recently opened files
+  recent_files = []
+  File.open(RECENT_LOC, 'r') do |recent|
+    recent_files = recent.read.split("\n")
+  end
+
+  # If file is already in recent_files, move it to the beginning
+  # Otherwise, just add it to the beginning
+  abs_path = File.expand_path(file_name)
+  recent_files.delete(abs_path) if recent_files.include?(abs_path)
+  recent_files.prepend(abs_path)
+
+  # Write updated list of recent files back into file
+  File.open(RECENT_LOC, 'w') do |recent|
+    recent.puts recent_files.join("\n")
+  end
+
+  puts recent_files
+end
+
+# Use xdg-open to open a specified file, then update the list of files
+def xdg_open(file_name)
+  pid = spawn("xdg-open '#{file_name}'")
+
+  Process.wait pid
+
+  if $CHILD_STATUS.exitstatus > 0
+    warn "Error when running xdg-open #{file_name}. Exiting..."
+    nil
+  end
+end
+
+FileUtils.mkdir_p(BASE_DIR) unless File.directory?(BASE_DIR)
+FileUtils.touch(RECENT_LOC) unless File.exist?(RECENT_LOC)
+
+# TODO: Add option parsing to handle changing recent list
+# options = {}
+# OptionParser.new do |opts|
+#   # TODO: Make banner more descriptive
+#   opts.banner = "Usage: rofi-open [options]"
+# end
+
+file_name = ''
+if ARGV.empty?
+  # Use rofi to select from recently used files
+  file_name = `cat #{RECENT_LOC} | rofi -dmenu -p "Recently Opened"`
+  exit if file_name.empty?
+  file_name = file_name.chomp
+else
+  file_name = ARGV[0]
+end
+
+unless File.exist?(file_name)
+  warn "Error: #{file_name} does not exist. Removing from recent list..."
+
+  # Read in recently opened files
+  recent_files = File.open(RECENT_LOC) do |recent|
+    recent_files = recent.read.split("\n")
+  end
+
+  # Delete will simply return nil if file_name is not found
+  recent_files.delete(file_name)
+
+  # Write updated list of recent files back into file
+  File.open(RECENT_LOC, 'w') do |recent|
+    recent.puts recent_files.join("\n")
+  end
+
+  exit 1
+end
+
+update_recent(file_name)
+xdg_open(file_name)
