@@ -10,6 +10,10 @@ if echo $fish_user_paths | grep -v --quiet util
   set -U fish_user_paths $fish_user_paths "$HOME/dotfiles/util/"
 end
 
+if echo $fish_user_paths | grep -v --quiet .gem/ruby
+  set -U fish_user_paths $fish_user_paths "$HOME/.gem/ruby/2.7.0/bin"
+end
+
 abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
