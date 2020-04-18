@@ -8,6 +8,8 @@ case "$HOSTNAME" in
   #   ;;
 	"msi")
 		# ~/dotfiles/multi/monitor_setup.d/msi
-		xrandr --output eDP1-1-1 --primary
+		# xrandr --output eDP-1-1 --primary
+		SCREEN=$(xrandr | grep -e eDP -e ' connected' | awk '{print $1}')
+		xrandr --output ${SCREEN} --primary
 		;;
 esac
