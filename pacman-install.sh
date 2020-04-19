@@ -11,7 +11,7 @@ sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
 	xss-lock vlc pulseaudio pulseaudio-alsa pavucontrol perl-file-mimeinfo \
 	discord shellcheck gnome-keyring seahorse qalculate-gtk \
 	adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts \
-	network-manager-applet zathura zathura-pdf-poppler htop code fzf
+	network-manager-applet zathura zathura-pdf-poppler htop code fzf nnn
 
 # Install yay
 if [ ! -d "$HOME"/Downloads ]; then
