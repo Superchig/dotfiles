@@ -45,6 +45,7 @@ abbr --add ei nvim ~/.config/i3/config
 abbr --add eb nvim ~/.config/berry/autostart
 abbr --add es nvim ~/.config/sxhkd/sxhkdrc
 abbr --add ep nvim ~/dotfiles/pacman-install.sh
+abbr --add em nvim ~/.config/mimeapps.list
 abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
 abbr --add cdd cd ~/dotfiles
