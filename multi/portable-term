@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 cd "$(xcwd)"
-exec alacritty
+exec kitty
 # if [ "$HOSTNAME" = "alien" ]; then
 #   exec alacritty
 # else
