@@ -283,6 +283,9 @@ for_window [title="Tab Style Selector - Mozilla Firefox"] floating enable
 for_window [title="qtcreator_process_stub"] floating enable
 # Make all Zotero windows float except the main one
 for_window [title="Zotero"] floating disable
+# For Steam friends list
+for_window [title="Friends list"] floating enable
+for_window [title="Steam - News*"] floating enable
 for_window [class="Zotero"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
