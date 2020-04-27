@@ -123,6 +123,8 @@ autocmd BufRead,BufNewFile .xinitrc set filetype=sh
 autocmd BufRead,BufNewFile init.vim set filetype=vim
 autocmd BufRead,BufNewFile COMMIT_EDITMSG set filetype=gitcommit
 
+autocmd BufRead,BufNewFile lfrc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
 autocmd Filetype fish compiler fish
 autocmd Filetype fish setlocal textwidth=79
 autocmd Filetype fish setlocal colorcolumn=+0
