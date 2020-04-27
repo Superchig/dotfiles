@@ -18,7 +18,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
-Plug 'artur-shaik/vim-javacomplete2'
+" Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'
@@ -95,7 +95,7 @@ autocmd Filetype bash,zsh set tabstop=8 softtabstop=0 expandtab shiftwidth=2 sma
 autocmd Filetype sh set autoindent noexpandtab tabstop=2 shiftwidth=2
 
 autocmd Filetype java set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 
