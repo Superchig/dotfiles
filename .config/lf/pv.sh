@@ -1,9 +1,9 @@
 #!/bin/sh
 
 case "$1" in
-    *.jpg) $icat "$1";;
-    *.png) $icat "$1";;
-    *.gif) $icat "$1";;
+    *.jpg) exiv2 "$1";;
+    *.png) exiv2 "$1";;
+    *.gif) exiv2 "$1";;
     *.tar*) tar tf "$1";;
     *.zip) unzip -l "$1";;
     *.rar) unrar l "$1";;

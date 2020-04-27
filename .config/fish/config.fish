@@ -71,6 +71,9 @@ set -x LESS_TERMCAP_so (printf '\e[01;33m')
 set -x LESS_TERMCAP_ue (printf '\e[0m')
 set -x LESS_TERMCAP_us (printf '\e[1;4;31m')
 
+# Bind f function (open lf with cd on quit enabled) to Ctrl+o
+bind \co f
+
 # Source the file for z.fish
 . $HOME/dotfiles/z.fish
 
