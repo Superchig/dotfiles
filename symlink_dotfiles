@@ -34,3 +34,6 @@ ln -st ~/.config/kitty "$DOTFILES"/.config/kitty/kitty.conf
 
 mkdir ~/.config/lf
 ln -st ~/.config/lf "$DOTFILES"/.config/lf/{draw_img.sh,lfrc,pv.sh}
+
+mkdir ~/.config/polybar
+ln -s ~/.config/polybar/config "$DOTFILES"/.config/polybar/custom-config
