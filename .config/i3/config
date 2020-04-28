@@ -319,21 +319,23 @@ for_window [workspace=$ws2] layout tabbed
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-	# i3bar_command i3bar --transparency
-        position top
-        tray_output primary
-        status_command i3status
+# bar {
+# 	# i3bar_command i3bar --transparency
+#         position top
+#         tray_output primary
+#         status_command i3status
 
-	colors {
-		background #000000
-		statusline #ffffff
+# 	colors {
+# 		background #000000
+# 		statusline #ffffff
 
-		# colorclass      border      background   text
-		# focused_workspace $background $darkblue    $black
-		# binding_mode      #2f343a     $darkgreen   #ffffff
-	}
-}
+# 		# colorclass      border      background   text
+# 		# focused_workspace $background $darkblue    $black
+# 		# binding_mode      #2f343a     $darkgreen   #ffffff
+# 	}
+# }
+
+exec polybar -r bar
 
 exec xset s off
 exec xset -dpms
