@@ -364,7 +364,7 @@ type = custom/script
 exec = $HOME/dotfiles/.config/polybar/polybattery
 label = "%output%"
 label-underline = ${xrdb:color6:#ffb52a}
-interval = 30
+interval = 5
 
 [module/temperature]
 type = internal/temperature
