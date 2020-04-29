@@ -37,3 +37,7 @@ ln -st ~/.config/lf "$DOTFILES"/.config/lf/{draw_img.sh,lfrc,pv.sh}
 
 mkdir ~/.config/polybar
 ln -s ~/.config/polybar/config "$DOTFILES"/.config/polybar/custom-config
+
+# Symlink autorandr postswitch scripts
+mkdir -p ~/.config/autorandr/postswitch.d
+ln -st ~/.config/autorandr/postswitch.d/ ~/dotfiles/minimalist/bar/launch_polybar.sh
