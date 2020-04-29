@@ -326,12 +326,12 @@ for_window [workspace=$ws2] layout tabbed
 #         status_command i3status
 
 # 	colors {
-# 		background #000000
+# 		background $background
 # 		statusline #ffffff
 
 # 		# colorclass      border      background   text
-# 		# focused_workspace $background $darkblue    $black
-# 		# binding_mode      #2f343a     $darkgreen   #ffffff
+# 		focused_workspace $background $darkblue    $white
+# 		binding_mode      $background $darkblue    $white
 # 	}
 # }
 
