@@ -327,7 +327,7 @@ for_window [workspace=$ws2] layout tabbed
 
 # 	colors {
 # 		background $background
-# 		statusline #ffffff
+# 		statusline $foreground
 
 # 		# colorclass      border      background   text
 # 		focused_workspace $background $darkblue    $foreground
