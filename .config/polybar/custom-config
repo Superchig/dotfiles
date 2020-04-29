@@ -17,7 +17,7 @@
 ;==========================================================
 
 [colors]
-background = ${xrdb:color0:#222}
+background = ${xrdb:background:#222}
 # background = #222
 background-alt = #444
 ; foreground = ${xrdb:color7:#222}
@@ -160,6 +160,7 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index%
+; label-focused-background = ${xrdb:color11}
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 1
@@ -273,7 +274,7 @@ time-alt = %I:%M:%S %p
 
 # format-prefix = 
 format-prefix-foreground = ${colors.foreground}
-format-underline = #0a6cf5
+format-underline = ${xrdb:color5:#0a6cf5}
 
 label = %date% %time%
 
@@ -284,7 +285,7 @@ interval = 5
 date = %a %Y-%m-%d
 
 ; format-prefix-foreground = ${colors.foreground}
-format-underline = #0a6cf5
+format-underline = ${xrdb:color3:#0a6cf5}
 
 label = %date%
 
@@ -360,7 +361,7 @@ poll-interval = 5
 type = custom/script
 exec = $HOME/dotfiles/.config/polybar/polybattery
 label = "%output%"
-label-underline = #ffb52a
+label-underline = ${xrdb:color6:#ffb52a}
 interval = 30
 
 [module/temperature]
