@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if [ "$HOSTNAME" = "msi" ]; then
+	sleep 2
+fi
+
 killall -q polybar
 
 PRIMARY=$(polybar --list-monitors | grep primary | cut -d ':' -f1)
