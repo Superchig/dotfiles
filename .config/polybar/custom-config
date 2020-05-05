@@ -284,7 +284,7 @@ label = %date% %time%
 type = internal/date
 interval = 5
 
-date = %a %Y-%m-%d
+date = %a — %b %d, %Y
 
 ; format-prefix-foreground = ${colors.foreground}
 format-underline = ${xrdb:color3:#0a6cf5}
