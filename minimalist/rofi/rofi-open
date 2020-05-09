@@ -57,7 +57,7 @@ FileUtils.touch(RECENT_LOC) unless File.exist?(RECENT_LOC)
 file_name = ''
 if ARGV.empty?
   # Use rofi to select from recently used files
-  file_name = `cat #{RECENT_LOC} | rofi -dmenu -p "Recently Opened"`
+  file_name = `cat #{RECENT_LOC} | rofi -dmenu -i -p "Recently Opened"`
   exit if file_name.empty?
   file_name = file_name.chomp
 else
