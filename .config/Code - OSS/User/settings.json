@@ -73,4 +73,5 @@
     "go.useLanguageServer": true,
     "ruby.useLanguageServer": true,
     "ruby.format": "rubocop",
+    "cmake.configureOnOpen": true,
 }

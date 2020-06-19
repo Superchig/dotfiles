@@ -340,8 +340,8 @@ exec $HOME/dotfiles/minimalist/bar/launch_polybar.sh
 exec xset s off
 exec xset -dpms
 # Calls autorandr -c and other, more specific things if necessary
-exec ~/dotfiles/multi/monitor_setup
-# exec autorandr -c
+exec ~/dotfiles/multi/monitor_setup # Disabled while msi is docked
+exec autorandr -c
 exec ~/.fehbg
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
@@ -349,7 +349,7 @@ exec redshift &
 exec alttab &
 
 exec $HOME/dotfiles/multi/set-touchpad
-exec $HOME/dotfiles/multi/set-dpi
+# exec $HOME/dotfiles/multi/set-dpi # Disabled while msi is docked
 # Turn on compose key, set to right alt
 exec setxkbmap -option compose:ralt
 
