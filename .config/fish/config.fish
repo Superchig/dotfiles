@@ -6,6 +6,8 @@ set -x MANWIDTH 80
 
 set -x XDG_CONFIG_HOME ~/.config
 
+set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
+
 if echo $fish_user_paths | grep -v --quiet util
   set -U fish_user_paths $fish_user_paths "$HOME/dotfiles/util/"
 end
@@ -54,6 +56,7 @@ abbr --add cdu cd /run/user/1000/gvfs/
 abbr --add ce $HOME/dotfiles/msi_gs65/conn_eduroam
 abbr --add ts amixer -q -D pulse sset Master toggle
 abbr --add mo $HOME/dotfiles/multi/monitor_setup
+abbr --add po $HOME/dotfiles/minimalist/bar/launch_polybar.sh
 abbr --add sx startx ~/.xinitrc
 
 abbr --add ops xo $HOME/school/span_201/tarea.pdf
