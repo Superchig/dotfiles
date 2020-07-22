@@ -299,6 +299,7 @@ for_window [class="Sxiv"] floating enable
 for_window [class="Xsane"] floating enable
 for_window [class="Alacritty" title="qalc"] floating enable
 for_window [class="Alacritty" title="pulsemixer"] floating enable
+for_window [class="mushclient.exe"] floating enable
 
 # Show no border for new windows
 default_border none
