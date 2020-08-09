@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-"$HOME/.config"}
+
+if [ ! -f "$XDG_CONFIG_HOME/xrun/default-wm" ]; then
+	>&2 echo "$XDG_CONFIG_HOME/xrun/default-wm does not exist!"
+	exit 1
+fi
+FILE_LOCATION="$XDG_CONFIG_HOME/xrun/default-wm"
+DEFAULT_WM=$(cat "$FILE_LOCATION")
+
+print_usage () {
+	echo "Usage: $0 [-h,window manager name]"
+}
+
+one_argument () {
+	case $1 in
+		"-h"|"--help")
+			print_usage
+			;;
+		"i3"|"gnome")
+			echo "$1" > "$FILE_LOCATION"
+			cat "$FILE_LOCATION"
+			;;
+		*)
+			print_usage
+			;;
+	esac
+}
+
+case $# in
+	0)
+		echo "$DEFAULT_WM"
+		;;
+	1)
+		one_argument $*
+		;;
+esac
