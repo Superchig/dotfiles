@@ -336,14 +336,13 @@ for_window [workspace=$ws2] layout tabbed
 # 	}
 # }
 
-exec $HOME/dotfiles/minimalist/bar/launch_polybar.sh
-
 exec xset s off
 exec xset -dpms
 # Calls autorandr -c and other, more specific things if necessary
 exec ~/dotfiles/multi/monitor_setup # Disabled while msi is docked
-exec autorandr -c
-exec ~/.fehbg
+# exec autorandr -c
+# exec ~/.fehbg
+exec $HOME/dotfiles/minimalist/bar/launch_polybar.sh
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
