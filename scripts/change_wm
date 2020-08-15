@@ -1,11 +1,15 @@
 #!/usr/bin/env sh
 XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-"$HOME/.config"}
+FILE_LOCATION="$XDG_CONFIG_HOME/xrun/default-wm"
 
 if [ ! -f "$XDG_CONFIG_HOME/xrun/default-wm" ]; then
 	>&2 echo "$XDG_CONFIG_HOME/xrun/default-wm does not exist!"
+	>&2 echo "Creating default file..."
+	mkdir -p "$XDG_CONFIG_HOME/xrun"
+	echo "i3" > "$FILE_LOCATION"
+	cat "$FILE_LOCATION"
 	exit 1
 fi
-FILE_LOCATION="$XDG_CONFIG_HOME/xrun/default-wm"
 DEFAULT_WM=$(cat "$FILE_LOCATION")
 
 print_usage () {
