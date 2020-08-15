@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Forces full composition pipeline for use with a specific monitor
+
+nvidia-settings --assign CurrentMetaMode='DPY-0: nvidia-auto-select @3840x2160 +0+0 {ViewPortIn=3840x2160, ViewPortOut=3840x2160+0+0, ForceFullCompositionPipeline=on}'
