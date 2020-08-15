@@ -66,6 +66,8 @@ abbr --add chwm ~/dotfiles/minimalist/chwm
 
 abbr --add ralt setxkbmap -option compose:ralt
 
+abbr --add orphans sudo pacman -Rns (pacman -Qtdq)
+
 set -x LESS_TERMCAP_mb (printf '\e[1;32m')
 set -x LESS_TERMCAP_md (printf '\e[1;32m')
 set -x LESS_TERMCAP_me (printf '\e[0m')
