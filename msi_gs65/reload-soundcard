@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# Power-cycle the NVIDIA sound card
+# This allows the NVIDIA card to properly detect when it can output sound
+
+echo "Disabling the sound card at 0000:01:00.1"
+sudo sh -c 'echo -n 1 > /sys/bus/pci/devices/0000:01:00.1/remove'
+echo "Rescanning pci bus to enable sound card"
+sudo sh -c 'echo -n 1 > /sys/bus/pci/rescan'
