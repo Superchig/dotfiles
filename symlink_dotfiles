@@ -18,7 +18,7 @@ mkdir ~/.config/alacritty
 ln -st ~/.config/alacritty "$DOTFILES"/.config/alacritty/alacritty.yml
 
 # Use default (without -t) format, so link from "$DOTFILES" to destination
-ln -s "$DOTFILES"/.config/rofi ~/.config/rofi
+ln -st ~/.config "$DOTFILES"/.config/rofi
 
 mkdir ~/.config/picom
 ln -st ~/.config/picom "$DOTFILES"/.config/picom/picom.conf
@@ -41,3 +41,7 @@ ln -s ~/.config/polybar/config "$DOTFILES"/.config/polybar/custom-config
 # Symlink autorandr postswitch scripts
 mkdir -p ~/.config/autorandr/postswitch.d
 ln -st ~/.config/autorandr/postswitch.d/ ~/dotfiles/minimalist/bar/launch_polybar.sh
+
+# Setup and symlink custom scripts bin
+mkdir -p ~/bin
+ln -st ~/bin ~/dotfiles/msi_gs65/* ~/dotfiles/scripts/*
