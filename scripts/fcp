@@ -1,4 +1,41 @@
-#!/usr/bin/env sh
-# Forces full composition pipeline for use with a specific monitor
+#!/usr/bin/env python3
 
-nvidia-settings --assign CurrentMetaMode='DPY-0: nvidia-auto-select @3840x2160 +0+0 {ViewPortIn=3840x2160, ViewPortOut=3840x2160+0+0, ForceFullCompositionPipeline=on}'
+# Force full composition pipeline for atttached monitor
+
+import subprocess
+import sys
+
+nvoutput = subprocess.run(["nvidia-settings", "--query", "CurrentMetaMode"], \
+    capture_output=True, text=True)
+
+# Obtain settings and put them into a list
+out = nvoutput.stdout.strip()
+print(out)
+
+settings_index = out.find("{")
+if settings_index == -1:
+    sys.exit("Could not find settings!")
+settings = out[settings_index:].lstrip("{").rstrip("}").split(",")
+# Use list comprehension to strip each setting
+settings = [setting.strip() for setting in settings]
+
+if "ForceFullCompositionPipeline=On" in settings and \
+   "ForceCompositionPipeline=On" in settings:
+    sys.exit("Already full composition!")
+
+if not "ForceFullCompositionPipeline=On" in settings:
+    settings.append("ForceFullCompositionPipeline=On")
+if not "ForceCompositionPipeline=On" in settings:
+    settings.append("ForceCompositionPipeline=On")
+
+settings.append("ForceCompositionPipeline=On")
+print("Settings:")
+print(settings)
+print("\n")
+
+# Reattach settings back into meta mode string
+meta_mode = "{" + ", ".join(settings) + "}"
+first_half = out[out.find("DPY-0"):out.find("0 {") + 2]
+new_settings = first_half + meta_mode
+print(new_settings)
+subprocess.run(["nvidia-settings", "--assign", "CurrentMetaMode=" + new_settings])
