@@ -63,6 +63,9 @@
     "vim.leader": "<space>",
     "vim.easymotionMarkerFontFamily": "Inconsolata",
     "editor.tabSize": 2,
+    "[python]": {
+        "editor.tabSize": 4
+    },
     "editor.rulers": [
         80
     ],
@@ -74,4 +77,6 @@
     "ruby.useLanguageServer": true,
     "ruby.format": "rubocop",
     "cmake.configureOnOpen": true,
+    "window.zoomLevel": 0,
+    "python.showStartPage": false,
 }
