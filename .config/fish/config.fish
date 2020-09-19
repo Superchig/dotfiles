@@ -20,6 +20,10 @@ if echo $fish_user_paths | grep -v --quiet go/bin
   set -U fish_user_paths $fish_user_paths "$HOME/go/bin"
 end
 
+if echo $fish_user_paths | grep -v --quiet .local/bin
+  set -U fish_user_paths $fish_user_paths "$HOME/.local/bin"
+end
+
 abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim
@@ -67,6 +71,10 @@ abbr --add chwm ~/dotfiles/minimalist/chwm
 abbr --add ralt setxkbmap -option compose:ralt
 
 abbr --add orphans sudo pacman -Rns (pacman -Qtdq)
+
+abbr --add fe ~/.fehbg
+
+alias au 'autorandr -c mobile && autorandr -c'
 
 set -x LESS_TERMCAP_mb (printf '\e[1;32m')
 set -x LESS_TERMCAP_md (printf '\e[1;32m')
