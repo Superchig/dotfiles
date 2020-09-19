@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-if [ "$HOSTNAME" = "msi" ]; then
+if [ "$HOSTNAME" = "msi" ] && [ $(cat "$XDG_CONFIG_HOME/set-dpi/high-dpi") = "true" ]; then
 	xrdb -merge ~/dotfiles/high_dpi.x
 fi

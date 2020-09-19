@@ -2,7 +2,25 @@
 # Power-cycle the NVIDIA sound card
 # This allows the NVIDIA card to properly detect when it can output sound
 
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ "$EUID" != 0 ]; then
+	echo "Please run as root."
+	exit 1
+fi
+
+CARD=/sys/bus/pci/devices/0000:01:00.1/
+
 echo "Disabling the sound card at 0000:01:00.1"
-sudo sh -c 'echo -n 1 > /sys/bus/pci/devices/0000:01:00.1/remove'
+if [ ! -f "$CARD/remove" ]; then
+	echo "$CARD/remove does not exist, so the sound card can't be removed"
+	exit 1
+fi
+
+sh -c 'echo -n 1 > /sys/bus/pci/devices/0000:01:00.1/remove'
 echo "Rescanning pci bus to enable sound card"
-sudo sh -c 'echo -n 1 > /sys/bus/pci/rescan'
+sh -c 'echo -n 1 > /sys/bus/pci/rescan'
+
+pulseaudio --kill
+pulseaudio --start
