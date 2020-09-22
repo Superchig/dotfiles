@@ -96,7 +96,7 @@ if status is-login
       if test "$hostname" = alien
           # exec startx -- -keeptty
       else if test "$hostname" = msi && test -f $HOME/bin/nvselect
-          $HOME/bin/nvselect
+          # $HOME/bin/nvselect
       end
     end
 end
