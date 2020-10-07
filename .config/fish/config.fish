@@ -24,6 +24,10 @@ if echo $fish_user_paths | grep -v --quiet .local/bin
   set -U fish_user_paths $fish_user_paths "$HOME/.local/bin"
 end
 
+if echo $fish_user_paths | grep -v --quiet .dotnet/tools
+  set -U fish_user_paths $fish_user_paths "$HOME/.dotnet/tools"
+end
+
 abbr --add l exa -la
 abbr --add e nvim
 abbr --add se sudo nvim

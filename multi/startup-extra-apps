@@ -5,4 +5,5 @@ syncthing-gtk --minimized &
 
 if [ "$HOSTNAME" = "msi" ]; then
 	discord --start-minimized &
+	slack -u &
 fi
