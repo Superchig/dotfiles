@@ -1,0 +1,7 @@
+#!/usr/bin/sh
+
+AGENT="/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
+if [ -f "$AGENT" ]; then
+	"$AGENT" &
+fi
