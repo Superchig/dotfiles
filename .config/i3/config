@@ -356,3 +356,5 @@ exec setxkbmap -option compose:ralt
 
 # Start more GUI-centric apps
 exec $HOME/dotfiles/multi/startup-extra-apps
+
+exec ~/dotfiles/scripts/polkit-agent
