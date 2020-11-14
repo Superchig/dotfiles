@@ -41,6 +41,8 @@ XTerm.vt100.faceName: Ubuntu Mono:size=12
 Xterm.vt100.translations: #override \n\
 	Ctrl <Key>U: scroll-back() \n\
 	Ctrl <Key>D: scroll-forw()
+Xterm.termName: xterm-256color
+XTerm.vt100.metaSendsEscape: true
 
 !! alttab options
 ! Set size of icons

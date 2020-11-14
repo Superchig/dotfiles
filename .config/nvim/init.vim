@@ -22,6 +22,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'
+Plug 'reedes/vim-pencil'
 
 " Initialize plugin system
 call plug#end()
