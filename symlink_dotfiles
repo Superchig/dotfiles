@@ -27,7 +27,7 @@ mkdir ~/.config/zathura
 ln -st ~/.config/zathura "$DOTFILES"/.config/zathura/zathurarc
 
 mkdir -p "$HOME"/.config/Code - OSS/User
-ln -st "$HOME"/.config/Code - OSS/User "$DOTFILES"/.config/Code - OSS/User
+ln -st "$HOME"/.config/Code - OSS/User "$DOTFILES/.config/Code - OSS/User"
 
 mkdir ~/.config/kitty
 ln -st ~/.config/kitty "$DOTFILES"/.config/kitty/kitty.conf
@@ -36,7 +36,7 @@ mkdir ~/.config/lf
 ln -st ~/.config/lf "$DOTFILES"/.config/lf/{draw_img.sh,lfrc,pv.sh}
 
 mkdir ~/.config/polybar
-ln -s ~/.config/polybar/config "$DOTFILES"/.config/polybar/custom-config
+ln -s ~/.config/polybar/config "$DOTFILES/.config/polybar/custom-config"
 
 # Symlink autorandr postswitch scripts
 mkdir -p ~/.config/autorandr/postswitch.d
