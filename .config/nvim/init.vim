@@ -34,6 +34,8 @@ set clipboard^=unnamedplus
 set completeopt-=preview
 set ignorecase
 set nohlsearch
+set ruler
+set relativenumber number
 
 colorscheme gruvbox
 hi Normal guibg=NONE ctermbg=NONE
@@ -145,6 +147,13 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+function! SilentRelativeNumberToggle()
+	set relativenumber!
+	echo ""
+endfunction
+
+noremap <C-n> :call SilentRelativeNumberToggle()<esc>
 
 " function! OpenCompletion()
 "     if !pumvisible() && ((v:char >= 'a' && v:char <= 'z') || (v:char >= 'A' && v:char <= 'Z')) && &ft=='go'

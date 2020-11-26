@@ -117,7 +117,8 @@ bindsym $mod+q exec $HOME/dotfiles/minimalist/launch.sh
 bindsym $mod+Shift+q exec rofi -show run
 
 # Rofi window selection
-bindsym Mod4+w exec rofi -show window
+# bindsym Mod4+w exec rofi -show window
+bindsym $mod+Shift+w exec rofi -show window
 
 # change focus
 bindsym $mod+h focus left
@@ -253,7 +254,8 @@ mode "launch" {
 	bindsym n exec nautilus "$(xcwd)"; mode "default"
 	bindsym p exec firefox --private-window; mode "default"
 	bindsym d exec "$HOME/dotfiles/util/discord.sh"; mode "default"
-	bindsym m exec alacritty --title pulsemixer -e pulsemixer; mode "default"
+	# bindsym m exec alacritty --title pulsemixer -e pulsemixer; mode "default"
+	bindsym m exec pavucontrol; mode "default"
 	bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
 	bindsym q exec qalculate-gtk; mode "default"
 	bindsym shift+q exec alacritty --title qalc -e qalc; mode "default"
@@ -340,6 +342,7 @@ for_window [workspace=$ws2] layout tabbed
 
 exec xset s off
 exec xset -dpms
+exec $HOME/bin/set-dpi
 # Calls autorandr -c and other, more specific things if necessary
 exec ~/dotfiles/multi/monitor_setup # Disabled while msi is docked
 # exec autorandr -c
