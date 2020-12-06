@@ -13,7 +13,8 @@ sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
 	adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts \
 	network-manager-applet zathura zathura-pdf-poppler htop code fzf nnn \
 	ttf-ubuntu-font-family kitty kitty-terminfo highlight mediainfo mlocate \
-	noto-fonts-emoji ttf-joypixels xdotool wmctrl
+	noto-fonts-emoji ttf-joypixels xdotool wmctrl \
+	zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search
 
 # Install yay
 if [ ! -d "$HOME"/Downloads ]; then
@@ -25,7 +26,7 @@ git clone https://github.com/Jguer/yay
 cd yay
 makepkg -si
 
-yay -S dropbox brave-bin xcwd-git lf-bin polybar-git
+yay -S dropbox xcwd-git lf-bin polybar-git zsh-theme-powerlevel10k-git
 
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of

@@ -1,161 +1,125 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/home/chiggie/.oh-my-zsh
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="fishy"
+# Basic settings taken from Arch wiki
+autoload -Uz compinit promptinit
+compinit
+promptinit
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+prompt adam1
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# History
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=${HOME}/.cache/zsh/history
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+if [ ! -f ${HISTFILE} ]; then
+  mkdir -p ${HOME}/.cache/zsh
+  touch ${HOME}/.cache/zsh/history
+fi
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+# Completion information
+zstyle ':completion:*' menu select
+zstyle ':completion::complete:*' gain-privileges 1
+setopt COMPLETE_ALIASES
 
-# Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
+# Bind shift-tab to tab backwards
+bindkey '^[[Z' reverse-menu-complete
 
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# History search enabled
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+[[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-# User configuration
-
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/chiggie/.rvm/bin:/home/chiggie/.rvm/bin:$PATH"
-export PATH="$HOME/opt/bin:$PATH"
-export TERM=xterm-256color
-# export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
-
-# # Emacs as default editor
-# export EDITOR='emacsclient'
-# export VISUAL='emacsclient'
-# export ALTERNATE_EDITOR='emacs' # Connect to Emacs if emacsclient cannot be found
-
-# Neovim as default editor
-export EDITOR='nvim'
-export VISUAL='nvim'
-export ALTERNATE_EDITOR='vi'
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls="ls --color=auto"
-alias edae="emacs --daemon"
-lessInfo () { info $* | less }
-lci () { /usr/local/bin/lci/lci $* }
-ecl () { emacsclient $* }
-monokaicolor () { ~/terminal-colors/guake/guake-colors-monokai/setup.sh }
-solarizeddarkcolor () { ~/terminal-colors/guake/guake-colors-solarized/set_dark.sh }
-alias valgrind="valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all"
-orphans() {
-	if [[ ! -n $(pacman -Qdt) ]]; then
-		echo "No orphans to remove."
-	else
-		sudo pacman -Rns $(pacman -Qdtq)
-	fi
-}
-# Silence stdout or stderr.
-up() {
-	if [[ $1 > 0 ]]; then
-		repeat $1 cd ..
-			   else
-				   cd ..
-		fi
-}
-alias rtags="ripper-tags -R -f TAGS"
-GUAKE_SAVE_DIRECTORY=~/temp/guake # Which directory to save
-# the current directory
-savedir() {
-	if (( $# == 1 )); then
-		if [[ -d "$1" ]]; then
-			cd $1
-			pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
-			cd -
-		else
-			echo "D'oh! $1 is not a directory."
-		fi
-	elif (( $# == 0 )); then
-		pwd > $GUAKE_SAVE_DIRECTORY/save_dir.txt
-	else
-		echo "Usage: savedir [path]"
-	fi
-}
-opsadi() { # Stands for OPen SAved DIrectory
-	NEW_WD=$(cat $GUAKE_SAVE_DIRECTORY/save_dir.txt)
-	cd $NEW_WD
-}
-# Stands for harmony node
-hnode() {
-	node --use-strict $(node --v8-options | grep harm | awk '{print $1}' | xargs) $*
-}
-alias startmpd="mpd ~/.config/mpd/mpd.conf"
-fork() {
-	($* &> /dev/null &)
+# Set the name of the terminal to match the current working directory
+chpwd() {
+  window_title="\033]0;${PWD##*/}\007"
+  echo -ne "$window_title"
 }
 
-# # tmuxinator
-# source ~/.bin/tmuxinator.zsh
+export EDITOR=nvim
+export VISUAL=${EDITOR}
+export MANWIDTH=80
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-source ~/.rvm/scripts/rvm
+alias ls='ls --color=auto'
+if [ -f /usr/bin/exa ]; then
+  alias l='exa -la'
+else
+  alias l='ls -lah'
+fi
 
-# nvm
-export NVM_DIR="/home/chiggie/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+alias grep='grep --color=auto'
 
-# go
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+alias xo='xdg-open &> /dev/null'
+alias e=$VISUAL
+alias se="sudo $VISUAL"
+alias ez="e ~/.zshrc"
+alias ef="e ~/.config/fish/config.fish"
+alias eb="e ~/dotfiles/.bashrc"
+alias ep="e ~/dotfiles/pacman-install.sh"
 
-source /home/chiggie/.config/broot/launcher/bash/br
+alias fr="history | sk | cut -c 8-"
+
+alias pe="ps -e | grep"
+alias pi="pacman -Qi | grep Description"
+alias sps="sudo pacman -S"
+
+alias mo="$HOME/dotfiles/minimalist/monitor_setup.bash"
+
+alias orphans="sudo pacman -Rns $(pacman -Qtdq)"
+
+alias gimme="sudo chown ${USER} *"
+
+alias cdc="cd $HOME/Documents/CPSC_Courses/cpsc231_a1/"
+alias cdo="cd $HOME/Downloads"
+alias cdd="cd $HOME/dotfiles"
+alias cds="cd $HOME/school/sophomore_fall"
+
+alias activate="source env/bin/activate"
+alias sz='source ~/.zshrc'
+
+alias ssy="sudo systemctl"
+
+export PATH="$PATH:$HOME/bin"
+
+# Colored man output
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# Source POSIX-compliant scripts
+source ${HOME}/.config/zsh/scripts/*
+
+bindkey '^O' lfcd
+# Establishes lfcd as widget for zle that calls a shell function named lfcd
+zle -N lfcd lfcd
+
+# On Arch Linux, installed via packages
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# Bind history-substring-search plugin's keys
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Set the title of the terminal to the current working directory on startup
+chpwd
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
