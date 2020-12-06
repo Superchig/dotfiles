@@ -135,3 +135,6 @@ source ~/.rvm/scripts/rvm # Rvm is now a function
 #   source $rvm_path/"scripts/zsh/Completion/_rvm"
 # }
 # compdef _rvm_completion rvm
+
+# Just use the default powerlevel10k bar
+POWERLEVEL9K_DISABLE_CONIGURATION_WIZARD=true
