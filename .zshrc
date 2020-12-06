@@ -10,7 +10,7 @@ autoload -Uz compinit promptinit
 compinit
 promptinit
 
-prompt adam1
+# prompt adam1
 
 # History
 HISTSIZE=10000
@@ -47,6 +47,8 @@ chpwd() {
 export EDITOR=nvim
 export VISUAL=${EDITOR}
 export MANWIDTH=80
+
+
 
 alias ls='ls --color=auto'
 if [ -f /usr/bin/exa ]; then
@@ -98,11 +100,10 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
 # Source POSIX-compliant scripts
-source ${HOME}/.config/zsh/scripts/*
+for FILE in $HOME/.config/zsh/scripts/*; do
+  source $FILE
+done
 
 bindkey '^O' lfcd
 # Establishes lfcd as widget for zle that calls a shell function named lfcd
@@ -123,3 +124,12 @@ chpwd
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+source ~/.rvm/scripts/rvm # Rvm is now a function
+
+# _rvm_completion() {
+#   source $rvm_path/"scripts/zsh/Completion/_rvm"
+# }
+# compdef _rvm_completion rvm
