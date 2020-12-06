@@ -23,12 +23,16 @@ if [ ! -f ${HISTFILE} ]; then
 fi
 
 # Completion information
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion::complete:*' gain-privileges 1
 setopt COMPLETE_ALIASES
 
 # Bind shift-tab to tab backwards
 bindkey '^[[Z' reverse-menu-complete
+
+# Enable using just directory names to cd
+setopt AUTO_CD
 
 # History search enabled
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -47,8 +51,6 @@ chpwd() {
 export EDITOR=nvim
 export VISUAL=${EDITOR}
 export MANWIDTH=80
-
-
 
 alias ls='ls --color=auto'
 if [ -f /usr/bin/exa ]; then
