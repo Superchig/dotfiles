@@ -6,6 +6,9 @@ mkdir ~/.config/fish
 ln -st ~/.config/fish "$DOTFILES"/.config/fish/config.fish
 ln -st ~/.config/fish "$DOTFILES"/.config/fish/functions
 
+ln -st ~ "$DOTFILES"/.zshrc
+ln -st ~ "$DOTFILES"/.p10k.zsh
+
 mkdir ~/.config/nvim
 ln -st ~/.config/nvim "$DOTFILES"/.config/nvim/init.vim
 
