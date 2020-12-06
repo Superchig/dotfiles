@@ -12,6 +12,10 @@ promptinit
 
 # prompt adam1
 
+# Use underscores (and other symbols) as word separators
+autoload -U select-word-style
+select-word-style bash
+
 # History
 HISTSIZE=10000
 SAVEHIST=10000
@@ -137,4 +141,4 @@ source ~/.rvm/scripts/rvm # Rvm is now a function
 # compdef _rvm_completion rvm
 
 # Just use the default powerlevel10k bar
-POWERLEVEL9K_DISABLE_CONIGURATION_WIZARD=true
+export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
