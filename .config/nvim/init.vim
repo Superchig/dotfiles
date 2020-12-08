@@ -108,6 +108,8 @@ autocmd Filetype markdown set colorcolumn=+0
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_level = 6
+" Disable concealing of markdown syntax
+let g:vim_markdown_conceal = 0
 
 autocmd Filetype yaml set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd Filetype yaml set colorcolumn=80

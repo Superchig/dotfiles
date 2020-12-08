@@ -2,7 +2,7 @@
     "editor.fontFamily": "'Inconsolata', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.fontSize": 16,
     "workbench.colorTheme": "Monokai",
-    "editor.lineNumbers": "on",
+    "editor.lineNumbers": "relative",
     "vim.useSystemClipboard": true,
     "C_Cpp.updateChannel": "Insiders",
     "vim.normalModeKeyBindings": [
