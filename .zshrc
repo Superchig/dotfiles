@@ -72,8 +72,11 @@ alias ez="e ~/.zshrc"
 alias ef="e ~/.config/fish/config.fish"
 alias eb="e ~/dotfiles/.bashrc"
 alias ep="e ~/dotfiles/pacman-install.sh"
+alias ei="e ~/.config/i3/config"
+alias ecl="emacsclient"
 
 alias fr="history | sk | cut -c 8-"
+alias lg="lazygit"
 
 alias pe="ps -e | grep"
 alias pi="pacman -Qi | grep Description"

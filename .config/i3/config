@@ -149,6 +149,7 @@ bindsym $mod+Shift+Right move right
 
 # split in vertical orientation
 bindsym $mod+v split v
+# bindsym $mod+Shift+v split v
 
 # enter fullscreen mode for the focused container
 # bindsym $mod+f fullscreen toggle
@@ -250,15 +251,15 @@ bindsym $mod+r mode "resize"
 
 mode "launch" {
         bindsym f exec firefox; mode "default"
-	bindsym b exec brave; mode "default"
-	bindsym n exec nautilus "$(xcwd)"; mode "default"
-	bindsym p exec firefox --private-window; mode "default"
-	bindsym d exec "$HOME/dotfiles/util/discord.sh"; mode "default"
-	# bindsym m exec alacritty --title pulsemixer -e pulsemixer; mode "default"
-	bindsym m exec pavucontrol; mode "default"
-	bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
-	bindsym q exec qalculate-gtk; mode "default"
-	bindsym shift+q exec alacritty --title qalc -e qalc; mode "default"
+        bindsym b exec brave; mode "default"
+        bindsym n exec nautilus "$(xcwd)"; mode "default"
+        bindsym p exec firefox --private-window; mode "default"
+        bindsym d exec "$HOME/dotfiles/util/discord.sh"; mode "default"
+        # bindsym m exec alacritty --title pulsemixer -e pulsemixer; mode "default"
+        bindsym m exec pavucontrol; mode "default"
+        bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
+        bindsym q exec qalculate-gtk; mode "default"
+        bindsym shift+q exec alacritty --title qalc -e qalc; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -294,7 +295,7 @@ for_window [class="Org.gnome.Nautilus"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="vlc"] floating enable
-for_window [class="Gimp"] floating enable
+# for_window [class="Gimp"] floating enable
 for_window [class="Lxappearance"] floating enable
 for_window [class="Arandr"] floating enable
 for_window [class="System-config-printer.py"] floating enable
@@ -357,6 +358,8 @@ exec $HOME/dotfiles/multi/set-touchpad
 # exec $HOME/dotfiles/multi/set-dpi # Disabled while msi is docked
 # Turn on compose key, set to right alt
 exec setxkbmap -option compose:ralt
+# exec setxkbmap -option ctrl:swapcaps
+# exec setxkbmap -option ctrl:nocaps
 
 # Start more GUI-centric apps
 exec $HOME/dotfiles/multi/startup-extra-apps
