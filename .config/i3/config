@@ -305,6 +305,7 @@ for_window [class="Gnome-screenshot"] floating enable
 for_window [class="Alacritty" title="qalc"] floating enable
 for_window [class="Alacritty" title="pulsemixer"] floating enable
 # for_window [class="mushclient.exe"] floating enable
+for_window [class="OpenGL"] floating enable
 
 # Show no border for new windows
 default_border none

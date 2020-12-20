@@ -65,7 +65,7 @@ fi
 
 alias grep='grep --color=auto'
 
-alias xo='xdg-open &> /dev/null'
+# alias xo='xdg-open &> /dev/null'
 alias e=$VISUAL
 alias se="sudo $VISUAL"
 alias ez="e ~/.zshrc"
