@@ -24,6 +24,10 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'
 Plug 'reedes/vim-pencil'
 
+if executable('zig')
+	Plug 'ziglang/zig.vim'
+endif
+
 " Initialize plugin system
 call plug#end()
 
