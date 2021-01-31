@@ -1,5 +1,13 @@
 " Install vim-plug if it is not already installed
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+if has('win32') && empty(glob('$LOCALAPPDATA\nvim\autoload\plug.vim'))
+	silent ! powershell -Command "
+				\   New-Item -Path ~\AppData\Local\nvim -Name autoload -Type Directory -Force;
+				\   Invoke-WebRequest
+				\   -Uri 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+				\   -OutFile ~\AppData\Local\nvim\autoload\plug.vim
+				\ "
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+elseif empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 	silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -23,10 +31,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'
 Plug 'reedes/vim-pencil'
-
-if executable('zig')
-	Plug 'ziglang/zig.vim'
-endif
 
 " Initialize plugin system
 call plug#end()
@@ -81,9 +85,11 @@ cabbrev bc :bp <bar> bd #<cr>
 " Show all open buffers and their status
 " nmap gl :ls<cr>
 
-cabbrev ev e ~/.config/nvim/init.vim
+" cabbrev ev e ~/.config/nvim/init.vim
+cabbrev ev e $MYVIMRC
+cabbrev soi source $MYVIMRC
+
 cabbrev eb e ~/.bashrc
-cabbrev soi source ~/.config/nvim/init.vim
 
 cabbrev twospace set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 cabbrev fulltab set tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
@@ -149,10 +155,10 @@ set completeopt=longest,menuone
 inoremap <expr> <cr> pumvisible () ? "\<C-y>" : "\<C-g>u\<cr>"
 
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+			\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+			\ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 function! SilentRelativeNumberToggle()
 	set relativenumber!
