@@ -259,7 +259,7 @@ mode "launch" {
         bindsym m exec pavucontrol; mode "default"
         bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
         bindsym q exec qalculate-gtk; mode "default"
-        bindsym shift+q exec alacritty --title qalc -e qalc; mode "default"
+        bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off'; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -306,6 +306,7 @@ for_window [class="Alacritty" title="qalc"] floating enable
 for_window [class="Alacritty" title="pulsemixer"] floating enable
 # for_window [class="mushclient.exe"] floating enable
 for_window [class="OpenGL"] floating enable
+for_window [class="openmw"] floating enable
 
 # Show no border for new windows
 default_border none
