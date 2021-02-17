@@ -77,4 +77,12 @@
     "cmake.configureOnOpen": true,
     "window.zoomLevel": 0,
     "python.showStartPage": false,
+    "editor.cursorBlinking": "solid",
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
