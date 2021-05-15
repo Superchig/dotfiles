@@ -81,6 +81,7 @@ alias lg="lazygit"
 alias pe="ps -e | grep"
 alias pi="pacman -Qi | grep Description"
 alias sps="sudo pacman -S"
+alias spr="sudo pacman -R"
 
 alias mo="$HOME/dotfiles/minimalist/monitor_setup.bash"
 
@@ -98,7 +99,12 @@ alias sz='source ~/.zshrc'
 
 alias ssy="sudo systemctl"
 
-export PATH="$PATH:$HOME/bin"
+alias gch="git checkout"
+alias gb="git branch"
+
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+
+export MANPATH="$MANPATH:/home/chiggie/.ghcup/share/man"
 
 # Colored man output
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -114,7 +120,7 @@ for FILE in $HOME/.config/zsh/scripts/*; do
   source $FILE
 done
 
-bindkey '^O' lfcd
+bindkey -s '^O' '^Ulfcd^M'
 # Establishes lfcd as widget for zle that calls a shell function named lfcd
 zle -N lfcd lfcd
 
@@ -145,3 +151,6 @@ source ~/.rvm/scripts/rvm # Rvm is now a function
 
 # Just use the default powerlevel10k bar
 export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+# opam configuration
+test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for WS in $(seq 1 4); do
+	echo "Moving ${WS}..."
+	i3-msg '[workspace="${WS}"]' move workspace to output primary
+done
+

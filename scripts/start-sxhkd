@@ -2,5 +2,5 @@
 
 killall -q sxhkd
 
-SXHKD_SHELL=sh sxhkd &
+SXHKD_SHELL=bash sxhkd &
 disown

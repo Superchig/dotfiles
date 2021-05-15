@@ -251,16 +251,23 @@ bindsym $mod+r mode "resize"
 
 mode "launch" {
         bindsym f exec firefox; mode "default"
-        bindsym b exec brave; mode "default"
         bindsym n exec nautilus "$(xcwd)"; mode "default"
-        bindsym p exec firefox --private-window; mode "default"
-        # bindsym d exec "$HOME/dotfiles/util/discord.sh"; mode "default"
+        bindsym c exec chromium; mode "default"
+        bindsym z exec zoom; mode "default"
+        # bindsym p exec firefox --private-window; mode "default"
         bindsym d exec "$HOME/dotfiles/scripts/electron-app.sh discord Discord"; mode "default"
-        # bindsym s exec "$HOME/dotfiles/util/slack.sh"; mode "default"
         bindsym s exec "$HOME/dotfiles/scripts/electron-app.sh slack Slack"; mode "default"
-	bindsym e exec "$HOME/dotfiles/scripts/electron-app.sh mailspring Mailspring"; mode "default"
-        # bindsym m exec alacritty --title pulsemixer -e pulsemixer; mode "default"
-        bindsym m exec pavucontrol; mode "default"
+        # bindsym b exec "$HOME/dotfiles/scripts/electron-app.sh bitwarden Bitwarden"; mode "default"
+        bindsym b exec "$HOME/dotfiles/scripts/electron-app.sh blueman-manager Blueman-manager"; mode "default"
+
+	# m for mail
+	bindsym m exec "$HOME/dotfiles/scripts/electron-app.sh mailspring Mailspring"; mode "default"
+
+ 	# e for Emacs
+	# bindsym e exec "$HOME/dotfiles/scripts/emacsclient-custom"; mode "default"
+        bindsym e exec "$HOME/dotfiles/scripts/electron-app.sh emacs Doom Emacs"; mode "default"
+
+        bindsym p exec pavucontrol; mode "default"
         bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
         bindsym q exec qalculate-gtk; mode "default"
         bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off'; mode "default"
@@ -294,6 +301,9 @@ for_window [title="Zotero"] floating disable
 for_window [title="Friends list"] floating enable
 for_window [title="Steam - News*"] floating enable
 for_window [title="SocialProgress"] floating enable
+for_window [title="Quick Format Citation"] floating enable
+for_window [title="Add/Edit Citation"] floating enable
+for_window [title="Progress" class="Zotero"] floating enable
 # for_window [class="Zotero"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
@@ -328,24 +338,27 @@ smart_borders on
 
 # Start workspace 2 in tabbed mode
 for_window [workspace=$ws2] layout tabbed
+for_window [workspace=$ws4] layout tabbed
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-# bar {
-# 	# i3bar_command i3bar --transparency
-#         position top
-#         tray_output primary
-#         status_command i3status
+bar {
+	# i3bar_command i3bar --transparency
+        position top
+        tray_output primary
+        status_command i3status
 
-# 	colors {
-# 		background $background
-# 		statusline $foreground
+	font pango:Inconsolata 14
 
-# 		# colorclass      border      background   text
-# 		focused_workspace $background $darkblue    $foreground
-# 		binding_mode      $background $darkblue    $foreground
-# 	}
-# }
+	colors {
+		background $background
+		statusline $foreground
+
+		# colorclass      border      background   text
+		focused_workspace $background $darkblue    $foreground
+		binding_mode      $background $darkblue    $foreground
+	}
+}
 
 exec xset s off
 exec xset -dpms
@@ -354,7 +367,7 @@ exec $HOME/bin/set-dpi
 exec ~/dotfiles/multi/monitor_setup # Disabled while msi is docked
 # exec autorandr -c
 # exec ~/.fehbg
-exec $HOME/dotfiles/minimalist/bar/launch_polybar.sh
+# exec $HOME/dotfiles/minimalist/bar/launch_polybar.sh
 exec picom &
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
