@@ -1,0 +1,8 @@
+#!/bin/sh
+# Requires wmctrl
+
+if wmctrl -l | grep Emacs; then
+	wmctrl -a Emacs
+else
+	emacsclient -nc --alternate-editor=''
+fi

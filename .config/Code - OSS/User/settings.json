@@ -1,7 +1,6 @@
 {
     "editor.fontFamily": "'Inconsolata', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.fontSize": 16,
-    "workbench.colorTheme": "Monokai",
     "editor.lineNumbers": "relative",
     "vim.useSystemClipboard": true,
     "C_Cpp.updateChannel": "Insiders",
@@ -69,13 +68,11 @@
     ],
     "window.menuBarVisibility": "toggle",
     "workbench.statusBar.visible": true,
-    "workbench.activityBar.visible": false,
     "editor.minimap.enabled": false,
     "go.useLanguageServer": true,
     "ruby.useLanguageServer": true,
     "ruby.format": "rubocop",
     "cmake.configureOnOpen": true,
-    "window.zoomLevel": 0,
     "python.showStartPage": false,
     "editor.cursorBlinking": "solid",
     "[javascript]": {
@@ -84,5 +81,26 @@
     },
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "workbench.colorCustomizations": {
+        "[Visual Studio Blue]": {
+            // "editor.background": "#ffffff"
+        }
+    },
+    "editor.tokenColorCustomizations": {
+        "[Visual Studio Blue]": {
+            // "keywords": "#0000FF"
+        }
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[haskell]": {
+        "editor.tabSize": 2
+    },
+    "workbench.activityBar.visible": false,
+    "workbench.colorTheme": "Monokai",
+    // "window.menuBarVisibility": "compact",
+    //     "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // },
 }
