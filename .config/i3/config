@@ -368,7 +368,7 @@ exec ~/dotfiles/multi/monitor_setup # Disabled while msi is docked
 # exec autorandr -c
 # exec ~/.fehbg
 # exec $HOME/dotfiles/minimalist/bar/launch_polybar.sh
-exec picom &
+exec picom -b
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 exec redshift &
 exec alttab &

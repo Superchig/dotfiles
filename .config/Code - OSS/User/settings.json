@@ -98,6 +98,12 @@
     "[haskell]": {
         "editor.tabSize": 2
     },
+    "[ruby]": {
+        "editor.tabSize": 2
+    },
+    "[erb]": {
+        "editor.tabSize": 2
+    },
     "workbench.activityBar.visible": false,
     "workbench.colorTheme": "Monokai",
     // "window.menuBarVisibility": "compact",
