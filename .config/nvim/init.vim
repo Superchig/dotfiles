@@ -58,6 +58,8 @@ map <C-k> <C-w>k
 nnoremap <silent> gd gd:nohlsearch<cr>
 nnoremap <silent> <C-n> :nohlsearch<cr>
 
+nnoremap Q gwip
+
 " Make it easier to make new tabs
 cabbrev tn tabnew
 nmap gs :tabnew<cr>
