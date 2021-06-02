@@ -49,5 +49,8 @@ ln -st ~/.config/autorandr/postswitch.d/ ~/dotfiles/minimalist/bar/launch_polyba
 mkdir -p ~/bin
 ln -st ~/bin ~/dotfiles/msi_gs65/* ~/dotfiles/scripts/*
 
+mkdir -p ~/.config/bin
+ln -s "$DOTFILES/sourceable_scripts" ~/.config/zsh/scripts
+
 mkdir -p ~/.config/sxhkd
 ln -s ~/.config/sxhkd/sxhkdrc "$DOTFILES/.config/sxhkd/sxhkdrc"
