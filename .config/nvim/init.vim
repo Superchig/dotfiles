@@ -29,7 +29,7 @@ Plug 'scrooloose/nerdtree'
 " Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'plasticboy/vim-markdown'
+Plug 'Superchig/vim-markdown'
 Plug 'reedes/vim-pencil'
 
 " Initialize plugin system
