@@ -107,3 +107,5 @@ end
 
 # Activate the default Ruby manually
 # rvm default 2> /dev/null
+
+frum init | source
