@@ -7,6 +7,8 @@ return {
         {key="t", mods="ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
         {key="h", mods="ALT", action=wezterm.action{ActivatePaneDirection="Left"}},
         {key="l", mods="ALT", action=wezterm.action{ActivatePaneDirection="Right"}},
+        {key="j", mods="ALT", action=wezterm.action{ActivatePaneDirection="Down"}},
+        {key="k", mods="ALT", action=wezterm.action{ActivatePaneDirection="Up"}},
         {key="1", mods="ALT", action=wezterm.action{ActivateTab=1}},
         {key="2", mods="ALT", action=wezterm.action{ActivateTab=2}},
         {key="H", mods="CTRL", action=wezterm.action{ActivateTabRelative=-1}},
