@@ -21,6 +21,8 @@ return {
         {key="0", mods="ALT", action=wezterm.action{ActivateTab=9}},
         {key="H", mods="CTRL", action=wezterm.action{ActivateTabRelative=-1}},
         {key="L", mods="CTRL", action=wezterm.action{ActivateTabRelative=1}},
+        {key="Enter", mods="ALT|SHIFT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+        {key="Enter", mods="ALT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
         {key="\"", mods="CTRL|ALT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
         {key="%", mods="CTRL|ALT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}}
     },
