@@ -106,6 +106,7 @@
     },
     "workbench.activityBar.visible": false,
     "workbench.colorTheme": "Monokai",
+    "editor.multiCursorModifier": "ctrlCmd",
     // "window.menuBarVisibility": "compact",
     //     "editor.defaultFormatter": "esbenp.prettier-vscode"
     // },
