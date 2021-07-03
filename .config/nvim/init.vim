@@ -45,6 +45,11 @@ set nohlsearch
 set ruler
 set relativenumber number
 
+" Preview changes with :s
+if has('nvim')
+	set inccommand=nosplit
+end
+
 colorscheme gruvbox
 hi Normal guibg=NONE ctermbg=NONE
 
