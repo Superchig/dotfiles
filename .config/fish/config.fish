@@ -92,7 +92,9 @@ set -x LESS_TERMCAP_us (printf '\e[1;4;31m')
 bind \co 'f; commandline -f repaint'
 
 # Source the file for z.fish
-. $HOME/dotfiles/z.fish
+# After some fish update, this apparently causes an awk message on directory
+# change
+# . $HOME/dotfiles/z.fish
 
 # Use custom program to start X at login
 if status is-login
