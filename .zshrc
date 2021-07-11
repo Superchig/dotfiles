@@ -65,6 +65,8 @@ fi
 
 alias grep='grep --color=auto'
 
+alias fzf="fzf --color='hl:yellow' --color='hl+:bright-yellow:bold'"
+
 # alias xo='xdg-open &> /dev/null'
 alias e=$VISUAL
 alias se="sudo $VISUAL"
@@ -73,6 +75,7 @@ alias ef="e ~/.config/fish/config.fish"
 alias eb="e ~/dotfiles/.bashrc"
 alias ep="e ~/dotfiles/pacman-install.sh"
 alias ei="e ~/.config/i3/config"
+alias en="e -u ~/dotfiles/.config/nvim/init.vim ~/tmp/zoom_items.md"
 alias ecl="emacsclient"
 
 alias fr="history | sk | cut -c 8-"
@@ -101,6 +104,11 @@ alias ssy="sudo systemctl"
 
 alias gch="git checkout"
 alias gb="git branch"
+
+alias cgc="cargo check --color=always 2>&1 | head -n 25"
+alias cgr="cargo run"
+alias cgt="cargo test"
+alias cgd="PURE_PYTHON=1 CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER=rust-gdb cargo test"
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 
@@ -143,6 +151,8 @@ chpwd
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 source ~/.rvm/scripts/rvm # Rvm is now a function
+
+export HOSTNAME=$(hostname)
 
 # _rvm_completion() {
 #   source $rvm_path/"scripts/zsh/Completion/_rvm"
