@@ -1,8 +1,12 @@
 #!/usr/bin/env sh
 
 dropbox &
-syncthing-gtk --minimized &
+if ! ps -e | grep syncthing-gtk; then
+	syncthing-gtk --minimized &
+fi
 
 if [ "$HOSTNAME" = "msi" ]; then
-	discord --start-minimized &
+	if ! ps -e | grep Discord; then
+		discord --start-minimized &
+	fi
 fi
