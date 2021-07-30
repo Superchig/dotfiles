@@ -58,10 +58,13 @@ export MANWIDTH=80
 
 alias ls='ls --color=auto'
 if [ -f /usr/bin/exa ]; then
-  alias l='exa -la'
+  alias l='exa -la --group-directories-first'
 else
   alias l='ls -lah'
 fi
+
+alias mv='mv --backup=numbered'
+alias cp='cp --backup=numbered'
 
 alias grep='grep --color=auto'
 
@@ -75,8 +78,10 @@ alias ef="e ~/.config/fish/config.fish"
 alias eb="e ~/dotfiles/.bashrc"
 alias ep="e ~/dotfiles/pacman-install.sh"
 alias ei="e ~/.config/i3/config"
-alias en="e -u ~/dotfiles/.config/nvim/init.vim ~/tmp/zoom_items.md"
+# alias en="e -u ~/dotfiles/.config/nvim/init.vim ~/tmp/zoom_items.md"
+alias en="e ~/tmp/zoom_items.md"
 alias ecl="emacsclient"
+alias ea="e ~/.config/awesome/rc.lua"
 
 alias fr="history | sk | cut -c 8-"
 alias lg="lazygit"
@@ -106,8 +111,8 @@ alias gch="git checkout"
 alias gb="git branch"
 
 alias cgc="cargo check --color=always 2>&1 | head -n 25"
-alias cgr="cargo run"
-alias cgt="cargo test"
+alias cgr="RUST_BACKTRACE=1 cargo run"
+alias cgt="RUST_BACKTRACE=1 cargo test"
 alias cgd="PURE_PYTHON=1 CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER=rust-gdb cargo test"
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
@@ -122,6 +127,15 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# nnn settings
+export NNN_FIFO="/tmp/nnn.fifo"
+export NNN_PLUG="p:preview-tui"
+# Configure nnn to
+# 1. Open text files in $VISUAL -> $EDITOR -> vi
+# 2. Start the preview-tui plugin automatically startup (toggled with ;p)
+alias nnn="nnn -e -P p"
+
 
 # Source POSIX-compliant scripts
 for FILE in $HOME/.config/zsh/scripts/*; do
