@@ -10,7 +10,7 @@ ln -st ~ "$DOTFILES"/.zshrc
 ln -st ~ "$DOTFILES"/.p10k.zsh
 
 mkdir ~/.config/nvim
-ln -st ~/.config/nvim "$DOTFILES"/.config/nvim/init.vim
+ln -st ~/.config/nvim "$DOTFILES"/.config/nvim/init.lua
 
 mkdir ~/.config/i3
 ln -st ~/.config/i3 "$DOTFILES"/.config/i3/config
