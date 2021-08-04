@@ -20,9 +20,22 @@ function isModuleAvailable(name)
   end
 end
 
+local bufmap = function(type, key, value)
+  vim.api.nvim_buf_set_keymap(0,type,key,value,{noremap = true, silent = true});
+end
+
 -- Function to attach completion when setting up lsp
 local on_attach = function(client)
-  require('completion').on_attach(client)
+  bufmap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>')
+  bufmap('n', 'ge', [[m'<cmd>lua vim.lsp.diagnostic.goto_next({enable_popup = false})<CR>]])
+  bufmap('n', 'gE', [[m'<cmd>lua vim.lsp.diagnostic.goto_prev({enable_popup = false})<CR>]])
+  bufmap('n', 'gs', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})<CR>')
+  bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>')
+  bufmap('n', '<F24>', '<cmd>lua vim.lsp.buf.references()<CR>')
+  bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+  cmd('setlocal signcolumn=number')
+
+  bufmap('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 end
 
 --- Install Packer by default
@@ -52,8 +65,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'alx741/vim-rustfmt'  -- Provides :Rustfmt and related commands
   -- use 'nvim-lua/lsp_extensions.nvim'
-  -- TODO(Chris): Move to nvim-compe
-  use 'nvim-lua/completion-nvim'
+  use 'hrsh7th/nvim-compe'
   -- use 'glepnir/lspsaga.nvim'
   use {
     'nvim-telescope/telescope.nvim',
@@ -71,7 +83,7 @@ end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
-    ensure_installed = {"lua", "ruby", "python"},
+    ensure_installed = {"lua", "ruby", "python", "haskell"},
 
     highlight = {
       enable = true,
@@ -79,6 +91,40 @@ if isModuleAvailable('nvim-treesitter.configs') then
     }
   })
 end
+
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  resolve_timeout = 800;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = {
+    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+    max_width = 120,
+    min_width = 60,
+    max_height = math.floor(vim.o.lines * 0.3),
+    min_height = 1,
+  };
+
+  source = {
+    path = true;
+    buffer = false;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    vsnip = true;
+    ultisnips = true;
+    luasnip = true;
+  };
+}
 
 require('nvim-autopairs').setup()
 
@@ -194,42 +240,15 @@ map('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>')
 cmd([[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]])
 cmd([[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
 
--- Use <Tab> as trigger keys
-map('i', '<Tab>', '<Plug>(completion_smart_tab)', {noremap = false})
-map('i', '<S-Tab>', '<Plug>(completion_smart_s_tab)', {noremap = false})
+cmd([[inoremap <silent><expr> <C-Space> compe#complete()]])
+cmd([[inoremap <silent><expr> <CR>      compe#confirm('<CR>')]])
+cmd([[inoremap <silent><expr> <C-e>     compe#close('<C-e>')0]])
+cmd([[inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })]])
+cmd([[inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })]])
 
 map('n', '<leader>q', '<cmd>copen<CR>', {noremap = true, silent = true})
 map('n', '<leader>n', '<cmd>cnext<CR>', {noremap = true, silent = true})
 map('n', '<leader>p', '<cmd>cprev<CR>', {noremap = true, silent = true})
-
--- Code navigation shortcuts for rust
--- Note(Chris): Using execute in this way actually causes these autocmd's to be added every time
--- a rust buffer is entered, so we probably shouldn't use it at all, (just in case)
--- execute([[
--- autocmd FileType rust nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
--- ]])
-
--- -- There doesn't seem to be a way to make this non-focusable
-cmd('autocmd FileType rust nnoremap <silent> gh <cmd>lua vim.lsp.buf.hover()<CR>')
-cmd([[autocmd FileType rust nnoremap <silent> ge m'<cmd>lua vim.lsp.diagnostic.goto_next({enable_popup = false})<CR>]])
-cmd([[autocmd FileType rust nnoremap <silent> gE m'<cmd>lua vim.lsp.diagnostic.goto_prev({enable_popup = false})<CR>]])
-cmd('autocmd FileType rust nnoremap <silent> gs <cmd>lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})<CR>')
-cmd('autocmd FileType rust nnoremap <silent> <F2>    <cmd>lua vim.lsp.buf.rename()<CR>')
--- <F24> seems to be what <S-F12> maps to with neovim + kitty/gnome-terminal
--- TODO(Chris): Implement previewing of references
-cmd('autocmd FileType rust nnoremap <silent> <F24>   <cmd>lua vim.lsp.buf.references()<CR>')
--- cmd('autocmd FileType rust nnoremap <silent> <F24>   <cmd>lua require("telescope.builtin").lsp_references()<CR>')
-cmd([[autocmd FileType rust nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>]])
--- -- If we set this to 'no' rather than 'number', it'll disable this entirely
-cmd('autocmd FileType rust set signcolumn=number')
-
--- cmd([[autocmd FileType rust nnoremap <silent> gh    <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>]])
--- cmd([[autocmd FileType rust nnoremap <silent> ge    <cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>]])
--- cmd([[autocmd FileType rust nnoremap <silent> gE    <cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<CR>]])
--- cmd([[autocmd FileType rust nnoremap <silent> gs    <cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>]])
--- cmd([[autocmd FileType rust nnoremap <silent> <F2>  <cmd>lua require('lspsaga.rename').rename()<CR>]])
--- -- <F24> seems to be what <S-F12> maps to with neovim + kitty/gnome-terminal
--- cmd([[autocmd FileType rust nnoremap <silent> <F24> <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>]])
 
 -- This is a workaround until cabbrev has a direct Lua API equivalent
 cmd('cabbrev tn tabnew')
