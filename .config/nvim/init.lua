@@ -24,6 +24,27 @@ local bufmap = function(type, key, value)
   vim.api.nvim_buf_set_keymap(0,type,key,value,{noremap = true, silent = true});
 end
 
+-- Print contents of `tbl`, with indentation.
+-- `indent` sets the initial level of indentation.
+function tprint (tbl, indent)
+  if not indent then indent = 0 end
+  for k, v in pairs(tbl) do
+    formatting = string.rep("  ", indent) .. k .. ": "
+    if type(v) == "table" then
+      print(formatting)
+      tprint(v, indent+1)
+    elseif type(v) == 'boolean' then
+      print(formatting .. tostring(v))      
+    elseif type(v) == 'function' then
+      print(formatting .. '<lua function>')
+    elseif type(v) == 'userdata' then
+      print(formatting .. '<userdata value>')
+    else
+      print(formatting .. v)
+    end
+  end
+end
+
 -- Function to attach completion when setting up lsp
 local on_attach = function(client)
   bufmap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -33,9 +54,68 @@ local on_attach = function(client)
   bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>')
   bufmap('n', '<F24>', '<cmd>lua vim.lsp.buf.references()<CR>')
   bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+  bufmap('n', 'gA', '<cmd>lua vim.lsp.buf.code_action()<CR>')
   cmd('setlocal signcolumn=number')
 
   bufmap('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+
+  if client.name == 'hls' then
+    -- This could be run in an if client.resolved_capabilities.code_lens then ... end block
+    bufmap("n", "-e", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
+    cmd [[augroup LspCodelensAutoGroup]]
+    cmd [[au!]]
+    -- cmd [[au BufEnter <buffer> lua vim.lsp.codelens.refresh()]]
+    -- cmd [[au CursorHold <buffer> lua vim.lsp.codelens.refresh()]]
+    -- cmd [[au InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
+    cmd [[au BufWrite <buffer> lua vim.lsp.codelens.refresh()]]
+    cmd [[augroup end]]
+
+    vim.lsp.handlers["textDocument/codeLens"] = function(err, unknown, result, client_id, bufnr)
+      vim.lsp.codelens.on_codelens(err, unknown, result, client_id, bufnr)
+
+      lenses = vim.lsp.codelens.get(bufnr)
+      -- Each CodeLense in lense contains something like:
+      -- range:
+      --   end:
+      --     line: 5
+      --     character: 5
+      --   start:
+      --     line: 5
+      --     character: 0
+      -- newText: lemon :: Integer
+      -- command:
+      --   arguments:
+      --        1:
+      --          changes: ...
+      --        title: lemon :: Integer
+      --        ...
+      --   command: 128333:ghcide-type-lenses:typesignature.add
+      for i,lense in ipairs(lenses) do
+        for k_maybe_file, v_maybe_file in pairs(lense.command.arguments[1].changes) do
+          if string.match(k_maybe_file, "file:%.*") then
+            for k_maybe_change, v_maybe_change in ipairs(v_maybe_file) do
+              if string.match(v_maybe_change.newText, '%.* :: %.*') then
+                new_text = '    ■' .. string.match(string.match(v_maybe_change.newText, ':: .*'), ' [%ad]*')
+
+                v_maybe_change.newText = new_text
+                lense.command.title = new_text
+              end
+            end
+          else
+            print("File not changed: " .. i_arg)
+          end
+        end
+
+        -- if string.match(lense.command.arguments, '%.* :: %.*') then
+        --   lenses[i].newText = string.sub(lense.newText, '.* :: .*', '■')
+        -- end
+      end
+
+      -- tprint(lenses)
+
+      vim.lsp.codelens.display(lenses, bufnr, client_id)
+    end
+  end
 end
 
 --- Install Packer by default
@@ -67,6 +147,7 @@ require('packer').startup(function()
   -- use 'nvim-lua/lsp_extensions.nvim'
   use 'hrsh7th/nvim-compe'
   -- use 'glepnir/lspsaga.nvim'
+  use {"ray-x/lsp_signature.nvim"}
   use {
     'nvim-telescope/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
@@ -77,7 +158,6 @@ require('packer').startup(function()
   use {'kevinhwang91/nvim-bqf'}
   -- Provides (the most ubiquitous) readline bindings for Vim
   use {'tpope/vim-rsi'}
-
   -- use 'nvim-treesitter/nvim-treesitter-textobjects'
 end)
 
@@ -92,7 +172,9 @@ if isModuleAvailable('nvim-treesitter.configs') then
   })
 end
 
-require'compe'.setup {
+require('lsp_signature').setup()
+
+require('compe').setup {
   enabled = true;
   autocomplete = true;
   debug = false;
@@ -144,7 +226,11 @@ require('lualine').setup({
 })
 
 -- This requires rust-analyzer to be installed separately
-require('lspconfig').rust_analyzer.setup({ on_attach=on_attach })
+lspconfig = require('lspconfig')
+lspconfig.rust_analyzer.setup({ on_attach=on_attach })
+lspconfig.hls.setup({
+  on_attach=on_attach,
+})
 
 -- Enable diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -267,7 +353,13 @@ cmd('autocmd Filetype markdown set textwidth=78 colorcolumn=+0')
 
 cmd('autocmd Filetype lua set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 
+cmd('autocmd Filetype json set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
+
+cmd('autocmd Filetype haskell set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
+
 cmd('autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
+
+cmd([[autocmd Filetype crontab set commentstring=#\ %s]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
@@ -318,3 +410,9 @@ create_augroup("Undercurl", {
 
 -- Apparently this function is not implemented yet
 -- vim.api.nvim_set_hl(0, "Normal", {guibg=nil; ctermbg = nil})
+
+function Ormolu()
+  cmd('!ormolu --mode=inplace %')
+end
+
+cmd(':command! Ormolu lua Ormolu()')
