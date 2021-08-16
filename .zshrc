@@ -1,3 +1,5 @@
+# vim: sw=2
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -31,6 +33,9 @@ zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion::complete:*' gain-privileges 1
 setopt COMPLETE_ALIASES
+
+# Don't put commands that start with a space in history
+setopt histignorespace
 
 # Bind shift-tab to tab backwards
 bindkey '^[[Z' reverse-menu-complete
@@ -90,6 +95,7 @@ alias pe="ps -e | grep"
 alias pi="pacman -Qi | grep Description"
 alias sps="sudo pacman -S"
 alias spr="sudo pacman -R"
+alias spk="sudo pacman -D --asexplicit"
 
 alias mo="$HOME/dotfiles/minimalist/monitor_setup.bash"
 
@@ -131,10 +137,10 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # nnn settings
 export NNN_FIFO="/tmp/nnn.fifo"
 export NNN_PLUG="p:preview-tui"
-# Configure nnn to
-# 1. Open text files in $VISUAL -> $EDITOR -> vi
-# 2. Start the preview-tui plugin automatically startup (toggled with ;p)
-alias nnn="nnn -e -P p"
+# Open text files in $VISUAL -> $EDITOR -> vi
+alias nnn="nnn -e"
+# Start the preview-tui plugin automatically startup (toggled with ;p)
+# alias nnn="nnn -e -P p"
 
 
 # Source POSIX-compliant scripts
@@ -142,9 +148,34 @@ for FILE in $HOME/.config/zsh/scripts/*; do
   source $FILE
 done
 
-bindkey -s '^O' '^Ulfcd^M'
 # Establishes lfcd as widget for zle that calls a shell function named lfcd
-zle -N lfcd lfcd
+# zle -N lfcd lfcd
+# bindkey -s '^O' '^Ulfcd^M'
+
+rf() {
+  rfcd < $TTY
+  zle accept-line
+}
+
+zle -N rfcd rf
+# bindkey -s '^O' '^Urfcd^M'
+bindkey '^O' rfcd
+
+# nv() { nvim }
+# zle -N nv nv
+# bindkey '^W' nv
+lfcd_tty() {
+  lfcd < $TTY
+  zle accept-line
+}
+zle -N lfcd lfcd_tty
+bindkey '^W' lfcd
+
+fg_top() {
+  fg %1
+}
+zle -N fg_top fg_top
+bindkey '^Z' fg_top
 
 # On Arch Linux, installed via packages
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -166,7 +197,7 @@ chpwd
 export PATH="$PATH:$HOME/.rvm/bin"
 source ~/.rvm/scripts/rvm # Rvm is now a function
 
-export HOSTNAME=$(hostname)
+# export HOSTNAME=$(hostname)
 
 # _rvm_completion() {
 #   source $rvm_path/"scripts/zsh/Completion/_rvm"
