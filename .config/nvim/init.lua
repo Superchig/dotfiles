@@ -159,11 +159,16 @@ require('packer').startup(function()
   -- Provides (the most ubiquitous) readline bindings for Vim
   use {'tpope/vim-rsi'}
   -- use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use {'mfussenegger/nvim-dap'}
+  use {
+    'rcarriga/nvim-dap-ui',
+    requires = {'mfussenegger/nvim-dap'}
+  }
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
-    ensure_installed = {"lua", "ruby", "python", "haskell"},
+    ensure_installed = {"lua", "ruby", "python", "haskell", "go"},
 
     highlight = {
       enable = true,
@@ -172,7 +177,12 @@ if isModuleAvailable('nvim-treesitter.configs') then
   })
 end
 
-require('lsp_signature').setup()
+require('lsp_signature').setup({
+  bind = true,
+  handler_opts = {
+    border = "none"
+  }
+})
 
 require('compe').setup {
   enabled = true;
@@ -231,6 +241,9 @@ lspconfig.rust_analyzer.setup({ on_attach=on_attach })
 lspconfig.hls.setup({
   on_attach=on_attach,
 })
+lspconfig.gopls.setup({
+  on_attach=on_attach,
+})
 
 -- Enable diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -252,6 +265,114 @@ require('telescope').setup({
     }
   }
 })
+
+local dap = require('dap')
+dap.adapters.go = function(callback, config)
+  local stdout = vim.loop.new_pipe(false)
+  local handle
+  local pid_or_err
+  local port = 38697
+  local opts = {
+    stdio = {nil, stdout},
+    args = {"dap", "-l", "127.0.0.1:" .. port},
+    detached = true
+  }
+  handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
+    stdout:close()
+    handle:close()
+    if code ~= 0 then
+      print('dlv exited with code', code)
+    end
+  end)
+  assert(handle, 'Error running dlv: ' .. tostring(pid_or_err))
+  stdout:read_start(function(err, chunk)
+    assert(not err, err)
+    if chunk then
+      vim.schedule(function()
+        require('dap.repl').append(chunk)
+      end)
+    end
+  end)
+  -- Wait for delve to start
+  vim.defer_fn(
+  function()
+    callback({type = "server", host = "127.0.0.1", port = port})
+  end,
+  100)
+end
+-- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+dap.configurations.go = {
+  {
+    type = "go",
+    name = "Debug",
+    request = "launch",
+    program = "${file}"
+  },
+  {
+    type = "go",
+    name = "Debug test", -- configuration for debugging test files
+    request = "launch",
+    mode = "test",
+    program = "${file}"
+  },
+  -- works with go.mod packages and sub packages 
+  {
+    type = "go",
+    name = "Debug test (go.mod)",
+    request = "launch",
+    mode = "test",
+    program = "./${relativeFileDirname}"
+  } 
+}
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed
+  name = "lldb"
+}
+-- TODO(Chris): Set up debugging config which allows you to attach via process name/id
+dap.configurations.cpp = {
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = vim.fn.getcwd() .. '/target/debug/${workspaceFolderBasename}',
+    -- program = function()
+    --   return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    -- end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    runInTerminal = true,
+  },
+  {
+    -- Debug adapter (lldb-vscode) specific items can be found in "Attaching Settings"
+    -- https://marketplace.visualstudio.com/items?itemName=lanza.lldb-vscode
+    -- TODO(Chris): Finish this
+    name = "Attach",
+    type = "lldb",
+    request = "attach",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+    runInTerminal = false,
+  },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 
 -- Disable Rust formatting on save
 vim.g.rustfmt_on_save = 0
@@ -296,6 +417,11 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+-- NOTE(Chris): We may need to move this to the beginning of the file
+-- Equivalent to let mapleader = " "
+map('n', '<SPACE>', '<Nop>')
+vim.g.mapleader = ' '
+
 map('n', '<C-s>', ':w<esc>')
 map('i', '<C-s>', '<C-o>:w<esc>')
 
@@ -307,10 +433,16 @@ map('n', '<C-j>', '<C-w>j', {noremap = true, silent = true})
 map('n', '<C-h>', '<C-w>h', {noremap = true, silent = true})
 map('n', '<C-l>', '<C-w>l', {noremap = true, silent = true})
 
-map('n', '<SPACE>', '<Nop>')
--- NOTE(Chris): We may need to move this to the beginning of the file
--- Equivalent to let mapleader = " "
-vim.g.mapleader = ' '
+-- Set up nvim-dap keybindings
+cmd([[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]])
+cmd([[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]])
+cmd([[nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>]])
+cmd([[nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>]])
+cmd([[nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>]])
+cmd([[nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]])
+cmd([[nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>]])
+cmd([[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]])
+cmd([[nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>]])
 
 -- Taken from https://github.com/nvim-telescope/telescope.nvim#usage
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
@@ -348,6 +480,8 @@ cmd('cabbrev soi source ~/.config/nvim/init.lua')
 cmd('cabbrev twospace set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 cmd('cabbrev fulltab set tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab')
 
+cmd('cabbrev Interesting vimgrep /^- .*interesting .*:/ %')
+
 cmd('autocmd Filetype markdown set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 cmd('autocmd Filetype markdown set textwidth=78 colorcolumn=+0')
 
@@ -356,6 +490,8 @@ cmd('autocmd Filetype lua set tabstop=8 softtabstop=0 expandtab shiftwidth=2 sma
 cmd('autocmd Filetype json set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 
 cmd('autocmd Filetype haskell set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
+
+cmd('autocmd Filetype go set tabstop=4 softtabstop=4 shiftwidth=4 smarttab')
 
 cmd('autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
 

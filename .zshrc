@@ -68,6 +68,8 @@ else
   alias l='ls -lah'
 fi
 
+alias diff='diff --color=auto'
+
 alias mv='mv --backup=numbered'
 alias cp='cp --backup=numbered'
 
@@ -196,6 +198,11 @@ chpwd
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 source ~/.rvm/scripts/rvm # Rvm is now a function
+
+if [ -f /usr/bin/go ]; then
+  export PATH="$PATH:$(go env GOPATH)/bin"
+fi
+
 
 # export HOSTNAME=$(hostname)
 
