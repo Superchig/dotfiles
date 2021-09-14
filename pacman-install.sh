@@ -14,7 +14,8 @@ sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
 	network-manager-applet zathura zathura-pdf-poppler htop code fzf nnn \
 	ttf-ubuntu-font-family kitty kitty-terminfo highlight mediainfo mlocate \
 	noto-fonts-emoji ttf-joypixels xdotool wmctrl \
-	zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search
+	zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
+	xorg-xinput
 
 # Install yay
 if [ ! -d "$HOME"/Downloads ]; then

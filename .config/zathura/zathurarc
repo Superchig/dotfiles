@@ -6,3 +6,5 @@ set default-bg "#DCDCDC"
 
 # Use clipboard for selection
 set selection-clipboard clipboard
+
+set window-title-basename true
