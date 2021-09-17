@@ -108,7 +108,15 @@ if status is-login
     end
 end
 
+# Set the title of the terminal to e.g. "fish ~/p/rolf"  or "nvim ~/D/appimages"
+function fish_title
+  set -q argv[1]; or set argv[1] fish
+  echo $argv (fish_prompt_pwd_dir_length=1 prompt_pwd)
+end
+
 # Activate the default Ruby manually
 # rvm default 2> /dev/null
 
-frum init | source
+if [ -f /usr/bin/frum ]
+  frum init | source
+end
