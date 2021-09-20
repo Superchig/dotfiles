@@ -56,6 +56,7 @@ abbr --add eb nvim ~/.config/berry/autostart
 abbr --add es nvim ~/.config/sxhkd/sxhkdrc
 abbr --add ep nvim ~/dotfiles/pacman-install.sh
 abbr --add em nvim ~/.config/mimeapps.list
+abbr --add en nvim ~/Dropbox/zoom_items.md
 abbr --add cdc cd ~/Documents/CPSC_Courses/cpsc350_data_structures/
 abbr --add cdo cd ~/Downloads
 abbr --add cdd cd ~/dotfiles
@@ -107,7 +108,15 @@ if status is-login
     end
 end
 
+# Set the title of the terminal to e.g. "fish ~/p/rolf"  or "nvim ~/D/appimages"
+function fish_title
+  set -q argv[1]; or set argv[1] fish
+  echo $argv (fish_prompt_pwd_dir_length=1 prompt_pwd)
+end
+
 # Activate the default Ruby manually
 # rvm default 2> /dev/null
 
-frum init | source
+if [ -f /usr/bin/frum ]
+  frum init | source
+end

@@ -164,6 +164,8 @@ require('packer').startup(function()
     'rcarriga/nvim-dap-ui',
     requires = {'mfussenegger/nvim-dap'}
   }
+
+  use {'dag/vim-fish'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
