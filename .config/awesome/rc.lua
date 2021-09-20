@@ -37,6 +37,10 @@ local function reverse(table)
     return t
 end
 
+-- Require the sharedtags library
+-- From https://github.com/Drauthius/awesome-sharedtags
+local sharedtags = require("sharedtags")
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -208,37 +212,50 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+local tags = sharedtags({
+    { name = "1", layout = awful.layout.suit.spiral.dwindle },
+    { name = "2", layout = awful.layout.suit.spiral.dwindle },
+    { name = "3", layout = awful.layout.suit.spiral.dwindle },
+    { name = "4", layout = awful.layout.suit.max },
+    { name = "5", screen = 2, layout = awful.layout.suit.spiral.dwindle },
+    { name = "6", screen = 2, layout = awful.layout.suit.spiral.dwindle },
+    { name = "7", screen = 2, layout = awful.layout.suit.spiral.dwindle },
+})
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
+    -- Here is a good place to add tags to a newly connected screen, if desired:
+    sharedtags.viewonly(tags[5], s)
+
     -- Each screen has its own tag table.
     -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
-    awful.tag.add("1", {
-        layout   = awful.layout.suit.spiral.dwindle,
-        selected = true
-    })
+    -- awful.tag.add("1", {
+    --     layout   = awful.layout.suit.spiral.dwindle,
+    --     selected = true
+    -- })
 
-    awful.tag.add("2", {
-        layout = awful.layout.suit.max,
-    })
+    -- awful.tag.add("2", {
+    --     layout = awful.layout.suit.max,
+    -- })
 
 
-    awful.tag.add("3", {
-        layout = awful.layout.suit.spiral.dwindle,
-    })
+    -- awful.tag.add("3", {
+    --     layout = awful.layout.suit.spiral.dwindle,
+    -- })
 
-    awful.tag.add("4", {
-        layout = awful.layout.suit.max,
-    })
+    -- awful.tag.add("4", {
+    --     layout = awful.layout.suit.max,
+    -- })
 
-    -- This for loop includes 9
-    for var=5,9 do
-      awful.tag.add(tostring(var), {
-        layout = awful.layout.suit.spiral.dwindle,
-      })
-    end
+    -- -- This for loop includes 9
+    -- for var=5,9 do
+    --   awful.tag.add(tostring(var), {
+    --     layout = awful.layout.suit.spiral.dwindle,
+    --   })
+    -- end
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -285,6 +302,9 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.systray(),
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout, -- Shows "us" by default on my machine
+            wibox.widget.textbox(" "),
+            require("battery-widget") {},
+            wibox.widget.textbox(" "),
             mytextclock,
             s.mylayoutbox,
         },
@@ -420,7 +440,7 @@ keybindings["normal"] = gears.table.join(
     -- awful.key({ modkey }, "p", function() menubar.show() end,
     --           {description = "show the menubar", group = "launcher"}),
 
-    awful.key({ modkey }, "q", function() awful.util.spawn(home .. "/dotfiles/minimalist/launch.sh") end,
+    awful.key({ modkey }, "q", function() awful.util.spawn("/bin/rofi -show drun -theme launchpad.rasi") end,
               {description = "use rofi to launch an application", group = "launcher"}),
 
     awful.key({ modkey, "Control", "Shift" }, "d",
@@ -510,15 +530,61 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
+-- for i = 1, 9 do
+--     keybindings["normal"] = gears.table.join(keybindings["normal"],
+--         -- View tag only.
+--         awful.key({ modkey }, "#" .. i + 9,
+--                   function ()
+--                         local screen = awful.screen.focused()
+--                         local tag = screen.tags[i]
+--                         if tag then
+--                            tag:view_only()
+--                         end
+--                   end,
+--                   {description = "view tag #"..i, group = "tag"}),
+--         -- Toggle tag display.
+--         awful.key({ modkey, "Control" }, "#" .. i + 9,
+--                   function ()
+--                       local screen = awful.screen.focused()
+--                       local tag = screen.tags[i]
+--                       if tag then
+--                          awful.tag.viewtoggle(tag)
+--                       end
+--                   end,
+--                   {description = "toggle tag #" .. i, group = "tag"}),
+--         -- Move client to tag.
+--         awful.key({ modkey, "Shift" }, "#" .. i + 9,
+--                   function ()
+--                       if client.focus then
+--                           local tag = client.focus.screen.tags[i]
+--                           if tag then
+--                               client.focus:move_to_tag(tag)
+--                           end
+--                      end
+--                   end,
+--                   {description = "move focused client to tag #"..i, group = "tag"}),
+--         -- Toggle tag on focused client.
+--         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
+--                   function ()
+--                       if client.focus then
+--                           local tag = client.focus.screen.tags[i]
+--                           if tag then
+--                               client.focus:toggle_tag(tag)
+--                           end
+--                       end
+--                   end,
+--                   {description = "toggle focused client on tag #" .. i, group = "tag"})
+--     )
+-- end
 for i = 1, 9 do
     keybindings["normal"] = gears.table.join(keybindings["normal"],
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
                         local screen = awful.screen.focused()
-                        local tag = screen.tags[i]
+                        local tag = tags[i]
                         if tag then
-                           tag:view_only()
+                           sharedtags.viewonly(tag, screen)
                         end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
@@ -526,9 +592,9 @@ for i = 1, 9 do
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
                       local screen = awful.screen.focused()
-                      local tag = screen.tags[i]
+                      local tag = tags[i]
                       if tag then
-                         awful.tag.viewtoggle(tag)
+                         sharedtags.viewtoggle(tag, screen)
                       end
                   end,
                   {description = "toggle tag #" .. i, group = "tag"}),
@@ -536,7 +602,7 @@ for i = 1, 9 do
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local tag = client.focus.screen.tags[i]
+                          local tag = tags[i]
                           if tag then
                               client.focus:move_to_tag(tag)
                           end
@@ -547,7 +613,7 @@ for i = 1, 9 do
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local tag = client.focus.screen.tags[i]
+                          local tag = tags[i]
                           if tag then
                               client.focus:toggle_tag(tag)
                           end
@@ -674,6 +740,9 @@ awful.rules.rules = {
         -- and the name shown there might not match defined rules here.
         name = {
           "Event Tester",  -- xev.
+          "Ryujinx - Settings",
+          "Ryujinx - Controller Settings - Player1",
+          "Ryujinx - Controller Settings - *",
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -786,7 +855,10 @@ awful.spawn("picom --experimental-backends -b")
 awful.spawn("autorandr -c")
 awful.spawn("nm-applet")
 -- Includes dropbox, syncthing-gtk, and discord, not restarting them each time
+awful.spawn.once(home .. "/dotfiles/multi/set-touchpad")
 awful.spawn.once(home .. "/dotfiles/multi/startup-extra-apps")
+awful.spawn.once("redshift")
+awful.spawn.once("cbatticon")
 -- }}}}
 
 -- vim: shiftwidth=4
