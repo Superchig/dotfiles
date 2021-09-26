@@ -542,6 +542,8 @@ cmd('autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
 
 cmd([[autocmd Filetype crontab set commentstring=#\ %s]])
 
+cmd([[autocmd Filetype toml set commentstring=#\ %s]])
+
 --- Set colorscheme
 cmd('colorscheme gruvbox')
 
