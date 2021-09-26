@@ -24,6 +24,10 @@ if echo $fish_user_paths | grep -v --quiet .local/bin
   set -U fish_user_paths $fish_user_paths "$HOME/.local/bin"
 end
 
+if echo $fish_user_paths | grep -v --quiet "$HOME/bin"
+  set -U fish_user_paths $fish_user_paths "$HOME/bin"
+end
+
 if echo $fish_user_paths | grep -v --quiet .dotnet/tools
   set -U fish_user_paths $fish_user_paths "$HOME/.dotnet/tools"
 end
@@ -50,7 +54,9 @@ abbr --add sf source ~/.config/fish/config.fish
 abbr --add ssy sudo systemctl
 abbr --add sy systemctl
 abbr --add ef nvim ~/.config/fish/config.fish
-abbr --add ea nvim ~/.config/alacritty/alacritty.yml
+abbr --add ez nvim ~/.zshrc
+# abbr --add ea nvim ~/.config/alacritty/alacritty.yml
+abbr --add ea nvim ~/.config/awesome/rc.lua
 abbr --add ei nvim ~/.config/i3/config
 abbr --add eb nvim ~/.config/berry/autostart
 abbr --add es nvim ~/.config/sxhkd/sxhkdrc
@@ -78,6 +84,10 @@ abbr --add ralt setxkbmap -option compose:ralt
 abbr --add orphans sudo pacman -Rns (pacman -Qtdq)
 
 abbr --add fe ~/.fehbg
+
+abbr --add lg lazygit
+
+abbr --add code code --enable-features=UseOzonePlatform --ozone-platform=wayland
 
 alias au 'autorandr -c mobile && autorandr -c'
 
