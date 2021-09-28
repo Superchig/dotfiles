@@ -248,7 +248,7 @@ require('dapui').setup({
     repl = "r",
   },
   sidebar = {
-    open_on_start = true,
+    -- open_on_start = true,
     -- You can change the order of elements in the sidebar
     elements = {
       -- Provide as ID strings or tables with "id" and "size" keys
@@ -264,7 +264,7 @@ require('dapui').setup({
     position = "left", -- Can be "left" or "right"
   },
   tray = {
-    open_on_start = true,
+    -- open_on_start = true,
     elements = { "repl" },
     size = 10,
     position = "bottom", -- Can be "bottom" or "top"
@@ -284,9 +284,24 @@ lspconfig = require('lspconfig')
 lspconfig.rust_analyzer.setup({ on_attach=on_attach })
 lspconfig.hls.setup({
   on_attach=on_attach,
+  root_dir=lspconfig.util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml", ".hlint.yaml")
 })
 lspconfig.gopls.setup({
   on_attach=on_attach,
+})
+lspconfig.clangd.setup({
+  on_attach=on_attach,
+})
+
+local pid = vim.fn.getpid()
+-- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
+local omnisharp_bin = "/home/chiggie/Downloads/omnisharp/run"
+-- on Windows
+-- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
+lspconfig.omnisharp.setup({
+  on_attach=on_attach,
+  cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) },
+  root_dir = lspconfig.util.root_pattern("*.sln"),
 })
 
 -- Enable diagnostics
@@ -543,6 +558,10 @@ cmd('autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
 cmd([[autocmd Filetype crontab set commentstring=#\ %s]])
 
 cmd([[autocmd Filetype toml set commentstring=#\ %s]])
+
+cmd('autocmd Filetype cs set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab')
+
+cmd('autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab')
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
