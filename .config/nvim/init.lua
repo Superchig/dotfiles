@@ -562,6 +562,16 @@ cmd([[autocmd Filetype toml set commentstring=#\ %s]])
 cmd('autocmd Filetype cs set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab')
 
 cmd('autocmd Filetype c set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab')
+cmd('autocmd Filetype cpp set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab')
+
+cmd([[autocmd Filetype cpp set commentstring=//\ %s]])
+cmd([[autocmd Filetype c set commentstring=//\ %s]])
+
+cmd([[autocmd Filetype sh set shiftwidth=2]])
+
+-- Lambda calculus
+cmd([[autocmd Bufread,BufNewFile *.lc set filetype=lc]])
+cmd([[autocmd Filetype lc set commentstring=//\ %s]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
