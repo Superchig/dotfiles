@@ -166,6 +166,7 @@ require('packer').startup(function()
   }
 
   use {'dag/vim-fish'}
+  use {'lervag/vimtex'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
@@ -290,6 +291,9 @@ lspconfig.gopls.setup({
   on_attach=on_attach,
 })
 lspconfig.clangd.setup({
+  on_attach=on_attach,
+})
+lspconfig.texlab.setup({
   on_attach=on_attach,
 })
 
@@ -575,6 +579,8 @@ cmd([[autocmd Filetype lc set commentstring=//\ %s]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
+
+-- cmd([[autocmd BufWritePost report.tex silent make]])
 
 -- Set background to be transparent in rather contorted way
 -- From https://www.reddit.com/r/neovim/comments/m0gyip/nvim_initlua_not_respecting_highlight_commands/
