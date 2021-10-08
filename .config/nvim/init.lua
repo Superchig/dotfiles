@@ -171,7 +171,7 @@ end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
-    ensure_installed = {"lua", "ruby", "python", "haskell", "go"},
+    ensure_installed = {"lua", "ruby", "python", "haskell", "go", "c"},
 
     highlight = {
       enable = true,
@@ -496,6 +496,9 @@ map('n', '<C-k>', '<C-w>k', {noremap = true, silent = true})
 map('n', '<C-j>', '<C-w>j', {noremap = true, silent = true})
 map('n', '<C-h>', '<C-w>h', {noremap = true, silent = true})
 map('n', '<C-l>', '<C-w>l', {noremap = true, silent = true})
+
+-- Rebind the "visual" mode keybindings to something more useful
+map('n', 'Q', 'gwip')
 
 -- Set up nvim-dap keybindings
 cmd([[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]])
