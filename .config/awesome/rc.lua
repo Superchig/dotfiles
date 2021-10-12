@@ -645,6 +645,10 @@ keybindings["launch"] = gears.table.join(
                 function() awful.util.spawn("pavucontrol"); switch_keybinding("normal") end,
               {description = "launch Pavucontrol", group = "launcher"}),
 
+    awful.key({ }, "b",
+                function() awful.util.spawn("blueman-manager"); switch_keybinding("normal") end,
+              {description = "launch Pavucontrol", group = "launcher"}),
+
     awful.key({ }, "n",
                 function() awful.util.spawn(home .. "/dotfiles/multi/gui-fm"); switch_keybinding("normal") end,
                 {description = "launch GUI file manager", group = "launcher"}),
