@@ -410,6 +410,12 @@ keybindings["normal"] = gears.table.join(
     awful.key({ modkey, "Control" }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
+    awful.key({ modkey,           }, "w",
+              function ()
+                  awful.layout.set(awful.layout.suit.max)
+              end,
+              {description = "select previous", group = "layout"}),
+
     awful.key({ modkey, "Control" }, "n",
               function ()
                   local c = awful.client.restore()
@@ -682,10 +688,10 @@ keybindings["launch"] = gears.table.join(
                 end,
                 {description = "launch qalc in fractional mode", group = "launcher"}),
 
-    awful.key({ }, "w",
-                function()
-                end,
-                {description = "test out a widget", group = "launcher"}),
+    -- awful.key({ }, "w",
+    --             function()
+    --             end,
+    --             {description = "test out a widget", group = "launcher"}),
 
     awful.key({ }, "Escape",
                 function() switch_keybinding("normal") end,
