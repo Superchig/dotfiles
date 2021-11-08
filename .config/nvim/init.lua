@@ -579,6 +579,7 @@ cmd([[autocmd Filetype sh set shiftwidth=2]])
 -- Lambda calculus
 cmd([[autocmd Bufread,BufNewFile *.lc set filetype=lc]])
 cmd([[autocmd Filetype lc set commentstring=//\ %s]])
+cmd([[autocmd Filetype lc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 -- cmd([[autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab]])
