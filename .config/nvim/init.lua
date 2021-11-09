@@ -296,6 +296,9 @@ lspconfig.clangd.setup({
 lspconfig.texlab.setup({
   on_attach=on_attach,
 })
+lspconfig.ocamllsp.setup({
+  on_attach=on_attach,
+})
 
 local pid = vim.fn.getpid()
 -- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
@@ -579,6 +582,7 @@ cmd([[autocmd Filetype sh set shiftwidth=2]])
 -- Lambda calculus
 cmd([[autocmd Bufread,BufNewFile *.lc set filetype=lc]])
 cmd([[autocmd Filetype lc set commentstring=//\ %s]])
+cmd([[autocmd Filetype lc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')

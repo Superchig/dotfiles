@@ -32,7 +32,7 @@ if echo $fish_user_paths | grep -v --quiet .dotnet/tools
   set -U fish_user_paths $fish_user_paths "$HOME/.dotnet/tools"
 end
 
-abbr --add l exa -la
+abbr --add l exa -la --group-directories-first
 abbr --add e nvim
 abbr --add se sudo nvim
 abbr --add b br -h
@@ -89,6 +89,11 @@ abbr --add lg lazygit
 
 abbr --add code code --enable-features=UseOzonePlatform --ozone-platform=wayland
 
+abbr --add cgb cargo build
+abbr --add cgr cargo run
+abbr --add cgt cargo test
+abbr --add cgc cargo check
+
 alias au 'autorandr -c mobile && autorandr -c'
 
 set -x LESS_TERMCAP_mb (printf '\e[1;32m')
@@ -130,3 +135,6 @@ end
 if [ -f /usr/bin/frum ]
   frum init | source
 end
+
+# Source opam (ocaml package manager) script
+source /home/chiggie/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
