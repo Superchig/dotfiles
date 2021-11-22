@@ -167,6 +167,7 @@ require('packer').startup(function()
 
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
+  use {'edwinb/idris2-vim'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
