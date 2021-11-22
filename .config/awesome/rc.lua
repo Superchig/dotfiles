@@ -350,8 +350,8 @@ keybindings["normal"] = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+    -- awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+    --           {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
     -- NOTE(Chris): I've actually not swapped the "k" and "j" settings here
@@ -687,11 +687,6 @@ keybindings["launch"] = gears.table.join(
                     switch_keybinding("normal")
                 end,
                 {description = "launch qalc in fractional mode", group = "launcher"}),
-
-    -- awful.key({ }, "w",
-    --             function()
-    --             end,
-    --             {description = "test out a widget", group = "launcher"}),
 
     awful.key({ }, "Escape",
                 function() switch_keybinding("normal") end,
