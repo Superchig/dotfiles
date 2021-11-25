@@ -214,7 +214,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 local tags = sharedtags({
     { name = "1", layout = awful.layout.suit.spiral.dwindle },
-    { name = "2", layout = awful.layout.suit.spiral.dwindle },
+    { name = "2", layout = awful.layout.suit.max },
     { name = "3", layout = awful.layout.suit.spiral.dwindle },
     { name = "4", layout = awful.layout.suit.max },
     { name = "5", screen = 2, layout = awful.layout.suit.spiral.dwindle },
@@ -479,7 +479,13 @@ clientkeys = gears.table.join(
                 function (c)
                     awful.client.floating.toggle()
                     c.ontop = not c.ontop
-                    awful.titlebar.toggle(c)
+                    c.maximized = not c.maximized
+                    if c.maximized then
+                        c.border_width = 0
+                    else
+                        c.border_width = beautiful.border_width
+                    end
+                    -- awful.titlebar.toggle(c)
                 end,
                 {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
@@ -702,8 +708,8 @@ root.keys(keybindings["normal"])
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
+      properties = { border_color = beautiful.border_normal,
+                     border_width = beautiful.border_width,
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
@@ -712,6 +718,21 @@ awful.rules.rules = {
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
     },
+
+    -- {
+    --     rule = { },
+    --     except_any = { class = "firefox" },
+    --     properties = {
+    --         border_width = beautiful.border_width,
+    --     },
+    -- },
+
+    -- {
+    --     rule = { class = "firefox" },
+    --     properties = {
+    --         border_width = 0,
+    --     }
+    -- },
 
     -- Floating clients.
     {
@@ -779,10 +800,15 @@ awful.rules.rules = {
         properties = { titlebars_enabled = true }
     },
 
+    {
+        rule = { class = "firefox" },
+        properties = { maximized = true, floating = false, }
+    },
+
     -- Maximized clients
     {
         rule_any = { maximized = { true } },
-        properties = { border_width = 0 }
+        properties = { border_width = 0, floating = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -804,6 +830,11 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+end)
+
+client.connect_signal("property::maximized", function (c)
+    -- The value of c.maximized will be the value of c after it's been
+    -- maximized/unmaximized.
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
