@@ -167,7 +167,8 @@ require('packer').startup(function()
 
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
-  use {'edwinb/idris2-vim'}
+  -- use {'edwinb/idris2-vim'}
+  use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
@@ -310,6 +311,13 @@ lspconfig.omnisharp.setup({
   on_attach=on_attach,
   cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) },
   root_dir = lspconfig.util.root_pattern("*.sln"),
+})
+
+-- This also sets up the idris2 lsp
+require('idris2').setup({
+  server={
+    on_attach=on_attach,
+  },
 })
 
 -- Enable diagnostics
@@ -645,3 +653,9 @@ function Ormolu()
 end
 
 cmd(':command! Ormolu lua Ormolu()')
+
+-- This sets up abbreviated commands for idris2-nvim's interactive idris integration
+-- https://github.com/ShinKage/idris2-nvim
+cmd([[command! Es lua require('idris2.code_action').expr_search()]])
+cmd([[command! Cs lua require('idris2.code_action').case_split()]])
+
