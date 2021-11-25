@@ -658,4 +658,5 @@ cmd(':command! Ormolu lua Ormolu()')
 -- https://github.com/ShinKage/idris2-nvim
 cmd([[command! Es lua require('idris2.code_action').expr_search()]])
 cmd([[command! Cs lua require('idris2.code_action').case_split()]])
+cmd([[command! Gd lua require('idris2.code_action').generate_def()]])
 
