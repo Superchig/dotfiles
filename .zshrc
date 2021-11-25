@@ -203,6 +203,7 @@ if [ -f /usr/bin/go ]; then
   export PATH="$PATH:$(go env GOPATH)/bin"
 fi
 
+export PATH="$PATH:$HOME/.idris2/bin"
 
 # export HOSTNAME=$(hostname)
 
