@@ -14,29 +14,17 @@ function add_path
   end
 end
 
-if echo $fish_user_paths | grep -v --quiet util
-  set -U fish_user_paths $fish_user_paths "$HOME/dotfiles/util/"
-end
+add_path "$HOME/dotfiles/util"
 
-if echo $fish_user_paths | grep -v --quiet .gem/ruby
-  set -U fish_user_paths $fish_user_paths "$HOME/.gem/ruby/2.7.0/bin"
-end
+add_path "$HOME/.gem/ruby/2.7.0/bin"
 
-if echo $fish_user_paths | grep -v --quiet go/bin
-  set -U fish_user_paths $fish_user_paths "$HOME/go/bin"
-end
+add_path "$HOME/go/bin"
 
-if echo $fish_user_paths | grep -v --quiet .local/bin
-  set -U fish_user_paths $fish_user_paths "$HOME/.local/bin"
-end
+add_path "$HOME/.local/bin"
 
-if echo $fish_user_paths | grep -v --quiet "$HOME/bin"
-  set -U fish_user_paths $fish_user_paths "$HOME/bin"
-end
+add_path "$HOME/bin"
 
-if echo $fish_user_paths | grep -v --quiet .dotnet/tools
-  set -U fish_user_paths $fish_user_paths "$HOME/.dotnet/tools"
-end
+add_path "$HOME/.dotnet/tools"
 
 add_path "$HOME/.idris2/bin"
 
