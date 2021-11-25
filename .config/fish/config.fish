@@ -8,6 +8,12 @@ set -x XDG_CONFIG_HOME ~/.config
 
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
+function add_path
+  if echo $fish_user_paths | grep -v --quiet $argv[1]
+    set -U fish_user_paths $fish_user_paths $argv[1]
+  end
+end
+
 if echo $fish_user_paths | grep -v --quiet util
   set -U fish_user_paths $fish_user_paths "$HOME/dotfiles/util/"
 end
@@ -31,6 +37,8 @@ end
 if echo $fish_user_paths | grep -v --quiet .dotnet/tools
   set -U fish_user_paths $fish_user_paths "$HOME/.dotnet/tools"
 end
+
+add_path "$HOME/.idris2/bin"
 
 abbr --add l exa -la --group-directories-first
 abbr --add e nvim
