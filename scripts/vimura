@@ -1,0 +1,14 @@
+#!/bin/bash
+# Modified version of https://gist.github.com/vext01/16df5bd48019d451e078#gistcomment-2964552
+# designed only to work with Neovim
+
+synctex_command="nvr --remote +%{line} %{input}"
+zathura -x "$synctex_command" ${@} > /dev/null 2> /dev/null &
+
+if [ "$#" -eq 1 ] && [ "${1: -4}" = ".pdf" ]; then
+  echo "Opening file..."
+  PDF="$1"
+  FILE_NAME=${PDF%.*}
+  TEX="$FILE_NAME.tex"
+  NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim "$TEX"
+fi
