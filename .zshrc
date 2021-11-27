@@ -144,6 +144,9 @@ alias nnn="nnn -e"
 # Start the preview-tui plugin automatically startup (toggled with ;p)
 # alias nnn="nnn -e -P p"
 
+if [ -f /usr/bin/idris2 ]; then
+  alias idris2="rlwrap idris2"
+fi
 
 # Source POSIX-compliant scripts
 for FILE in $HOME/.config/zsh/scripts/*; do
