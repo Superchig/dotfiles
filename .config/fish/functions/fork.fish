@@ -1,4 +1,4 @@
 function fork
-	$argv &
+	$argv &> /dev/null &
 	disown
 end
