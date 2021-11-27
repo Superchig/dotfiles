@@ -90,6 +90,8 @@ abbr --add cgr cargo run
 abbr --add cgt cargo test
 abbr --add cgc cargo check
 
+abbr --add idris2 rlwrap idris2
+
 alias au 'autorandr -c mobile && autorandr -c'
 
 set -x LESS_TERMCAP_mb (printf '\e[1;32m')
