@@ -660,3 +660,14 @@ cmd([[command! Es lua require('idris2.code_action').expr_search()]])
 cmd([[command! Cs lua require('idris2.code_action').case_split()]])
 cmd([[command! Gd lua require('idris2.code_action').generate_def()]])
 
+-- Synctex function part of https://gist.github.com/vext01/16df5bd48019d451e078#gistcomment-2964552
+cmd([[
+function! Synctex()
+    let vimura_param = " --synctex-forward " . line('.') . ":" . col('.') . ":" . expand('%:p') . " " . substitute(expand('%:p'),"tex$","pdf", "")
+    call jobstart("vimura" . vimura_param)
+    redraw!
+endfunction
+]])
+-- With kitty and Neovim, <C-M> is the same input as <C-Enter> and <Enter>
+cmd([[autocmd Filetype tex nnoremap <silent> <C-M> :call Synctex()<cr>]])
+cmd([[autocmd Filetype tex inoremap <silent> <C-M> <cmd>:call Synctex()<cr>]])
