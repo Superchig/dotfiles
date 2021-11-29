@@ -670,4 +670,4 @@ endfunction
 ]])
 -- With kitty and Neovim, <C-M> is the same input as <C-Enter> and <Enter>
 cmd([[autocmd Filetype tex nnoremap <silent> <C-M> :call Synctex()<cr>]])
-cmd([[autocmd Filetype tex inoremap <silent> <C-M> <cmd>:call Synctex()<cr>]])
+-- cmd([[autocmd Filetype tex inoremap <silent> <C-M> <cmd>:call Synctex()<cr>]])
