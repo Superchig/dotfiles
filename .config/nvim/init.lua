@@ -173,7 +173,7 @@ end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
-    ensure_installed = {"lua", "ruby", "python", "haskell", "go", "c"},
+    ensure_installed = {"lua", "ruby", "python", "haskell", "go", "c", "latex"},
 
     highlight = {
       enable = true,
