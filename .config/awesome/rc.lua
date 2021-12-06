@@ -477,9 +477,17 @@ clientkeys = gears.table.join(
     --           {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Shift" }, "space",  
                 function (c)
-                    awful.client.floating.toggle()
-                    c.ontop = not c.ontop
-                    c.maximized = not c.maximized
+                    if c.floating then
+                        c.floating = false
+                        c.maximized = true
+                        c.ontop = false
+                    else
+                        -- This will simulate the floated window of i3/sway
+                        c.floating = true
+                        c.maximized = false
+                        c.ontop = true
+                    end
+
                     if c.maximized then
                         c.border_width = 0
                     else
@@ -715,7 +723,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
      }
     },
 
@@ -776,7 +784,7 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       },
-      properties = { floating = true, ontop = true, placement = awful.placement.centered }
+      properties = { floating = true, ontop = true, maximized = false, placement = awful.placement.centered }
     },
 
     {
@@ -887,14 +895,27 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- {{{{Startup items
+local function spawn_once(program)
+    local args = {}
+    for substring in string.gmatch(program, "%S+") do
+        table.insert(args, substring)
+    end
+    local prog_name = args[1]
+
+    local prog_exists = os.execute("ps -e | grep -q " .. prog_name)
+    if not prog_exists then
+        awful.spawn(program)
+    end
+end
+
 awful.spawn("picom --experimental-backends -b")
 awful.spawn("autorandr -c")
 awful.spawn("nm-applet")
 -- Includes dropbox, syncthing-gtk, and discord, not restarting them each time
 awful.spawn.once(home .. "/dotfiles/multi/set-touchpad")
 awful.spawn.once(home .. "/dotfiles/multi/startup-extra-apps")
-awful.spawn.once("redshift")
-awful.spawn.once("cbatticon")
+spawn_once("redshift")
+spawn_once("cbatticon")
 -- }}}}
 
 -- vim: shiftwidth=4
