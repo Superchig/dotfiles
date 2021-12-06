@@ -132,8 +132,8 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'tpope/vim-commentary'
   use 'tpope/vim-surround'
-  -- use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
-  use 'morhetz/gruvbox'
+  use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
+  -- use 'morhetz/gruvbox'
   use 'windwp/nvim-autopairs'
   use {
     'hoob3rt/lualine.nvim',
@@ -493,6 +493,7 @@ opt.shortmess:append('c')
 opt.mouse = 'a'
 opt.cursorline = true
 -- opt.diffopt = 'internal,filler,closeoff'
+opt.shell = "/bin/bash"
 
 --- Set keybindings
 local function map(mode, lhs, rhs, opts)
@@ -613,41 +614,41 @@ cmd('colorscheme gruvbox')
 -- From https://www.reddit.com/r/neovim/comments/m0gyip/nvim_initlua_not_respecting_highlight_commands/
 -- Perhaps I should file a bug report as to why simply using vim.cmd doesn't work?
 
-function hi(group, opts)
-  local c = "highlight " .. group
-  for k, v in pairs(opts) do
-    c = c .. " " .. k .. "=" .. v
-  end
-  vim.cmd(c)
-end
+ function hi(group, opts)
+   local c = "highlight " .. group
+   for k, v in pairs(opts) do
+     c = c .. " " .. k .. "=" .. v
+   end
+   vim.cmd(c)
+ end
+ 
+ function create_augroup(name, autocmds)
+   cmd = vim.cmd
+   cmd('augroup ' .. name)
+   cmd('autocmd!')
+   for _, autocmd in ipairs(autocmds) do
+     cmd('autocmd ' .. table.concat(autocmd, ' '))
+   end
+   cmd('augroup END')
+ end
+ 
+ function HighlightNone()
+   hi("Normal", {ctermbg = "NONE", guibg = "NONE"})
+ end
+ 
+ create_augroup("HighlightNone", {
+   {"ColorScheme", "*", "lua HighlightNone()"}
+ })
 
-function create_augroup(name, autocmds)
-  cmd = vim.cmd
-  cmd('augroup ' .. name)
-  cmd('autocmd!')
-  for _, autocmd in ipairs(autocmds) do
-    cmd('autocmd ' .. table.concat(autocmd, ' '))
-  end
-  cmd('augroup END')
-end
-
-function HighlightNone()
-  hi("Normal", {ctermbg = "NONE", guibg = "NONE"})
-end
-
-create_augroup("HighlightNone", {
-  {"ColorScheme", "*", "lua HighlightNone()"}
-})
-
--- -- This function and create_augroup call enable undercurl on diagnostics
-function Undercurl()
-  hi("LspDiagnosticsUnderlineWarning", {guifg="NONE", ctermfg="NONE", cterm="undercurl", gui="undercurl"})
-  hi("LspDiagnosticsUnderlineError", {guifg="NONE", ctermfg="NONE", cterm="undercurl", gui="undercurl"})
-end
-
-create_augroup("Undercurl", {
-  {"ColorScheme", "*", "lua Undercurl()"}
-})
+ -- This function and create_augroup call enable undercurl on diagnostics
+ function Undercurl()
+   hi("LspDiagnosticsUnderlineWarning", {guifg="NONE", ctermfg="NONE", cterm="undercurl", gui="undercurl"})
+   hi("LspDiagnosticsUnderlineError", {guifg="NONE", ctermfg="NONE", cterm="undercurl", gui="undercurl"})
+ end
+ 
+ create_augroup("Undercurl", {
+   {"ColorScheme", "*", "lua Undercurl()"}
+ })
 
 -- This command would enable undercurl for lsp underline diagnostics, but these
 -- sorts of highlight commands don't work in init.lua by default.
