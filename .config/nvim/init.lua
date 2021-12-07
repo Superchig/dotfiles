@@ -323,12 +323,22 @@ lspconfig.omnisharp.setup({
   root_dir = lspconfig.util.root_pattern("*.sln"),
 })
 
--- This also sets up the idris2 lsp
-require('idris2').setup({
-  server={
-    on_attach=on_attach,
-  },
-})
+-- Set up Idris 2 when loading relevant files using this hacky function and autocmd.
+-- Normally, calling require('idris2').setup({}) leads to 220 extra ms in startup time
+-- on an M.2 SSD machine.
+function SetupIdris2()
+  -- This also sets up the idris2 lsp
+  require('idris2').setup({
+    server={
+      on_attach=on_attach,
+    },
+  })
+
+  -- This essentially just calls what should already be called in the autocmd from
+  -- the idris2 plugin.
+  lspconfig["idris2_lsp"].manager.try_add()
+end
+cmd([[autocmd FileType idris2 ++once lua SetupIdris2()]])
 
 -- Enable diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
