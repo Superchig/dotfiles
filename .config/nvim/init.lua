@@ -1,3 +1,6 @@
+-- Use https://github.com/lewis6991/impatient.nvim
+require('impatient')
+
 --- vim API shortcuts
 local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -130,6 +133,7 @@ end
 require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+  use 'lewis6991/impatient.nvim'
   use 'tpope/vim-commentary'
   use 'tpope/vim-surround'
   use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
@@ -608,54 +612,8 @@ cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 --- Set colorscheme
 cmd('colorscheme gruvbox')
 
--- cmd([[autocmd BufWritePost report.tex silent make]])
-
--- Set background to be transparent in rather contorted way
--- From https://www.reddit.com/r/neovim/comments/m0gyip/nvim_initlua_not_respecting_highlight_commands/
--- Perhaps I should file a bug report as to why simply using vim.cmd doesn't work?
-
- function hi(group, opts)
-   local c = "highlight " .. group
-   for k, v in pairs(opts) do
-     c = c .. " " .. k .. "=" .. v
-   end
-   vim.cmd(c)
- end
- 
- function create_augroup(name, autocmds)
-   cmd = vim.cmd
-   cmd('augroup ' .. name)
-   cmd('autocmd!')
-   for _, autocmd in ipairs(autocmds) do
-     cmd('autocmd ' .. table.concat(autocmd, ' '))
-   end
-   cmd('augroup END')
- end
- 
- function HighlightNone()
-   hi("Normal", {ctermbg = "NONE", guibg = "NONE"})
- end
- 
- create_augroup("HighlightNone", {
-   {"ColorScheme", "*", "lua HighlightNone()"}
- })
-
- -- This function and create_augroup call enable undercurl on diagnostics
- function Undercurl()
-   hi("LspDiagnosticsUnderlineWarning", {guifg="NONE", ctermfg="NONE", cterm="undercurl", gui="undercurl"})
-   hi("LspDiagnosticsUnderlineError", {guifg="NONE", ctermfg="NONE", cterm="undercurl", gui="undercurl"})
- end
- 
- create_augroup("Undercurl", {
-   {"ColorScheme", "*", "lua Undercurl()"}
- })
-
--- This command would enable undercurl for lsp underline diagnostics, but these
--- sorts of highlight commands don't work in init.lua by default.
--- cmd("hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=undercurl gui=undercurl")
-
--- Apparently this function is not implemented yet
--- vim.api.nvim_set_hl(0, "Normal", {guibg=nil; ctermbg = nil})
+-- Make background transparent
+cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
 
 function Ormolu()
   cmd('!ormolu --mode=inplace %')
