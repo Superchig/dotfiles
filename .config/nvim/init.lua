@@ -1,6 +1,3 @@
--- Use https://github.com/lewis6991/impatient.nvim
-require('impatient')
-
 --- vim API shortcuts
 local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -21,6 +18,11 @@ function isModuleAvailable(name)
     end
     return false
   end
+end
+
+-- Use https://github.com/lewis6991/impatient.nvim
+if isModuleAvailable('impatient') then
+  require('impatient')
 end
 
 local bufmap = function(type, key, value)
