@@ -621,6 +621,11 @@ cmd([[autocmd Filetype lc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 sma
 cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 -- cmd([[autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab]])
 
+-- Configure vim-surround to use 'q' and 'Q' for LaTeX quotes
+-- From https://vi.stackexchange.com/questions/5067/surround-plugin-and-tex-quotes
+cmd([[autocmd FileType tex let b:surround_{char2nr("q")} = "`\r'"]])
+cmd([[autocmd FileType tex let b:surround_{char2nr('Q')} = "``\r''"]])
+
 --- Set colorscheme
 cmd('colorscheme gruvbox')
 
