@@ -359,10 +359,32 @@ keybindings["normal"] = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey, "Control" }, "Right", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, "Control" }, "Left", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
+    awful.key({ modkey, "Shift", "Control" }, "Right",
+        function ()
+            local t = client.focus and client.focus.first_tag or nil
+
+            awful.screen.focus_relative(1)
+
+            if t ~= nil then
+                sharedtags.viewonly(t, awful.screen.focused())
+            end
+        end,
+              {description = "move tag and focus the next screen", group = "screen"}),
+    awful.key({ modkey, "Shift", "Control" }, "Left",
+        function ()
+            local t = client.focus and client.focus.first_tag or nil
+
+            awful.screen.focus_relative(-1)
+
+            if t ~= nil then
+                sharedtags.viewonly(t, awful.screen.focused())
+            end
+        end,
+              {description = "move tag and focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
@@ -373,15 +395,6 @@ keybindings["normal"] = gears.table.join(
             end
         end,
         {description = "go back", group = "client"}),
-    -- awful.key({ modkey,           }, "Tab", function () awful.client.focus.byidx( 1) end,
-    --        {description = "cycle focus by index", group = "client"}),
-    -- awful.key({ modkey, "Shift"   }, "Tab", function () awful.client.focus.byidx(-1) end,
-    --        {description = "cycle focus by index in reverse", group = "client"}),
-    -- awful.key({ modkey,          }, "Tab",
-    --             function()
-    --                 cyclefocus.cycle({modifier="Mod1"})
-    --             end,
-    --             {description = "Cycle through windows on the same screen and tag", group = "client"}),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -604,7 +617,13 @@ for i = 1, 9 do
                         local screen = awful.screen.focused()
                         local tag = tags[i]
                         if tag then
-                           sharedtags.viewonly(tag, screen)
+                            local goal_screen = tag.screen
+                            if goal_screen ~= screen then
+                                awful.screen.focus(goal_screen)
+                                sharedtags.viewonly(tag, goal_screen)
+                            else
+                                sharedtags.viewonly(tag, screen)
+                            end
                         end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
