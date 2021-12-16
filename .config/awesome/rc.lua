@@ -365,7 +365,7 @@ keybindings["normal"] = gears.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey, "Shift", "Control" }, "Right",
         function ()
-            local t = client.focus and client.focus.first_tag or nil
+            local t = awful.screen.focused().selected_tag
 
             awful.screen.focus_relative(1)
 
@@ -376,7 +376,7 @@ keybindings["normal"] = gears.table.join(
               {description = "move tag and focus the next screen", group = "screen"}),
     awful.key({ modkey, "Shift", "Control" }, "Left",
         function ()
-            local t = client.focus and client.focus.first_tag or nil
+            local t = awful.screen.focused().selected_tag
 
             awful.screen.focus_relative(-1)
 
