@@ -2,6 +2,8 @@
 # Modified version of https://gist.github.com/vext01/16df5bd48019d451e078#gistcomment-2964552
 # designed only to work with Neovim
 
+# Requires neovim-remote from https://github.com/mhinz/neovim-remote
+
 synctex_command="nvr --remote +%{line} %{input}"
 zathura -x "$synctex_command" ${@} > /dev/null 2> /dev/null &
 
