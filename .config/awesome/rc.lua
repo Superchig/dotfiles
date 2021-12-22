@@ -367,10 +367,10 @@ keybindings["normal"] = gears.table.join(
         function ()
             local t = awful.screen.focused().selected_tag
 
-            awful.screen.focus_relative(1)
-
             if t ~= nil then
-                sharedtags.viewonly(t, awful.screen.focused())
+                local next_screen = awful.screen.focused():get_next_in_direction("right")
+
+                sharedtags.viewonly(t, next_screen)
             end
         end,
               {description = "move tag and focus the next screen", group = "screen"}),
@@ -378,10 +378,10 @@ keybindings["normal"] = gears.table.join(
         function ()
             local t = awful.screen.focused().selected_tag
 
-            awful.screen.focus_relative(-1)
-
             if t ~= nil then
-                sharedtags.viewonly(t, awful.screen.focused())
+                local next_screen = awful.screen.focused():get_next_in_direction("left")
+
+                sharedtags.viewonly(t, next_screen)
             end
         end,
               {description = "move tag and focus the previous screen", group = "screen"}),
