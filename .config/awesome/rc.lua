@@ -939,6 +939,7 @@ awful.spawn.once(home .. "/dotfiles/multi/set-touchpad")
 awful.spawn.once(home .. "/dotfiles/multi/startup-extra-apps")
 spawn_once("redshift")
 spawn_once("cbatticon")
+spawn_once("xscreensaver --no-splash")
 -- }}}}
 
 -- vim: shiftwidth=4
