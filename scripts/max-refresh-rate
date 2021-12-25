@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+
+# This script sets each active and connected display to use the highest refresh rate
+
+import subprocess
+import sys
+import re
+
+class Display:
+    def __init__(self, name, is_connected):
+        self.name = name
+        self.is_connected = is_connected
+        self.curr_resolution = None
+        self.curr_refresh_rate = None
+        self.refresh_rates = None
+        self.is_active = False
+
+    def __repr__(self):
+        connected = 'connected' if self.is_connected else 'disconnected'
+        return f"{self.name} {connected} {self.refresh_rates} {self.curr_resolution} {self.curr_refresh_rate}"
+
+xrandr_output = subprocess.run(['xrandr', '--query'], \
+    capture_output=True, text=True)
+
+out = xrandr_output.stdout.strip()
+# print(out)
+
+displays = []
+for line in out.splitlines():
+    # print(line)
+
+    if re.match('.*(-?)* .*connected', line):
+        words = line.split()
+        name = words[0]
+        is_connected = words[1] == 'connected'
+        displays.append(Display(name, is_connected))
+    elif re.match('(\s*\d+x\d+) * (\s*\d+.\d\d)*', line):
+        words = line.split()
+        resolution = words[0]
+        refresh_rates = []
+        default_rate = None
+        curr_rate = None
+
+        for hz in words[1:]:
+            if hz == '+':
+                default_rate = refresh_rates[-1]
+                continue
+            
+            has_asterisk = False
+            has_plus = False
+
+            if hz.endswith('*+'):
+                hz = hz[:len(hz) - 2]
+                has_asterisk = True
+                has_plus = True
+            elif hz.endswith('*'):
+                hz = hz[:len(hz) - 1]
+                curr_rate = hz
+                has_asterisk = True
+
+            if has_asterisk:
+                curr_rate = hz
+
+            if has_plus:
+                default_rate = hz
+
+            refresh_rates.append(hz)
+
+        if curr_rate:
+            # print(refresh_rates)
+            displays[-1].curr_refresh_rate = curr_rate
+            displays[-1].curr_resolution = resolution
+            displays[-1].refresh_rates = refresh_rates
+
+connected_displays = [scr for scr in displays if scr.is_connected]
+
+print(displays)
+print(connected_displays)
+
+active_displays = [scr for scr in connected_displays if scr.curr_resolution]
+
+# print(active_displays)
+
+for display in active_displays:
+    float_rates = [float(rate) for rate in display.refresh_rates]
+    max_float_rate = max(float_rates)
+    max_rate = display.refresh_rates[float_rates.index(max_float_rate)]
+
+    subprocess.run(['xrandr', '--output', display.name, '--mode', '3440x1440', '--rate', max_rate])
+
