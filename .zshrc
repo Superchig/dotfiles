@@ -101,8 +101,6 @@ alias spk="sudo pacman -D --asexplicit"
 
 alias mo="$HOME/dotfiles/minimalist/monitor_setup.bash"
 
-alias orphans="sudo pacman -Rns $(pacman -Qtdq)"
-
 alias gimme="sudo chown ${USER} *"
 
 alias cdc="cd $HOME/Documents/CPSC_Courses/cpsc231_a1/"
