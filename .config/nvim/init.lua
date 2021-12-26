@@ -232,20 +232,7 @@ require('compe').setup {
 
 require('nvim-autopairs').setup()
 
-require('lualine').setup({
-  sections = {
-    -- The default for lualine_x is {'encoding', 'fileformat', 'filetype'}
-    lualine_x = {
-      {
-        'diagnostics',
-        sources = {'nvim_diagnostic'},
-        symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
-      },
-      'encoding',
-      'filetype'
-    }
-  }
-})
+require('lualine').setup()
 
 require('dapui').setup({
   icons = { expanded = "▾", collapsed = "▸" },
