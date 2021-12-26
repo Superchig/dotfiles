@@ -4,6 +4,7 @@
 
 import subprocess
 import sys
+import re
 
 nvoutput = subprocess.run(["nvidia-settings", "--query", "CurrentMetaMode"], \
     capture_output=True, text=True)
@@ -12,12 +13,10 @@ nvoutput = subprocess.run(["nvidia-settings", "--query", "CurrentMetaMode"], \
 out = nvoutput.stdout.strip()
 print(out)
 
-settings_index = out.find("{")
-if settings_index == -1:
-    sys.exit("Could not find settings!")
-settings = out[settings_index:].lstrip("{").rstrip("}").split(",")
-# Use list comprehension to strip each setting
-settings = [setting.strip() for setting in settings]
+pattern = re.compile("(.* :: )(?P<name>.+)(: )(?P<mode>[^\s]+x[^\s]+)(.*) \{(?P<settings>.*)\}")
+top_parts = pattern.match(out)
+
+settings = top_parts['settings'].split(', ')
 
 if "ForceFullCompositionPipeline=On" in settings and \
    "ForceCompositionPipeline=On" in settings:
@@ -34,8 +33,5 @@ print(settings)
 print("\n")
 
 # Reattach settings back into meta mode string
-meta_mode = "{" + ", ".join(settings) + "}"
-first_half = out[out.find("DPY-0"):out.find("0 {") + 2]
-new_settings = first_half + meta_mode
-print(new_settings)
-subprocess.run(["nvidia-settings", "--assign", "CurrentMetaMode=" + new_settings])
+meta_mode = f"{top_parts['name']}: {top_parts['mode']} {{{', '.join(settings)}}}"
+subprocess.run(["nvidia-settings", "--assign", "CurrentMetaMode=" + meta_mode])
