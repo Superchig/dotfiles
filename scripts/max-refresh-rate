@@ -72,12 +72,12 @@ for line in out.splitlines():
             displays[-1].curr_resolution = resolution
             displays[-1].refresh_rates = refresh_rates
 
-connected_displays = [scr for scr in displays if scr.is_connected]
+connected_displays = [dis for dis in displays if dis.is_connected]
 
 print(displays)
 print(connected_displays)
 
-active_displays = [scr for scr in connected_displays if scr.curr_resolution]
+active_displays = [dis for dis in connected_displays if dis.curr_resolution]
 
 # print(active_displays)
 
@@ -86,5 +86,5 @@ for display in active_displays:
     max_float_rate = max(float_rates)
     max_rate = display.refresh_rates[float_rates.index(max_float_rate)]
 
-    subprocess.run(['xrandr', '--output', display.name, '--mode', '3440x1440', '--rate', max_rate])
+    subprocess.run(['xrandr', '--output', display.name, '--mode', display.curr_resolution, '--rate', max_rate])
 
