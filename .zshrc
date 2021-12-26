@@ -218,3 +218,7 @@ export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # opam configuration
 test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+if [ -f /usr/bin/exa ]; then
+  eval "$(zoxide init zsh)"
+fi
