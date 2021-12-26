@@ -175,7 +175,6 @@ require('packer').startup(function()
   use {'lervag/vimtex'}
   -- use {'edwinb/idris2-vim'}
   use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
-  use {'ziglang/zig.vim'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
@@ -469,10 +468,6 @@ vim.g.vim_markdown_folding_style_pythonic = 1
 vim.g.vim_markdown_folding_level = 6
 -- Disable concealing of markdown syntax
 vim.g.vim_markdown_conceal = 0
-
--- Disable automatic code formatting on save for zig
--- https://github.com/ziglang/zig.vim
-vim.g.zig_fmt_autosave = 0
 
 --- Options
 -- Equivalent to set termguicolors
