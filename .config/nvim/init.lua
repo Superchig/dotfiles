@@ -150,9 +150,13 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   use 'neovim/nvim-lspconfig'
   use 'alx741/vim-rustfmt'  -- Provides :Rustfmt and related commands
-  -- use 'nvim-lua/lsp_extensions.nvim'
-  use 'hrsh7th/nvim-compe'
-  -- use 'glepnir/lspsaga.nvim'
+
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
+
   use {"ray-x/lsp_signature.nvim"}
   use {
     'nvim-telescope/telescope.nvim',
@@ -173,7 +177,6 @@ require('packer').startup(function()
 
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
-  -- use {'edwinb/idris2-vim'}
   use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
 end)
 
@@ -195,39 +198,58 @@ require('lsp_signature').setup({
   }
 })
 
-require('compe').setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
+local cmp = require('cmp')
 
-  source = {
-    path = true;
-    buffer = false;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = true;
-    ultisnips = true;
-    luasnip = true;
-  };
-}
+cmp.setup({
+  -- snippet = {
+  --   -- REQUIRED - you must specify a snippet engine
+  --   expand = function(args)
+  --     vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+  --     -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+  --     -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+  --     -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+  --   end,
+  -- },
+  mapping = {
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    -- { name = 'vsnip' }, -- For vsnip users.
+    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'ultisnips' }, -- For ultisnips users.
+    -- { name = 'snippy' }, -- For snippy users.
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+-- Prepare for lspconfig
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 require('nvim-autopairs').setup()
 
@@ -275,27 +297,34 @@ require('dapui').setup({
   windows = { indent = 1 },
 })
 
+-- TODO(Chris): Put this repetitive lspconfig setup into a loop
 -- This requires rust-analyzer to be installed separately
 lspconfig = require('lspconfig')
 lspconfig.rust_analyzer.setup({ on_attach=on_attach })
 lspconfig.hls.setup({
   on_attach=on_attach,
-  root_dir=lspconfig.util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml", ".hlint.yaml")
+  capabilities=capabilities,
+  root_dir=lspconfig.util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml", ".hlint.yaml"),
 })
 lspconfig.gopls.setup({
   on_attach=on_attach,
+  capabilities=capabilities,
 })
 lspconfig.clangd.setup({
   on_attach=on_attach,
+  capabilities=capabilities,
 })
 lspconfig.texlab.setup({
   on_attach=on_attach,
+  capabilities=capabilities,
 })
 lspconfig.ocamllsp.setup({
   on_attach=on_attach,
+  capabilities=capabilities,
 })
 lspconfig.zls.setup({
   on_attach=on_attach,
+  capabilities=capabilities,
 })
 
 local pid = vim.fn.getpid()
@@ -543,12 +572,6 @@ map('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>')
 -- LSP completion
 cmd([[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]])
 cmd([[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
-
-cmd([[inoremap <silent><expr> <C-Space> compe#complete()]])
-cmd([[inoremap <silent><expr> <CR>      compe#confirm('<CR>')]])
-cmd([[inoremap <silent><expr> <C-e>     compe#close('<C-e>')0]])
-cmd([[inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })]])
-cmd([[inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })]])
 
 map('n', '<leader>q', '<cmd>copen<CR>', {noremap = true, silent = true})
 map('n', '<leader>n', '<cmd>cnext<CR>', {noremap = true, silent = true})
