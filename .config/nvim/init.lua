@@ -272,6 +272,8 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -635,10 +637,6 @@ map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
 map('n', '<C-p>', '<cmd>Telescope find_files<cr>')
 
 map('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>')
-
--- LSP completion
-cmd([[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]])
-cmd([[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
 
 map('n', '<leader>q', '<cmd>copen<CR>', {noremap = true, silent = true})
 map('n', '<leader>n', '<cmd>cnext<CR>', {noremap = true, silent = true})
