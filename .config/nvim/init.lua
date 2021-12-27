@@ -593,6 +593,7 @@ cmd('cabbrev Interesting vimgrep /^- .*interesting .*:/ %')
 
 cmd('autocmd Filetype markdown set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 cmd('autocmd Filetype markdown set textwidth=78 colorcolumn=+0')
+cmd([[autocmd Filetype markdown lua require('cmp').setup.buffer { enabled = false }]])
 
 cmd('autocmd Filetype lua set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 
@@ -628,6 +629,8 @@ cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 
 -- Set the default empty buffer type to Markdown
 cmd([[autocmd BufEnter {} set ft=markdown]])
+
+cmd([[autocmd Filetype {} lua require('cmp').setup.buffer { enabled = false }]])
 
 -- Configure vim-surround to use 'q' and 'Q' for LaTeX quotes
 -- From https://vi.stackexchange.com/questions/5067/surround-plugin-and-tex-quotes
