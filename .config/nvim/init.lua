@@ -352,7 +352,20 @@ require('dapui').setup({
 -- TODO(Chris): Put this repetitive lspconfig setup into a loop
 -- This requires rust-analyzer to be installed separately
 lspconfig = require('lspconfig')
-lspconfig.rust_analyzer.setup({ on_attach=on_attach })
+lspconfig.rust_analyzer.setup({
+  on_attach=on_attach,
+  capabilities=capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      -- https://users.rust-lang.org/t/how-to-use-clippy-in-vs-code-with-rust-analyzer/41881
+      -- https://rust-analyzer.github.io/manual.html#nvim-lsp
+      checkOnSave = {
+        -- The default command is "check"
+        command = 'clippy',
+      },
+    },
+  },
+})
 lspconfig.hls.setup({
   on_attach=on_attach,
   capabilities=capabilities,
