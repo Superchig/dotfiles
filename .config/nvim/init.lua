@@ -626,6 +626,9 @@ cmd([[autocmd Filetype lc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 sma
 cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 -- cmd([[autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab]])
 
+-- Set the default empty buffer type to Markdown
+cmd([[autocmd BufEnter {} set ft=markdown]])
+
 -- Configure vim-surround to use 'q' and 'Q' for LaTeX quotes
 -- From https://vi.stackexchange.com/questions/5067/surround-plugin-and-tex-quotes
 cmd([[autocmd FileType tex let b:surround_{char2nr("q")} = "`\r'"]])
