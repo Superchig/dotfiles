@@ -386,6 +386,7 @@ local omnisharp_bin = "/home/chiggie/Downloads/omnisharp/run"
 -- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
 lspconfig.omnisharp.setup({
   on_attach=on_attach,
+  capabilities=capabilities,
   cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) },
   root_dir = lspconfig.util.root_pattern("*.sln"),
 })
@@ -398,6 +399,7 @@ function SetupIdris2()
   require('idris2').setup({
     server={
       on_attach=on_attach,
+      capabilities=capabilities,
     },
   })
 
