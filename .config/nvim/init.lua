@@ -734,3 +734,21 @@ endfunction
 -- With kitty and Neovim, <C-M> is the same input as <C-Enter> and <Enter>
 cmd([[autocmd Filetype tex nnoremap <silent> <C-M> :call Synctex()<cr>]])
 -- cmd([[autocmd Filetype tex inoremap <silent> <C-M> <cmd>:call Synctex()<cr>]])
+
+vim.g.vim_markdown_folding_disabled = 1
+
+-- This can broadly replace the functionality of zM for Markdown files
+function notes_headers()
+  cmd([[vimgrep /^# .*$/j %]])
+  -- The ivy theme is used to place the prompt at the top, reversing the
+  -- result order
+  require('telescope.builtin').quickfix(require('telescope.themes').get_ivy())
+end
+-- cmd([[:command! NotesHeaders lua notes_headers()]])
+
+if vim.g.vim_markdown_folding_disabled == 1 then
+  -- Checking file name autocmd is from https://stackoverflow.com/questions/6009698/autocmd-check-filename-in-vim
+  -- cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap <silent> zM :lua notes_headers()<cr>]])
+  cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap zM :lua notes_headers()<cr>]])
+end
+
