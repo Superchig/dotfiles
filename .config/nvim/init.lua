@@ -635,6 +635,7 @@ map('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
+map('n', '<leader>fl', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<cr>')
 
 map('n', '<C-p>', '<cmd>Telescope find_files<cr>')
 
@@ -710,7 +711,7 @@ cmd('colorscheme gruvbox')
 -- Make background transparent
 cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
 
-function Ormolu()
+local function Ormolu()
   cmd('!ormolu --mode=inplace %')
 end
 
