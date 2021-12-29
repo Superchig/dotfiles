@@ -38,6 +38,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioPlay exec playerctl play-play
+
 # get color from XResource configuration - variable_name XResource fallback
 
 # special
@@ -303,6 +306,7 @@ for_window [title="Steam - News*"] floating enable
 for_window [title="SocialProgress"] floating enable
 for_window [title="Quick Format Citation"] floating enable
 for_window [title="Add/Edit Citation"] floating enable
+for_window [title="Event Tester"] floating enable
 for_window [title="Progress" class="Zotero"] floating enable
 # for_window [class="Zotero"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
