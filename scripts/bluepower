@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+import re
+
+class Device:
+    def __init__(self, name, path):
+        self.name = name
+        self.path = path
+        self.props = {}
+
+    def __repr__(self):
+        return f"{self.name}: {self.path} -- {self.props}"
+
+upower_output = subprocess.run(["upower", "--dump"], capture_output=True, text=True)
+
+out = upower_output.stdout
+
+devices = []
+
+device_header_pat = re.compile('(?P<name>.*): (?P<path>.*)')
+prop_pat = re.compile('\s*(?P<key>.*): \s*(?P<val>.*)')
+
+for line in out.splitlines():
+    if line.startswith('Device'):
+        (name, path) = device_header_pat.match(line).groups()
+        devices.append(Device(name, path))
+    elif line.startswith('Daemon'):
+        break
+    else:
+        match = prop_pat.match(line)
+        if match:
+            (key, val) = match.groups()
+            devices[-1].props[key] = val
+
+mpow = next((d for d in devices if 'model' in d.props and d.props['model'] == 'Mpow Flame S'), None)
+if mpow:
+    print(mpow.props['percentage'])
+
