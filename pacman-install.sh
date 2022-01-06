@@ -6,6 +6,7 @@ IFS=$'\n\t'
 ORIGDIR=$(pwd)
 
 sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
+        dkms linux-headers \
 	firefox xorg-xrandr arandr sxiv guake gcc clang fd exa xterm xfce4-notifyd \
 	i3-gaps rofi autorandr feh picom redshift alacritty mpv wget curl \
 	xss-lock vlc pulseaudio pulseaudio-alsa pavucontrol perl-file-mimeinfo \
