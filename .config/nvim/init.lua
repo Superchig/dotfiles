@@ -53,9 +53,9 @@ end
 -- Function to attach completion when setting up lsp
 local on_attach = function(client)
   bufmap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>')
-  bufmap('n', 'ge', [[m'<cmd>lua vim.lsp.diagnostic.goto_next({enable_popup = false})<CR>]])
-  bufmap('n', 'gE', [[m'<cmd>lua vim.lsp.diagnostic.goto_prev({enable_popup = false})<CR>]])
-  bufmap('n', 'gs', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})<CR>')
+  bufmap('n', 'ge', [[m'<cmd>lua vim.diagnostic.goto_next({enable_popup = false})<CR>]])
+  bufmap('n', 'gE', [[m'<cmd>lua vim.diagnostic.goto_prev({enable_popup = false})<CR>]])
+  bufmap('n', 'gs', '<cmd>lua vim.diagnostic.open_float({focusable = false})<CR>')
   bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>')
   bufmap('n', '<F24>', '<cmd>lua vim.lsp.buf.references()<CR>')
   bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -187,7 +187,9 @@ if isModuleAvailable('nvim-treesitter.configs') then
     ensure_installed = {"lua", "ruby", "python", "haskell", "go", "c", "latex"},
     highlight = {
       enable = true,
-      disable = {'markdown'}
+      -- Use plasticboy/vim-markdown for highlighting, but Treesitter for
+      -- code-folding
+      disable = {'markdown'} 
     },
     textobjects = {
       select = {
@@ -569,6 +571,9 @@ vim.g.vim_markdown_folding_level = 6
 -- Disable concealing of markdown syntax
 vim.g.vim_markdown_conceal = 0
 
+-- vim.o.foldmethod = 'expr'
+-- vim.o.foldexpr = [[nvim_treesitter#foldexpr()]]
+
 --- Options
 -- Equivalent to set termguicolors
 opt.termguicolors = true
@@ -676,6 +681,7 @@ cmd('autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
 cmd([[autocmd Filetype crontab set commentstring=#\ %s]])
 
 cmd([[autocmd Filetype toml set commentstring=#\ %s]])
+cmd([[autocmd Filetype toml set shiftwidth=2]])
 
 cmd('autocmd Filetype cs set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab')
 
@@ -694,6 +700,8 @@ cmd([[autocmd Filetype lc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 sma
 
 cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 -- cmd([[autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab]])
+--
+cmd([[autocmd Filetype html set shiftwidth=4]])
 
 -- Set the default empty buffer type to Markdown
 cmd([[autocmd BufEnter {} set ft=markdown]])
@@ -742,6 +750,7 @@ function notes_headers()
   cmd([[vimgrep /^# .*$/j %]])
   -- The ivy theme is used to place the prompt at the top, reversing the
   -- result order
+  vim.o.foldlevel = 0
   require('telescope.builtin').quickfix(require('telescope.themes').get_ivy())
 end
 -- cmd([[:command! NotesHeaders lua notes_headers()]])
