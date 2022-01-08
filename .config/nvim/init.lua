@@ -134,22 +134,22 @@ end
 -- Use :PackerCompile and then :PackerInstall when installing plugins
 require('packer').startup(function()
   -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-  use 'lewis6991/impatient.nvim'
-  use 'tpope/vim-commentary'
-  use 'tpope/vim-surround'
+  use {'wbthomason/packer.nvim'}
+  use {'lewis6991/impatient.nvim'}
+  use {'tpope/vim-commentary'}
+  use {'tpope/vim-surround'}
   use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
   -- use 'morhetz/gruvbox'
-  use 'windwp/nvim-autopairs'
+  use {'windwp/nvim-autopairs'}
   use {
     'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
   -- Use :TSUpdate to update parsers
   -- Use :TSInstall to install specific parsers
-  use 'nvim-treesitter/nvim-treesitter'
-  use 'neovim/nvim-lspconfig'
-  use 'alx741/vim-rustfmt'  -- Provides :Rustfmt and related commands
+  use {'nvim-treesitter/nvim-treesitter'}
+  use {'neovim/nvim-lspconfig'}
+  use {'alx741/vim-rustfmt'}  -- Provides :Rustfmt and related commands
 
   use {'hrsh7th/cmp-nvim-lsp'}
   use {'hrsh7th/cmp-buffer'}
