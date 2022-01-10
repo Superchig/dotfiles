@@ -1,6 +1,23 @@
 #!/usr/bin/env sh
-cd "$(xcwd)"
+
+# Dependencies: xcwd, xdotool, relevant terminal
+
+PID=$(xdotool getactivewindow getwindowpid)
+PROCESS_NAME=$(ps -p "$PID" -o comm=)
+echo "PROCESS_NAME: $PROCESS_NAME"
+case "$PROCESS_NAME" in
+  firefox | GeckoMain)
+    ;;
+  *)
+    cd "$(xcwd)"
+    ;;
+esac
+
 exec kitty
+
+# cd "$(xcwd)"
+# exec kitty
+
 # if [ "$HOSTNAME" = "alien" ]; then
 #   exec alacritty
 # else
