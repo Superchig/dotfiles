@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -euo pipefail
+
+if [ "$#" -ne 1 ]; then
+  ME=$(basename "$0")
+  echo "Usage: ${ME} file-title"
+  exit 1
+fi
+
+FILE_TITLE="${0}"
+
+DATE=$(date +'%Y-%m-%d')
+FILE=posts/${DATE}-${FILE_TITLE}.md
+echo "${FILE}"
+hugo new "${FILE}"
+${VISUAL} content/"${FILE}"
