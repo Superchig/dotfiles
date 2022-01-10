@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Dependencies: jq
+
+jq --color-output "$@" | less -R
