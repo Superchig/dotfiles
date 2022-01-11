@@ -55,7 +55,7 @@ abbr --add ez nvim ~/.zshrc
 abbr --add ea nvim ~/.config/awesome/rc.lua
 abbr --add ei nvim ~/.config/i3/config
 abbr --add eb nvim ~/.config/berry/autostart
-abbr --add es nvim ~/.config/sxhkd/sxhkdrc
+abbr --add es nvim ~/.config/sway/config
 abbr --add ep nvim ~/dotfiles/pacman-install.sh
 abbr --add em nvim ~/.config/mimeapps.list
 abbr --add en nvim ~/Dropbox/zoom_items.md
