@@ -136,3 +136,6 @@ end
 
 # Source opam (ocaml package manager) script
 source /home/chiggie/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+zoxide init fish --cmd j | source
+
