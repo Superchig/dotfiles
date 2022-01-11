@@ -66,6 +66,8 @@ input type:touchpad {
     tap_button_map lrm
 }
 
+input * xkb_options compose:ralt
+
 ### Key bindings
 #
 # Basics:
