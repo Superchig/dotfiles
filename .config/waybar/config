@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "custom/media", "sway/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "battery", "battery#bat2", "tray"],
+    "modules-right": ["pulseaudio", "network", "battery", "battery#bat2", "clock#date", "tray"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -74,6 +74,12 @@
         "spacing": 10
     },
     "clock": {
+    	"format": "{:%I:%M %p}",
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "clock#date": {
     	"format": "{:%a - %b %d, %Y}",
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
