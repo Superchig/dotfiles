@@ -306,6 +306,10 @@ default_border pixel 2
 
 smart_borders on
 
+gaps inner 3
+
+smart_gaps on
+
 #
 # Status Bar:
 #
@@ -329,5 +333,6 @@ bar {
 }
 
 exec mako
+exec $HOME/dotfiles/multi/startup-extra-apps
 
 include /etc/sway/config.d/*
