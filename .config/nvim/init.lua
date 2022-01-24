@@ -641,6 +641,7 @@ map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
 map('n', '<leader>fl', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<cr>')
+map('n', '<leader>fa', '<cmd>lua require("telescope.builtin").lsp_code_actions()<cr>')
 
 map('n', '<C-p>', '<cmd>Telescope find_files<cr>')
 
