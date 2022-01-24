@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# This backs up a zoom_items.md file into a zip file
+
+# Dependencies: zip, zipnote
+
+DATE=$(date +'%Y-%m-%d')
+
+zip -u archive_zoom_items.zip zoom_items.md
+printf "@ zoom_items.md\n@=${DATE}-zoom_items.md\n" | zipnote -w archive_zoom_items.zip
