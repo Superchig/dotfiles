@@ -99,7 +99,7 @@ alias sps="sudo pacman -S"
 alias spr="sudo pacman -R"
 alias spk="sudo pacman -D --asexplicit"
 
-alias mo="$HOME/dotfiles/minimalist/monitor_setup.bash"
+alias mo="$HOME/dotfiles/multi/monitor_setup"
 
 alias gimme="sudo chown ${USER} *"
 
