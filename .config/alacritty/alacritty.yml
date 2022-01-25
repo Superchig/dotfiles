@@ -152,7 +152,8 @@ schemes:
 
 colors: *gruv_dark
 
-background_opacity: .85
+window:
+  opacity: .85
 
 key_bindings:
  - { key: U,   mods: Control|Shift,   action: ScrollPageUp,   }
