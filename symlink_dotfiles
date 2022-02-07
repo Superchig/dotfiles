@@ -54,3 +54,5 @@ ln -s "$DOTFILES/sourceable_scripts" ~/.config/zsh/scripts
 
 mkdir -p ~/.config/sxhkd
 ln -s ~/.config/sxhkd/sxhkdrc "$DOTFILES/.config/sxhkd/sxhkdrc"
+
+ln -s ~/.fonts.conf "$DOTFILES/.fonts.conf"
