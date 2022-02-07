@@ -39,3 +39,8 @@ Set-Alias -Name ln -Value New-Link
 
 # gsudo is a sudo equivalent for Windows
 # https://github.com/gerardog/gsudo
+
+function Run-Lazygit {
+  lazygit
+}
+Set-Alias -Name lg -Value Run-Lazygit
