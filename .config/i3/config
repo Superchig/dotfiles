@@ -222,7 +222,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+Control+d exec $HOME/dotfiles/minimalist/rofi/i3_exit.sh
 
 # bindsym $mod+Shift+b exec i3-msg border pixel 3
-# bindsym --release $mod+Shift+b exec i3-msg border pixel 0
+bindsym --release $mod+Shift+b exec i3-msg border pixel 0
 bindsym $mod+Shift+Control+p exec ~/dotfiles/minimalist/rofi/power_options.sh
 
 # resize window (you can also use the mouse for that)
@@ -244,8 +244,7 @@ mode "resize" {
         bindsym Up resize shrink height 10 px or 10 ppt; mode "default"
         bindsym Right resize grow width 10 px or 10 ppt; mode "default"
 
-	# Moves the window to the center
-	bindsym c move position center; mode "default"
+	bindsym c resize set width 1920px; resize set height 1080px; move position center; mode "default"
 
 	bindsym 1 resize set width 1920px; resize set height 1080px; mode "default"
 
@@ -312,6 +311,7 @@ for_window [title="SocialProgress"] floating enable
 for_window [title="Quick Format Citation"] floating enable
 for_window [title="Add/Edit Citation"] floating enable
 for_window [title="Event Tester"] floating enable
+
 for_window [title="Progress" class="Zotero"] floating enable
 # for_window [class="Zotero"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
@@ -326,12 +326,17 @@ for_window [class="Sxiv"] floating enable
 for_window [class="Xsane"] floating enable
 for_window [class="yuzu"] floating enable
 for_window [class="Gnome-screenshot"] floating enable
+for_window [class="OpenGL"] floating enable
+for_window [class="openmw"] floating enable
+
 for_window [class="Alacritty" title="qalc"] floating enable
 for_window [class="Alacritty" title="pulsemixer"] floating enable
 for_window [class="Steam" title="Friends List"] floating enable
 # for_window [class="mushclient.exe"] floating enable
-for_window [class="OpenGL"] floating enable
-for_window [class="openmw"] floating enable
+
+for_window [window_type="dialog"] floating enable
+for_window [window_type="popup_menu"] floating enable
+for_window [window_type="notification"] floating enable
 
 # Show no border for new windows
 default_border none
@@ -348,7 +353,7 @@ smart_gaps on
 smart_borders on
 
 # Start workspace 2 in tabbed mode
-for_window [workspace=$ws2] layout tabbed
+# for_window [workspace=$ws2] layout tabbed
 for_window [workspace=$ws4] layout tabbed
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -397,3 +402,4 @@ exec $HOME/dotfiles/multi/startup-extra-apps
 exec ~/dotfiles/scripts/polkit-agent
 
 exec xscreensaver --no-splash &
+
