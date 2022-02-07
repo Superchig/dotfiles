@@ -714,6 +714,8 @@ cmd([[autocmd Filetype {} lua require('cmp').setup.buffer { enabled = false }]])
 cmd([[autocmd FileType tex let b:surround_{char2nr("q")} = "`\r'"]])
 cmd([[autocmd FileType tex let b:surround_{char2nr('Q')} = "``\r''"]])
 
+cmd([[autocmd BufRead report.tex setlocal spell]])
+
 cmd([[autocmd Filetype conf set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 --- Set colorscheme
