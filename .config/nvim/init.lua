@@ -720,7 +720,9 @@ cmd([[autocmd Filetype conf set tabstop=8 softtabstop=0 expandtab shiftwidth=4 s
 cmd('colorscheme gruvbox')
 
 -- Make background transparent
-cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
+if vim.g.GuiLoaded == 0 then
+  cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
+end
 
 local function Ormolu()
   cmd('!ormolu --mode=inplace %')
