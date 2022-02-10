@@ -722,7 +722,7 @@ cmd([[autocmd Filetype conf set tabstop=8 softtabstop=0 expandtab shiftwidth=4 s
 cmd('colorscheme gruvbox')
 
 -- Make background transparent
-if vim.g.GuiLoaded == 0 then
+if not vim.g.GuiLoaded or vim.g.GuiLoaded == 0 then
   cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
 end
 
