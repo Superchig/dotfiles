@@ -170,7 +170,7 @@ require('packer').startup(function()
   use {'kevinhwang91/nvim-bqf'}
   -- Provides (the most ubiquitous) readline bindings for Vim
   use {'tpope/vim-rsi'}
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  -- use 'nvim-treesitter/nvim-treesitter-textobjects'
   use {'mfussenegger/nvim-dap'}
   use {
     'rcarriga/nvim-dap-ui',
@@ -180,6 +180,7 @@ require('packer').startup(function()
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
   use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
+  use {'ledger/vim-ledger'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
@@ -641,6 +642,7 @@ map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
 map('n', '<leader>fl', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<cr>')
+map('n', '<leader>fL', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<cr>')
 map('n', '<leader>fa', '<cmd>lua require("telescope.builtin").lsp_code_actions()<cr>')
 
 map('n', '<C-p>', '<cmd>Telescope find_files<cr>')
@@ -717,6 +719,8 @@ cmd([[autocmd FileType tex let b:surround_{char2nr('Q')} = "``\r''"]])
 cmd([[autocmd BufRead report.tex setlocal spell]])
 
 cmd([[autocmd Filetype conf set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
+
+cmd([[autocmd Filetype ledger set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
