@@ -5,6 +5,10 @@ if ! ps -e | grep syncthing-gtk; then
 	syncthing-gtk --minimized &
 fi
 
+if [ "$HOSTNAME" = "msi" ]; then
+  solaar --window=hide
+fi
+
 # if [ "$HOSTNAME" = "msi" ]; then
 # 	if ! ps -e | grep Discord; then
 # 		discord --start-minimized &
