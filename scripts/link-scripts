@@ -1,4 +1,22 @@
 #!/bin/sh
 
-mkdir -p ~/bin
-ln -st ~/bin ~/dotfiles/scripts/*
+# This symlinks scripts from ~/dotfiles/scripts to ~/bin.
+
+BIN=~/bin
+
+mkdir -p "$BIN"
+
+if echo "$PATH" | grep -q "$BIN"; then
+  echo "PATH correct 👍: contains $BIN"
+else
+  echo "Warning ⚠️: PATH does not include $BIN"
+fi
+
+for FILE in ~/dotfiles/scripts/*; do
+  if [ -f "$BIN/$(basename "$FILE")" ]; then
+    echo "File exists ✅: $FILE"
+  else
+    ln -st "$BIN" "$FILE"
+    echo "File symlinked 🔗: $FILE"
+  fi
+done
