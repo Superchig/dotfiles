@@ -70,7 +70,7 @@ font-2 = NotoColorEmoji:fontformat=truetype:scale=10:antialias=false;
 modules-left = i3 xwindow
 # modules-center = mpd
 modules-center = time
-modules-right = polybattery pulseaudio date
+modules-right = gobattery pulseaudio date
 ; modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
 
 tray-position = ${env:TRAY_POSITION:right}
@@ -362,6 +362,13 @@ poll-interval = 5
 [module/polybattery]
 type = custom/script
 exec = $HOME/dotfiles/.config/polybar/polybattery
+label = "%output%"
+label-underline = ${xrdb:color6:#ffb52a}
+interval = 5
+
+[module/gobattery]
+type = custom/script
+exec = $HOME/go/bin/go-battery
 label = "%output%"
 label-underline = ${xrdb:color6:#ffb52a}
 interval = 5
