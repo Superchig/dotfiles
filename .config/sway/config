@@ -334,5 +334,6 @@ bar {
 
 exec mako
 exec $HOME/dotfiles/multi/startup-extra-apps
+exec nm-applet
 
 include /etc/sway/config.d/*
