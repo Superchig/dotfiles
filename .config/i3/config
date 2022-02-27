@@ -244,7 +244,11 @@ mode "resize" {
         bindsym Up resize shrink height 10 px or 10 ppt; mode "default"
         bindsym Right resize grow width 10 px or 10 ppt; mode "default"
 
-	bindsym c resize set width 1920px; resize set height 1080px; move position center; mode "default"
+	bindsym c floating enable; resize set width 1920px; resize set height 1080px; move position center; mode "default"
+        # This binds the "=" key
+	bindcode 21 floating enable; resize set width 965px; resize set height 733px; move position center; mode "default"
+        # This binds the space key
+	bindcode 65 floating disable; mode "default"
 
 	bindsym 1 resize set width 1920px; resize set height 1080px; mode "default"
 
