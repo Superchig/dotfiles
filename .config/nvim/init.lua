@@ -58,6 +58,7 @@ local on_attach = function(client)
   bufmap('n', 'gs', '<cmd>lua vim.diagnostic.open_float({focusable = false})<CR>')
   bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>')
   bufmap('n', '<F24>', '<cmd>lua vim.lsp.buf.references()<CR>')
+  bufmap('n', '<S-F12>', '<cmd>lua vim.lsp.buf.references()<CR>') -- For Windows/wezterm support
   bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
   bufmap('n', 'gA', '<cmd>lua vim.lsp.buf.code_action()<CR>')
   cmd('setlocal signcolumn=number')
