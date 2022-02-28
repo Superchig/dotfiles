@@ -12,6 +12,6 @@ END {
    d = int(s / 86400);
    h = int((s - d * 86400) / 3600)
    m = int((s - d * 86400 - h * 3600) / 60)
-   printf "Last update was %d days %d hours and %d minutes ago\nRun pacman now!\n", d, h, m
+   printf "Last update was %d days, %d hours, and %d minutes ago\n", d, h, m
 }
 ' /var/log/pacman.log
