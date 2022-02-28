@@ -4,6 +4,9 @@ Set-Alias -Name l -Value ls
 
 Set-Alias -Name e -Value nvim
 
+function Edit-Notes {nvim.exe $HOME\Dropbox\zoom_items.md}
+Set-Alias -Name en -Value Edit-Notes
+
 # Function must be named according to <ApprovedVerb>-<Prefix><SingularNoun>
 # https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/09-functions?view=powershell-7.1
 function Edit-Profile {nvim.exe $profile}
