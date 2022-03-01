@@ -182,6 +182,7 @@ require('packer').startup(function()
   use {'lervag/vimtex'}
   use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
   use {'ledger/vim-ledger'}
+  use {'vim-scripts/lbnf.vim'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
@@ -722,6 +723,8 @@ cmd([[autocmd BufRead report.tex setlocal spell]])
 cmd([[autocmd Filetype conf set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 cmd([[autocmd Filetype ledger set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
+
+cmd([[autocmd Bufread,BufNewFile *.cf set filetype=lbnf]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
