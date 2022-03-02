@@ -725,6 +725,8 @@ cmd([[autocmd Filetype conf set tabstop=8 softtabstop=0 expandtab shiftwidth=4 s
 cmd([[autocmd Filetype ledger set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 cmd([[autocmd Bufread,BufNewFile *.cf set filetype=lbnf]])
+cmd([[autocmd Filetype lbnf set commentstring=--\ %s]])
+cmd([[autocmd Filetype lbnf set comments+=b:--]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
