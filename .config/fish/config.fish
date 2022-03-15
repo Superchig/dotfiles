@@ -83,7 +83,7 @@ abbr --add fe ~/.fehbg
 
 abbr --add lg lazygit
 
-abbr --add code code --enable-features=UseOzonePlatform --ozone-platform=wayland
+# abbr --add code code --enable-features=UseOzonePlatform --ozone-platform=wayland
 
 abbr --add cgb cargo build
 abbr --add cgr cargo run
