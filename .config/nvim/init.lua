@@ -314,7 +314,20 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 require('nvim-autopairs').setup()
 
-require('lualine').setup()
+require('lualine').setup({
+  sections = {
+    lualine_b = {
+      'branch',
+      {
+        'diff',
+        diff_color = {
+          removed = { fg = 'orange' } -- This color is at least defined by gruvbox.nvim
+        },
+      },
+      'diagnostics'
+    },
+  },
+})
 
 require('dapui').setup({
   icons = { expanded = "▾", collapsed = "▸" },
