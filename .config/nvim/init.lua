@@ -187,7 +187,10 @@ end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
-    ensure_installed = {"lua", "ruby", "python", "haskell", "go", "c", "latex"},
+    ensure_installed = {
+      "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust",
+      "comment", -- Highlights comments with specific syntax
+    },
     highlight = {
       enable = true,
       -- Use plasticboy/vim-markdown for highlighting, but Treesitter for
