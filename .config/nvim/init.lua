@@ -183,6 +183,7 @@ require('packer').startup(function()
   use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
   use {'ledger/vim-ledger'}
   use {'vim-scripts/lbnf.vim'}
+  use {'pest-parser/pest.vim'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
