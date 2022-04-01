@@ -714,6 +714,8 @@ cmd([[autocmd Filetype c set commentstring=//\ %s]])
 
 cmd([[autocmd Filetype sh set shiftwidth=2]])
 
+cmd([[autocmd Filetype awk set shiftwidth=2]])
+
 -- Lambda calculus
 cmd([[autocmd Bufread,BufNewFile *.lc set filetype=lc]])
 cmd([[autocmd Filetype lc set commentstring=//\ %s]])
