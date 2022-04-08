@@ -123,4 +123,7 @@ map - $$HOME/.config/lf/draw_img.sh $f
 # Open with <enter>
 map <enter> open
 
+# Show hidden files
+set hidden
+
 set previewer ~/.config/lf/pv.sh
