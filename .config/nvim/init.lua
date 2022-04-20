@@ -722,7 +722,7 @@ cmd([[autocmd Bufread,BufNewFile *.lc set filetype=lc]])
 cmd([[autocmd Filetype lc set commentstring=//\ %s]])
 cmd([[autocmd Filetype lc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
-cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
+-- cmd([[autocmd Filetype tex set textwidth=80 colorcolumn=+0]])
 -- cmd([[autocmd Filetype tex set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab]])
 --
 cmd([[autocmd Filetype html set shiftwidth=4]])
@@ -746,6 +746,10 @@ cmd([[autocmd Filetype ledger set tabstop=8 softtabstop=0 expandtab shiftwidth=4
 cmd([[autocmd Bufread,BufNewFile *.cf set filetype=lbnf]])
 cmd([[autocmd Filetype lbnf set commentstring=--\ %s]])
 cmd([[autocmd Filetype lbnf set comments+=b:--]])
+
+cmd([[autocmd Filetype wast set tabstop=8 softtabstop=0 expandtab shiftwidth=1 smarttab]])
+vim.opt.lispwords:append('module,import,export,func,call,block,loop,br_if')
+-- cmd([[autocmd Filetype wast setlocal autoindent indentexpr=]])
 
 --- Set colorscheme
 cmd('colorscheme gruvbox')
