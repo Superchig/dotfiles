@@ -107,6 +107,7 @@
     "workbench.activityBar.visible": false,
     "workbench.colorTheme": "Monokai",
     "editor.multiCursorModifier": "ctrlCmd",
+    "haskell.manageHLS": "PATH",
     // "window.menuBarVisibility": "compact",
     //     "editor.defaultFormatter": "esbenp.prettier-vscode"
     // },
