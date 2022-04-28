@@ -102,8 +102,24 @@ set -x LESS_TERMCAP_so (printf '\e[01;33m')
 set -x LESS_TERMCAP_ue (printf '\e[0m')
 set -x LESS_TERMCAP_us (printf '\e[1;4;31m')
 
+# You can see the definition of the `f` function with `functions f`
+function rfcd
+    set tmp (mktemp)
+    rolf -last-dir-path $tmp $argv
+    if test -f "$tmp"
+        set dir (cat $tmp)
+        rm -f $tmp
+        if test -d "$dir"
+            if test "$dir" != (pwd)
+                cd $dir
+            end
+        end
+    end
+end
+
+bind \cw 'f; commandline -f repaint'
 # Bind file manager to Ctrl+o
-bind \co 'f; commandline -f repaint'
+bind \co 'rfcd; commandline -f repaint'
 
 # Source the file for z.fish
 # After some fish update, this apparently causes an awk message on directory
