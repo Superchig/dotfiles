@@ -115,7 +115,7 @@ end)
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
     ensure_installed = {
-      "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust",
+      "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust", "jsonc",
       "comment", -- Highlights comments with specific syntax
     },
     highlight = {
