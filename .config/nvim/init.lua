@@ -696,8 +696,12 @@ vim.opt.lispwords:append('module,import,export,func,call,block,loop,br_if')
 --- Set colorscheme
 cmd('colorscheme gruvbox')
 
--- Make background transparent
-if not vim.g.GuiLoaded or vim.g.GuiLoaded == 0 then
+-- Neovide-specific configuration
+-- https://github.com/neovide/neovide/issues/24
+if vim.g.neovide then
+  -- vim.g.neovide_transparency = 0.8
+elseif not vim.g.GuiLoaded or vim.g.GuiLoaded == 0 then
+  -- Make background transparent
   cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
 end
 
