@@ -693,6 +693,8 @@ cmd([[autocmd Filetype wast set tabstop=8 softtabstop=0 expandtab shiftwidth=1 s
 vim.opt.lispwords:append('module,import,export,func,call,block,loop,br_if')
 -- cmd([[autocmd Filetype wast setlocal autoindent indentexpr=]])
 
+cmd([[autocmd Filetype pest set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
+
 --- Set colorscheme
 cmd('colorscheme gruvbox')
 
