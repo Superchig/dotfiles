@@ -108,6 +108,10 @@ require('packer').startup(function()
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     -- cmd = "Telescope"
   }
+  use {
+    'nvim-telescope/telescope-ui-select.nvim',
+    requires = {'nvim-telescope/telescope.nvim'}
+  }
   use {'Superchig/vim-markdown'}
   use {'reedes/vim-pencil'}
   use {'kevinhwang91/nvim-bqf'}
@@ -408,8 +412,17 @@ require('telescope').setup({
         ['<C-g>'] = require('telescope.actions').close
       }
     }
-  }
+  },
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown()
+    }
+  },
 })
+
+-- To get ui-select loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require("telescope").load_extension("ui-select")
 
 local dap = require('dap')
 dap.adapters.go = function(callback, config)
@@ -604,7 +617,7 @@ map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
 map('n', '<leader>fl', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<cr>')
 map('n', '<leader>fL', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<cr>')
-map('n', '<leader>fa', '<cmd>lua require("telescope.builtin").lsp_code_actions()<cr>')
+map('n', '<leader>fa', '<cmd>lua vim.lsp.buf.code_action()<cr>')
 
 map('n', '<C-p>', '<cmd>Telescope find_files<cr>')
 
@@ -732,6 +745,7 @@ endfunction
 ]])
 -- With kitty and Neovim, <C-M> is the same input as <C-Enter> and <Enter>
 cmd([[autocmd Filetype tex nnoremap <silent> <C-M> :call Synctex()<cr>]])
+cmd([[autocmd Filetype tex nnoremap <silent> <C-Space> :call Synctex()<cr>]])
 -- cmd([[autocmd Filetype tex inoremap <silent> <C-M> <cmd>:call Synctex()<cr>]])
 
 vim.g.vim_markdown_folding_disabled = 1
