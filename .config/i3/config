@@ -225,6 +225,10 @@ bindsym $mod+Shift+Control+d exec $HOME/dotfiles/minimalist/rofi/i3_exit.sh
 bindsym --release $mod+Shift+b exec i3-msg border pixel 0
 bindsym $mod+Shift+Control+p exec ~/dotfiles/minimalist/rofi/power_options.sh
 
+# Use super+F12 to toggle caps lock, in case the caps lock key has been bound
+# to super
+bindsym mod4+F12 exec xdotool key Caps_Lock
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -401,6 +405,8 @@ exec $HOME/dotfiles/multi/set-touchpad
 exec setxkbmap -option compose:ralt
 # exec setxkbmap -option ctrl:swapcaps
 # exec setxkbmap -option ctrl:nocaps
+# Set caps lock to super
+exec setxkbmap -option caps:super
 
 # Start more GUI-centric apps
 exec $HOME/dotfiles/multi/startup-extra-apps
