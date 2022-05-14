@@ -1,8 +1,9 @@
 ;; Set up all configuration that doesn't require packages
 
-(global-set-key [f7] 'ee)
 (global-set-key "\C-v" 'View-scroll-half-page-forward)
 (global-set-key "\M-v" 'View-scroll-half-page-backward)
+(global-set-key (kbd "C-h C-f") 'find-function)
+;; (global-set-key [f7] 'ee)
 
 (autoload 'View-scroll-half-page-forward "view")
 (autoload 'View-scroll-half-page-backward "view")
@@ -11,6 +12,8 @@
 (global-hl-line-mode)
 (setq blink-cursor-mode nil)
 (setq column-number-mode t)
+
+(setq vc-follow-symlinks t)
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -90,5 +93,26 @@
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (use-package magit)
+
+(use-package company
+  :config
+  (add-hook 'prog-mode-hook 'company-mode)
+  (with-eval-after-load 'company
+    (define-key company-mode-map (kbd "<tab>") #'company-indent-or-complete-common)
+    (define-key company-active-map (kbd "M-/") #'company-complete)
+    (define-key company-active-map
+      (kbd "TAB")
+      #'company-complete-common-or-cycle)
+    (define-key company-active-map
+      (kbd "<backtab>")
+      (lambda ()
+	(interactive)
+	(company-complete-common-or-cycle -1)))
+    (define-key company-active-map (kbd "M-.") #'company-show-location)
+    (define-key company-active-map (kbd "RET") nil)))
+
+(use-package slime
+  :config
+  (setq inferior-lisp-program "sbcl"))
 
 ; TODO(Chris): Install (and configure?) the lsp-mode package
