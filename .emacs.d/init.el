@@ -1,8 +1,11 @@
 ;; Set up all configuration that doesn't require packages
 
-(global-set-key [f7] (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
+(global-set-key [f7] 'ee)
 (global-set-key "\C-v" 'View-scroll-half-page-forward)
 (global-set-key "\M-v" 'View-scroll-half-page-backward)
+
+(autoload 'View-scroll-half-page-forward "view")
+(autoload 'View-scroll-half-page-backward "view")
 
 (global-display-line-numbers-mode)
 (global-hl-line-mode)
@@ -16,6 +19,11 @@
 (add-to-list 'default-frame-alist
 	     '(font . "Iosevka 12")
 	     '(font . "Inconsolata 12"))
+
+(defun ee ()
+  "Edit the Emacs configuration file."
+  (interactive)
+  (find-file user-init-file))
 
 ;; Set-up packages with straight.el, starting with bootstrap installation
 
