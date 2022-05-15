@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -402,11 +402,10 @@ exec alttab &
 exec $HOME/dotfiles/multi/set-touchpad
 # exec $HOME/dotfiles/multi/set-dpi # Disabled while msi is docked
 # Turn on compose key, set to right alt
-exec setxkbmap -option compose:ralt
-# exec setxkbmap -option ctrl:swapcaps
-# exec setxkbmap -option ctrl:nocaps
+# exec setxkbmap -option compose:ralt
 # Set caps lock to super
-exec setxkbmap -option caps:super
+# exec setxkbmap -option caps:super
+exec setxkbmap -option compose:ralt -option caps:super
 
 # Start more GUI-centric apps
 exec $HOME/dotfiles/multi/startup-extra-apps
