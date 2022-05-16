@@ -62,8 +62,11 @@
   (global-set-key (kbd "M-o") 'ace-window))
 
 (use-package smartparens
+  :init
+  (setq sp-base-key-bindings 'sp)
   :config
-  (add-hook 'prog-mode-hook #'smartparens-mode))
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  (require 'smartparens-config))
 
 (use-package counsel)
 
@@ -111,8 +114,19 @@
     (define-key company-active-map (kbd "M-.") #'company-show-location)
     (define-key company-active-map (kbd "RET") nil)))
 
+(defun call-prog-mode-hook ()
+  (interactive)
+  (dolist (hook prog-mode-hook) (funcall hook)))
+
 (use-package slime
   :config
-  (setq inferior-lisp-program "sbcl"))
+  (setq inferior-lisp-program "sbcl")
+  (add-hook 'slime-repl-mode-hook 'call-prog-mode-hook))
+
+(use-package slime-company
+  :after (slime company)
+  :config
+  (setq slime-company-completion 'fuzzy
+	slile-company-after-completion 'slime-company-just-one-space))
 
 ; TODO(Chris): Install (and configure?) the lsp-mode package
