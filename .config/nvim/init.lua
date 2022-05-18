@@ -245,6 +245,7 @@ cmp.setup({
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' }
   }
@@ -252,6 +253,7 @@ cmp.setup.cmdline('/', {
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = 'path' }
   }, {
@@ -743,8 +745,8 @@ function! Synctex()
     redraw!
 endfunction
 ]])
--- With kitty and Neovim, <C-M> is the same input as <C-Enter> and <Enter>
-cmd([[autocmd Filetype tex nnoremap <silent> <C-M> :call Synctex()<cr>]])
+-- Starting with Neovim 0.7, <CR> is different from <C-M>
+cmd([[autocmd Filetype tex nnoremap <silent> <CR> :call Synctex()<cr>]])
 cmd([[autocmd Filetype tex nnoremap <silent> <C-Space> :call Synctex()<cr>]])
 -- cmd([[autocmd Filetype tex inoremap <silent> <C-M> <cmd>:call Synctex()<cr>]])
 
