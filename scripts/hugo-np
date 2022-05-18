@@ -8,7 +8,7 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
-FILE_TITLE="${0}"
+FILE_TITLE="${1}"
 
 DATE=$(date +'%Y-%m-%d')
 FILE=posts/${DATE}-${FILE_TITLE}.md
