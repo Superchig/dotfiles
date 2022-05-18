@@ -118,15 +118,24 @@
   (interactive)
   (dolist (hook prog-mode-hook) (funcall hook)))
 
-(use-package slime
+;; (use-package slime
+;;   :config
+;;   (setq inferior-lisp-program "sbcl")
+;;   ;; (add-hook 'slime-repl-mode-hook 'call-prog-mode-hook)
+;;   (add-hook 'slime-repl-mode-hook 'smartparens-strict-mode))
+
+;; (use-package slime-company
+;;   :after
+;;   (slime company)
+;;   :config
+;;   (setq slime-company-completion 'fuzzy
+;; 	slime-company-after-completion 'slime-company-just-one-space))
+
+;; (slime-setup '(slime-fancy slime-company))
+
+(use-package sly
   :config
   (setq inferior-lisp-program "sbcl")
-  (add-hook 'slime-repl-mode-hook 'call-prog-mode-hook))
-
-(use-package slime-company
-  :after (slime company)
-  :config
-  (setq slime-company-completion 'fuzzy
-	slile-company-after-completion 'slime-company-just-one-space))
+  (add-hook 'sly-mrepl-hook 'call-prog-mode-hook))
 
 ; TODO(Chris): Install (and configure?) the lsp-mode package
