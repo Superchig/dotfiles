@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <date>"
+  exit 1
+fi
+
+GIT_COMMITTER_DATE="$1" git commit --date="$1" --amend
