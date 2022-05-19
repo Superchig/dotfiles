@@ -645,7 +645,10 @@ cmd('cabbrev Interesting vimgrep /^- .*interesting .*:/ %')
 
 cmd('autocmd Filetype markdown set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 cmd('autocmd Filetype markdown set textwidth=78 colorcolumn=+0')
+cmd([[autocmd Filetype markdown setlocal spell]])
 cmd([[autocmd Filetype markdown lua require('cmp').setup.buffer { enabled = false }]])
+
+cmd('autocmd Filetype asciidoc set textwidth=80')
 
 cmd('autocmd Filetype lua set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab')
 
