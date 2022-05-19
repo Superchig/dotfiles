@@ -1,3 +1,5 @@
+ ;; -*- lexical-binding: t; -*-
+
 ;; Set up all configuration that doesn't require packages
 
 (global-set-key "\C-v" 'View-scroll-half-page-forward)
@@ -22,6 +24,20 @@
 (add-to-list 'default-frame-alist
 	     '(font . "Iosevka 12")
 	     '(font . "Inconsolata 12"))
+
+;; Automatically wrap isearch
+;; https://stackoverflow.com/questions/285660/automatically-wrapping-i-search
+;; Prevents issue where you have to press backspace twice when
+;; trying to remove the first character that fails a search
+(define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
+
+(defadvice isearch-search (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)
+    (isearch-repeat (if isearch-forward 'forward))
+    (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)))
 
 (defun ee ()
   "Edit the Emacs configuration file."
@@ -78,7 +94,7 @@
   (ivy-mode)
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
-  (global-set-key "\C-s" 'swiper)
+  ;; (global-set-key "\C-s" 'swiper)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (global-set-key (kbd "<f6>") 'ivy-resume)
   (global-set-key (kbd "M-x") 'counsel-M-x)
