@@ -26,7 +26,8 @@
 (defun ee ()
   "Edit the Emacs configuration file."
   (interactive)
-  (find-file user-init-file))
+  ;; (find-file user-init-file)
+  (find-function 'ee))
 
 ;; Set-up packages with straight.el, starting with bootstrap installation
 
