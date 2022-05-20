@@ -39,6 +39,8 @@
     (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)))
 
+(setq help-window-select t)
+
 (defun ee ()
   "Edit the Emacs configuration file."
   (interactive)
