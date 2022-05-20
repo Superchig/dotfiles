@@ -72,6 +72,19 @@
   :config
   (load-theme 'gruvbox t))
 
+(use-package org
+  :straight (:type built-in)
+  :init
+  (global-set-key (kbd "C-c l") #'org-store-link)
+  (global-set-key (kbd "C-c a") #'org-agenda)
+  (global-set-key (kbd "C-c c") #'org-capture)
+
+  (add-hook 'org-mode-hook #'auto-fill-mode)
+
+  :config
+  (define-key org-mode-map (kbd "M-n") #'org-next-visible-heading)
+  (define-key org-mode-map (kbd "M-p") #'org-previous-visible-heading))
+
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
