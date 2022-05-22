@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# https://stackoverflow.com/questions/2456750/how-to-check-if-stdin-is-from-the-terminal-or-a-pipe-in-a-shell-script
+if [ ! -t 0 ]; then
+  pandoc - --from gfm --to gfm --wrap none
+  exit
+fi
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <input GFM file>"
+  exit 1
+fi
+
+pandoc "$1" --from gfm --to gfm --wrap none

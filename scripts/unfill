@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+# When used on Markdown or Markdown-esque input, this script puts multi-line paragraphs onto a single line.
+
+import sys
+
+line_buf = []
+
+for line in sys.stdin:
+    if line_buf and not line_buf[-1]:
+        paragraph = ' '.join(line_buf)
+        line_buf.clear()
+
+        print(paragraph, "\n")
+
+    line = line.rstrip()
+
+    line_buf.append(line)
+
+paragraph = ' '.join(line_buf)
+line_buf.clear()
+
+print(paragraph)
