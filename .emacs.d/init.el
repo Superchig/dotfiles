@@ -203,4 +203,6 @@
   (setq inferior-lisp-program "sbcl")
   (add-hook 'sly-mrepl-hook 'call-prog-mode-hook))
 
+(use-package racket-mode)
+
 ; TODO(Chris): Install (and configure?) the lsp-mode package
