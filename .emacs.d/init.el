@@ -108,6 +108,8 @@
   (global-set-key (kbd "M-o") 'ace-window))
 
 (use-package smartparens
+  :hook ((lisp-mode . smartparens-strict-mode)
+	 (emacs-lisp-mode . smartparens-strict-mode))
   :init
   (setq sp-base-key-bindings 'sp)
   :config
@@ -199,10 +201,15 @@
   (dolist (hook prog-mode-hook) (funcall hook)))
 
 (use-package sly
+  :hook ((sly-mrepl . smartparens-strict-mode))
   :config
   (setq inferior-lisp-program "sbcl")
   (add-hook 'sly-mrepl-hook 'call-prog-mode-hook))
 
-(use-package racket-mode)
+(use-package racket-mode
+  :hook ((racket-repl-mode . smartparens-strict-mode)
+	 (racket-mode . smartparens-strict-mode))
+  :config
+  (add-hook 'racket-repl-mode-hook 'call-prog-mode-hook))
 
 ; TODO(Chris): Install (and configure?) the lsp-mode package
