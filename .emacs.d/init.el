@@ -1,4 +1,4 @@
- ;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Set up all configuration that doesn't require packages
 
