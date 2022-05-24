@@ -55,6 +55,15 @@
 ;; ...and later, for new frames / emacsclient
 (add-hook 'after-make-frame-functions 'my-frame-behaviours)
 
+;; https://github.com/eriksvedang/.emacs.d/blob/9ba77a88788ffd191bd64f140ad4bbe0dc0dd11d/config.org
+;; Notably, this doesn't seem to tell you what face (font?) is used for
+;; the secondary monospace fonts used in between = in org-mode.
+(defun what-face (pos)
+  (interactive "d")
+  (let ((face (or (get-char-property (point) 'read-face-name)
+                  (get-char-property (point) 'face))))
+    (if face (message "Face: %s" face) (message "No face at %d" pos))))
+
 (defun ee ()
   "Edit the Emacs configuration file."
   (interactive)
