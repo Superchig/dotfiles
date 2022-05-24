@@ -41,6 +41,20 @@
 
 (setq help-window-select t)
 
+;; https://emacs.stackexchange.com/questions/37407/how-to-check-if-my-emacsclient-is-running-in-a-gui-window
+(defun my-frame-behaviors (&optional frame)
+  "Make frame- and/or terminal-local changes."
+  (interactive)
+  (with-selected-frame (or frame (selected-frame))
+    (when window-system
+      (global-unset-key (kbd "C-z"))
+      (global-unset-key (kbd "C-x C-z")))))
+
+;; Run in non-daemon Emacs...
+(my-frame-behaviors)
+;; ...and later, for new frames / emacsclient
+(add-hook 'after-make-frame-functions 'my-frame-behaviours)
+
 (defun ee ()
   "Edit the Emacs configuration file."
   (interactive)
