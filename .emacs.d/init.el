@@ -152,6 +152,20 @@
   (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
+(use-package prescient
+  :config
+  (prescient-persist-mode))
+
+(use-package ivy-prescient
+  :after (counsel ivy)
+  :config
+  (ivy-prescient-mode)
+  (setq ivy-prescient-retain-classic-highlighting t))
+
+(use-package company-prescient
+  :after (company)
+  (company-prescient-mode))
+
 ;; (use-package vertico
 ;;   :init
 ;;   (vertico-mode)
