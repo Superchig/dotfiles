@@ -221,4 +221,11 @@
   :config
   (add-hook 'racket-repl-mode-hook 'call-prog-mode-hook))
 
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-center-content t)
+  (setq dashboard-startup-banner 'logo)
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
+
 ; TODO(Chris): Install (and configure?) the lsp-mode package
