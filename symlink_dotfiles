@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 DOTFILES=$(pwd)
 
@@ -49,7 +49,7 @@ ln -st ~/.config/autorandr/postswitch.d/ ~/dotfiles/minimalist/bar/launch_polyba
 mkdir -p ~/bin
 ln -st ~/bin ~/dotfiles/msi_gs65/* ~/dotfiles/scripts/*
 
-mkdir -p ~/.config/bin
+mkdir -p ~/.config/zsh
 ln -s "$DOTFILES/sourceable_scripts" ~/.config/zsh/scripts
 
 mkdir -p ~/.config/sxhkd

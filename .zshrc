@@ -1,4 +1,3 @@
-# vim: sw=2
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -70,8 +69,10 @@ fi
 
 alias diff='diff --color=auto'
 
-alias mv='mv --backup=numbered'
-alias cp='cp --backup=numbered'
+if [ ! -f "/usr/local/bin/brew" ]; then
+  alias mv='mv --backup=numbered'
+  alias cp='cp --backup=numbered'
+fi
 
 alias grep='grep --color=auto'
 
@@ -147,9 +148,11 @@ if [ -f /usr/bin/idris2 ]; then
 fi
 
 # Source POSIX-compliant scripts
-for FILE in $HOME/.config/zsh/scripts/*; do
-  source $FILE
-done
+if [ -d "$HOME/.config/zsh/scripts" ]; then
+  for FILE in $HOME/.config/zsh/scripts/*; do
+    source $FILE
+  done
+fi
 
 # Establishes lfcd as widget for zle that calls a shell function named lfcd
 # zle -N lfcd lfcd
@@ -181,10 +184,23 @@ zle -N fg_top fg_top
 bindkey '^Z' fg_top
 
 # On Arch Linux, installed via packages
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+source_if() {
+  if [ -f "$1" ]; then
+    source "$1"
+  fi
+}
+
+if [ -f "/usr/local/bin/brew" ]; then
+  # From brew --prefix
+  PLUGINS=/usr/local/share
+else
+  PLUGINS=/usr/share/zsh/plugins
+fi
+
+source_if $PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source_if $PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
+source_if $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
+source_if /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # Bind history-substring-search plugin's keys
 bindkey '^[[A' history-substring-search-up
@@ -215,7 +231,7 @@ export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 # opam configuration
 test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-if [ -f /usr/bin/exa ]; then
+if [ -f /usr/bin/zoxide ] || [ -f /usr/local/bin/zoxide ]; then
   eval "$(zoxide init zsh --cmd j)"
 fi
 

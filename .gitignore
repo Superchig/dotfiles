@@ -8,3 +8,4 @@
 .emacs.d/el-get
 .emacs.d/recentf
 .emacs.d/tramp
+.DS_STORE

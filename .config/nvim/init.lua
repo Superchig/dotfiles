@@ -723,7 +723,7 @@ if vim.g.neovide then
   -- vim.g.neovide_transparency = 0.8
   -- Equivalent to :set guifont
   vim.o.guifont = 'Iosevka Term:h12,Consolas:h12,Inconsolata:h12'
-elseif not vim.g.GuiLoaded or vim.g.GuiLoaded == 0 then
+elseif (not vim.g.GuiLoaded or vim.g.GuiLoaded == 0) and not vim.fn.has('macunix') then
   -- Make background transparent
   cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
 end
