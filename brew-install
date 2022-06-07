@@ -1,0 +1,8 @@
+#!/bin/sh
+
+brew install neovim lazygit \
+  zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
+  # Install GNU utilities with g prefix
+  coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
+
+brew install --cask emacs visual-studio-code
