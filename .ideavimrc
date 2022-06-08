@@ -1,0 +1,2 @@
+map gh <Action>(ShowErrorDescription)
+set number relativenumber
