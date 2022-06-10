@@ -53,7 +53,7 @@
 ;; Run in non-daemon Emacs...
 (my-frame-behaviors)
 ;; ...and later, for new frames / emacsclient
-(add-hook 'after-make-frame-functions 'my-frame-behaviours)
+(add-hook 'after-make-frame-functions #'my-frame-behaviours)
 
 ;; https://github.com/eriksvedang/.emacs.d/blob/9ba77a88788ffd191bd64f140ad4bbe0dc0dd11d/config.org
 ;; Notably, this doesn't seem to tell you what face (font?) is used for
@@ -106,9 +106,9 @@
 
 (straight-use-package 'use-package)
 
-(use-package gruvbox-theme
-  :config
-  (load-theme 'gruvbox t))
+(use-package gruvbox-theme)
+
+(load-theme 'gruvbox t)
 
 (use-package org
   :straight (:type built-in)
@@ -246,9 +246,15 @@
 
 (use-package racket-mode
   :hook ((racket-repl-mode . smartparens-strict-mode)
-	 (racket-mode . smartparens-strict-mode))
+	 (racket-mode . smartparens-strict-mode)
+	 (racket-mode . racket-xp-mode))
   :config
-  (add-hook 'racket-repl-mode-hook 'call-prog-mode-hook))
+  (add-hook 'racket-repl-mode-hook 'call-prog-mode-hook)
+  (defface-racket my/racket-xp-unused-face
+    '((t nil))
+    "Face `racket-xp-mode` can use to highlight unused requires or definitions. Manually set to show no changes."
+    "Unused Face")
+  (setq racket-xp-unused-face my/racket-xp-unused-face))
 
 (use-package dashboard
   :config
@@ -256,5 +262,12 @@
   (setq dashboard-center-content t)
   (setq dashboard-startup-banner 'logo)
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
+
+(use-package doom-modeline
+  :disabled
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-minor-modes t))
 
 ; TODO(Chris): Install (and configure?) the lsp-mode package
