@@ -280,7 +280,7 @@ mode "launch" {
 
  	# e for Emacs
 	# bindsym e exec "$HOME/dotfiles/scripts/emacsclient-custom"; mode "default"
-        bindsym e exec "$HOME/dotfiles/scripts/electron-app.sh emacs Doom Emacs"; mode "default"
+	bindsym e exec wmctrl -xa emacs || emacs; mode "default"
 
         bindsym p exec pavucontrol; mode "default"
         bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
@@ -337,6 +337,8 @@ for_window [class="Gnome-screenshot"] floating enable
 for_window [class="OpenGL"] floating enable
 for_window [class="openmw"] floating enable
 for_window [class="unityhub"] floating enable
+for_window [class="unityhub"] floating enable
+for_window [class="simple-scan"] floating enable
 
 for_window [class="Alacritty" title="qalc"] floating enable
 for_window [class="Alacritty" title="pulsemixer"] floating enable
