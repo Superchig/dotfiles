@@ -13,6 +13,9 @@ promptinit
 
 # prompt adam1
 
+autoload -U bashcompinit
+bashcompinit
+
 # Use underscores (and other symbols) as word separators
 autoload -U select-word-style
 select-word-style bash
@@ -191,16 +194,17 @@ source_if() {
 }
 
 if [ -f "/usr/local/bin/brew" ]; then
-  # From brew --prefix
+  # From $(brew --prefix)/share
   PLUGINS=/usr/local/share
+  source_if /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 else
   PLUGINS=/usr/share/zsh/plugins
+  source_if /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 fi
 
 source_if $PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source_if $PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
 source_if $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
-source_if /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # Bind history-substring-search plugin's keys
 bindkey '^[[A' history-substring-search-up
@@ -235,5 +239,12 @@ if [ -f /usr/bin/zoxide ] || [ -f /usr/local/bin/zoxide ]; then
   eval "$(zoxide init zsh --cmd j)"
 fi
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+# Source any local (machine-specific) configuration files
+if [ -d "$HOME/.config/zsh/local" ]; then
+  for FILE in $HOME/.config/zsh/local/*(D); do
+    source $FILE
+  done
+fi
+
+# # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# export PATH="$PATH:$HOME/.rvm/bin"
