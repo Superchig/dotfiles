@@ -117,6 +117,7 @@ alias sz='source ~/.zshrc'
 
 alias ssy="sudo systemctl"
 
+alias gca="git commit --amend"
 alias gch="git checkout"
 alias gb="git branch"
 
