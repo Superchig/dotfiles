@@ -1,2 +1,9 @@
 map gh <Action>(ShowErrorDescription)
 set number relativenumber
+
+set ideajoin
+
+" Plugins
+
+set surround
+set clipboard+=unnamed

@@ -675,6 +675,8 @@ cmd([[autocmd Filetype c set commentstring=//\ %s]])
 
 cmd([[autocmd Filetype sh set shiftwidth=2]])
 
+cmd([[autocmd Filetype zsh set shiftwidth=2]])
+
 cmd([[autocmd Filetype awk set shiftwidth=2]])
 
 -- Lambda calculus
