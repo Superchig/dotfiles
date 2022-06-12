@@ -1,10 +1,10 @@
 #!/bin/sh
 
-brew install neovim lazygit fd ripgrep tldr fzf \
-  font-meslo-lg-nerd-font \
+brew install neovim lazygit fd ripgrep tldr fzf tokei highlight \
+  font-meslo-lg-nerd-font font-iosevka-nerd-font \
   gh awscli \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
   # Install GNU utilities with g prefix
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
 
-brew install --cask emacs visual-studio-code homebrew/cask-fonts/font-iosevka
+brew install --cask emacs visual-studio-code
