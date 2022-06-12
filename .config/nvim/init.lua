@@ -112,6 +112,7 @@ require('packer').startup(function()
     'nvim-telescope/telescope-ui-select.nvim',
     requires = {'nvim-telescope/telescope.nvim'}
   }
+  use {'nvim-orgmode/orgmode', requires = {'nvim-treesitter/nvim-treesitter'}}
   use {'Superchig/vim-markdown'}
   use {'reedes/vim-pencil'}
   use {'kevinhwang91/nvim-bqf'}
@@ -135,14 +136,17 @@ end)
 if isModuleAvailable('nvim-treesitter.configs') then
   require('nvim-treesitter.configs').setup({
     ensure_installed = {
-      "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust", "jsonc",
       "comment", -- Highlights comments with specific syntax
+      "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust", "jsonc",
+      "org",
     },
     highlight = {
       enable = true,
       -- Use plasticboy/vim-markdown for highlighting, but Treesitter for
       -- code-folding
-      disable = {'markdown'} 
+      disable = {'markdown'} ,
+      -- Required for spellcheck, some LaTex highlights and code block highlights that do not have ts grammar
+      additional_vim_regex_highlighting = {'org'},
     },
     textobjects = {
       select = {
@@ -425,6 +429,10 @@ require('telescope').setup({
 -- To get ui-select loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("ui-select")
+
+require('orgmode').setup_ts_grammar()
+
+require('orgmode').setup()
 
 local dap = require('dap')
 dap.adapters.go = function(callback, config)
