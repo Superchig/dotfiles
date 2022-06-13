@@ -63,7 +63,7 @@ export EDITOR=nvim
 export VISUAL=${EDITOR}
 export MANWIDTH=80
 
-alias ls='ls --color=auto'
+alias ls='ls --color=auto -F'
 if [ -f /usr/bin/exa ]; then
   alias l='exa -la --group-directories-first'
 else
