@@ -1,9 +1,13 @@
 map gh <Action>(ShowErrorDescription)
 set number relativenumber
+set clipboard+=unnamed
+
+set visualbell " Disable the beep
+
+" IntelliJ-specific
 
 set ideajoin
 
 " Plugins
 
 set surround
-set clipboard+=unnamed
