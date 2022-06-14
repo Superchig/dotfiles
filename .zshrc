@@ -70,7 +70,9 @@ else
   alias l='ls -lah'
 fi
 
-alias diff='diff --color=auto'
+if [ ! -f "/usr/local/bin/brew" ]; then
+  alias diff='diff --color=auto'
+fi
 
 if [ ! -f "/usr/local/bin/brew" ]; then
   alias mv='mv --backup=numbered'
@@ -104,6 +106,13 @@ alias spr="sudo pacman -R"
 alias spk="sudo pacman -D --asexplicit"
 
 alias mo="$HOME/dotfiles/multi/monitor_setup"
+alias ru="rubymine"
+
+if [ -f "/usr/local/bin/brew" ]; then
+  alias rubymine="open -na 'RubyMine.app'"
+fi
+
+alias rubymine="open -na 'RubyMine.app'"
 
 alias gimme="sudo chown ${USER} *"
 
