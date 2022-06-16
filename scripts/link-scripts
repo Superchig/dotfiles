@@ -2,7 +2,7 @@
 
 # This symlinks scripts from ~/dotfiles/scripts to ~/bin.
 
-BIN=~/bin
+BIN="$HOME/bin"
 
 mkdir -p "$BIN"
 
@@ -16,7 +16,7 @@ for FILE in ~/dotfiles/scripts/*; do
   if [ -f "$BIN/$(basename "$FILE")" ]; then
     echo "File exists ✅: $FILE"
   else
-    ln -st "$BIN" "$FILE"
+    ln -s "$FILE" "$BIN"
     echo "File symlinked 🔗: $FILE"
   fi
 done
