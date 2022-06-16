@@ -108,10 +108,8 @@ alias mo="$HOME/dotfiles/multi/monitor_setup"
 alias ru="rubymine"
 
 if [ -f "/usr/local/bin/brew" ]; then
-  alias rubymine="open -na 'RubyMine.app'"
+  alias rubymine="open -a 'RubyMine.app'"
 fi
-
-alias rubymine="open -na 'RubyMine.app'"
 
 alias gimme="sudo chown ${USER} *"
 
@@ -246,6 +244,10 @@ test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-ini
 
 if [ -f /usr/bin/zoxide ] || [ -f /usr/local/bin/zoxide ]; then
   eval "$(zoxide init zsh --cmd j)"
+fi
+
+if [ -f /usr/bin/mcfly ] || [ -f /usr/local/bin/mcfly ]; then
+  eval "$(mcfly init zsh)"
 fi
 
 # Source any local (machine-specific) configuration files
