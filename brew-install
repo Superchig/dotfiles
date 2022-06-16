@@ -3,6 +3,7 @@
 brew install neovim lazygit fd ripgrep tldr fzf tokei highlight \
   font-meslo-lg-nerd-font font-iosevka-nerd-font \
   gh awscli \
+  mcfly \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
   # Install GNU utilities with g prefix
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
