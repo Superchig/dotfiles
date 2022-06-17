@@ -112,9 +112,6 @@ require('packer').startup(function()
     'nvim-telescope/telescope-ui-select.nvim',
     requires = {'nvim-telescope/telescope.nvim'}
   }
-  use {'nvim-orgmode/orgmode', requires = {'nvim-treesitter/nvim-treesitter'}}
-  use {'Superchig/vim-markdown'}
-  use {'reedes/vim-pencil'}
   use {'kevinhwang91/nvim-bqf'}
   -- Provides (the most ubiquitous) readline bindings for Vim
   use {'tpope/vim-rsi'}
@@ -125,6 +122,9 @@ require('packer').startup(function()
     requires = {'mfussenegger/nvim-dap'}
   }
 
+  use {'nvim-orgmode/orgmode', requires = {'nvim-treesitter/nvim-treesitter'}}
+  use {'Superchig/vim-markdown'}
+  use {'reedes/vim-pencil'}
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
   use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
