@@ -766,8 +766,10 @@ cmd([[autocmd Filetype tex nnoremap <silent> <C-Space> :call Synctex()<cr>]])
 vim.g.vim_markdown_folding_disabled = 1
 
 -- This can broadly replace the functionality of zM for Markdown files
-function notes_headers()
-  cmd([[vimgrep /^# .*$/j %]])
+function notes_headers(regex)
+  regex = regex or '^# .*$'
+  cmd([[vimgrep /]] .. regex .. [[/j %]])
+  -- cmd([[vimgrep /^# .*$/j %]])
   -- The ivy theme is used to place the prompt at the top, reversing the
   -- result order
   vim.o.foldlevel = 0
@@ -779,5 +781,6 @@ if vim.g.vim_markdown_folding_disabled == 1 then
   -- Checking file name autocmd is from https://stackoverflow.com/questions/6009698/autocmd-check-filename-in-vim
   -- cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap <silent> zM :lua notes_headers()<cr>]])
   cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap zM :lua notes_headers()<cr>]])
+  cmd([[autocmd BufRead,BufNewFile notes.md nnoremap zM :lua notes_headers('^#\\+ .*$')<cr>]])
 end
 
