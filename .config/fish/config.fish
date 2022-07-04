@@ -45,6 +45,7 @@ abbr --add pq pacman -Q
 abbr --add pss pacman -Ss
 abbr --add pm pulsemixer
 abbr --add xf xset dpms force off
+abbr --add gca git commit --amend
 
 abbr --add sf source ~/.config/fish/config.fish
 abbr --add ssy sudo systemctl
