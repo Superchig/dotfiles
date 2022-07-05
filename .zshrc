@@ -240,7 +240,7 @@ export PATH="$PATH:$HOME/.idris2/bin"
 export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # opam configuration
-test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+test -r "$HOME/.opam/opam-init/init.zsh" && . "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null || true
 
 if [ -f /usr/bin/zoxide ] || [ -f /usr/local/bin/zoxide ]; then
   eval "$(zoxide init zsh --cmd j)"
