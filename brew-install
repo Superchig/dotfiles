@@ -1,6 +1,6 @@
 #!/bin/sh
 
-brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight \
+brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   rlwrap \
   font-meslo-lg-nerd-font font-iosevka-nerd-font \
   gh awscli \
@@ -9,4 +9,4 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight \
   # Install GNU utilities with g prefix
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
 
-brew install --cask emacs visual-studio-code
+brew install --cask emacs visual-studio-code rectangle
