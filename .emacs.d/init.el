@@ -17,13 +17,22 @@
 
 (setq vc-follow-symlinks t)
 
+(setq ring-bell-function 'ignore)
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier nil)
+
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
 (add-to-list 'default-frame-alist
-	     '(font . "Iosevka 12")
+	     '(font . "Iosevka 12"))
+
+(add-to-list 'default-frame-alist
 	     '(font . "Inconsolata 12"))
+
+(add-to-list 'default-frame-alist
+	     '(font . "Monaco Nerd Font 12"))
 
 ;; Automatically wrap isearch
 ;; https://stackoverflow.com/questions/285660/automatically-wrapping-i-search
