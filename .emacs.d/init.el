@@ -108,7 +108,7 @@
 
 (use-package gruvbox-theme)
 
-(load-theme 'gruvbox t)
+(load-theme 'gruvbox-light-medium t)
 
 (use-package org
   :straight (:type built-in)
