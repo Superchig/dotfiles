@@ -9,6 +9,7 @@ sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
         dkms linux-headers \
 	firefox xorg-xrandr arandr sxiv guake gcc clang fd exa xterm xfce4-notifyd \
 	i3-gaps rofi autorandr feh picom redshift alacritty mpv wget curl \
+	visidata \
 	xss-lock vlc pulseaudio pulseaudio-alsa pavucontrol perl-file-mimeinfo \
 	discord shellcheck gnome-keyring seahorse qalculate-gtk \
 	adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts \
