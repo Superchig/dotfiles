@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# This assumes emacs has magit set up
+
+echo "Starting magit..."
+
+read -r -d '' STARTUP << EOM
+(progn
+  (select-frame-set-input-focus (selected-frame))
+  (magit-status)
+  (delete-other-windows))
+EOM
+
+ALTERNATE_EDITOR="" emacsclient --create-frame --no-wait --eval "$STARTUP"
