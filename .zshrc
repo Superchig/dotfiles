@@ -35,7 +35,6 @@ fi
 zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion::complete:*' gain-privileges 1
-setopt COMPLETE_ALIASES
 
 # Improve ssh completion
 # https://stackoverflow.com/questions/54309712/zsh-doesnt-autocomplete-correctly-my-ssh-command
