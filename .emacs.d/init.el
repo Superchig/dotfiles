@@ -62,7 +62,7 @@
 ;; Run in non-daemon Emacs...
 (my-frame-behaviors)
 ;; ...and later, for new frames / emacsclient
-(add-hook 'after-make-frame-functions #'my-frame-behaviours)
+;; (add-hook 'after-make-frame-functions #'my-frame-behaviours)
 
 ;; https://github.com/eriksvedang/.emacs.d/blob/9ba77a88788ffd191bd64f140ad4bbe0dc0dd11d/config.org
 ;; Notably, this doesn't seem to tell you what face (font?) is used for
