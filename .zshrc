@@ -164,6 +164,9 @@ if [ -f /usr/bin/idris2 ]; then
   alias idris2="rlwrap idris2"
 fi
 
+# Copy completions for ripgrep into rgl script
+compdef rgl=rg
+
 # Source POSIX-compliant scripts
 if [ -d "$HOME/.config/zsh/scripts" ]; then
   for FILE in $HOME/.config/zsh/scripts/*; do
