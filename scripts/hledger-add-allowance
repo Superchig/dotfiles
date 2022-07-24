@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+# This script will find the last day my dad sent me weekly allowance money and 
+# print new hledger transactions which cover any other money he would have sent
+# me.
+
+require 'date'
+
+dates = []
+
+File.open(ENV['HOME'] + '/.hledger.journal').each do |line|
+
+  if match = /(\d+-\d+-\d+) .*dad allowance .*/.match(line)
+    raw_date = match[1]
+    date = Date.parse(raw_date)
+    dates.push(date)
+  end
+end
+
+last_date = dates.sort.last
+next_date = last_date + 7
+
+today = Date.today
+
+# We use next_date rather than last_date to avoid including last_date
+new_dates = next_date.step(today, 7).map { |date| date }
+
+new_dates.each do |date|
+  puts %{
+#{date.strftime("%Y-%m-%d")} dad allowance into usaa savings
+    assets:usaa savings    $20.00
+    revenue:dad allowance}
+end
+
+if new_dates.empty?
+  STDERR.puts "No new transactions were necessary."
+else
+  STDERR.puts "\n#{new_dates.size} transactions added."
+end
+
+
