@@ -285,7 +285,7 @@ mode "launch" {
         bindsym p exec pavucontrol; mode "default"
         bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
         bindsym q exec qalculate-gtk; mode "default"
-        bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off'; mode "default"
+        bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off' -s 'ignore comma on'; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -345,6 +345,7 @@ for_window [class="Alacritty" title="pulsemixer"] floating enable
 for_window [class="Steam" title="Friends List"] floating enable
 for_window [class="Unity" title="Starting Unity..."] floating enable
 # for_window [class="mushclient.exe"] floating enable
+for_window [class="jetbrains-rubymine" title="Welcome to RubyMine"] floating enable
 
 for_window [window_type="dialog"] floating enable
 for_window [window_type="popup_menu"] floating enable
