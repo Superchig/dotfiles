@@ -685,6 +685,8 @@ cmd([[autocmd Filetype zsh set shiftwidth=2]])
 
 cmd([[autocmd Filetype awk set shiftwidth=2]])
 
+cmd([[autocmd Filetype sql set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab]])
+
 -- Lambda calculus
 cmd([[autocmd Bufread,BufNewFile *.lc set filetype=lc]])
 cmd([[autocmd Filetype lc set commentstring=//\ %s]])
