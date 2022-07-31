@@ -122,6 +122,7 @@ require('packer').startup(function()
     requires = {'mfussenegger/nvim-dap'}
   }
 
+  use {'simrat39/rust-tools.nvim', requires = {'nvim-lua/plenary.nvim'}}
   use {'nvim-orgmode/orgmode', requires = {'nvim-treesitter/nvim-treesitter'}}
   use {'Superchig/vim-markdown'}
   use {'reedes/vim-pencil'}
@@ -325,23 +326,35 @@ require('dapui').setup({
   windows = { indent = 1 },
 })
 
+require('rust-tools').setup({
+  tools = {
+    -- Disable inlay hints
+    autoSetHints = false,
+    -- Don't display hover actions in `gh` hover info
+    hover_with_actions= false,
+  },
+  hover_actions = {
+    border = "none",
+  },
+  server = {
+    on_attach=on_attach,
+    capabilities=capabilities,
+    settings = {
+      ["rust-analyzer"] = {
+        -- https://users.rust-lang.org/t/how-to-use-clippy-in-vs-code-with-rust-analyzer/41881
+        -- https://rust-analyzer.github.io/manual.html#nvim-lsp
+        checkOnSave = {
+          -- The default command is "check"
+          command = 'clippy',
+        },
+      },
+    },
+  }
+})
+
 -- TODO(Chris): Put this repetitive lspconfig setup into a loop
 -- This requires rust-analyzer to be installed separately
 lspconfig = require('lspconfig')
-lspconfig.rust_analyzer.setup({
-  on_attach=on_attach,
-  capabilities=capabilities,
-  settings = {
-    ["rust-analyzer"] = {
-      -- https://users.rust-lang.org/t/how-to-use-clippy-in-vs-code-with-rust-analyzer/41881
-      -- https://rust-analyzer.github.io/manual.html#nvim-lsp
-      checkOnSave = {
-        -- The default command is "check"
-        command = 'clippy',
-      },
-    },
-  },
-})
 lspconfig.hls.setup({
   on_attach=on_attach,
   capabilities=capabilities,
