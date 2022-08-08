@@ -2,6 +2,8 @@ map gh <Action>(ShowErrorDescription)
 set number relativenumber
 set clipboard+=unnamed
 
+nnoremap Y y$
+
 set visualbell " Disable the beep
 
 " IntelliJ-specific
