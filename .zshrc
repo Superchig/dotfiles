@@ -35,6 +35,7 @@ fi
 zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion::complete:*' gain-privileges 1
+setopt COMPLETE_ALIASES
 
 # Improve ssh completion
 # https://stackoverflow.com/questions/54309712/zsh-doesnt-autocomplete-correctly-my-ssh-command
@@ -89,6 +90,10 @@ alias grep='grep --color=auto'
 
 alias fzf="fzf --color='hl:yellow' --color='hl+:bright-yellow:bold'"
 
+if [ -f /usr/bin/helix ]; then
+  alias hx='helix'
+fi
+
 # alias xo='xdg-open &> /dev/null'
 alias e=$VISUAL
 alias se="sudo $VISUAL"
@@ -135,11 +140,13 @@ alias gch="git checkout"
 alias gb="git branch"
 
 alias cgc="cargo check --color=always 2>&1 | head -n 25"
+alias cgb="cargo build"
 alias cgr="RUST_BACKTRACE=1 cargo run"
 alias cgt="RUST_BACKTRACE=1 cargo test"
 alias cgd="PURE_PYTHON=1 CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER=rust-gdb cargo test"
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 export MANPATH="$MANPATH:/home/chiggie/.ghcup/share/man"
 
@@ -250,7 +257,7 @@ export PATH="$PATH:$HOME/.idris2/bin"
 export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 # opam configuration
-test -r "$HOME/.opam/opam-init/init.zsh" && . "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null || true
+test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 if [ -f /usr/bin/zoxide ] || [ -f /usr/local/bin/zoxide ]; then
   eval "$(zoxide init zsh --cmd j)"
