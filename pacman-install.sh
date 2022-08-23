@@ -29,7 +29,7 @@ git clone https://github.com/Jguer/yay
 cd yay
 makepkg -si
 
-yay -S dropbox xcwd-git lf-bin polybar-git zsh-theme-powerlevel10k-git
+yay -S dropbox xcwd-git lf-bin polybar-git zsh-theme-powerlevel10k-git noisetorch-bin
 
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of
