@@ -108,7 +108,12 @@
     "workbench.colorTheme": "Monokai",
     "editor.multiCursorModifier": "ctrlCmd",
     "haskell.manageHLS": "PATH",
+    "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
     // "window.menuBarVisibility": "compact",
     //     "editor.defaultFormatter": "esbenp.prettier-vscode"
     // },
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1,
+        "asvetliakov.vscode-neovim": 1
+    },
 }
