@@ -70,6 +70,9 @@ export EDITOR=nvim
 export VISUAL=${EDITOR}
 export MANWIDTH=80
 
+# Use emacs keymap in zsh, even if EDITOR is set to vi or vim
+bindkey -e
+
 alias ls='ls --color=auto -F'
 if [ -f /usr/bin/exa ]; then
   alias l='exa -la --group-directories-first'
@@ -106,6 +109,7 @@ alias ei="e ~/.config/i3/config"
 alias en="e ~/tmp/zoom_items.md"
 alias ecl="emacsclient"
 alias ea="e ~/.config/awesome/rc.lua"
+alias eh="e ~/.hledger.journal"
 
 alias fr="history | sk | cut -c 8-"
 alias lg="lazygit"
@@ -276,3 +280,19 @@ fi
 
 # # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/chiggie/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/chiggie/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/chiggie/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/chiggie/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
