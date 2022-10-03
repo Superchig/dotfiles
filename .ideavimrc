@@ -1,4 +1,5 @@
-map gh <Action>(ShowErrorDescription)
+map gh <Action>(QuickJavaDoc)
+map gs <Action>(ShowErrorDescription)
 set number relativenumber
 set clipboard+=unnamed
 
