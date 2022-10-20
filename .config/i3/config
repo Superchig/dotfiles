@@ -339,6 +339,7 @@ for_window [class="openmw"] floating enable
 for_window [class="unityhub"] floating enable
 for_window [class="unityhub"] floating enable
 for_window [class="simple-scan"] floating enable
+for_window [class="Lightdm-gtk-greeter-settings"] floating enable
 
 for_window [class="Alacritty" title="qalc"] floating enable
 for_window [class="Alacritty" title="pulsemixer"] floating enable
