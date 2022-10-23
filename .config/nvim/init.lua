@@ -380,6 +380,10 @@ lspconfig.zls.setup({
   on_attach=on_attach,
   capabilities=capabilities,
 })
+lspconfig.pyright.setup({
+  on_attach=on_attach,
+  capabilities=capabilities,
+})
 
 local pid = vim.fn.getpid()
 -- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
