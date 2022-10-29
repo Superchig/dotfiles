@@ -55,7 +55,16 @@
             "commands": [
                 "workbench.action.selectTheme"
             ]
-        }
+        },
+        {
+            "before": [
+                "<S-y>"
+            ],
+            "after": [
+                "y",
+                "$"
+            ]
+        },
     ],
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "vim.easymotion": true,
@@ -115,5 +124,13 @@
     "extensions.experimental.affinity": {
         "vscodevim.vim": 1,
         "asvetliakov.vscode-neovim": 1
+    },
+    "svelte.plugin.svelte.note-new-transformation": false,
+    "svelte.enable-ts-plugin": true,
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode",
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
 }
