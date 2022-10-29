@@ -63,7 +63,7 @@ local on_attach = function(client)
   bufmap('n', 'gA', '<cmd>lua vim.lsp.buf.code_action()<CR>')
   cmd('setlocal signcolumn=number')
 
-  bufmap('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+  bufmap('n','<leader>=', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>')
 end
 
 --- Install Packer by default
@@ -656,6 +656,8 @@ map('n', '<leader>p', '<cmd>cprev<CR>', {noremap = true, silent = true})
 cmd('cabbrev tn tabnew')
 cmd('nnoremap <S-k> gt')
 cmd('nnoremap <S-j> gT')
+cmd('nnoremap <silent> gn :bn<CR>')
+cmd('nnoremap <silent> gp :bp<CR>')
 
 cmd('cabbrev ev e ~/.config/nvim/init.lua')
 
