@@ -296,3 +296,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# https://github.com/Schniz/fnm
+eval "$(fnm env --use-on-cd)"
