@@ -139,7 +139,7 @@ if isModuleAvailable('nvim-treesitter.configs') then
     ensure_installed = {
       "comment", -- Highlights comments with specific syntax
       "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust", "jsonc",
-      "org",
+      "org", "svelte", "typescript", "javascript"
     },
     highlight = {
       enable = true,
@@ -381,6 +381,14 @@ lspconfig.zls.setup({
   capabilities=capabilities,
 })
 lspconfig.pyright.setup({
+  on_attach=on_attach,
+  capabilities=capabilities,
+})
+lspconfig.tsserver.setup({
+  on_attach=on_attach,
+  capabilities=capabilities,
+})
+lspconfig.svelte.setup({
   on_attach=on_attach,
   capabilities=capabilities,
 })
