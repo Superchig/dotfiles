@@ -65,6 +65,34 @@
                 "$"
             ]
         },
+        {
+            "before": [
+                "g",
+                "s"
+            ],
+            "after": [
+                "g",
+                "h"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "e"
+            ],
+            "commands": [
+                "editor.action.marker.nextInFiles"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "E"
+            ],
+            "commands": [
+                "editor.action.marker.prevInFiles"
+            ]
+        }
     ],
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "vim.easymotion": true,
