@@ -139,7 +139,7 @@ if isModuleAvailable('nvim-treesitter.configs') then
     ensure_installed = {
       "comment", -- Highlights comments with specific syntax
       "lua", "ruby", "python", "haskell", "go", "c", "latex", "rust", "jsonc",
-      "org", "svelte", "typescript", "javascript"
+      "org", "svelte", "typescript", "javascript", "css",
     },
     highlight = {
       enable = true,
