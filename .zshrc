@@ -252,11 +252,6 @@ export PATH="$PATH:$HOME/.idris2/bin"
 
 # export HOSTNAME=$(hostname)
 
-# _rvm_completion() {
-#   source $rvm_path/"scripts/zsh/Completion/_rvm"
-# }
-# compdef _rvm_completion rvm
-
 # Just use the default powerlevel10k bar
 export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
@@ -278,9 +273,6 @@ if [ -d "$HOME/.config/zsh/local" ]; then
   done
 fi
 
-# # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$PATH:$HOME/.rvm/bin"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/chiggie/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -298,3 +290,6 @@ unset __conda_setup
 
 # https://github.com/Schniz/fnm
 eval "$(fnm env --use-on-cd)"
+
+# https://github.com/TaKO8Ki/frum
+eval "$(frum init)"
