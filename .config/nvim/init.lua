@@ -751,6 +751,8 @@ vim.opt.lispwords:append('module,import,export,func,call,block,loop,br_if')
 cmd([[autocmd Bufread,BufNewFile *.chawk set filetype=awk]])
 cmd([[autocmd Filetype pest set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
+cmd([[autocmd Filetype asciidoc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
+
 --- Set colorscheme
 cmd('colorscheme gruvbox')
 
