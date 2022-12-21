@@ -157,9 +157,11 @@
     "svelte.enable-ts-plugin": true,
     "[svelte]": {
         "editor.defaultFormatter": "svelte.svelte-vscode",
+        "editor.tabSize": 2,
     },
     "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2,
     },
     // This addresses an infuriating behavior where the cursor is moved after
     // auto-quotes.
@@ -167,4 +169,6 @@
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
 }
