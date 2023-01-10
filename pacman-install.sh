@@ -1,35 +1,30 @@
 #!/usr/bin/env bash
+# vim: tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 # Install programs on pacman-based distros (Arch, Antergos, Manjaro, etc.)
+
 set -euo pipefail
 IFS=$'\n\t'
 
 ORIGDIR=$(pwd)
 
-sudo pacman --needed -S fish xorg-server xfce4 neovim xsel base-devel vim git \
-        dkms linux-headers \
-	firefox xorg-xrandr arandr sxiv guake gcc clang fd exa xterm xfce4-notifyd \
-	i3-gaps rofi autorandr feh picom redshift alacritty mpv wget curl \
-	visidata \
-	xss-lock vlc pulseaudio pulseaudio-alsa pavucontrol perl-file-mimeinfo \
-	discord shellcheck gnome-keyring seahorse qalculate-gtk \
-	adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts \
-	network-manager-applet zathura zathura-pdf-poppler htop code fzf nnn \
-	ttf-ubuntu-font-family kitty kitty-terminfo highlight mediainfo mlocate \
-	noto-fonts-emoji ttf-joypixels xdotool wmctrl \
-	zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
-	xorg-xinput
+sudo pacman --needed -S nushell
 
-# Install yay
-if [ ! -d "$HOME"/Downloads ]; then
-	mkdir "$HOME"/Downloads
+nu pacman-install.nu
+
+# Install paru
+if ! command -v paru 2>&1; then
+  if [ ! -d "$HOME"/Downloads ]; then
+    mkdir "$HOME"/Downloads
+  fi
+
+  cd "$HOME"/Downloads
+  git clone https://aur.archlinux.org/paru-bin.git
+  cd paru
+  makepkg -si
 fi
 
-cd "$HOME"/Downloads
-git clone https://github.com/Jguer/yay
-cd yay
-makepkg -si
-
-yay -S dropbox xcwd-git lf-bin polybar-git zsh-theme-powerlevel10k-git noisetorch-bin
+paru --needed -S dropbox xcwd-git lf-bin polybar-git zsh-theme-powerlevel10k-git noisetorch-bin \
+  frum-bin fnm-bin extension-manager
 
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of
