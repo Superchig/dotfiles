@@ -14,7 +14,8 @@ sudo pacman --needed -S [
   ## Terminals
   alacritty, xterm, kitty, kitty-terminfo
   ## Foundational terminal packages
-  vim, vi, git, neovim, xsel, gcc, clang, wget, curl, perl-file-mimeinfo, mlocate
+  vim, vi, git, neovim, xsel, gcc, clang, wget, curl, perl-file-mimeinfo \
+  mlocate, inetutils \
   ## Terminal utilities
   fd, exa, visidata, htop, lazygit
   neofetch, shellcheck, fzf, highlight, mediainfo
@@ -31,7 +32,7 @@ sudo pacman --needed -S [
   xss-lock, network-manager-applet, xorg-xinput, arandr, feh, xfce4-notifyd
   ## Tools For Any Desktop
   firefox, sxiv, mpv, vlc, pavucontrol, discord, seahorse, qalculate-gtk
-  zathura, zathura-pdf-poppler, code
+  zathura, zathura-pdf-poppler, code, audacity
   ## Fonts
   adobe-source-han-sans-otc-fonts, adobe-source-han-serif-otc-fonts
   noto-fonts-emoji, ttf-joypixels, ttf-inconsolata
