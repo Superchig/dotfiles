@@ -17,14 +17,14 @@ sudo pacman --needed -S [
   vim, vi, git, neovim, xsel, gcc, clang, wget, curl, perl-file-mimeinfo
   mlocate, inetutils, tree
   ## Terminal utilities
-  fd, exa, visidata, htop, lazygit, stow
+  fd, exa, visidata, htop, lazygit, stow, bat
   neofetch, shellcheck, fzf, highlight, mediainfo
   ## Shell-boosters
   fish, zsh, mcfly, zoxide
   zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search
   # Desktop Suite
   ## Packages For Any Desktop
-  pipewire-pulse, pipewire-alsa, gnome-keyring
+  pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks
   ## Gnome Desktop
   gnome-shell, gnome-control-center, gnome-backgrounds
   ## Mega-Customized Desktop (Xorg)
