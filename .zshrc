@@ -289,7 +289,11 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # https://github.com/Schniz/fnm
-eval "$(fnm env --use-on-cd)"
+if command -v fnm 2>&1; then
+  eval "$(fnm env --use-on-cd)"
+fi
 
 # https://github.com/TaKO8Ki/frum
-eval "$(frum init)"
+if command -v frum 2>&1; then
+  eval "$(frum init)"
+fi
