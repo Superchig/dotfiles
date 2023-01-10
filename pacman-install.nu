@@ -15,7 +15,7 @@ sudo pacman --needed -S [
   alacritty, xterm, kitty, kitty-terminfo
   ## Foundational terminal packages
   vim, vi, git, neovim, xsel, gcc, clang, wget, curl, perl-file-mimeinfo
-  mlocate, inetutils
+  mlocate, inetutils, tree
   ## Terminal utilities
   fd, exa, visidata, htop, lazygit, stow
   neofetch, shellcheck, fzf, highlight, mediainfo
