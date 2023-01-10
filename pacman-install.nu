@@ -17,7 +17,7 @@ sudo pacman --needed -S [
   vim, vi, git, neovim, xsel, gcc, clang, wget, curl, perl-file-mimeinfo
   mlocate, inetutils
   ## Terminal utilities
-  fd, exa, visidata, htop, lazygit
+  fd, exa, visidata, htop, lazygit, stow
   neofetch, shellcheck, fzf, highlight, mediainfo
   ## Shell-boosters
   fish, zsh, mcfly, zoxide
