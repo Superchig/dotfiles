@@ -3,7 +3,9 @@ Nushell.Nushell
 Mozilla.Firefox
 Neovim.Neovim
 Microsoft.VisualStudio.2022.Community
+gerardog.gsudo
 Git.Git
+Microsoft.PowerToys
 
 # Git setup
 
