@@ -1,0 +1,13 @@
+Valve.Steam
+Nushell.Nushell
+Mozilla.Firefox
+Neovim.Neovim
+Microsoft.VisualStudio.2022.Community
+Git.Git
+
+# Git setup
+
+```
+git config --global user.email "chiggiechang@gmail.com"
+git config --global user.name "Christopher Chang"
+```
