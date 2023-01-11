@@ -6,6 +6,7 @@ Microsoft.VisualStudio.2022.Community
 gerardog.gsudo
 Git.Git
 Microsoft.PowerToys
+Dropbox.Dropbox
 
 # Git setup
 
