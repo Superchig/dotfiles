@@ -8,6 +8,8 @@ sudo pacman --needed -S [
   xorg-server,
   # Basic system packages
   base-devel, dkms, linux-headers
+  ## Needed to run appimages
+  fuse
   # Fonts
   ttf-ubuntu-font-family
   # Terminal-related
@@ -24,7 +26,7 @@ sudo pacman --needed -S [
   zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search
   # Desktop Suite
   ## Packages For Any Desktop
-  pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks
+  pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks, gnome-clocks
   ## Gnome Desktop
   gnome-shell, gnome-control-center, gnome-backgrounds
   ## Mega-Customized Desktop (Xorg)
