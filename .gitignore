@@ -9,3 +9,5 @@
 .emacs.d/recentf
 .emacs.d/tramp
 .DS_STORE
+
+stow/kitty/.config/kitty/device-specific.conf
