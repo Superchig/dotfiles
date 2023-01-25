@@ -11,3 +11,4 @@
 .DS_STORE
 
 stow/kitty/.config/kitty/device-specific.conf
+stow/nvim/.config/nvim/plugin/
