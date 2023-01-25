@@ -7,7 +7,7 @@
 sudo pacman --needed -S [
   xorg-server,
   # Basic system packages
-  base-devel, dkms, linux-headers
+  base-devel, dkms, linux-headers, pacman-contrib
   ## Needed to run appimages
   fuse
   # Fonts
@@ -20,13 +20,14 @@ sudo pacman --needed -S [
   mlocate, inetutils, tree
   ## Terminal utilities
   fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp
-  neofetch, shellcheck, fzf, highlight, mediainfo
+  neofetch, shellcheck, fzf, highlight, mediainfo, jq
   ## Shell-boosters
   fish, zsh, mcfly, zoxide
   zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search
   # Desktop Suite
   ## Packages For Any Desktop
   pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks, gnome-clocks
+  cups, cups-pdf
   ## Gnome Desktop
   gnome-shell, gnome-control-center, gnome-backgrounds
   ## Mega-Customized Desktop (Xorg)
