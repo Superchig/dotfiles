@@ -1,8 +1,0 @@
-"1.0.5-pm
-
-loadplugins '\.(js|penta)$'
-group user
-command! -nargs=+ -description='Search in DuckDuckGo' s open duckduckgo <args>
-command! -nargs=* -description='Open up a new tab and search in duckduckgo.' tos tabopen duckduckgo <args>
-
-" vim: set ft=pentadactyl:
