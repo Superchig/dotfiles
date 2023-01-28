@@ -82,6 +82,7 @@ require('packer').startup(function()
   use {'tpope/vim-commentary'}
   use {'tpope/vim-surround'}
   use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
+  use {'shaunsingh/nord.nvim'}
   -- use 'morhetz/gruvbox'
   use {'windwp/nvim-autopairs'}
   use {
@@ -754,14 +755,21 @@ cmd([[autocmd Filetype pest set tabstop=8 softtabstop=0 expandtab shiftwidth=4 s
 cmd([[autocmd Filetype asciidoc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
 --- Set colorscheme
-cmd('colorscheme gruvbox')
+if os.getenv('TERM') == 'foot' then
+  cmd('colorscheme nord')
+else
+  cmd('colorscheme gruvbox')
+end
 
 -- Neovide-specific configuration
 -- https://github.com/neovide/neovide/issues/24
 if vim.g.neovide then
   -- vim.g.neovide_transparency = 0.8
-  -- Equivalent to :set guifont
-  vim.o.guifont = 'Iosevka Term:h12,Consolas:h12,Inconsolata:h12'
+  if vim.loop.os_uname().sysname == "Linux" then
+    vim.o.guifont = 'Iosevka Nerd Font:h12,Consolas:h12,Inconsolata:h12'
+  else
+    vim.o.guifont = 'Iosevka Term:h12,Consolas:h12,Inconsolata:h12'
+  end
 elseif (not vim.g.GuiLoaded or vim.g.GuiLoaded == 0) and vim.fn.has('macunix') == 0 then
   -- Make background transparent
   cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
