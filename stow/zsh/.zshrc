@@ -66,7 +66,7 @@ chpwd() {
   echo -ne "$window_title"
 }
 
-export EDITOR=nvim
+export EDITOR=helix
 export VISUAL=${EDITOR}
 export MANWIDTH=80
 
@@ -162,6 +162,9 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# bat settings
+# export BAT_THEME="gruvbox-light"
 
 # nnn settings
 export NNN_FIFO="/tmp/nnn.fifo"
