@@ -83,6 +83,8 @@ require('packer').startup(function()
   use {'tpope/vim-surround'}
   use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
   use {'shaunsingh/nord.nvim'}
+  use {'shaunsingh/solarized.nvim'}
+  use {'Mofiqul/dracula.nvim'}
   -- use 'morhetz/gruvbox'
   use {'windwp/nvim-autopairs'}
   use {
@@ -758,7 +760,7 @@ cmd([[autocmd Filetype asciidoc set tabstop=8 softtabstop=0 expandtab shiftwidth
 if os.getenv('TERM') == 'foot' then
   cmd('colorscheme nord')
 else
-  cmd('colorscheme gruvbox')
+  cmd('colorscheme dracula')
 end
 
 -- Neovide-specific configuration
@@ -772,7 +774,7 @@ if vim.g.neovide then
   end
 elseif (not vim.g.GuiLoaded or vim.g.GuiLoaded == 0) and vim.fn.has('macunix') == 0 then
   -- Make background transparent
-  cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
+  -- cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
 end
 
 local function Ormolu()
