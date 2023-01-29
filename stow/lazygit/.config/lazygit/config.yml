@@ -1,0 +1,7 @@
+gui:
+  showIcons: true
+  theme:
+    selectedLineBgColor:
+      - reverse
+    selectedRangeBgColor:
+      - reverse
