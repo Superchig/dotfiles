@@ -1,7 +1,8 @@
 #!/bin/sh
 
 brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
-  rlwrap stow rubymine \
+  rlwrap stow zoxide lf \
+  rubymine \
   gh awscli \
   mcfly \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
