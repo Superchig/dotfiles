@@ -85,6 +85,7 @@ require('packer').startup(function()
   use {'shaunsingh/nord.nvim'}
   use {'shaunsingh/solarized.nvim'}
   use {'Mofiqul/dracula.nvim'}
+  use {'Th3Whit3Wolf/one-nvim'}
   -- use 'morhetz/gruvbox'
   use {'windwp/nvim-autopairs'}
   use {
@@ -756,11 +757,13 @@ cmd([[autocmd Filetype pest set tabstop=8 softtabstop=0 expandtab shiftwidth=4 s
 
 cmd([[autocmd Filetype asciidoc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
+cmd("set background=light")
+
 --- Set colorscheme
 if os.getenv('TERM') == 'foot' then
   cmd('colorscheme nord')
 else
-  cmd('colorscheme dracula')
+  cmd('colorscheme one-nvim')
 end
 
 -- Neovide-specific configuration
