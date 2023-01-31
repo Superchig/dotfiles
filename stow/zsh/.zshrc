@@ -167,11 +167,11 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-# Light theme settings
-export BAT_THEME="OneHalfLight"
-export MCFLY_LIGHT="TRUE"
+# Light/dark theme settings
+export BAT_THEME="gruvbox-dark"
+# export MCFLY_LIGHT="TRUE"
 if command -v vivid 2>&1 > /dev/null; then
-  export LS_COLORS="$(vivid generate one-light)"
+  export LS_COLORS="$(vivid generate gruvbox-dark)"
 fi
 
 # nnn settings
