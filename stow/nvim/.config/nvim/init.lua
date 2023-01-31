@@ -759,7 +759,7 @@ cmd("set background=light")
 if os.getenv('TERM') == 'foot' then
   cmd('colorscheme nord')
 else
-  cmd('colorscheme modus-operandi')
+  cmd('colorscheme one-nvim')
 end
 
 -- Neovide-specific configuration
