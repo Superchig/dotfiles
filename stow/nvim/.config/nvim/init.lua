@@ -128,7 +128,6 @@ require('packer').startup(function()
   }
 
   use {'simrat39/rust-tools.nvim', requires = {'nvim-lua/plenary.nvim'}}
-  use {'nvim-orgmode/orgmode', requires = {'nvim-treesitter/nvim-treesitter'}}
   use {'Superchig/vim-markdown'}
   use {'reedes/vim-pencil'}
   use {'dag/vim-fish'}
@@ -457,10 +456,6 @@ require('telescope').setup({
 -- To get ui-select loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("ui-select")
-
-require('orgmode').setup_ts_grammar()
-
-require('orgmode').setup()
 
 local dap = require('dap')
 dap.adapters.go = function(callback, config)
