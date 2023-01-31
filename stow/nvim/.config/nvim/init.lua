@@ -86,6 +86,7 @@ require('packer').startup(function()
   use {'shaunsingh/solarized.nvim'}
   use {'Mofiqul/dracula.nvim'}
   use {'Th3Whit3Wolf/one-nvim'}
+  use {'ishan9299/modus-theme-vim'}
   -- use 'morhetz/gruvbox'
   use {'windwp/nvim-autopairs'}
   use {
@@ -763,7 +764,7 @@ cmd("set background=light")
 if os.getenv('TERM') == 'foot' then
   cmd('colorscheme nord')
 else
-  cmd('colorscheme one-nvim')
+  cmd('colorscheme modus-operandi')
 end
 
 -- Neovide-specific configuration
