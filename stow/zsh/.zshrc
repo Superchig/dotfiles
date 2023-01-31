@@ -168,10 +168,18 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 # Light/dark theme settings
-export BAT_THEME="gruvbox-dark"
-# export MCFLY_LIGHT="TRUE"
-if command -v vivid 2>&1 > /dev/null; then
-  export LS_COLORS="$(vivid generate gruvbox-dark)"
+if [ "$(uname)" = "Darwin" ]; then
+  export BAT_THEME="gruvbox-light"
+  export MCFLY_LIGHT="TRUE"
+  if command -v vivid 2>&1 > /dev/null; then
+    export LS_COLORS="$(vivid generate one-light-modified)"
+  fi
+else
+  export BAT_THEME="gruvbox-dark"
+  # export MCFLY_LIGHT="TRUE"
+  if command -v vivid 2>&1 > /dev/null; then
+    export LS_COLORS="$(vivid generate gruvbox-dark)"
+  fi
 fi
 
 # nnn settings
