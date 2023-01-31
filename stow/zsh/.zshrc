@@ -66,7 +66,12 @@ chpwd() {
   echo -ne "$window_title"
 }
 
-export EDITOR=helix
+if command -v helix 2>&1 > /dev/null; then
+  export EDITOR=helix
+else
+  export EDITOR=nvim
+fi
+
 export VISUAL=${EDITOR}
 export MANWIDTH=80
 
@@ -163,8 +168,12 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-# bat settings
-# export BAT_THEME="gruvbox-light"
+# Light theme settings
+export MCFLY_LIGHT=TRUE
+export BAT_THEME="gruvbox-light"
+if command -v vivid 2>&1 > /dev/null; then
+  export LS_COLORS=$(vivid generate one-light)
+fi
 
 # nnn settings
 export NNN_FIFO="/tmp/nnn.fifo"
@@ -179,7 +188,10 @@ if [ -f /usr/bin/idris2 ]; then
 fi
 
 # Copy completions for ripgrep into rgl script
-compdef rgl=rg
+
+if command -v rg 2>&1 > /dev/null; then
+  compdef rgl=rg
+fi
 
 # Source POSIX-compliant scripts
 if [ -d "$HOME/.config/zsh/scripts" ]; then
@@ -299,4 +311,9 @@ fi
 # https://github.com/TaKO8Ki/frum
 if command -v frum 2>&1 > /dev/null; then
   eval "$(frum init)"
+fi
+
+if [ -f "$PATH:$HOME/.rvm/bin" ]; then
+  # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+  export PATH="$PATH:$HOME/.rvm/bin"
 fi
