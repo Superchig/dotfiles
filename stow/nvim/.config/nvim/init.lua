@@ -753,11 +753,12 @@ cmd([[autocmd Filetype pest set tabstop=8 softtabstop=0 expandtab shiftwidth=4 s
 
 cmd([[autocmd Filetype asciidoc set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab]])
 
--- cmd("set background=light")
-
 --- Set colorscheme
 if os.getenv('TERM') == 'foot' then
   cmd('colorscheme nord')
+elseif vim.loop.os_uname().sysname == "Darwin" then
+  vim.o.background = "light"
+  cmd('colorscheme one-nvim')
 else
   cmd('colorscheme gruvbox')
 end
