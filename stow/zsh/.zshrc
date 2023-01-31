@@ -66,12 +66,7 @@ chpwd() {
   echo -ne "$window_title"
 }
 
-if command -v helix 2>&1 > /dev/null; then
-  export EDITOR=helix
-else
-  export EDITOR=nvim
-fi
-
+export EDITOR=nvim
 export VISUAL=${EDITOR}
 export MANWIDTH=80
 
