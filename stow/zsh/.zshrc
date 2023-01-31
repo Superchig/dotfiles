@@ -75,6 +75,9 @@ fi
 export VISUAL=${EDITOR}
 export MANWIDTH=80
 
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
+
 # Use emacs keymap in zsh, even if EDITOR is set to vi or vim
 bindkey -e
 
@@ -119,6 +122,10 @@ alias eh="e ~/.hledger.journal"
 alias fr="history | sk | cut -c 8-"
 alias lg="lazygit"
 
+if command -v pacman-less 2>&1 > /dev/null; then
+  alias pacman="pacman-less"
+fi
+
 alias pe="ps -e | grep"
 alias pi="pacman -Qi | grep Description"
 alias sps="sudo pacman -S"
@@ -154,9 +161,6 @@ alias cgr="RUST_BACKTRACE=1 cargo run"
 alias cgt="RUST_BACKTRACE=1 cargo test"
 alias cgd="PURE_PYTHON=1 CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER=rust-gdb cargo test"
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.cargo/bin"
-
 export MANPATH="$MANPATH:/home/chiggie/.ghcup/share/man"
 
 # Colored man output
@@ -169,10 +173,10 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 # Light theme settings
-export MCFLY_LIGHT=TRUE
-export BAT_THEME="gruvbox-light"
+export BAT_THEME="OneHalfLight"
+export MCFLY_LIGHT="TRUE"
 if command -v vivid 2>&1 > /dev/null; then
-  export LS_COLORS=$(vivid generate one-light)
+  export LS_COLORS="$(vivid generate one-light)"
 fi
 
 # nnn settings
