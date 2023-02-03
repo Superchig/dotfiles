@@ -7,6 +7,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+UNAME="$(uname)"
+
 # Basic settings taken from Arch wiki
 autoload -Uz compinit promptinit
 compinit
@@ -168,7 +170,7 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 # Light/dark theme settings
-if [ "$(uname)" = "Darwin" ]; then
+if [ "$UNAME" = "Darwin" ]; then
   export BAT_THEME="gruvbox-light"
   export MCFLY_LIGHT="TRUE"
   if command -v vivid 2>&1 > /dev/null; then
@@ -180,6 +182,10 @@ else
   if command -v vivid 2>&1 > /dev/null; then
     export LS_COLORS="$(vivid generate gruvbox-dark)"
   fi
+fi
+
+if [ "$UNAME" = "Darwin" ] && command -v gcc-12 2>&1 > /dev/null; then
+  export CC=gcc-12
 fi
 
 # nnn settings
