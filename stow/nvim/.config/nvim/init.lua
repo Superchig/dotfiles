@@ -129,13 +129,9 @@ require('packer').startup(function()
 
   use {'simrat39/rust-tools.nvim', requires = {'nvim-lua/plenary.nvim'}}
   use {'Superchig/vim-markdown'}
-  use {'reedes/vim-pencil'}
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
-  use {'ShinKage/idris2-nvim', requires = {'neovim/nvim-lspconfig', 'MunifTanjim/nui.nvim'}}
   use {'ledger/vim-ledger'}
-  use {'vim-scripts/lbnf.vim'}
-  use {'Superchig/pest.vim'}
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
