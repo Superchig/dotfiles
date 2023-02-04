@@ -1,6 +1,13 @@
 return {
+  -- TODO(Chris): Move themes into their own section
   -- Add gruvbox
   { "ellisonleao/gruvbox.nvim" },
+
+  -- Eagerly load the tokyonight theme
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+  },
 
   -- Configure LazyVim to load gruvbox
   {
