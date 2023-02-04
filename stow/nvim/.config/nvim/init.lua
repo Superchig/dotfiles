@@ -132,11 +132,6 @@ require('packer').startup(function()
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
   use {'ledger/vim-ledger'}
-
-  use {
-    'nvim-neorg/neorg',
-    run = ":Neorg sync-parsers", -- This is the important bit!
-  }
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
@@ -566,12 +561,6 @@ dap.configurations.cpp = {
 }
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
-
-require('neorg').setup {
-  load = {
-    ["core.defaults"] = {}
-  }
-}
 
 -- Disable Rust formatting on save
 vim.g.rustfmt_on_save = 0
