@@ -3,5 +3,6 @@ return {
   opts = {
     -- Disable highlighting for markdown, since we can just use Superchig/vim-markdown
     highlight = { disable = { "markdown" } },
+    ensure_installed = { "comment" },
   },
 }
