@@ -136,13 +136,6 @@ require('packer').startup(function()
   use {
     'nvim-neorg/neorg',
     run = ":Neorg sync-parsers", -- This is the important bit!
-    function()
-      require('neorg').setup {
-        load = {
-          ["core.defaults"] = {}
-        }
-      }
-    end,
   }
 end)
 
@@ -573,6 +566,12 @@ dap.configurations.cpp = {
 }
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
+
+require('neorg').setup {
+  load = {
+    ["core.defaults"] = {}
+  }
+}
 
 -- Disable Rust formatting on save
 vim.g.rustfmt_on_save = 0
