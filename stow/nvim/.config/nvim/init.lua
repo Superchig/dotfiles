@@ -132,6 +132,18 @@ require('packer').startup(function()
   use {'dag/vim-fish'}
   use {'lervag/vimtex'}
   use {'ledger/vim-ledger'}
+
+  use {
+    'nvim-neorg/neorg',
+    run = ":Neorg sync-parsers", -- This is the important bit!
+    function()
+      require('neorg').setup {
+        load = {
+          ["core.defaults"] = {}
+        }
+      }
+    end,
+  }
 end)
 
 if isModuleAvailable('nvim-treesitter.configs') then
