@@ -6,3 +6,6 @@ debug
 foo.*
 *.log
 data
+
+# Maybe this makes it harder to reproduce LazyVim installations, but it's not clear yet
+lazy-lock.json
