@@ -9,6 +9,9 @@ vim.keymap.set("n", "gp", "<cmd>bp<cr>")
 
 vim.keymap.set("n", "gh", vim.lsp.buf.hover)
 
+-- Restore the default behavior of `gw`
+vim.keymap.del("n", "gw")
+
 -- This can broadly replace the functionality of zM for Markdown files
 function NotesHeaders(regex)
   regex = regex or "^# .*$"
