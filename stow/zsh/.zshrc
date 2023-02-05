@@ -105,6 +105,7 @@ fi
 
 # alias xo='xdg-open &> /dev/null'
 alias e=$VISUAL
+alias n=neovide
 alias se="sudo $VISUAL"
 alias ez="e ~/.zshrc"
 alias ef="e ~/.config/fish/config.fish"
