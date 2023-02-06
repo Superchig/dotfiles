@@ -8,6 +8,10 @@ return {
     lazy = false,
   },
 
+  {
+    "https://github.com/Th3Whit3Wolf/one-nvim"
+  },
+
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
