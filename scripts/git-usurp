@@ -1,0 +1,4 @@
+#!/bin/bash
+
+DATE="$(git log -n 1 --format=%aD)"
+GIT_COMMITTER_DATE="$DATE" git commit --amend --reset-author --no-edit --date="$DATE"
