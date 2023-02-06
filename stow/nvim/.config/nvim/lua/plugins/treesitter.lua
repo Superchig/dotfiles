@@ -4,6 +4,6 @@ return {
   opts = {
     -- Disable highlighting for markdown, since we can just use Superchig/vim-markdown
     highlight = { disable = { "markdown" } },
-    ensure_installed = { "comment", "css", "lua", "ruby", "python", "typescript", "rust" },
+    ensure_installed = { "comment", "css", "lua", "ruby", "python", "typescript", "rust", "vim" },
   },
 }
