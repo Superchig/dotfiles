@@ -4,3 +4,5 @@
 
 -- TODO(Chris): Put this in the config part of some plugin configuration
 vim.cmd([[autocmd Filetype markdown lua require('cmp').setup.buffer { enabled = false }]])
+
+vim.cmd([[autocmd Filetype markdown set textwidth=78 colorcolumn=+0]])
