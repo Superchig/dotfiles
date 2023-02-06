@@ -12,6 +12,7 @@ vim.keymap.set("n", "<leader>=", vim.lsp.buf.format)
 
 -- Restore the default behavior of `gw`
 vim.keymap.del("n", "gw")
+vim.keymap.del("v", "gw")
 
 -- This can broadly replace the functionality of zM for Markdown files
 function NotesHeaders(regex)
