@@ -68,5 +68,13 @@ return {
       -- Automatically format on save or not
       autoformat = false
     }
-  }
+  },
+
+  {
+    "RRethy/vim-illuminate",
+    keys = {
+      { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header", },
+      { "[[", "<Plug>Markdown_MoveToPreviousHeader", desc = "Prev Header" },
+    }
+  },
 }
