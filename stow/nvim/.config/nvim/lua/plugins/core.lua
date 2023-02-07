@@ -70,11 +70,24 @@ return {
     }
   },
 
+  -- TODO(Chris): Create an override.lua file for overriding existing plugin configs
   {
     "RRethy/vim-illuminate",
     keys = {
       { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header", },
       { "[[", "<Plug>Markdown_MoveToPreviousHeader", desc = "Prev Header" },
     }
+  },
+
+  {
+    "RRethy/vim-illuminate",
+    keys = {
+      { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header", },
+      { "[[", "<Plug>Markdown_MoveToPreviousHeader", desc = "Prev Header" },
+    }
+  },
+
+  {
+    "hallison/vim-rdoc"
   },
 }
