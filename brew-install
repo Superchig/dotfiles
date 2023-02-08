@@ -3,7 +3,7 @@
 brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   rlwrap stow zoxide lf vivid \
   rubymine \
-  gh awscli \
+  gh awscli awscli@1 \
   mcfly \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
   romkatv/powerlevel10k/powerlevel10k \
