@@ -90,4 +90,8 @@ return {
   {
     "hallison/vim-rdoc"
   },
+
+  {
+    "TimUntersberger/neogit"
+  },
 }
