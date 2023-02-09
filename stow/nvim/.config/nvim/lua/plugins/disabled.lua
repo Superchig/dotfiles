@@ -12,4 +12,5 @@ return {
   -- As of 2/4/2023, this doesn't support highlighting the author in TODO(author):
   -- https://github.com/folke/todo-comments.nvim/issues/10
   { "folke/todo-comments.nvim", enabled = false },
+  { "RRethy/vim-illuminate", enabled = false },
 }
