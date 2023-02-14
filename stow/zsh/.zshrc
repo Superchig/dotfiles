@@ -71,7 +71,7 @@ chpwd() {
 export EDITOR=nvim
 export VISUAL=${EDITOR}
 export MANWIDTH=80
-export PAGER=less # Useful for the pager in psql
+export PAGER='less -S' # Useful for the pager in psql
 
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
