@@ -4,7 +4,7 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   rlwrap stow zoxide lf vivid \
   rubymine \
   gh awscli awscli@1 \
-  mcfly \
+  mcfly just \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
   romkatv/powerlevel10k/powerlevel10k \
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep \
