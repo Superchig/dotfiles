@@ -92,6 +92,9 @@ return {
   },
 
   {
-    "TimUntersberger/neogit"
-  },
+    "earthly/earthly.vim",
+    config = function()
+      vim.cmd([[autocmd Filetype Earthfile setlocal shiftwidth=4]])
+    end,
+  }
 }
