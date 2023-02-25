@@ -190,6 +190,10 @@ if [ "$UNAME" = "Darwin" ] && command -v gcc-12 2>&1 > /dev/null; then
   export CC=gcc-12
 fi
 
+if [ "$UNAME" = "Darwin" ]; then
+  export JAVA_HOME="$(/usr/libexec/java_home)"
+fi
+
 # nnn settings
 export NNN_FIFO="/tmp/nnn.fifo"
 export NNN_PLUG="p:preview-tui"
