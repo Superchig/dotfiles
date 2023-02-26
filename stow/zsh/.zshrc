@@ -153,7 +153,7 @@ alias ssy="sudo systemctl"
 alias gca="git commit --amend"
 alias gch="git checkout"
 alias gb="git branch"
-alias gs="git stash --include-untracked"
+alias gits="git stash --include-untracked"
 
 alias cgc="cargo check --color=always 2>&1 | head -n 25"
 alias cgb="cargo build"
