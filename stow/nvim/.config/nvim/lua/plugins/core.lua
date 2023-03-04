@@ -96,5 +96,9 @@ return {
     config = function()
       vim.cmd([[autocmd Filetype Earthfile setlocal shiftwidth=4]])
     end,
-  }
+  },
+
+  {
+    "ChrisWellsWood/roc.vim"
+  },
 }
