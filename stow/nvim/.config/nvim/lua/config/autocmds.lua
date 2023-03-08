@@ -6,3 +6,9 @@
 vim.cmd([[autocmd Filetype markdown lua require('cmp').setup.buffer { enabled = false }]])
 
 vim.cmd([[autocmd Filetype markdown set textwidth=78 colorcolumn=+0]])
+
+-- NOTE(Chris): Not sure where else to put this
+if vim.loop.os_uname().sysname == 'Darwin'
+then
+  vim.cmd([[let $CC = "gcc-12"]])
+end
