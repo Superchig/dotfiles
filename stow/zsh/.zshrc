@@ -187,10 +187,6 @@ else
   fi
 fi
 
-if [ "$UNAME" = "Darwin" ] && command -v gcc-12 2>&1 > /dev/null; then
-  export CC=gcc-12
-fi
-
 if [ "$UNAME" = "Darwin" ]; then
   export JAVA_HOME="$(/usr/libexec/java_home)"
 fi
@@ -344,3 +340,6 @@ if [ -f "$PATH:$HOME/.rvm/bin" ]; then
   # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
   export PATH="$PATH:$HOME/.rvm/bin"
 fi
+
+# Use rbenv temporarily
+# eval "$(rbenv init - zsh)"
