@@ -101,4 +101,8 @@ return {
   {
     "ChrisWellsWood/roc.vim"
   },
+
+  {
+    "vmchale/just-vim"
+  },
 }
