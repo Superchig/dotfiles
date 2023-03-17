@@ -191,6 +191,11 @@ if [ "$UNAME" = "Darwin" ]; then
   export JAVA_HOME="$(/usr/libexec/java_home)"
 fi
 
+# Mclfy settings
+
+export MCFLY_FUZZY=2
+export MCFLY_RESULTS=500
+
 # nnn settings
 export NNN_FIFO="/tmp/nnn.fifo"
 export NNN_PLUG="p:preview-tui"
