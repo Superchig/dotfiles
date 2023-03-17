@@ -103,6 +103,9 @@ return {
   },
 
   {
-    "vmchale/just-vim"
+    "vmchale/just-vim",
+    config = function()
+      vim.cmd([[autocmd Filetype just setlocal shiftwidth=4]])
+    end,
   },
 }
