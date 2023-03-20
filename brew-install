@@ -8,7 +8,7 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
   romkatv/powerlevel10k/powerlevel10k \
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep \
-  gcc moreutils xh difftastic git-delta pandoc watch
+  gcc moreutils xh difftastic git-delta pandoc watch shellcheck
 
 brew install --cask emacs visual-studio-code rectangle \
   homebrew/cask-fonts/font-meslo-lg-nerd-font \
