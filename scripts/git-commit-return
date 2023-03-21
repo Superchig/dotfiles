@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This script creates a new commit with the same tree as the given commit, and
+# then it updates
+
+set -euo pipefail
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <commit>"
+  exit 1
+fi
+
+GIT_DIR="$(git rev-parse --git-dir)"
+
+TREE_HASH="$(git show --pretty=format:'%T' --no-patch "$1")"
+
+# NOTE(Chris): This line creates a new commit
+NEW_COMMIT_HASH="$(git commit-tree "$TREE_HASH" -m 'FIXUP: Change this line with a new commit message' -p HEAD)"
+git reset --hard "$NEW_COMMIT_HASH"
+git commit --amend --allow-empty
