@@ -341,6 +341,8 @@ if command -v rockie 2>&1 > /dev/null; then
   eval "$(rockie env)"
 fi
 
+eval "$(rtx activate zsh)"
+
 if [ -f "$PATH:$HOME/.rvm/bin" ]; then
   # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
   export PATH="$PATH:$HOME/.rvm/bin"
