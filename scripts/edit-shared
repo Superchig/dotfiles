@@ -1,0 +1,3 @@
+#!/bin/sh
+
+nvim scp://root@74.207.240.129//root/shared_notes/links.md
