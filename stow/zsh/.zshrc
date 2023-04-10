@@ -34,7 +34,13 @@ if [ ! -f ${HISTFILE} ]; then
 fi
 
 # Completion information
-zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
+# zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
+# NOTE(Chris): I should be able to use the line above. However, for a reason I
+# don't entirely understand, this currently breaks autocompletion (something's
+# going on with my LS_COLORS).
+# In any case, the line below will work, albeit at the cost of losing color
+# functionality for the currently-selected tab-complete item.
+zstyle ':completion:*' menu select list-colors
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion::complete:*' gain-privileges 1
 setopt COMPLETE_ALIASES
