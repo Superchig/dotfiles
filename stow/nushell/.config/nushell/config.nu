@@ -661,8 +661,8 @@ def-env lfcd [] {
   cd (open --raw ~/tmp/lfcd_last_dir.txt)
 }
 
-def mvdo [hours_ago: int] {
-  let hours_ago_duration = ($"($hours_ago)hr" | into duration)
+def mvdo [minutes_ago: int] {
+  let hours_ago_duration = ($"($minutes_ago)min" | into duration)
 
   let recent_downloads = (ls -a ~\Downloads\ | where { |file|
     let duration = (date now) - $file.modified
