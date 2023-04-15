@@ -664,6 +664,7 @@ def-env lfcd [] {
 alias l = ls -a
 alias cdd = cd ~/dotfiles
 alias e = nvim
+alias lg = lazygit
 
 # Set up zoxide
 
