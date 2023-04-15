@@ -9,6 +9,9 @@ Microsoft.PowerToys
 Dropbox.Dropbox
 Rustlang.Rustup
 7zip.7zip
+sharkdp.fd
+ajeetdsouza.zoxide
+JesseDuffield.lazygit
 
 # Git setup
 
