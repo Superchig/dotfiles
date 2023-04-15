@@ -15,3 +15,5 @@ if vim.loop.os_uname().sysname == 'Darwin'
 then
   vim.cmd([[let $CC = "gcc-12"]])
 end
+
+-- NOTE(Chris): On Windows, you can probably install Zig, if you want to build Treesitter parsers
