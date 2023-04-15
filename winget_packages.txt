@@ -8,6 +8,7 @@ Git.Git
 Microsoft.PowerToys
 Dropbox.Dropbox
 Rustlang.Rustup
+7zip.7zip
 
 # Git setup
 
