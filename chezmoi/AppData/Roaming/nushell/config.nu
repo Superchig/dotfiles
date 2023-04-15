@@ -661,10 +661,29 @@ def-env lfcd [] {
   cd (open --raw ~/tmp/lfcd_last_dir.txt)
 }
 
+def mvdo [hours_ago: int] {
+  let hours_ago_duration = ($"($hours_ago)hr" | into duration)
+
+  let recent_downloads = (ls -a ~\Downloads\ | where { |file|
+    let duration = (date now) - $file.modified
+    $duration < $hours_ago_duration
+  })
+
+  if ($recent_downloads | length) <= 0 {
+    echo 'No downloads were recent enough, sorry.'
+  } else {
+    $recent_downloads | each { |file_info|
+      mv ($file_info.name) .
+      $file_info
+    }
+  }
+}
+
 alias l = ls -a
 alias cdd = cd ~/dotfiles
 alias e = nvim
 alias lg = lazygit
+alias ln = gsudo nu ~/bin/ln.nu
 
 # Set up zoxide
 
