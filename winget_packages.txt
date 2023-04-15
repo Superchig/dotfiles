@@ -12,6 +12,7 @@ Rustlang.Rustup
 sharkdp.fd
 ajeetdsouza.zoxide
 JesseDuffield.lazygit
+Neovide.Neovide
 
 # Git setup
 
