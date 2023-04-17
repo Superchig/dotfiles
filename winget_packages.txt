@@ -13,6 +13,7 @@ ajeetdsouza.zoxide
 JesseDuffield.lazygit
 Neovide.Neovide
 Microsoft.VisualStudioCode
+Casey.Just
 
 # Git setup
 
