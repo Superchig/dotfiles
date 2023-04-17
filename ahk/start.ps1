@@ -1,0 +1,1 @@
+& $env:APPDATA'\Microsoft\Windows\Start Menu\Programs\Startup\alt_backtick.exe'
