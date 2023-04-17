@@ -19,6 +19,7 @@ let custom_config = {
       }
     }
   ])
+  shell_integration: false
 }
 
 let-env config = ($env.config | merge $custom_config)

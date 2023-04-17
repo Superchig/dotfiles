@@ -1,6 +1,8 @@
+# From https://github.com/nushell/nushell/tree/0.78.0/crates/nu-utils/src/sample_config
+
 # Nushell Config File
 #
-# version = 0.78.1
+# version = 0.78.0
 
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
@@ -26,21 +28,21 @@ let dark_theme = {
     duration: white
     date: {|| (date now) - $in |
       if $in < 1hr {
-        'purple'
+        'red3b'
       } else if $in < 6hr {
-        'red'
+        'orange3'
       } else if $in < 1day {
-        'yellow'
+        'yellow3b'
       } else if $in < 3day {
-        'green'
+        'chartreuse2b'
       } else if $in < 1wk {
-        'light_green'
+        'green3b'
       } else if $in < 6wk {
-        'cyan'
+        'darkturquoise'
       } else if $in < 52wk {
-        'blue'
+        'deepskyblue3b'
       } else { 'dark_gray' }
-    }
+    }    
     range: white
     float: white
     string: white
@@ -57,7 +59,6 @@ let dark_theme = {
     shape_binary: purple_bold
     shape_block: blue_bold
     shape_bool: light_cyan
-    shape_closure: green_bold
     shape_custom: green
     shape_datetime: cyan_bold
     shape_directory: cyan
@@ -67,7 +68,7 @@ let dark_theme = {
     shape_flag: blue_bold
     shape_float: purple_bold
     # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: white bg: red attr: b}
+    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
     shape_globpattern: cyan_bold
     shape_int: purple_bold
     shape_internalcall: cyan_bold
@@ -87,7 +88,6 @@ let dark_theme = {
     shape_string_interpolation: cyan_bold
     shape_table: blue_bold
     shape_variable: purple
-    shape_vardecl: purple
 }
 
 let light_theme = {
@@ -110,19 +110,19 @@ let light_theme = {
     duration: dark_gray
   date: {|| (date now) - $in |
     if $in < 1hr {
-      'purple'
+      'red3b'
     } else if $in < 6hr {
-      'red'
+      'orange3'
     } else if $in < 1day {
-      'yellow'
+      'yellow3b'
     } else if $in < 3day {
-      'green'
+      'chartreuse2b'
     } else if $in < 1wk {
-      'light_green'
+      'green3b'
     } else if $in < 6wk {
-      'cyan'
+      'darkturquoise'
     } else if $in < 52wk {
-      'blue'
+      'deepskyblue3b'
     } else { 'dark_gray' }
   }
     range: dark_gray
@@ -141,7 +141,6 @@ let light_theme = {
     shape_binary: purple_bold
     shape_block: blue_bold
     shape_bool: light_cyan
-    shape_closure: green_bold
     shape_custom: green
     shape_datetime: cyan_bold
     shape_directory: cyan
@@ -151,7 +150,7 @@ let light_theme = {
     shape_flag: blue_bold
     shape_float: purple_bold
     # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: white bg: red attr: b}
+    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
     shape_globpattern: cyan_bold
     shape_int: purple_bold
     shape_internalcall: cyan_bold
@@ -171,7 +170,6 @@ let light_theme = {
     shape_string_interpolation: cyan_bold
     shape_table: blue_bold
     shape_variable: purple
-    shape_vardecl: purple
 }
 
 # External completer example
