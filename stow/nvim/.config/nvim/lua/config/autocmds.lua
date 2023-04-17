@@ -10,6 +10,8 @@ vim.cmd([[autocmd Filetype markdown set textwidth=78 colorcolumn=+0]])
 vim.cmd([[autocmd Filetype cpp set shiftwidth=4 tabstop=4]])
 vim.cmd([[autocmd Filetype cpp set commentstring=//\ %s]])
 
+vim.cmd([[autocmd Filetype make set shiftwidth=4 tabstop=4]])
+
 -- NOTE(Chris): Not sure where else to put this
 if vim.loop.os_uname().sysname == 'Darwin'
 then
