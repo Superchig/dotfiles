@@ -1,0 +1,12 @@
+set shell := ['nu', '-c']
+
+install:
+    nu install.nu
+
+stop:
+    ^'C:\Program Files\AutoHotkey\v2\AutoHotkey64' stop.ahk
+
+start:
+    powershell -ExecutionPolicy Bypass .\start.ps1
+
+reload: stop install start
