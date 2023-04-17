@@ -13,6 +13,7 @@ sharkdp.fd
 ajeetdsouza.zoxide
 JesseDuffield.lazygit
 Neovide.Neovide
+Microsoft.VisualStudioCode
 
 # Git setup
 
