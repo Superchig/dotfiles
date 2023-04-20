@@ -12,4 +12,5 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
 
 brew install --cask emacs visual-studio-code rectangle \
   homebrew/cask-fonts/font-meslo-lg-nerd-font \
-  font-iosevka-nerd-font iterm2 unnaturalscrollwheels chromedriver
+  font-iosevka-nerd-font iterm2 unnaturalscrollwheels chromedriver \
+  cyberduck
