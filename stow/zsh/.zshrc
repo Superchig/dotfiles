@@ -356,10 +356,12 @@ if command -v rtx 2>&1 > /dev/null; then
   eval "$(rtx activate zsh)"
 fi
 
+# if command -v rbenv 2>&1 > /dev/null; then
+#   eval "$(rbenv init - zsh)"
+# fi
+
 if [ -f "$PATH:$HOME/.rvm/bin" ]; then
   # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
   export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
-# Use rbenv temporarily
-# eval "$(rbenv init - zsh)"
