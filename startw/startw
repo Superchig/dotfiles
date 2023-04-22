@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import os
+import subprocess
+import sys
+
+def dbus_update_activation_environment() -> None:
+    subprocess.run(["dbus-update-activation-environment", "DISPLAY", "XAUTHORITY", "WAYLAND_DISPLAY"])
+
+def gnome_keyring_daemon() -> tuple[str, str]:
+    result = subprocess.run(["/usr/bin/gnome-keyring-daemon", "--start", "--components=ssh"], capture_output=True, text=True)
+    output = result.stdout.strip().split("\n")
+    
+    gnome_keyring_control = ""
+    ssh_auth_sock = ""
+    
+    for line in output:
+        if line.startswith("GNOME_KEYRING_CONTROL="):
+            gnome_keyring_control = line[len("GNOME_KEYRING_CONTROL="):]
+        elif line.startswith("SSH_AUTH_SOCK="):
+            ssh_auth_sock = line[len("SSH_AUTH_SOCK="):]
+
+    return gnome_keyring_control, ssh_auth_sock
+
+def set_environment_variables(gnome_keyring_control: str, ssh_auth_sock: str) -> None:
+    os.environ["GNOME_KEYRING_CONTROL"] = gnome_keyring_control
+    os.environ["SSH_AUTH_SOCK"] = ssh_auth_sock
+
+def gnome() -> None:
+    os.environ["XDG_SESSION_TYPE"] = "wayland"
+    subprocess.run(["dbus-run-session", "gnome-session"])
+
+def print_help() -> None:
+    print(f"Usage: {sys.argv[0]} [option]")
+    print("Options:")
+    print("\tsway - Start sway")
+    print("\tgnome - Start Gnome")
+    print("\tswitch-to <option> - This will switch you to a different DE/compositor, once you've exited your current one.")
+    print("\thelp - Print this help.")
+
+if __name__ == "__main__":
+    data_dir_path = os.environ['HOME'] + '/.local/state'
+    if 'XDG_STATE_HOME' in os.environ:
+        data_dir_path = os.environ['XDG_STATE_HOME']
+    startw_dir_path = data_dir_path + '/startw'
+    os.makedirs(startw_dir_path, exist_ok=True)
+    next_compositor_big_path = Path(startw_dir_path + '/next_compositor')
+    next_compositor_big_path.touch()
+
+    next_compositor_name = next_compositor_big_path.read_text()
+
+    if len(next_compositor_name) > 0:
+        next_compositor_big_path.write_text('')
+        os.execl('/usr/bin/env', '-S', 'startw', next_compositor_name)
+
+    dbus_update_activation_environment()
+    gnome_keyring_control, ssh_auth_sock = gnome_keyring_daemon()
+    set_environment_variables(gnome_keyring_control, ssh_auth_sock)
+
+    if len(sys.argv) > 4:
+        print_help()
+        exit(1)
+
+    if len(sys.argv) == 1:
+        subprocess.run(["sway"])
+    elif len(sys.argv) == 2 or len(sys.argv) == 3:
+        match sys.argv[1]:
+            case 'sway':
+                subprocess.run(['sway'])
+            case 'gnome':
+                gnome()
+            case 'switch-to':
+                compositor = sys.argv[2]
+                match compositor:
+                    case 'sway' | 'gnome':
+                        os.makedirs(startw_dir_path, exist_ok=True)
+
+                        next_compositor_big_path.write_text(compositor)
+
+                        print(f"You'll switch to `{compositor}` when you run `startw` again. Feel free to exit your compositor.")
+                    case _:
+                        print(f"Unsupported compositor: `{compositor}`")
+            case 'help':
+                print_help()
+            case _:
+                print(f"Unsupported option: `{sys.argv[1]}`")
+    else:
+        raise Exception("This shouldn't be reachable!")

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set up things for using gnome-keyring to store/access my ssh key passphrase
+
+dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh)
+export GNOME_KEYRING_CONTROL # Not sure if this line is necessary
+export SSH_AUTH_SOCK
+
+# sway
+
+XDG_SESSION_TYPE=wayland dbus-run-session gnome-session
