@@ -63,6 +63,8 @@ if __name__ == "__main__":
         exit(1)
 
     if len(sys.argv) == 1:
+        os.environ['XDG_SESSION_TYPE'] = "wayland"
+        os.environ['XDG_CURRENT_DESKTOP'] = 'sway'
         subprocess.run(["sway"])
     elif len(sys.argv) == 2 or len(sys.argv) == 3:
         match sys.argv[1]:
