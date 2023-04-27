@@ -193,6 +193,9 @@ input "type:keyboard" {
 # Enter launch mode
 bindsym $mod+o mode "launch"
 
+# Take a screenshot (shift+print screen)
+bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy --type image/png
+
 #
 # Resizing containers:
 #
