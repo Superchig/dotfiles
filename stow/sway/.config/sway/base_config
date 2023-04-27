@@ -221,30 +221,14 @@ bindsym $mod+r mode "resize"
 mode "launch" {
      bindsym f exec firefox; mode "default"
      bindsym n exec nautilus "$(xcwd)"; mode "default"
-     bindsym c exec chromium; mode "default"
-     bindsym z exec zoom; mode "default"
-     # bindsym p exec firefox --private-window; mode "default"
-     bindsym d exec "$HOME/dotfiles/scripts/electron-app.sh discord Discord"; mode "default"
-     bindsym s exec "$HOME/dotfiles/scripts/electron-app.sh slack Slack"; mode "default"
-     # bindsym b exec "$HOME/dotfiles/scripts/electron-app.sh bitwarden Bitwarden"; mode "default"
      bindsym b exec "$HOME/dotfiles/scripts/electron-app.sh blueman-manager Blueman-manager"; mode "default"
 
-    # m for mail
-    bindsym m exec "$HOME/dotfiles/scripts/electron-app.sh mailspring Mailspring"; mode "default"
+     bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off' -s 'ignore comma on'; mode "default"
 
-    # e for Emacs
-    # bindsym e exec "$HOME/dotfiles/scripts/emacsclient-custom"; mode "default"
-    bindsym e exec wmctrl -xa emacs || emacs; mode "default"
-
-    bindsym p exec pavucontrol; mode "default"
-    bindsym o exec "$HOME/dotfiles/minimalist/rofi/rofi-open"; mode "default"
-    bindsym q exec qalculate-gtk; mode "default"
-    bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off' -s 'ignore comma on'; mode "default"
-
-    # back to normal: Enter or Escape or $mod+r
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+o mode "default"
+     # back to normal: Enter or Escape or $mod+r
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+     bindsym $mod+o mode "default"
 }
 
 #
