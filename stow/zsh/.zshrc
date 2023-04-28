@@ -360,8 +360,6 @@ fi
 #   eval "$(rbenv init - zsh)"
 # fi
 
-if [ -f "$PATH:$HOME/.rvm/bin" ]; then
-  # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-  export PATH="$PATH:$HOME/.rvm/bin"
-fi
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
