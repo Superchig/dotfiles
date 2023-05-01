@@ -36,6 +36,10 @@ def sway() -> None:
     os.environ['XDG_CURRENT_DESKTOP'] = 'sway'
     subprocess.run(["sway"])
 
+def plasma() -> None:
+    os.environ['PLASMA_USE_QT_SCALING'] = '1'
+    subprocess.run(["startplasma-wayland"])
+
 def print_help() -> None:
     print(f"Usage: {sys.argv[0]} [option]")
     print("Options:")
@@ -75,10 +79,12 @@ if __name__ == "__main__":
                 sway()
             case 'gnome':
                 gnome()
+            case 'plasma':
+                plasma()
             case 'switch-to':
                 compositor = sys.argv[2]
                 match compositor:
-                    case 'sway' | 'gnome':
+                    case 'sway' | 'gnome' | 'plasma':
                         os.makedirs(startw_dir_path, exist_ok=True)
 
                         next_compositor_big_path.write_text(compositor)
