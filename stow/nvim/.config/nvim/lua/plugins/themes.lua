@@ -12,6 +12,10 @@ return {
     "https://github.com/Th3Whit3Wolf/one-nvim"
   },
 
+  {
+    "Mofiqul/vscode.nvim"
+  },
+
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
@@ -34,7 +38,7 @@ return {
 
         if vim.loop.os_uname().sysname == "Darwin" then
           vim.o.background = "light"
-          return "one-nvim"
+          return "vscode"
         else
           return "gruvbox"
         end
