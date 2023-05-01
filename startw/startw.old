@@ -4,10 +4,15 @@
 
 dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
 
-eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh)
-export GNOME_KEYRING_CONTROL # Not sure if this line is necessary
-export SSH_AUTH_SOCK
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=--components=pkgcs11,secrets,ssh)
+# export GNOME_KEYRING_CONTROL # Not sure if this line is necessary
+# export SSH_AUTH_SOCK
 
-# sway
+# NOTE(Chris): As far as I can tell (as of 04/30/2023), both Gnome and Plasma need this
+export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
-XDG_SESSION_TYPE=wayland dbus-run-session gnome-session
+# XDG_SESSION_TYPE=wayland XDG_CURRENT_DESKTOP=sway sway
+
+# XDG_SESSION_TYPE=wayland dbus-run-session gnome-session
+
+PLASMA_USE_QT_SCALING=1 startplasma-wayland
