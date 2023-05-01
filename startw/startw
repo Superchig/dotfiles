@@ -9,7 +9,7 @@ def dbus_update_activation_environment() -> None:
     subprocess.run(["dbus-update-activation-environment", "DISPLAY", "XAUTHORITY", "WAYLAND_DISPLAY"])
 
 def gnome_keyring_daemon() -> tuple[str, str]:
-    result = subprocess.run(["/usr/bin/gnome-keyring-daemon", "--start", "--components=ssh"], capture_output=True, text=True)
+    result = subprocess.run(["/usr/bin/gnome-keyring-daemon", "--start", "--components=pkgcs11,secrets,ssh"], capture_output=True, text=True)
     output = result.stdout.strip().split("\n")
     
     gnome_keyring_control = ""
@@ -30,6 +30,11 @@ def set_environment_variables(gnome_keyring_control: str, ssh_auth_sock: str) ->
 def gnome() -> None:
     os.environ["XDG_SESSION_TYPE"] = "wayland"
     subprocess.run(["dbus-run-session", "gnome-session"])
+
+def sway() -> None:
+    os.environ['XDG_SESSION_TYPE'] = "wayland"
+    os.environ['XDG_CURRENT_DESKTOP'] = 'sway'
+    subprocess.run(["sway"])
 
 def print_help() -> None:
     print(f"Usage: {sys.argv[0]} [option]")
@@ -63,13 +68,11 @@ if __name__ == "__main__":
         exit(1)
 
     if len(sys.argv) == 1:
-        os.environ['XDG_SESSION_TYPE'] = "wayland"
-        os.environ['XDG_CURRENT_DESKTOP'] = 'sway'
-        subprocess.run(["sway"])
+        sway()
     elif len(sys.argv) == 2 or len(sys.argv) == 3:
         match sys.argv[1]:
             case 'sway':
-                subprocess.run(['sway'])
+                sway()
             case 'gnome':
                 gnome()
             case 'switch-to':
