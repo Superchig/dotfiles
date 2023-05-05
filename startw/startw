@@ -40,6 +40,9 @@ def plasma() -> None:
     os.environ['PLASMA_USE_QT_SCALING'] = '1'
     subprocess.run(["startplasma-wayland"])
 
+def hyprland() -> None:
+    subprocess.run(["Hyprland"])
+
 def print_help() -> None:
     print(f"Usage: {sys.argv[0]} [option]")
     print("Options:")
@@ -81,10 +84,12 @@ if __name__ == "__main__":
                 gnome()
             case 'plasma':
                 plasma()
+            case 'hyprland':
+                hyprland()
             case 'switch-to':
                 compositor = sys.argv[2]
                 match compositor:
-                    case 'sway' | 'gnome' | 'plasma':
+                    case 'sway' | 'gnome' | 'plasma' | 'hyprland':
                         os.makedirs(startw_dir_path, exist_ok=True)
 
                         next_compositor_big_path.write_text(compositor)
