@@ -126,7 +126,7 @@ alias ei="e ~/.config/i3/config"
 alias en="e ~/tmp/zoom_items.md"
 alias ecl="emacsclient"
 alias ea="e ~/.config/awesome/rc.lua"
-alias eh="e ~/.hledger.journal"
+alias eh="e ~/.config/hypr/hyprland.conf"
 
 alias fr="history | sk | cut -c 8-"
 alias lg="lazygit"
