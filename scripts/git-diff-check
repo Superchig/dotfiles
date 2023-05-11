@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+
+if len(sys.argv) != 2:
+    print('Usage: git diff-check <regex>')
+    exit(1)
+
+regex_raw = sys.argv[1]
+
+def parse_diff_output(diff_output: str):
+    lines: list[str] = []
+
+    raw_lines = diff_output.split("\n")
+    i = 0
+    file_path = ''
+    start_line = ''  # Initialize start_line to an empty string
+    line_count = 0
+
+    while i < len(raw_lines):
+        line = raw_lines[i]
+
+        if line.startswith('--- a/'):
+            file_path = line[6:]
+        elif line.startswith('--- /dev/null'):
+            next_line = raw_lines[i + 1]
+            file_path = next_line[6:]
+            line_count = 0
+        elif line.startswith('@@'):
+            line_numbers = line.split('@@')[1].strip().split(' ')[1]
+            start_line = int(line_numbers[1:].split(',')[0])
+        elif line.startswith('+'):
+            line_count += 1
+            if start_line:
+                # TODO(Chris): Figure out why we need to subtract 2 form line count
+                lines.append(f'{file_path}:{start_line + line_count - 2}: {line}')
+
+        i += 1
+
+    return "\n".join(lines)
+
+raw_diff_output = subprocess.check_output(['git', 'diff', '-U0', '-G', regex_raw, 'master..'], text=True)
+diff_output = parse_diff_output(raw_diff_output)
+subprocess.run(['grep', '--color=auto', '-E', regex_raw], text=True, input=diff_output, stdout=sys.stdout, stderr=sys.stderr)
