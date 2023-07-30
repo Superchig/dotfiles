@@ -34,7 +34,7 @@ def gnome() -> None:
 def sway() -> None:
     os.environ['XDG_SESSION_TYPE'] = "wayland"
     os.environ['XDG_CURRENT_DESKTOP'] = 'sway'
-    subprocess.run(["sway"])
+    subprocess.run(["sway", "--unsupported-gpu"])
 
 def plasma() -> None:
     os.environ['PLASMA_USE_QT_SCALING'] = '1'
