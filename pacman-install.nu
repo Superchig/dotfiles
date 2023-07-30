@@ -34,7 +34,7 @@ sudo pacman --needed -S [
   i3-gaps, autorandr, xdotool, wmctrl, xorg-xrandr, rofi, picom, redshift
   xss-lock, network-manager-applet, xorg-xinput, arandr, feh, xfce4-notifyd
   ## Mega-Customized Desktop (Sway)
-  sway, waybar, mako, wlroots, wl-clipboard, kanshi, egl-wayland, bemenu-wyland
+  sway, waybar, mako, wlroots, wl-clipboard, kanshi, egl-wayland, bemenu-wayland
   slurp, grim
   ## Tools For Any Desktop
   firefox, sxiv, mpv, vlc, pavucontrol, discord, seahorse, qalculate-gtk
