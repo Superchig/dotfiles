@@ -20,7 +20,8 @@ sudo pacman --needed -S [
   mlocate, inetutils, tree
   ## Terminal utilities
   fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp
-  neofetch, shellcheck, fzf, highlight, mediainfo, jq
+  neofetch, shellcheck, fzf, highlight, mediainfo, jq, dua-cli,
+  tokei
   ## Shell-boosters
   fish, zsh, mcfly, zoxide
   zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search
