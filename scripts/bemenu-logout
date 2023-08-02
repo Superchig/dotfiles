@@ -1,0 +1,19 @@
+#!/bin/sh
+
+CHOICE=$(printf "hibernate\nsuspend\npower off\nrestart" | bemenu)
+
+case "$CHOICE" in
+  "hibernate")
+    systemctl hibernate
+    ;;
+  "suspend")
+    systemctl suspend
+    ;;
+  "power off")
+    systemctl poweroff
+    ;;
+  "restart")
+    systemctl reboot
+    ;;
+  *) echo "That's not a valid choice!";;
+esac
