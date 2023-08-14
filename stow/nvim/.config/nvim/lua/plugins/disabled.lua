@@ -1,7 +1,8 @@
 return {
-  -- The next two plugins modify the behavior of f and s
+  -- The next three plugins modify the behavior of f and s
   { "ggandor/leap.nvim", enabled = false },
   { "ggandor/flit.nvim", enabled = false },
+  { "folke/flash.nvim", enabled = false },
   -- I haven't takent the time to rebind this plugin to correspond to the
   -- vim-commentary mappings
   { "echasnovski/mini.surround", enabled = false },
