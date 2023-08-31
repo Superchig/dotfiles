@@ -290,7 +290,7 @@ chpwd
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if [ -f /usr/bin/go ]; then
+if command -v go 2>&1 > /dev/null; then
   export PATH="$PATH:$(go env GOPATH)/bin"
 fi
 
