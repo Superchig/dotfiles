@@ -229,7 +229,7 @@ bindsym $mod+r mode "resize"
 
 mode "launch" {
      bindsym f exec firefox; mode "default"
-     bindsym n exec nautilus "$(xcwd)"; mode "default"
+     bindsym n exec thunar "$(swaycwd)"; mode "default"
      bindsym b exec "$HOME/dotfiles/scripts/electron-app.sh blueman-manager Blueman-manager"; mode "default"
 
      bindsym shift+q exec alacritty --title qalc -e qalc -s 'fractions off' -s 'ignore comma on'; mode "default"
