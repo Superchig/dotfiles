@@ -266,6 +266,6 @@ exec waybar
 exec systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-exec_always "pkill kanshi; kanshi"
+# exec_always "pkill kanshi; kanshi"
 
 include @sysconfdir@/sway/config.d/*
