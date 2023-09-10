@@ -14,6 +14,10 @@ return {
         "svelte-language-server",
         "tailwindcss-language-server",
         "typescript-language-server",
+        -- C++
+        "clangd",
+        "codelldb",
+        "clang-format",
       },
     },
   },
