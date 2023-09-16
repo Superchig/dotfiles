@@ -48,5 +48,19 @@ return {
         },
       }
     end
+  },
+
+  {
+    "L3MON4D3/LuaSnip",
+    opts = function ()
+      return {
+        -- NOTE(Chris): This stops you from jumping to a snippet with <tab> once you've exited the snippet
+        history = false,
+      }
+    end
+    -- NOTE(Chris): Uncomment this if you just want to disable the <tab> jump key
+    -- keys = function ()
+    --   return { }
+    -- end
   }
 }
