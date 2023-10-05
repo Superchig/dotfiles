@@ -40,6 +40,6 @@ def parse_diff_output(diff_output: str):
 
     return "\n".join(lines)
 
-raw_diff_output = subprocess.check_output(['git', 'diff', '-U0', '-G', regex_raw, 'master..'], text=True)
+raw_diff_output = subprocess.check_output(['git', 'diff', '-U0', '-G', regex_raw, 'master'], text=True)
 diff_output = parse_diff_output(raw_diff_output)
 subprocess.run(['grep', '--color=auto', '-E', regex_raw], text=True, input=diff_output, stdout=sys.stdout, stderr=sys.stderr)
