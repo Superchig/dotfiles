@@ -90,8 +90,8 @@ export PATH="$PATH:$HOME/.cargo/bin"
 bindkey -e
 
 alias ls='ls --color=auto -F'
-if [ -f /usr/bin/exa ]; then
-  alias l='exa -la --group-directories-first'
+if [ -f /usr/bin/eza ]; then
+  alias l='eza -la --group-directories-first'
 else
   alias l='ls -lah'
 fi
