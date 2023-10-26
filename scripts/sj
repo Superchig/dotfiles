@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -euo pipefail
+
+TIMESTAMP="$(date '+%Y%m%d%H%M%S')"
+TEMP_FILE="/tmp/sjournal-$TIMESTAMP.md"
+
+onexit() {
+  echo "Exiting, removing temp file..."
+  rm -f "$TEMP_FILE"
+}
+
+trap onexit EXIT
+
+touch "$TEMP_FILE"
+
+"$EDITOR" "$TEMP_FILE"
+if [ -z "$(cat "$TEMP_FILE")" ]; then
+  echo "Temp file is empty"
+  exit 1
+fi
+
+scp "$TEMP_FILE" root@74.207.240.129:~/journal/
