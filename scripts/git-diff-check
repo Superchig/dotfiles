@@ -40,6 +40,9 @@ def parse_diff_output(diff_output: str):
 
     return "\n".join(lines)
 
-raw_diff_output = subprocess.check_output(['git', 'diff', '-U0', '-G', regex_raw, 'master'], text=True)
+main_branch_bytes = subprocess.check_output("git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'", shell=True)
+main_branch = main_branch_bytes.decode('utf-8').strip()
+
+raw_diff_output = subprocess.check_output(['git', 'diff', '-U0', '-G', regex_raw, main_branch], text=True)
 diff_output = parse_diff_output(raw_diff_output)
 subprocess.run(['grep', '--color=auto', '-E', regex_raw], text=True, input=diff_output, stdout=sys.stdout, stderr=sys.stderr)
