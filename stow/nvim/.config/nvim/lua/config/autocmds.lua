@@ -18,6 +18,10 @@ vim.cmd([[autocmd Filetype go set shiftwidth=4 tabstop=4]])
 if vim.loop.os_uname().sysname == 'Darwin'
 then
   vim.cmd([[let $CC = "gcc"]])
+
+  -- NOTE(Chris): This will disable transparency in the autocomplete drop-down menu
+  -- iTerm2 doesn't handle text transparency very well
+  vim.opt.pumblend = 0
 end
 
 -- NOTE(Chris): On Windows, you can probably install Zig, if you want to build Treesitter parsers
