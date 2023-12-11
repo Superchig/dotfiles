@@ -7,3 +7,5 @@ vim.o.timeoutlen = 0
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.hlsearch = false
 vim.opt.conceallevel = 0
+
+vim.g.autoformat = true
