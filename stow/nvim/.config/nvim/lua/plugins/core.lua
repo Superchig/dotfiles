@@ -52,28 +52,6 @@ return {
     },
   },
 
-  -- Add prettier to our list of null-ls formatting sources
-  -- List of sources at https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function()
-      local null_ls = require("null-ls")
-      return {
-        sources = {
-          null_ls.builtins.formatting.prettier,
-        },
-      }
-    end,
-  },
-
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      -- Automatically format on save or not
-      autoformat = false
-    }
-  },
-
   -- TODO(Chris): Create an override.lua file for overriding existing plugin configs
   {
     "RRethy/vim-illuminate",
