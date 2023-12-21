@@ -14,6 +14,8 @@ vim.cmd([[autocmd Filetype make set shiftwidth=4 tabstop=4]])
 
 vim.cmd([[autocmd Filetype go set shiftwidth=4 tabstop=4]])
 
+vim.cmd([[autocmd BufNewFile,BufRead *.templ set filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]])
+
 -- NOTE(Chris): Not sure where else to put this
 if vim.loop.os_uname().sysname == 'Darwin'
 then
