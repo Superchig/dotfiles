@@ -357,8 +357,8 @@ if command -v rockie 2>&1 > /dev/null; then
 fi
 
 
-if command -v rtx 2>&1 > /dev/null; then
-  eval "$(rtx activate zsh)"
+if command -v mise 2>&1 > /dev/null; then
+  eval "$(mise activate zsh)"
 fi
 
 # if command -v rbenv 2>&1 > /dev/null; then
