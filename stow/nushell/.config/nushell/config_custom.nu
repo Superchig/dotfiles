@@ -47,6 +47,13 @@ def mvdo [minutes_ago: int] {
   }
 }
 
+def edit-shared [] {
+  # NOTE(Chris): We should replace this with `nvim scp://root@74.207.240.129//root/shared_notes/links.md`
+  # when (Neo)vim's netrw plugin works properly with `scp://` on Windows
+  # https://github.com/neovim/neovim/issues/23962
+  ssh root@74.207.240.129 -t 'vim /root/shared_notes/links.md'
+}
+
 alias l = ls -a
 alias cdd = cd ~/dotfiles
 alias e = nvim
@@ -57,4 +64,11 @@ alias ln = gsudo nu ~/bin/ln.nu
 
 if ('~/.zoxide.nu' | path exists) {
   source ~/.zoxide.nu
+}
+
+# Start the ssh-agent
+# NOTE(Chris): For this to work properly, we need to use once on the current machine
+# `Set-Service ssh-agent -StartupType Manual` in powershell
+if not (powershell -c 'Get-Service ssh-agent | ConvertTo-Json' | from json | get CanStop) {
+  ssh-agent
 }
