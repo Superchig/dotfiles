@@ -92,6 +92,13 @@ export PAGER='less -S' # Useful for the pager in psql
 export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
+# Set up gcr-ssh-agent
+# Requires `systemctl enable --user gcr-ssh-agent.socket`
+# See https://old.reddit.com/r/archlinux/comments/1aq97m8/gnomekeyring_14601_in_extratesting_disables/
+if [ "$UNAME" = Linux ]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+fi
+
 # Use emacs keymap in zsh, even if EDITOR is set to vi or vim
 bindkey -e
 
