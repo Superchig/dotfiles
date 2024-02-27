@@ -333,17 +333,17 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/chiggie/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "$HOME/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/chiggie/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 
 # https://github.com/Schniz/fnm
@@ -365,7 +365,12 @@ fi
 
 
 if command -v mise 2>&1 > /dev/null; then
-  eval "$(mise activate zsh)"
+  # https://unix.stackexchange.com/questions/26676/how-to-check-if-a-shell-is-login-interactive-batch
+  if [[ -o interactive ]]; then
+    eval "$(mise activate zsh)"
+  else
+    eval "$(mise activate zsh --shims)"
+  fi
 fi
 
 # if command -v rbenv 2>&1 > /dev/null; then
@@ -373,7 +378,7 @@ fi
 # fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-if [ -f "$HOME/.rvm/scripts/rvm" ]; then
-  source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-fi
+# if [ -f "$HOME/.rvm/scripts/rvm" ]; then
+#   source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# fi
 
