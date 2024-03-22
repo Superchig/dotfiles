@@ -126,6 +126,10 @@ if [ -f /usr/bin/helix ]; then
   alias hx='helix'
 fi
 
+if [ "$UNAME" = "Darwin" ]; then
+  alias k9s="k9s --context staging"
+fi
+
 # alias xo='xdg-open &> /dev/null'
 alias e=$VISUAL
 alias n=neovide
