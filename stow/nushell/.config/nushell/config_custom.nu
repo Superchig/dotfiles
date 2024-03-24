@@ -1,8 +1,7 @@
 # vim: noautoindent nosmartindent
 
 # In env.nu, we should source this with:
-#   NOTE(Chris): We use `~` because it's apparently a constant and `source` requires a constant
-#   source ~\dotfiles\stow\nushell\.config\nushell\nu_custom.nu
+#   source ($nu.default-config-dir | path join 'config_custom.nu')
 
 let custom_config = {
   show_banner: false
@@ -22,9 +21,9 @@ let custom_config = {
   shell_integration: false
 }
 
-let-env config = ($env.config | merge $custom_config)
+$env.config = ($env.config | merge $custom_config)
 
-def-env lfcd [] {
+def --env lfcd [] {
   lf -last-dir-path ~/tmp/lfcd_last_dir.txt
   cd (open --raw ~/tmp/lfcd_last_dir.txt)
 }
@@ -61,10 +60,12 @@ alias lg = lazygit
 alias ln = gsudo nu ~/bin/ln.nu
 
 # Set up zoxide
-
-if ('~/.zoxide.nu' | path exists) {
-  source ~/.zoxide.nu
-}
+# We can't conditionally source files yet
+# https://github.com/nushell/nushell/issues/8214
+# Recreate the zoxide file if necessary with:
+#   zoxide init --cmd j nushell | save -f ($nu.default-config-dir | path join '.zoxide.nu')
+const ZOX_NU_PATH = ($nu.default-config-dir | path join '.zoxide.nu')
+source $ZOX_NU_PATH
 
 # Start the ssh-agent
 # NOTE(Chris): For this to work properly, we need to use once on the current machine
