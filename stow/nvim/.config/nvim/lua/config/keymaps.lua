@@ -17,7 +17,7 @@ function NotesHeaders(regex)
   -- cmd([[vimgrep /^# .*$/j %]])
   -- The ivy theme is used to place the prompt at the top, reversing the
   -- result order
-  vim.o.foldlevel = 0
+  vim.o.foldlevel = 100
   require("telescope.builtin").quickfix(require("telescope.themes").get_ivy())
 end
 
