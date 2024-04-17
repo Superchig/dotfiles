@@ -70,7 +70,7 @@ set $menu bemenu-run
 
 input "type:keyboard" {
     xkb_layout us
-    xkb_options caps:super
+    xkb_options "caps:super,compose:ralt"
 }
 
 ### Key bindings
