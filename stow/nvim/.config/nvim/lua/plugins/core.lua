@@ -41,36 +41,25 @@ return {
     end,
   },
 
-  {
-    "echasnovski/mini.indentscope",
-    -- Modified from https://www.lazyvim.org/plugins/ui#miniindentscope
-    opts = {
-      draw = {
-        delay = 0,
-        animation = require("mini.indentscope").gen_animation.none(),
-      },
-    },
-  },
-
   -- TODO(Chris): Create an override.lua file for overriding existing plugin configs
   {
     "RRethy/vim-illuminate",
     keys = {
-      { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header", },
+      { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header" },
       { "[[", "<Plug>Markdown_MoveToPreviousHeader", desc = "Prev Header" },
-    }
+    },
   },
 
   {
     "RRethy/vim-illuminate",
     keys = {
-      { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header", },
+      { "]]", "<Plug>Markdown_MoveToNextHeader", desc = "Next Header" },
       { "[[", "<Plug>Markdown_MoveToPreviousHeader", desc = "Prev Header" },
-    }
+    },
   },
 
   {
-    "hallison/vim-rdoc"
+    "hallison/vim-rdoc",
   },
 
   {
@@ -81,7 +70,7 @@ return {
   },
 
   {
-    "ChrisWellsWood/roc.vim"
+    "ChrisWellsWood/roc.vim",
   },
 
   {
