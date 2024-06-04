@@ -369,6 +369,10 @@ fi
 
 
 if command -v mise 2>&1 > /dev/null; then
+  if [ "$UNAME" = "Darwin" ]; then
+    export ASDF_HASHICORP_TERRAFORM_VERSION_FILE="unset_version_file.tf.bak"
+  fi
+
   # https://unix.stackexchange.com/questions/26676/how-to-check-if-a-shell-is-login-interactive-batch
   if [[ -o interactive ]]; then
     eval "$(mise activate zsh)"
