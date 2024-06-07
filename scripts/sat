@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# This script acts like a less sophisticated version of Unix `at`, without relying on mail for logs
+# Dependencies: GNU date
+# Dependencies (optional): bat
+
+USAGE="Usage: echo <cmd> | $0 <time> [-- <cmd>]"
+
+if [ "$#" -lt 1 ]; then
+	>&2 echo "$USAGE"
+	exit 1
+elif [ "$#" -gt 1 ]; then
+	# Read command from CLI args
+
+	if [ "$2" != "--" ]; then
+		>&2 echo "$USAGE"
+		exit 1
+	fi
+
+	ARGS=("$@")
+	CMD=${ARGS[*]:2}
+elif [ "$1" = show ]; then
+	ps -e | grep -e 'sh.*sat'
+
+	exit
+elif [ "$1" = logs ]; then
+	if command -v bat >/dev/null 2>&1; then
+		cat() {
+			bat "$@"
+		}
+	fi
+
+	cat /tmp/sat-*
+
+	exit
+else
+	# Read command from STDIN
+
+	# Check if we're given terminal input
+	if [ -t 0 ]; then
+		>&2 echo "$USAGE"
+		exit 1
+	fi
+
+	CMD="$(cat)"
+fi
+
+TIME="$1"
+
+if command -v gdate >/dev/null 2>&1; then
+	date() {
+		gdate "$@"
+	}
+fi
+
+NOW=$(date +%s)
+TARGET=$(date -d "today $TIME" +%s)
+
+# NOTE(Chris): We run this twice to allow for AM and PM shifts
+if [ "$NOW" -gt "$TARGET" ]; then
+	TARGET=$((TARGET + (12 * 3600)))
+fi
+if [ "$NOW" -gt "$TARGET" ]; then
+	TARGET=$((TARGET + (12 * 3600)))
+fi
+
+date -d "@$TARGET" +"%a %b %_d %_I:%M %p %Y"
+SECONDS=$((TARGET - NOW))
+echo "Waiting $((SECONDS / 3600)) hours, $((SECONDS / 60 % 60)) minutes, $((SECONDS % 60)) seconds"
+
+wait-then-act() {
+	SECONDS="$1"
+	CMD="$2"
+
+	sleep "$SECONDS"
+
+	LOG_FILE="/tmp/sat-$(date '+%Y-%m-%d-%H:%M-%s')"
+	>>"$LOG_FILE" echo "Executing $CMD"
+	>>"$LOG_FILE" 2>&1 eval "$CMD"
+}
+
+wait-then-act "$SECONDS" "$CMD" &
+disown
