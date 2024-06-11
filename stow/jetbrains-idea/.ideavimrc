@@ -1,5 +1,11 @@
-map gh <Action>(QuickJavaDoc)
+let mapleader=" "
+
+" Test these out with `:action FindUsages`
+map gh <Action>(ShowHoverInfo)
 map gs <Action>(ShowErrorDescription)
+map gr <Action>(FindUsages)
+
+map <leader>= <Action>(ReformatCode)
 
 nnoremap <S-k> gt
 nnoremap <S-j> gT
@@ -10,6 +16,7 @@ set clipboard+=unnamed
 nnoremap Y y$
 
 set visualbell " Disable the beep
+set incsearch
 
 " IntelliJ-specific
 
