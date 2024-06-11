@@ -7,8 +7,8 @@ vim.keymap.set("n", "<leader>fc", "<cmd>e ~/.config/nvim<cr>")
 vim.keymap.set("n", "gn", "<cmd>bn<cr>")
 vim.keymap.set("n", "gp", "<cmd>bp<cr>")
 
-vim.keymap.set("n", "gh", vim.lsp.buf.hover)
-vim.keymap.set("n", "<leader>=", vim.lsp.buf.format)
+vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Show LSP hover info" })
+vim.keymap.set("n", "<leader>=", vim.lsp.buf.format, { desc = "Format file with LSP" })
 
 -- This can broadly replace the functionality of zM for Markdown files
 function NotesHeaders(regex)
