@@ -4,7 +4,7 @@
 # Dependencies: GNU date
 # Dependencies (optional): bat
 
-USAGE="Usage: echo <cmd> | $0 <time> [-- <cmd>]"
+USAGE="Usage: echo <cmd|show|logs> | $0 <time> [-- <cmd>]"
 
 if [ "$#" -lt 1 ]; then
 	>&2 echo "$USAGE"
@@ -20,7 +20,7 @@ elif [ "$#" -gt 1 ]; then
 	ARGS=("$@")
 	CMD=${ARGS[*]:2}
 elif [ "$1" = show ]; then
-	ps -e | grep -e 'sh.*sat'
+	ps -e | grep 'sat '
 
 	exit
 elif [ "$1" = logs ]; then
@@ -47,10 +47,16 @@ fi
 
 TIME="$1"
 
-if command -v gdate >/dev/null 2>&1; then
-	date() {
-		gdate "$@"
-	}
+if [ "$(uname)" = "Darwin" ]; then
+	if command -v gdate >/dev/null 2>&1; then
+		date() {
+			gdate "$@"
+		}
+	else
+		date() {
+			/usr/local/bin/gdate "$@"
+		}
+	fi
 fi
 
 NOW=$(date +%s)
