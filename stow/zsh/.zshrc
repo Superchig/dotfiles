@@ -72,12 +72,6 @@ zle -N down-line-or-beginning-search
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
-# Bind Ctrl-X Ctrl-E to editing the current line in a text editor, like in bash
-# Modified from https://stackoverflow.com/questions/890620/unable-to-have-bash-like-c-x-e-in-zsh
-autoload edit-command-line
-zle -N edit-command-line
-bindkey '^X^E' edit-command-line
-
 # Set the name of the terminal to match the current working directory
 chpwd() {
   window_title="\033]0;${PWD##*/}\007"
@@ -300,6 +294,12 @@ source_if $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
 # Bind history-substring-search plugin's keys
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+# Bind Ctrl-X Ctrl-E to editing the current line in a text editor, like in bash
+# Modified from https://stackoverflow.com/questions/890620/unable-to-have-bash-like-c-x-e-in-zsh
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
 
 # Set the title of the terminal to the current working directory on startup
 chpwd
