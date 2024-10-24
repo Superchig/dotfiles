@@ -6,17 +6,20 @@ map gs <Action>(ShowErrorDescription)
 map gr <Action>(FindUsages)
 
 map <leader>= <Action>(ReformatCode)
+map <leader>gb <Action>(Annotate)
 
 nnoremap <S-k> gt
 nnoremap <S-j> gT
 
-set number relativenumber
+" set number relativenumber
+set number
 set clipboard+=unnamed
 
 nnoremap Y y$
 
 set visualbell " Disable the beep
 set incsearch
+set ignorecase smartcase
 
 " IntelliJ-specific
 
