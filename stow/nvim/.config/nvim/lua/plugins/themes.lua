@@ -9,11 +9,11 @@ return {
   },
 
   {
-    "https://github.com/Th3Whit3Wolf/one-nvim"
+    "projekt0n/github-nvim-theme",
   },
 
   {
-    "Mofiqul/vscode.nvim"
+    "Mofiqul/vscode.nvim",
   },
 
   -- Configure LazyVim to load gruvbox
