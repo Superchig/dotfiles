@@ -262,7 +262,7 @@ mode "launch" {
 exec mako
 exec dropbox
 exec waybar
-exec swaybar -c "#3f3f3f"
+exec swaybg -c "#3f3f3f"
 
 # announce a running sway session to systemd
 exec systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
