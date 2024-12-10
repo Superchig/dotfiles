@@ -1,5 +1,10 @@
 # vim: sw=2
 
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  BREW_PREFIX="$(brew --prefix)"
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -278,10 +283,9 @@ source_if() {
   fi
 }
 
-if [ -f "/usr/local/bin/brew" ]; then
-  # From $(brew --prefix)/share
-  PLUGINS=/usr/local/share
-  source_if /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+if [ -n "$BREW_PREFIX" ]; then
+  PLUGINS="$BREW_PREFIX/share"
+  source_if "$PLUGINS"/powerlevel10k/powerlevel10k.zsh-theme
 else
   PLUGINS=/usr/share/zsh/plugins
   source_if /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
@@ -390,4 +394,3 @@ fi
 # if [ -f "$HOME/.rvm/scripts/rvm" ]; then
 #   source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 # fi
-
