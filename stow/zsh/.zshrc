@@ -102,17 +102,17 @@ fi
 bindkey -e
 
 alias ls='ls --color=auto -F'
-if [ -f /usr/bin/eza ]; then
+if command -v eza > /dev/null; then
   alias l='eza -la --group-directories-first'
 else
   alias l='ls -lah'
 fi
 
-if [ ! -f "/usr/local/bin/brew" ]; then
+if [ -z "$BREW_PREFIX" ]; then
   alias diff='diff --color=auto'
 fi
 
-if [ ! -f "/usr/local/bin/brew" ]; then
+if [ -z "$BREW_PREFIX" ]; then
   alias mv='mv --backup=numbered'
   alias cp='cp --backup=numbered'
 fi
@@ -121,7 +121,7 @@ alias grep='grep --color=auto'
 
 alias fzf="fzf --color='hl:yellow' --color='hl+:bright-yellow:bold'"
 
-if [ -f /usr/bin/helix ]; then
+if command -v helix > /dev/null; then
   alias hx='helix'
 fi
 
@@ -159,7 +159,7 @@ alias spk="sudo pacman -D --asexplicit"
 
 alias mo="$HOME/dotfiles/multi/monitor_setup"
 
-if [ -f "/usr/local/bin/brew" ]; then
+if [ -n "$BREW_PREFIX" ]; then
   alias rubymine="open -a 'RubyMine.app'"
 fi
 
@@ -229,10 +229,6 @@ export NNN_PLUG="p:preview-tui"
 alias nnn="nnn -e"
 # Start the preview-tui plugin automatically startup (toggled with ;p)
 # alias nnn="nnn -e -P p"
-
-if [ -f /usr/bin/idris2 ]; then
-  alias idris2="rlwrap idris2"
-fi
 
 # Copy completions for ripgrep into rgl script
 
@@ -325,11 +321,11 @@ export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 # opam configuration
 test -r /home/chiggie/.opam/opam-init/init.zsh && . /home/chiggie/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-if [ -f /usr/bin/zoxide ] || [ -f /usr/local/bin/zoxide ]; then
+if command -v zoxide > /dev/null; then
   eval "$(zoxide init zsh --cmd j)"
 fi
 
-if [ -f /usr/bin/mcfly ] || [ -f /usr/local/bin/mcfly ]; then
+if command -v zoxide > /dev/null; then
   eval "$(mcfly init zsh)"
 fi
 
