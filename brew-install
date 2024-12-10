@@ -8,10 +8,10 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
   romkatv/powerlevel10k/powerlevel10k \
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep \
-  gcc moreutils xh difftastic git-delta pandoc watch shellcheck \
+  gnupg gcc moreutils xh difftastic git-delta pandoc watch shellcheck \
   mise \
   temurin@21
 
 brew install --cask visual-studio-code rectangle \
   homebrew/cask/font-meslo-lg-nerd-font \
-  font-iosevka-nerd-font iterm2 unnaturalscrollwheels
+  font-iosevka-nerd-font iterm2 unnaturalscrollwheels docker
