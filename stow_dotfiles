@@ -2,6 +2,18 @@
 
 for ENTRY in "stow"/*; do
   BASENAME=$(basename "$ENTRY")
-  stow -d stow -t $HOME "$BASENAME"
+  stow -d stow -t "$HOME" "$BASENAME"
   echo "Stowing $BASENAME..."
 done
+
+UNAME="$(uname)"
+
+if [ "$UNAME" = "Darwin" ]; then
+  echo "--- Stowing for macOS ---"
+  STOW_DIR=macos/stow
+  for ENTRY in "$STOW_DIR"/*; do
+    BASENAME=$(basename "$ENTRY")
+    stow -d "$STOW_DIR" -t "$HOME" "$BASENAME"
+    echo "Stowing $BASENAME..."
+  done
+fi
