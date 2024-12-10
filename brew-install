@@ -9,7 +9,7 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   romkatv/powerlevel10k/powerlevel10k \
   coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep \
   gnupg gcc moreutils xh difftastic git-delta pandoc watch shellcheck \
-  mise \
+  mise go \
   temurin@21
 
 brew install --cask visual-studio-code rectangle \
