@@ -2,7 +2,7 @@
 
 brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
   rlwrap stow zoxide lf vivid \
-  rubymine \
+  rubymine puma/puma/puma-dev \
   gh awscli \
   mcfly just \
   zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search \
