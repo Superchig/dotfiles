@@ -16,3 +16,7 @@ brew install --cask visual-studio-code rectangle \
   homebrew/cask/font-meslo-lg-nerd-font \
   font-iosevka-nerd-font iterm2 unnaturalscrollwheels ccmenu shottr keepassxc \
   slack microsoft-teams docker zoom ccmenu
+
+echo "Remember to use:"
+echo "\tgit config --global user.name 'Christopher Chang'"
+echo "\tgit config --global user.email <email>"
