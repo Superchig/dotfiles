@@ -14,5 +14,5 @@ brew install neovim lazygit fd ripgrep tldr bat fzf tokei highlight jq \
 
 brew install --cask visual-studio-code rectangle \
   homebrew/cask/font-meslo-lg-nerd-font \
-  font-iosevka-nerd-font iterm2 unnaturalscrollwheels ccmenu shottr \
+  font-iosevka-nerd-font iterm2 unnaturalscrollwheels ccmenu shottr keepassxc \
   slack microsoft-teams docker zoom ccmenu
