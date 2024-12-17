@@ -1,0 +1,48 @@
+[log]
+	date = local
+
+[push]
+	autoSetupRemote = true
+  default = upstream
+
+; [diff]
+;   tool = difftastic
+;   colorMoved = default
+
+[pager]
+  difftool = true
+
+[difftool]
+  prompt = false
+
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+
+[core]
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  line-numbers = true
+  navigate = true
+  diff-so-fancy = true
+
+[merge]
+  conflictstyle = diff3
+
+; [remote "upstream"]
+;   fetch = +refs/heads/*:refs/remotes/origin/*
+;   tagOpt = --tags
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[commit]
+	verbose = true
+
+[include]
+  path = ~/.gitconfig-local
