@@ -1,9 +1,12 @@
 let mapleader=" "
 
+" Find these with     "IdeaVim: Track Action IDs"
 " Test these out with `:action FindUsages`
 map gh <Action>(ShowHoverInfo)
 map gs <Action>(ShowErrorDescription)
 map gr <Action>(FindUsages)
+map [b <Action>(EditorCodeBlockStart)
+map ]b <Action>(EditorCodeBlockEnd)
 
 map <leader>= <Action>(ReformatCode)
 map <leader>gb <Action>(Annotate)
