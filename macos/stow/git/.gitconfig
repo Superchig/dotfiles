@@ -46,3 +46,6 @@
 
 [include]
   path = ~/.gitconfig-local
+
+[user]
+	useConfigOnly = true
