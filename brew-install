@@ -20,3 +20,9 @@ brew install --cask visual-studio-code rectangle \
 echo "Remember to use:"
 echo "\tgit config --global user.name 'Christopher Chang'"
 echo "\tgit config --global user.email <email>"
+
+echo "Remember to use (delta):"
+echo "\tgit config --global core.pager delta"
+echo "\tgit config --global interactive.diffFilter 'delta --color-only'"
+echo "\tgit config --global delta.navigate true"
+echo "\tgit config --global merge.conflictStyle zdiff3"
