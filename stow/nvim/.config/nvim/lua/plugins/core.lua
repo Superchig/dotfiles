@@ -1,27 +1,4 @@
 return {
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "flake8",
-        "json-lsp",
-        "lua-language-server",
-        "prettier",
-        "rust-analyzer",
-        "shellcheck",
-        "shfmt",
-        "stylua",
-        "svelte-language-server",
-        "tailwindcss-language-server",
-        "typescript-language-server",
-        -- C++
-        "clangd",
-        "codelldb",
-        "clang-format",
-      },
-    },
-  },
-
   -- Good old vim-surround
   {
     "tpope/vim-surround",
