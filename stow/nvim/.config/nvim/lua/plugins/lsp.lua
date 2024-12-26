@@ -33,7 +33,8 @@ return {
         -- provide the inlay hints.
         inlay_hints = {
           enabled = true,
-          exclude = { "vue" }, -- filetypes for which you don't want to enable inlay hints
+          -- exclude = { "vue" }, -- filetypes for which you don't want to enable inlay hints
+          exclude = { "vue", "cpp", "hpp" }, -- filetypes for which you don't want to enable inlay hints
         },
         -- Enable this to enable the builtin LSP code lenses on Neovim >= 0.10.0
         -- Be aware that you also will need to properly configure your LSP server to
@@ -98,24 +99,17 @@ return {
         -- you can do any additional lsp server setup here
         -- return true if you don't want this server to be setup with lspconfig
         setup = {
-          -- example to setup with typescript.nvim
-          -- tsserver = function(_, opts)
-          --   require("typescript").setup({ server = opts })
+          -- clangd = function(_, opts)
+          --   require("lspconfig").clangd.setup({
+          --     server = opts,
+          --     -- Parmeters are (new_config, root_dir)
+          --     on_new_config = function(new_config, _)
+          --       -- From https://clangd.llvm.org/features#experimental-c20-modules-support
+          --       table.insert(new_config.cmd, "--experimental-modules-support")
+          --     end,
+          --   })
           --   return true
           -- end,
-          -- Specify * to use this function as a fallback for any server
-          -- ["*"] = function(server, opts) end,
-          clangd = function(_, opts)
-            require("lspconfig").clangd.setup({
-              server = opts,
-              -- Parmeters are (new_config, root_dir)
-              on_new_config = function(new_config, _)
-                -- From https://clangd.llvm.org/features#experimental-c20-modules-support
-                table.insert(new_config.cmd, "--experimental-modules-support")
-              end,
-            })
-            return true
-          end,
         },
       }
       return ret
