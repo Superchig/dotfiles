@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>fc", "<cmd>e ~/.config/nvim<cr>")
 vim.keymap.set("n", "gn", "<cmd>bn<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "gp", "<cmd>bp<cr>", { desc = "Previous buffer" })
 
-vim.keymap.set("n", "K", "<cmd>BufferLineCyclePrev<cr>", { desc = "Next buffer" })
+vim.keymap.set("n", "K", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "J", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 
 vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Show LSP hover info" })
