@@ -1,6 +1,15 @@
 return {
   -- Add gruvbox
-  { "ellisonleao/gruvbox.nvim" },
+  {
+    "ellisonleao/gruvbox.nvim",
+    opts = {
+      overrides = {
+        LspReferenceText = { bg = "#57514e" },
+        LspReferenceRead = { bg = "#57514e" },
+        LspReferenceWrite = { bg = "#57514e" },
+      },
+    },
+  },
 
   -- Eagerly load the tokyonight theme
   {
