@@ -69,6 +69,19 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+
+      local orig_notify = vim.notify
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.notify = function(msg, level, notify_opts)
+        if msg == "No information available" then
+          return
+        end
+
+        orig_notify(msg, level, notify_opts)
+      end
+    end,
   },
 
   {
