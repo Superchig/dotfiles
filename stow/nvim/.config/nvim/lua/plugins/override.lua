@@ -31,6 +31,7 @@ return {
     opts = {
       -- Disable highlighting for markdown, since we can just use Superchig/vim-markdown
       highlight = { disable = { "markdown" } },
+      indent = { disable = { "ruby" } },
       ensure_installed = { "comment", "css", "lua", "ruby", "python", "typescript", "rust", "vim", "go", "cpp" },
     },
   },
