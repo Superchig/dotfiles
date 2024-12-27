@@ -56,3 +56,15 @@ function Close_other_bufs()
 end
 
 vim.api.nvim_create_user_command("Bonly", Close_other_bufs, { desc = "Delete other buffers" })
+
+-- This can broadly replace the functionality of zM for Markdown files
+function NotesHeaders(regex)
+  regex = regex or "^# .*$"
+  vim.cmd([[vimgrep /]] .. regex .. [[/j %]])
+  -- cmd([[vimgrep /^# .*$/j %]])
+  vim.o.foldlevel = 100
+  require("fzf-lua").quickfix()
+end
+
+vim.cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap zM <cmd>lua NotesHeaders()<cr>]])
+vim.cmd([[autocmd BufRead,BufNewFile notes.md nnoremap zM <cmd>lua NotesHeaders('^#\\+ .*$')<cr>]])

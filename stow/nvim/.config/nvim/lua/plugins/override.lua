@@ -19,8 +19,9 @@ return {
     "neovim/nvim-lspconfig",
     opts = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] = { "K", "<cmd>bn<cr>", desc = "Next buffer" }
-      keys[#keys + 1] = { "J", "<cmd>bp<cr>", desc = "Previous buffer" }
+
+      keys[#keys + 1] = { "K", false }
+      keys[#keys + 1] = { "J", false }
     end,
   },
 
@@ -65,6 +66,19 @@ return {
         enabled = true,
         animate = {
           enabled = false,
+        },
+      },
+    },
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      window = {
+        mappings = {
+          ["/"] = "none",
+          ["?"] = "none",
+          ["<leader>?"] = "show_help",
         },
       },
     },
