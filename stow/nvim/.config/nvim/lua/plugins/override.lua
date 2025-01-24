@@ -17,11 +17,33 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    opts = function()
+    opts = function(_, opts)
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
 
       keys[#keys + 1] = { "K", false }
       keys[#keys + 1] = { "J", false }
+
+      opts.setup.tailwindcss = function(_, tailwindcss_opts)
+        local default_filetypes = require("lspconfig").tailwindcss.config_def.default_config.filetypes
+        tailwindcss_opts.filetypes = { "ruby" }
+        vim.list_extend(tailwindcss_opts.filetypes, default_filetypes)
+
+        tailwindcss_opts.settings = {
+          tailwindCSS = {
+            includeLanguages = {
+              ruby = "html",
+            },
+            experimental = {
+              classRegex = {
+                [[class= "([^"]*)]],
+                [[class: "([^"]*)]],
+                [[class= '([^']*)]],
+                [[class: '([^']*)]],
+              },
+            },
+          },
+        }
+      end
     end,
   },
 
