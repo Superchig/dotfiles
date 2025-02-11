@@ -7,9 +7,23 @@
 (global-hl-line-mode)
 (electric-pair-mode 1)
 
+(setq mac-command-modifier 'meta)
+
 ;; (ido-mode 1)
 
-(set-frame-font "Iosevka Nerd Font Mono 11")
+(defun insert-available-fonts ()
+  "Insert a list of available fonts after the cursor, starting with a newline."
+  (interactive)
+  (let ((sorted-fonts (sort
+		     (font-family-list)
+		     #'string<)))
+  (insert "\n")
+  (dolist (font sorted-fonts)
+    (insert font)
+    (insert "\n"))))
+
+(cond ((eq system-type 'darwin) (set-frame-font "MesloLGM Nerd Font Mono 14"))
+      ((eq system-type 'gnu/linux (set-frame-font "Iosevka Nerd Font Mono 11"))))
 
 (setq scroll-preserve-screen-position t)
 (setq help-window-select t)
@@ -17,6 +31,7 @@
 ;; You can update the GNU ELPA keyring with `package-install gnu-elpa-keyring-update'
 ;; https://lists.gnu.org/archive/html/emacs-devel/2024-06/msg01157.html
 
+(package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 (use-package doom-themes
@@ -46,7 +61,9 @@
   (keycast-tab-bar-mode 1))
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (transient-bind-q-to-quit))
 
 (use-package paredit
   :ensure t
