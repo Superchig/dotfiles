@@ -15,18 +15,23 @@
   "Insert a list of available fonts after the cursor, starting with a newline."
   (interactive)
   (let ((sorted-fonts (sort
-		     (font-family-list)
-		     #'string<)))
-  (insert "\n")
-  (dolist (font sorted-fonts)
-    (insert font)
-    (insert "\n"))))
+		       (font-family-list)
+		       #'string<)))
+    (insert "\n")
+    (dolist (font sorted-fonts)
+      (insert font)
+      (insert "\n"))))
 
+;; On macOS, you can also use change Emacs' font rendering with:
+;; `defaults write org.gnu.Emacs AppleFontSmoothing -int 0'
+;; `defaults delete org.gnu.Emacs AppleFontSmoothing'
+;; Remember to restart
 (cond ((eq system-type 'darwin) (set-frame-font "MesloLGM Nerd Font Mono 14"))
       ((eq system-type 'gnu/linux (set-frame-font "Iosevka Nerd Font Mono 11"))))
 
 (setq scroll-preserve-screen-position t)
 (setq help-window-select t)
+(setq custom-safe-themes t)
 
 ;; You can update the GNU ELPA keyring with `package-install gnu-elpa-keyring-update'
 ;; https://lists.gnu.org/archive/html/emacs-devel/2024-06/msg01157.html
@@ -37,7 +42,14 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-one t))
+
+  (defun disable-all-themes ()
+    (interactive)
+    (dolist (theme custom-enabled-themes)
+      (disable-theme theme)))
+  
+  (cond ((eq system-type 'darwin) (print "No theme set in macOS"))
+	((eq system-type 'gnu/linux) (load-theme 'doom-one t))))
 
 (use-package which-key
   :ensure t
@@ -120,8 +132,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1" "2b20b4633721cc23869499012a69894293d49e147feeb833663fdc968f240873" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default))
  '(package-selected-packages
    '(magit keycast paredit ace-window gnu-elpa-keyring-update vertico company sly doom-themes which-key)))
 (custom-set-faces
