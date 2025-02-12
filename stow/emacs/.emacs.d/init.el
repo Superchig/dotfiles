@@ -44,9 +44,20 @@
   :config
 
   (defun disable-all-themes ()
+    "Load all currently loaded themes."
     (interactive)
     (dolist (theme custom-enabled-themes)
       (disable-theme theme)))
+
+  (defun switch-theme (theme)
+    "Disable all existing themes and then load a new theme."
+    (interactive
+     (list
+      (intern (completing-read "Load custom theme: "
+                               (mapcar #'symbol-name
+				       (custom-available-themes))))))
+    (disable-all-themes)
+    (load-theme theme t))
   
   (cond ((eq system-type 'darwin) (print "No theme set in macOS"))
 	((eq system-type 'gnu/linux) (load-theme 'doom-one t))))
