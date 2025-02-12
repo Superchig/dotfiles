@@ -27,7 +27,7 @@
 ;; `defaults delete org.gnu.Emacs AppleFontSmoothing'
 ;; Remember to restart
 (cond ((eq system-type 'darwin) (set-frame-font "MesloLGM Nerd Font Mono 14"))
-      ((eq system-type 'gnu/linux (set-frame-font "Iosevka Nerd Font Mono 11"))))
+      ((eq system-type 'gnu/linux) (set-frame-font "Iosevka Nerd Font Mono 11")))
 
 (setq scroll-preserve-screen-position t)
 (setq help-window-select t)
