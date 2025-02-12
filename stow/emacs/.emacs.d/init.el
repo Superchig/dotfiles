@@ -109,7 +109,8 @@
     (sly-compile-defun))
   
   (keymap-set sly-editing-mode-map "C-c C-c" 'my/sly-save-and-compile)
-  (setq sly-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))
+  (setq sly-lisp-implementations
+	'((qlot-ros-sbcl ("qlot" "exec" "ros" "run" "--" "--dynamic-space-size" "4Gb"))))
   (setq sly-description-autofocus t))
 
 (use-package company

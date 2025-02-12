@@ -316,6 +316,7 @@ if command -v go 2>&1 > /dev/null; then
 fi
 
 export PATH="$PATH:$HOME/.idris2/bin"
+export PATH="$PATH:$HOME/.roswell/bin"
 
 # export HOSTNAME=$(hostname)
 
