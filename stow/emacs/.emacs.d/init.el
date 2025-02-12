@@ -92,6 +92,7 @@
   :ensure t
   :config
   (add-hook 'lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
   
   (keymap-set paredit-mode-map "C-<left>" 'paredit-backward-slurp-sexp)
   (keymap-set paredit-mode-map "C-<right>" 'paredit-forward-slurp-sexp)
