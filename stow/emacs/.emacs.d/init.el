@@ -6,6 +6,7 @@
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode)
 (electric-pair-mode 1)
+(setq ring-bell-function 'ignore)
 
 (setq mac-command-modifier 'meta)
 
