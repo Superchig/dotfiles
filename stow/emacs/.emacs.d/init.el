@@ -4,7 +4,6 @@
 (blink-cursor-mode -1)
 
 (global-display-line-numbers-mode 1)
-(global-hl-line-mode)
 (electric-pair-mode 1)
 (setq ring-bell-function 'ignore)
 
@@ -33,6 +32,14 @@
 (setq scroll-preserve-screen-position t)
 (setq help-window-select t)
 (setq custom-safe-themes t)
+
+(add-hook 'prog-mode-hook 'hl-line-mode)
+(add-hook 'text-mode-hook 'hl-line-mode)
+
+(defun my/term-mode-hook ()
+  (display-line-numbers-mode -1)
+  (hl-line-mode -1))
+(add-hook 'term-mode-hook 'my/term-mode-hook)
 
 ;; You can update the GNU ELPA keyring with `package-install gnu-elpa-keyring-update'
 ;; https://lists.gnu.org/archive/html/emacs-devel/2024-06/msg01157.html
