@@ -111,6 +111,17 @@
   :ensure t
   :config
 
+  (add-to-list 'exec-path
+	       (format "%s/.roswell/bin" (getenv "HOME")))
+
+  (defun add-to-path (dir)
+    (add-to-list 'exec-path dir)
+    (setenv "PATH"
+	    (format "%s:%s" (getenv "PATH") dir)))
+
+  (when (eq system-type 'darwin)
+    (add-to-path "/opt/homebrew/bin"))
+  
   (defun my/sly-save-and-compile ()
     (interactive)
     (save-buffer)
