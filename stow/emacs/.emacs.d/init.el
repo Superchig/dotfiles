@@ -5,6 +5,9 @@
 
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
+
+(recentf-mode 1)
+
 (setq ring-bell-function 'ignore)
 
 (setq mac-command-modifier 'meta)
