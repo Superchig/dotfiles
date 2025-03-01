@@ -99,6 +99,16 @@
   :config
   (transient-bind-q-to-quit))
 
+(use-package git-gutter
+  :ensure t
+  :config
+  (global-git-gutter-mode t))
+
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode 1))
+
 (use-package paredit
   :ensure t
   :config
@@ -135,10 +145,8 @@
 	'((qlot-ros-sbcl ("qlot" "exec" "ros" "run" "--" "--dynamic-space-size" "4Gb"))))
   (setq sly-description-autofocus t))
 
-(use-package company
-  :ensure t
-  :config
-  (global-company-mode 1))
+(use-package geiser
+  :ensure t)
 
 ;; (defun scroll-half-page-down ()
 ;;   "Scroll down half the page."
@@ -168,7 +176,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit keycast paredit ace-window gnu-elpa-keyring-update vertico company sly doom-themes which-key)))
+   '(geiser git-gutter magit keycast paredit ace-window gnu-elpa-keyring-update vertico company sly doom-themes which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
