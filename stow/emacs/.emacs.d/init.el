@@ -119,6 +119,11 @@
   :config
   (global-git-gutter-mode t))
 
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
 (use-package company
   :ensure t
   :config
