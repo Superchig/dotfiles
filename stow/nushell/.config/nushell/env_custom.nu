@@ -2,6 +2,7 @@
 #   source ($nu.default-config-dir | path join 'env_custom.nu')
 
 $env.Path = ($env.Path | split row (char esep) | prepend ($"($env.HOMEPATH)/bin"))
+$env.Path = ($env.Path | split row (char esep) | prepend "AppData/Local/mise/shims")
 
 $env.EDITOR = 'nvim'
 
