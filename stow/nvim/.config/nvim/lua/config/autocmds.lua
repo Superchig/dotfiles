@@ -15,6 +15,8 @@ vim.cmd([[autocmd Filetype js,json set shiftwidth=2 tabstop=2]])
 
 vim.cmd([[autocmd Filetype odin set noexpandtab tabstop=4 shiftwidth=4]])
 
+vim.cmd([[autocmd Filetype just setlocal shiftwidth=4]])
+
 vim.cmd([[autocmd BufNewFile,BufRead *.templ set filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]])
 
 -- NOTE(Chris): Not sure where else to put this
