@@ -46,7 +46,12 @@ return {
         end
 
         if vim.loop.os_uname().sysname == "Darwin" then
-          vim.o.background = "light"
+          if vim.env.TERM == "xterm-ghostty" then
+            vim.o.background = "dark"
+            return "tokyonight"
+          else
+            vim.o.background = "light"
+          end
           return "vscode"
         else
           return "gruvbox"
