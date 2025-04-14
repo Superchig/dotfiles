@@ -4,8 +4,8 @@
 
 vim.cmd([[autocmd Filetype markdown set textwidth=78 colorcolumn=+0]])
 
-vim.cmd([[autocmd Filetype c,cpp,objc set shiftwidth=4 tabstop=4]])
-vim.cmd([[autocmd Filetype c,cpp,objc set commentstring=//\ %s]])
+vim.cmd([[autocmd Filetype c,cpp,objc,objcpp set shiftwidth=4 tabstop=4]])
+vim.cmd([[autocmd Filetype c,cpp,objc,objcpp set commentstring=//\ %s]])
 
 vim.cmd([[autocmd Filetype make set shiftwidth=4 tabstop=4]])
 
