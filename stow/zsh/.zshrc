@@ -203,11 +203,18 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 export GROFF_NO_SGR=1
 
 # Light/dark theme settings
-if [ "$UNAME" = "Darwin" ]; then
+if [ "$UNAME" = "Darwin" ] && [ "$TERM" != "xterm-ghostty" ]; then
+  echo "should not be in ghostty" > /tmp/ghostty.log
+
   export BAT_THEME="gruvbox-light"
   export MCFLY_LIGHT="TRUE"
   if command -v vivid 2>&1 > /dev/null; then
     export LS_COLORS="$(vivid generate one-light-modified)"
+  fi
+elif [ "$UNAME" = "Darwin" ] && [ "$TERM" = "xterm-ghostty" ]; then
+  export BAT_THEME="ansi"
+  if command -v vivid 2>&1 > /dev/null; then
+    export LS_COLORS="$(vivid generate tokyonight-moon)"
   fi
 else
   export BAT_THEME="gruvbox-dark"
