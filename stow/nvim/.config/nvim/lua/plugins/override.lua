@@ -44,6 +44,10 @@ return {
           },
         }
       end
+
+      opts.servers.clangd = {
+        cmd = { "clangd", "--log=verbose", "--query-driver=*/zig-cc.*,*/zig-c++.*", "-header-insertion=never" },
+      }
     end,
   },
 
