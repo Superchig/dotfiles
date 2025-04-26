@@ -42,4 +42,10 @@ fork() {
   ($* &>/dev/null &)
 }
 
-eval "$(zoxide init bash --cmd j)"
+if command -v mcfly >/dev/null; then
+  eval "$(mcfly init bash)"
+fi
+
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init bash --cmd j)"
+fi
