@@ -8,7 +8,7 @@ alias l="ls -lah"
 alias lg="lazygit"
 alias gits="git stash save --all"
 
-alias cdd="cd $HOME/Dotfiles"
+alias cdd="cd $HOME/dotfiles"
 
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
@@ -21,6 +21,22 @@ fi
 
 export PATH="$PATH:$HOME/AppData/Local/mise/shims"
 export PATH="$PATH:$HOME/git-bash-bin"
+
+lfcd() {
+  tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ]; then
+      if [ "$dir" != "$(pwd)" ]; then
+        cd "$dir"
+      fi
+    fi
+  fi
+}
+
+bind '"\C-w":"lfcd\C-m"'
 
 fork() {
   ($* &>/dev/null &)
