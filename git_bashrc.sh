@@ -15,6 +15,10 @@ bind 'TAB:menu-complete'
 
 export MSYS="winsymlinks:nativestrict"
 
+if [ -f "$HOME/msvc_env.sh" ]; then
+  source "$HOME/msvc_env.sh"
+fi
+
 export PATH="$PATH:$HOME/AppData/Local/mise/shims"
 export PATH="$PATH:$HOME/git-bash-bin"
 
