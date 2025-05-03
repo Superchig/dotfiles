@@ -1,0 +1,10 @@
+#!/bin/sh
+
+fork() {
+  "$@" >/dev/null 2>&1 &
+}
+
+fork mako
+fork dropbox
+fork waybar --config "$HOME/.config/labwc/waybar/config.jsonc"
+fork swaybg -i /usr/share/backgrounds/archlinux/simple.png

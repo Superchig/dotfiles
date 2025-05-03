@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<labwc_config>
+  <keyboard>
+    <keybind key="Super_L" onRelease="yes">
+      <action name="Execute" command="bemenu-run" />
+    </keybind>
+
+    <keybind key="W-right" onRelease="no">
+      <action name="ToggleSnapToEdge" direction="right" />
+    </keybind>
+
+    <keybind key="W-left" onRelease="no">
+      <action name="ToggleSnapToEdge" direction="left" />
+    </keybind>
+
+    <keybind key="W-up" onRelease="no">
+      <action name="ToggleMaximize" />
+    </keybind>
+
+    <keybind key="W-down" onRelease="no">
+      <action name="Iconify" />
+    </keybind>
+
+    <keybind key="W-return" onRelease="no">
+      <action name="Execute" command="ghostty" />
+    </keybind>
+
+    <keybind key="A-space" onRelease="no">
+      <action name="ShowMenu" menu="client-menu" atCursor="no" />
+    </keybind>
+
+    <keybind key="A-F4" onRelease="yes">
+      <action name="Close" />
+    </keybind>
+
+    <keybind key="A-tab" onRelease="no">
+      <action name="NextWindow" />
+    </keybind>
+
+    <keybind key="A-S-tab" onRelease="no">
+      <action name="PreviousWindow" />
+    </keybind>
+  </keyboard>
+
+  <theme>
+    <name>Adwaita-dark</name>
+    <dropShadows>yes</dropShadows>
+  </theme>
+
+  <windowSwitcher>
+    <fields>
+      <field content="icon" width="5%" />
+      <field content="desktop_entry_name" width="30%" />
+      <field content="title" width="65%" />
+    </fields>
+  </windowSwitcher>
+
+  <libinput>
+    <device category="touchpad">
+      <naturalScroll>yes</naturalScroll>
+    </device>
+  </libinput>
+</labwc_config>
