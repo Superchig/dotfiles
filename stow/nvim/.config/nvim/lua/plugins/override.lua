@@ -48,6 +48,18 @@ return {
       opts.servers.clangd = {
         cmd = { "clangd", "-header-insertion=never" },
       }
+
+      -- if require("mason-registry").is_installed("slang")
+      opts.servers.slangd = {
+        settings = {
+          slang = {
+            inlayHints = {
+              deducedTypes = false,
+              parameterNames = false,
+            },
+          },
+        },
+      }
     end,
   },
 
@@ -74,9 +86,6 @@ return {
         "shellcheck",
         "shfmt",
         "stylua",
-        "svelte-language-server",
-        "tailwindcss-language-server",
-        "typescript-language-server",
         -- C++
         "clangd",
         "codelldb",
