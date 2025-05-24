@@ -63,16 +63,16 @@ return {
     end,
   },
 
-  -- {
-  --   -- Compare to https://www.lazyvim.org/plugins/treesitter#nvim-treesitter
-  --   "nvim-treesitter/nvim-treesitter",
-  --   opts = {
-  --     -- Disable highlighting for markdown, since we can just use Superchig/vim-markdown
-  --     highlight = { disable = { "markdown" } },
-  --     indent = { disable = { "ruby" } },
-  --     ensure_installed = { "comment", "lua", "ruby", "python" },
-  --   },
-  -- },
+  {
+    -- Compare to https://www.lazyvim.org/plugins/treesitter#nvim-treesitter
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      -- -- Disable highlighting for markdown, since we can just use Superchig/vim-markdown
+      -- highlight = { disable = { "markdown" } },
+      indent = { disable = { "ruby", "cpp" } },
+      -- ensure_installed = { "comment", "lua", "ruby", "python" },
+    },
+  },
 
   {
     "williamboman/mason.nvim",
