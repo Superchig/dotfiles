@@ -49,7 +49,7 @@
 # 
 # Changing this configuration at runtime will only affect new terminals, i.e.
 # new windows, tabs, etc.
-font-family = 
+font-family = Iosevka Nerd Font
 
 font-family-bold = 
 font-family-italic = 
@@ -397,7 +397,7 @@ freetype-load-flags = hinting,force-autohint,monochrome,autohint
 # 
 #   - macOS: titlebar tabs style is not updated when switching themes.
 # 
-theme = 
+# theme = Builtin Tango Dark
 
 # Background color for the window.
 # Specified as either hex (`#RRGGBB` or `RRGGBB`) or a named X11 color.
