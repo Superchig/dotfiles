@@ -18,6 +18,10 @@ return {
   },
 
   {
+    "dracula/vim",
+  },
+
+  {
     "projekt0n/github-nvim-theme",
   },
 
@@ -49,6 +53,9 @@ return {
           if vim.env.TERM == "xterm-ghostty" then
             vim.o.background = "dark"
             return "tokyonight"
+          elseif vim.env.TERM == "rio" then
+            vim.o.background = "dark"
+            return "dracula"
           else
             vim.o.background = "light"
           end
