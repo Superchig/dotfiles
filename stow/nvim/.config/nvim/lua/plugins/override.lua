@@ -45,9 +45,15 @@ return {
         }
       end
 
-      opts.servers.clangd = {
-        cmd = { "clangd", "-header-insertion=never" },
-      }
+      if vim.loop.os_uname().sysname == "Darwin" then
+        opts.servers.clangd = {
+          cmd = { "/opt/homebrew/opt/llvm@20/bin/clangd", "-header-insertion=never" },
+        }
+      else
+        opts.servers.clangd = {
+          cmd = { "clangd", "-header-insertion=never" },
+        }
+      end
 
       -- if require("mason-registry").is_installed("slang")
       opts.servers.slangd = {
