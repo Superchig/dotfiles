@@ -1,3 +1,6 @@
+# In the Windows terminal profile for MSYS zsh, I usually set the command line to the following:
+# `C:\msys64\msys2_shell.cmd -defterm -ucrt64 -no-start -shell zsh -use-full-path`
+
 export MSYS="winsymlinks:nativestrict"
 
 export EDITOR=nvim
