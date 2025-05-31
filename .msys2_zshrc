@@ -1,0 +1,154 @@
+export MSYS="winsymlinks:nativestrict"
+
+export EDITOR=nvim
+export VISUAL=${EDITOR}
+export MANWIDTH=80
+
+# Colored man output
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+export GROFF_NO_SGR=1
+
+if [ -f "$HOME/msvc_env.sh" ]; then
+  source "$HOME/msvc_env.sh"
+fi
+
+export HOME="$(cygpath "$HOME")"
+
+# Use emacs keymap in zsh, even if EDITOR is set to vi or vim
+bindkey -e
+
+# Basic settings taken from Arch wiki
+autoload -Uz compinit promptinit
+compinit
+promptinit
+
+prompt suse
+
+# Use underscores (and other symbols) as word separators
+autoload -U select-word-style
+select-word-style bash
+
+# History
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=${HOME}/.cache/zsh/history
+
+if [ ! -f ${HISTFILE} ]; then
+  mkdir -p ${HOME}/.cache/zsh
+  touch ${HOME}/.cache/zsh/history
+fi
+
+# Completion information
+zstyle ':completion:*' menu select list-colors "${(@s.:.)LS_COLORS}"
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+zstyle ':completion::complete:*' gain-privileges 1
+setopt COMPLETE_ALIASES
+
+# Don't put commands that start with a space in history
+setopt histignorespace
+
+# Bind shift-tab to tab backwards
+bindkey '^[[Z' reverse-menu-complete
+
+# Enable using just directory names to cd
+setopt AUTO_CD
+
+# History search enabled
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
+
+# Set the name of the terminal to match the current working directory
+# chpwd() {
+#   window_title="\033]0;${PWD##*/}\007"
+#   echo -ne "$window_title"
+# }
+
+alias ls='ls --color=auto -F'
+if type exa >/dev/null 2>/dev/null; then
+  alias l='exa -la --group-directories-first'
+else
+  alias l='ls -lah'
+fi
+
+alias grep='grep --color=auto'
+alias fzf="fzf --color='hl:yellow' --color='hl+:bright-yellow:bold'"
+
+alias e=$VISUAL
+
+alias ez="e ~/.zshrc"
+alias ef="e ~/.config/fish/config.fish"
+
+alias lg="lazygit"
+
+alias pe="ps -e | grep"
+
+alias cdo="cd $HOME/Downloads"
+alias cdd="cd $HOME/dotfiles"
+
+alias gca="git commit --amend"
+
+fork() {
+  ($* &>/dev/null &)
+}
+
+lfcd() {
+  tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ]; then
+      if [ "$dir" != "$(pwd)" ]; then
+        cd "$dir"
+      fi
+    fi
+  fi
+}
+
+lfcd_tty() {
+  lfcd < $TTY
+  zle accept-line
+}
+zle -N lfcd lfcd_tty
+bindkey '^W' lfcd
+
+PLUGINS=""
+
+source_if() {
+  if [ -f "$1" ]; then
+    source "$1"
+  fi
+}
+
+source_if $PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source_if $PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
+source_if $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# Bind history-substring-search plugin's keys
+if [ -f "$PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh" ]; then
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+fi
+
+if type zoxide >/dev/null 2>/dev/null; then
+  eval "$(zoxide init zsh --cmd j)"
+fi
+
+# if type mcfly >/dev/null 2>/dev/null; then
+#   eval "$(mcfly init zsh)"
+# fi
+
+# if type starship >/dev/null 2>/dev/null; then
+#   eval "$(starship init zsh)"
+# fi
