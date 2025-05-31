@@ -43,7 +43,7 @@ return {
           if vim.loop.os_uname().sysname == "Linux" then
             vim.o.guifont = "Iosevka Nerd Font:h12,Consolas:h12,Inconsolata:h12"
           else
-            vim.o.guifont = "Iosevka Term:h12"
+            vim.o.guifont = "Iosevka Nerd Font:h12"
           end
 
           return "tokyonight"

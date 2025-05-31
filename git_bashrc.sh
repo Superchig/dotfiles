@@ -7,6 +7,7 @@ alias l="ls -lah"
 
 alias lg="lazygit"
 alias gits="git stash save --all"
+alias gca="git commit --amend"
 
 alias cdd="cd $HOME/dotfiles"
 
