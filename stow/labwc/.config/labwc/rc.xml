@@ -44,7 +44,8 @@
 
   <theme>
     <!-- See also ~/.config/labwc/environment -->
-    <name>Lab-TokyoNight</name>
+    <!-- <name>Lab-TokyoNight</name> -->
+    <name>Adwaita-dark</name>
     <dropShadows>yes</dropShadows>
   </theme>
 
