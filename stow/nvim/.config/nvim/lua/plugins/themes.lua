@@ -60,6 +60,12 @@ return {
             vim.o.background = "light"
           end
           return "vscode"
+        elseif vim.loop.os_uname().sysname == "Linux" then
+          if vim.env.TERM == "xterm-kitty" then
+            return "gruvbox"
+          elseif vim.env.TERM == "xterm-ghostty" then
+            return "tokyonight-moon"
+          end
         else
           return "gruvbox"
         end
