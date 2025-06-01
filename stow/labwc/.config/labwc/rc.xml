@@ -2,7 +2,7 @@
 <labwc_config>
   <keyboard>
     <keybind key="Super_L" onRelease="yes">
-      <action name="Execute" command="bemenu-run" />
+      <action name="Execute" command="fuzzel" />
     </keybind>
 
     <keybind key="W-right" onRelease="no">
