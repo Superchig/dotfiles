@@ -43,6 +43,7 @@
   </keyboard>
 
   <theme>
+    <!-- See also ~/.config/labwc/environment -->
     <name>Lab-TokyoNight</name>
     <dropShadows>yes</dropShadows>
   </theme>
