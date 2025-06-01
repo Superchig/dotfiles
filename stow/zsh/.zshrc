@@ -216,12 +216,22 @@ elif [ "$UNAME" = "Darwin" ] && [ "$TERM" = "xterm-ghostty" ]; then
   if command -v vivid 2>&1 > /dev/null; then
     export LS_COLORS="$(vivid generate tokyonight-moon)"
   fi
-else
-  export BAT_THEME="gruvbox-dark"
-  # export MCFLY_LIGHT="TRUE"
-  if command -v vivid 2>&1 > /dev/null; then
-    export LS_COLORS="$(vivid generate gruvbox-dark)"
-  fi
+elif [ "$UNAME" = "Linux" ]; then
+  case "$TERM" in
+    "xterm-kitty")
+      export BAT_THEME="gruvbox-dark"
+      # export MCFLY_LIGHT="TRUE"
+      if command -v vivid 2>&1 > /dev/null; then
+        export LS_COLORS="$(vivid generate gruvbox-dark)"
+      fi
+      ;;
+    "xterm-ghostty")
+      export BAT_THEME="ansi"
+      if command -v vivid 2>&1 > /dev/null; then
+        export LS_COLORS="$(vivid generate tokyonight-storm)"
+      fi
+      ;;
+  esac
 fi
 
 if [ "$UNAME" = "Darwin" ]; then
