@@ -4,6 +4,7 @@ fork() {
   "$@" >/dev/null 2>&1 &
 }
 
+fork kanshi
 fork mako
 fork dropbox
 fork waybar --config "$HOME/.config/labwc/waybar/config.jsonc"
