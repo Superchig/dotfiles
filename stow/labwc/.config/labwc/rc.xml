@@ -40,6 +40,10 @@
     <keybind key="A-S-tab" onRelease="no">
       <action name="PreviousWindow" />
     </keybind>
+
+    <keybind key="W-f" onRelease="no">
+      <action name="ToggleFullscreen" />
+    </keybind>
   </keyboard>
 
   <theme>
