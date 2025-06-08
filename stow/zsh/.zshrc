@@ -133,6 +133,10 @@ if [ "$UNAME" = "Darwin" ]; then
   alias k9s="k9s --context staging"
 fi
 
+if [ "$UNAME" = "Linux" ]; then
+  alias open="fork xdg-open"
+fi
+
 # alias xo='xdg-open &> /dev/null'
 alias e=$VISUAL
 alias n=neovide
