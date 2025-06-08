@@ -5,6 +5,10 @@
       <action name="Execute" command="fuzzel" />
     </keybind>
 
+    <keybind key="A-`" onRelease="no">
+      <action name="Execute" command="wlr-alt-backtick" />
+    </keybind>
+
     <keybind key="W-right" onRelease="no">
       <action name="ToggleSnapToEdge" direction="right" />
     </keybind>
