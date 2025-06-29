@@ -2,22 +2,24 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
-vim.cmd([[autocmd Filetype markdown set textwidth=78 colorcolumn=+0]])
+vim.cmd([[autocmd Filetype markdown setlocal textwidth=78 colorcolumn=+0]])
 
-vim.cmd([[autocmd Filetype c,cpp,objc,objcpp set shiftwidth=4 tabstop=4]])
-vim.cmd([[autocmd Filetype c,cpp,objc,objcpp set commentstring=//\ %s]])
+vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal shiftwidth=4 tabstop=4]])
+vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal commentstring=//\ %s]])
 
-vim.cmd([[autocmd Filetype make set shiftwidth=4 tabstop=4]])
+vim.cmd([[autocmd Filetype make setlocal shiftwidth=4 tabstop=4]])
 
-vim.cmd([[autocmd Filetype go set shiftwidth=4 tabstop=4]])
+vim.cmd([[autocmd Filetype go setlocal shiftwidth=4 tabstop=4]])
 
-vim.cmd([[autocmd Filetype js,json set shiftwidth=2 tabstop=2]])
+vim.cmd([[autocmd Filetype js,json setlocal shiftwidth=2 tabstop=2]])
 
-vim.cmd([[autocmd Filetype odin set noexpandtab tabstop=4 shiftwidth=4]])
+vim.cmd([[autocmd Filetype odin setlocal noexpandtab tabstop=4 shiftwidth=4]])
 
 vim.cmd([[autocmd Filetype just setlocal shiftwidth=4]])
 
-vim.cmd([[autocmd BufNewFile,BufRead *.templ set filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]])
+vim.cmd(
+  [[autocmd BufNewFile,BufRead *.templ setlocal filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]]
+)
 
 -- NOTE(Chris): Not sure where else to put this
 if vim.loop.os_uname().sysname == "Darwin" then
