@@ -84,18 +84,9 @@ return {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "flake8",
-        "json-lsp",
         "lua-language-server",
-        "prettier",
-        "rust-analyzer",
         "shellcheck",
         "shfmt",
-        "stylua",
-        -- C++
-        "clangd",
-        "codelldb",
-        "clang-format",
       },
     },
   },
