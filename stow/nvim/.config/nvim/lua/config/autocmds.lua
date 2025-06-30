@@ -7,6 +7,16 @@ vim.cmd([[autocmd Filetype markdown setlocal textwidth=78 colorcolumn=+0]])
 vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal shiftwidth=4 tabstop=4]])
 vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal commentstring=//\ %s]])
 
+vim.cmd([[autocmd Filetype d setlocal shiftwidth=4 tabstop=4]])
+vim.cmd([[autocmd Filetype d setlocal commentstring=//\ %s]])
+vim.cmd([[autocmd Filetype d set makeprg=dub\ build]])
+vim.cmd([[autocmd Filetype d lua SetDErrorFormat()]])
+vim.cmd([[autocmd BufWritePost *.d silent !dfmt -i <afile>]])
+vim.cmd([[autocmd BufWritePost *.d lua RunDMakeAsync()]])
+vim.cmd([[autocmd QuickfixCmdPost make cwindow]])
+
+vim.cmd([[autocmd Filetype shaderslang setlocal shiftwidth=4 tabstop=4]])
+
 vim.cmd([[autocmd Filetype make setlocal shiftwidth=4 tabstop=4]])
 
 vim.cmd([[autocmd Filetype go setlocal shiftwidth=4 tabstop=4]])
@@ -68,3 +78,102 @@ end
 
 vim.cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap zM <cmd>lua NotesHeaders()<cr>]])
 vim.cmd([[autocmd BufRead,BufNewFile notes.md nnoremap zM <cmd>lua NotesHeaders('^#\\+ .*$')<cr>]])
+
+function SetDErrorFormat()
+  vim.o.errorformat = [[%f(%l\,%c): %m]]
+end
+
+DJobs = {}
+
+function RunDMakeAsync()
+  local i = 1
+  while #DJobs > 0 do
+    local job_id = table.remove(DJobs, i)
+    vim.fn.jobstop(job_id)
+  end
+
+  -- Modified from https://phelipetls.github.io/posts/async-make-in-nvim-with-lua/
+  local lines = {}
+  local makeprg = vim.o.makeprg
+  if not makeprg then
+    return
+  end
+  local errorformat = vim.o.errorformat
+  local cmd = vim.fn.expandcmd(makeprg)
+
+  local function on_event(job_id, data, event)
+    if event == "stdout" or event == "stderr" then
+      if data then
+        vim.list_extend(lines, data)
+      end
+    end
+    if event == "exit" then
+      local job_present = false
+      for _, j in ipairs(DJobs) do
+        if j == job_id then
+          job_present = true
+          break
+        end
+      end
+
+      if not job_present then
+        return
+      end
+
+      vim.fn.setqflist({}, " ", {
+        title = cmd,
+        lines = lines,
+        efm = errorformat,
+      })
+      vim.api.nvim_command("doautocmd QuickFixCmdPost")
+
+      QuickfixToDiagnostics()
+
+      local win_id = vim.api.nvim_get_current_win()
+      local buf_id = vim.api.nvim_win_get_buf(win_id)
+
+      vim.cmd("cwindow")
+
+      vim.api.nvim_set_current_win(win_id)
+      vim.api.nvim_win_set_buf(win_id, buf_id)
+    end
+  end
+
+  local job_id = vim.fn.jobstart(
+    cmd,
+    { on_stderr = on_event, on_stdout = on_event, on_exit = on_event, stdout_buffered = true, stderr_buffered = true }
+  )
+
+  table.insert(DJobs, job_id)
+end
+
+function QuickfixToDiagnostics()
+  -- Create a new diagnostic namespace
+  local ns = vim.api.nvim_create_namespace("quickfix_diagnostics")
+
+  -- Clear any existing diagnostics in this namespace
+  vim.diagnostic.reset(ns)
+
+  -- Get the quickfix list
+  local qf_list = vim.fn.getqflist()
+
+  -- Convert quickfix items to diagnostics
+  local diagnostics = {}
+  for _, item in ipairs(qf_list) do
+    -- Skip invalid items
+    if item.valid == 1 and item.bufnr > 0 then
+      local diag = {
+        bufnr = item.bufnr,
+        lnum = item.lnum - 1, -- Quickfix lines are 1-based, diagnostics are 0-based
+        col = item.col - 1, -- Quickfix columns are 1-based, diagnostics are 0-based
+        message = item.text,
+        severity = vim.diagnostic.severity.ERROR, -- Default to ERROR; adjust as needed
+        source = "quickfix",
+      }
+      table.insert(diagnostics, diag)
+    end
+  end
+
+  -- Set diagnostics in the namespace
+  vim.diagnostic.set(ns, 0, diagnostics, {})
+end
