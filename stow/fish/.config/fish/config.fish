@@ -9,9 +9,9 @@ set -x XDG_CONFIG_HOME ~/.config
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 function add_path
-  if echo $fish_user_paths | grep -v --quiet $argv[1]
-    set -U fish_user_paths $fish_user_paths $argv[1]
-  end
+    if echo $fish_user_paths | grep -v --quiet $argv[1]
+        set -U fish_user_paths $fish_user_paths $argv[1]
+    end
 end
 
 add_path "$HOME/dotfiles/util"
@@ -130,29 +130,29 @@ bind \co 'rfcd; commandline -f repaint'
 # Use custom program to start X at login
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1
-      if test "$hostname" = alien
-          # exec startx -- -keeptty
-      else if test "$hostname" = msi && test -f $HOME/bin/nvselect
-          # $HOME/bin/nvselect
-      end
+        if test "$hostname" = alien
+            # exec startx -- -keeptty
+        else if test "$hostname" = msi && test -f $HOME/bin/nvselect
+            # $HOME/bin/nvselect
+        end
     end
 end
 
 # Set the title of the terminal to e.g. "fish ~/p/rolf"  or "nvim ~/D/appimages"
 function fish_title
-  set -q argv[1]; or set argv[1] fish
-  echo $argv (fish_prompt_pwd_dir_length=1 prompt_pwd)
+    set -q argv[1]; or set argv[1] fish
+    echo $argv (fish_prompt_pwd_dir_length=1 prompt_pwd)
 end
 
 # Activate the default Ruby manually
 # rvm default 2> /dev/null
 
 if [ -f /usr/bin/frum ]
-  frum init | source
+    frum init | source
 end
 
 # Source opam (ocaml package manager) script
-source /home/chiggie/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+source /home/chiggie/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
 
 zoxide init fish --cmd j | source
 
