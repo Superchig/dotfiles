@@ -17,6 +17,8 @@ vim.cmd([[autocmd QuickfixCmdPost make cwindow]])
 
 vim.cmd([[autocmd Filetype shaderslang setlocal shiftwidth=4 tabstop=4]])
 
+vim.cmd([[autocmd Filetype glsl setlocal shiftwidth=4 tabstop=4]])
+
 vim.cmd([[autocmd Filetype make setlocal shiftwidth=4 tabstop=4]])
 
 vim.cmd([[autocmd Filetype go setlocal shiftwidth=4 tabstop=4]])
