@@ -29,6 +29,8 @@ vim.cmd([[autocmd Filetype odin setlocal noexpandtab tabstop=4 shiftwidth=4]])
 
 vim.cmd([[autocmd Filetype just setlocal shiftwidth=4]])
 
+vim.cmd([[autocmd Filetype fish setlocal shiftwidth=4]])
+
 vim.cmd(
   [[autocmd BufNewFile,BufRead *.templ setlocal filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]]
 )
