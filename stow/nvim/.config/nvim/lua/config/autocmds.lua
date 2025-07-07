@@ -12,8 +12,12 @@ vim.cmd([[autocmd Filetype d setlocal commentstring=//\ %s]])
 vim.cmd([[autocmd Filetype d set makeprg=dub\ build]])
 vim.cmd([[autocmd Filetype d lua SetDErrorFormat()]])
 vim.cmd([[autocmd BufWritePost *.d silent !dfmt -i <afile>]])
-vim.cmd([[autocmd BufWritePost *.d lua RunDMakeAsync()]])
+vim.cmd([[autocmd BufWritePost *.d lua RunMakeAsync()]])
 vim.cmd([[autocmd QuickfixCmdPost make cwindow]])
+
+vim.cmd([[autocmd Filetype zig set makeprg=zig\ build\ -Dno-bin\ -fincremental]])
+vim.cmd([[autocmd BufWritePost *.zig silent !zig fmt <afile>]])
+vim.cmd([[autocmd BufWritePost *.zig lua RunMakeAsync()]])
 
 vim.cmd([[autocmd Filetype shaderslang setlocal shiftwidth=4 tabstop=4]])
 
@@ -89,7 +93,7 @@ end
 
 DJobs = {}
 
-function RunDMakeAsync()
+function RunMakeAsync()
   local i = 1
   while #DJobs > 0 do
     local job_id = table.remove(DJobs, i)
@@ -174,10 +178,19 @@ function QuickfixToDiagnostics()
         severity = vim.diagnostic.severity.ERROR, -- Default to ERROR; adjust as needed
         source = "quickfix",
       }
-      table.insert(diagnostics, diag)
+      local list = diagnostics[item.bufnr]
+
+      if not list then
+        list = {}
+        diagnostics[item.bufnr] = list
+      end
+
+      table.insert(list, diag)
     end
   end
 
-  -- Set diagnostics in the namespace
-  vim.diagnostic.set(ns, 0, diagnostics, {})
+  for bufnr, diag_list in pairs(diagnostics) do
+    -- Set diagnostics in the namespace
+    vim.diagnostic.set(ns, bufnr, diag_list, {})
+  end
 end
