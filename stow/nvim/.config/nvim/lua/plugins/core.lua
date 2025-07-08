@@ -49,4 +49,11 @@ return {
   {
     "ChrisWellsWood/roc.vim",
   },
+
+  {
+    "Superchig/zig-watch.nvim",
+    dir = "~/dotfiles/stow/nvim/.config/nvim/custom-plugins/zig-watch.nvim",
+    dev = true,
+    config = {},
+  },
 }
