@@ -54,6 +54,15 @@ return {
     "Superchig/zig-watch.nvim",
     dir = "~/dotfiles/stow/nvim/.config/nvim/custom-plugins/zig-watch.nvim",
     dev = true,
-    config = {},
+    config = function()
+      vim.cmd([[autocmd BufWritePost *.zig silent !zig fmt <afile>]])
+
+      if vim.fn.has("mac") then
+        vim.cmd([[autocmd Filetype zig set makeprg=zig\ build\ -Dno-bin\ -fincremental]])
+        vim.cmd([[autocmd BufWritePost *.zig lua RunMakeAsync()]])
+      else
+        return { autocmd = true }
+      end
+    end,
   },
 }

@@ -156,19 +156,21 @@ function M.toggle_watcher()
 end
 
 -- Setup function to define commands
-function M.setup()
+function M.setup(opts)
   vim.api.nvim_create_user_command("ZigWatchStart", M.start_watcher, {})
   vim.api.nvim_create_user_command("ZigWatchStop", M.stop_watcher, {})
   vim.api.nvim_create_user_command("ZigWatchToggle", M.toggle_watcher, {})
 
-  vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "zig",
-    callback = function(ev)
-      if ev.file ~= "build.zig" then
-        M.start_watcher({ mute_start_messages = true })
-      end
-    end,
-  })
+  if opts["autocmd"] then
+    vim.api.nvim_create_autocmd({ "FileType" }, {
+      pattern = "zig",
+      callback = function(ev)
+        if ev.file ~= "build.zig" then
+          M.start_watcher({ mute_start_messages = true })
+        end
+      end,
+    })
+  end
 end
 
 return M

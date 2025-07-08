@@ -15,10 +15,6 @@ vim.cmd([[autocmd BufWritePost *.d silent !dfmt -i <afile>]])
 vim.cmd([[autocmd BufWritePost *.d lua RunMakeAsync()]])
 vim.cmd([[autocmd QuickfixCmdPost make cwindow]])
 
--- vim.cmd([[autocmd Filetype zig set makeprg=zig\ build\ -Dno-bin\ -fincremental]])
-vim.cmd([[autocmd BufWritePost *.zig silent !zig fmt <afile>]])
--- vim.cmd([[autocmd BufWritePost *.zig lua RunMakeAsync()]])
-
 vim.cmd([[autocmd Filetype shaderslang setlocal shiftwidth=4 tabstop=4]])
 
 vim.cmd([[autocmd Filetype glsl setlocal shiftwidth=4 tabstop=4]])
