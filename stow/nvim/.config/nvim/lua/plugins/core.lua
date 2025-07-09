@@ -58,7 +58,6 @@ return {
       vim.cmd([[autocmd BufWritePost *.zig silent !zig fmt <afile>]])
 
       if vim.fn.has("mac") then
-        vim.cmd([[autocmd Filetype zig set makeprg=zig\ build\ -Dno-bin\ -fincremental]])
         vim.cmd([[autocmd BufWritePost *.zig lua RunMakeAsync()]])
       else
         return { autocmd = true }
