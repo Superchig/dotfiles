@@ -336,8 +336,7 @@ if command -v go 2>&1 > /dev/null; then
   export PATH="$PATH:$(go env GOPATH)/bin"
 fi
 
-export PATH="$PATH:$HOME/.idris2/bin"
-export PATH="$PATH:$HOME/.roswell/bin"
+export PATH="$PATH:/opt/shader-slang-bin/bin"
 
 # export HOSTNAME=$(hostname)
 
