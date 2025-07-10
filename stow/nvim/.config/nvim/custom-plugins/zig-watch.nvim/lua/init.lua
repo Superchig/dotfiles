@@ -104,7 +104,7 @@ function M.start_watcher(opts)
     "zig",
     "build",
     "-Dno-bin",
-    "-fincremental",
+    -- "-fincremental",
     "--watch",
     "--color",
     "off",
