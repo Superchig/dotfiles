@@ -57,9 +57,11 @@ return {
     opts = function(_, opts)
       vim.cmd([[autocmd BufWritePost *.zig silent !zig fmt <afile>]])
 
-      if vim.fn.has("mac") == 1 then
+      -- if vim.fn.has("mac") == 1 then
+      if false then
         vim.cmd([[autocmd BufWritePost *.zig lua RunMakeAsync()]])
       else
+        vim.cmd([[autocmd BufWritePost build.zig lua RunMakeAsync()]])
         opts.autocmd = true
       end
     end,
