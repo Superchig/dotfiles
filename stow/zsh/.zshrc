@@ -92,7 +92,8 @@ export VISUAL=${EDITOR}
 export MANWIDTH=80
 export PAGER='less -S' # Useful for the pager in psql
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+export PATH="$HOME/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
 # Set up gcr-ssh-agent
