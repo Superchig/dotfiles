@@ -6,6 +6,7 @@ vim.cmd([[autocmd Filetype markdown setlocal textwidth=78 colorcolumn=+0]])
 
 vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal shiftwidth=4 tabstop=4]])
 vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal commentstring=//\ %s]])
+vim.cmd([[autocmd Filetype c,cpp,objc,objcpp setlocal makeprg=just\ build]])
 
 vim.cmd([[autocmd Filetype d setlocal shiftwidth=4 tabstop=4]])
 vim.cmd([[autocmd Filetype d setlocal commentstring=//\ %s]])
@@ -82,6 +83,23 @@ function NotesHeaders(regex)
   -- cmd([[vimgrep /^# .*$/j %]])
   vim.o.foldlevel = 100
   require("fzf-lua").quickfix()
+end
+
+-- This runs the macro @a, waits a second, and then navigates to the next error
+function AtAOnError(count)
+  if count == nil then
+    count = 1
+  end
+
+  for i = 1, count do
+    print("Handling run ", i)
+
+    vim.cmd("normal @a")
+    vim.cmd("sleep 200ms")
+    vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR })
+  end
+
+  print("Done with AtAOnError")
 end
 
 vim.cmd([[autocmd BufRead,BufNewFile zoom_items.md nnoremap zM <cmd>lua NotesHeaders()<cr>]])
