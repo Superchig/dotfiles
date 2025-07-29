@@ -10,6 +10,7 @@ map ]b <Action>(EditorCodeBlockEnd)
 
 map <leader>= <Action>(ReformatCode)
 map <leader>gb <Action>(Annotate)
+map <leader>cr <Action>(RenameElement)
 
 nnoremap <S-k> gt
 nnoremap <S-j> gT
