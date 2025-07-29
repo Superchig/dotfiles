@@ -11,8 +11,23 @@ vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.wrap = false
 
+-- See :help base-directories for more
+local config = vim.fn.stdpath("config") -- E.g., ~/.config/bvim/
+local data = vim.fn.stdpath("data") -- E.g., ~/.local/share/bvim/
+local state = vim.fn.stdpath("state") -- E.g., ~/.local/state/bvim/
+local cache = vim.fn.stdpath("cache") -- E.g., ~/.cache/bvim
+local init_file = config .. "/init.lua"
+
 vim.cmd([[autocmd FileType lua setlocal expandtab shiftwidth=2 tabstop=2]])
-vim.cmd([[cabbrev ev e ~/.config/bvim/init.lua]])
+vim.cmd("cabbrev ev e" .. init_file)
+
+vim.cmd([[
+	augroup vimrc-incsearch-highlight
+	  autocmd!
+	  autocmd CmdlineEnter /,\? :set hlsearch
+	  autocmd CmdlineLeave /,\? :set nohlsearch
+	augroup END
+]])
 
 function GetSurroundingChars()
   local pos = vim.api.nvim_win_get_cursor(0)
@@ -136,3 +151,66 @@ end
 
 -- Call the function to set up auto-pairs
 auto_pairs()
+
+local bin_path = data .. "/bmason"
+local download_path = cache .. "/bmason"
+
+util = require("util")
+
+local file_exists = util.file_exists
+
+local lsp_bin = bin_path .. "/bmason/LuaLS"
+local download_url = "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-darwin-arm64.tar.gz"
+
+-- TODO(Chris): Refactor this to be recursive
+local function mkdir_p(path)
+  local parts = util.split(path, util.path_separator)
+  local parts_cumulative = {}
+  
+  if vim.fn.has("unix") then
+    table.insert(parts_cumulative, "/")
+  end
+
+  for _, part in ipairs(parts) do
+    table.insert(parts_cumulative, part)
+    table.insert(parts_cumulative, "/")
+
+    local path_cumulative = util.path_join(unpack(parts_cumulative))
+
+    if not file_exists(path_cumulative) then
+      completed = vim.system({"mkdir", path_cumulative}):wait()
+      if completed.code ~= 0 then
+        error("Failed to create directory: " .. path_cumulative)
+      end
+    end
+  end
+end
+
+mkdir_p(download_path)
+mkdir_p(lsp_bin)
+
+if not file_exists(lsp_bin) then
+  local archive = download_path .. "/lua-language-server-3.15.0-darwin-arm64.tar.gz"
+
+  if not file_exists(archive) then
+    local function after_download(completed)
+      if completed.code ~= 0 then
+        error("Failed to download LuaLS, exit code: " .. completed.code)
+      else
+        print("Finished downloading LuaLS")
+      end
+    end
+
+    print("Downloading LuaLS")
+    vim.system({"curl", "-L", "-o", archive, download_url}, {}, after_download)
+  end
+
+  print("Extracting LuaLS")
+  vim.system({"tar", "xvf", archive, "--directory", lsp_bin}, {}, function(completed)
+    if completed.code ~= 0 then
+      error("Failed to extract LuaLS, exit code: " .. completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr)
+    else
+      print("Finished extracting LuaLS")
+    end
+  end)
+end
