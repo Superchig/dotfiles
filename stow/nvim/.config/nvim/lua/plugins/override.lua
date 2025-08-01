@@ -45,6 +45,7 @@ return {
         }
       end
 
+      ---@diagnostic disable-next-line: undefined-field
       if vim.loop.os_uname().sysname == "Darwin" then
         opts.servers.clangd = {
           cmd = { "/opt/homebrew/opt/llvm@20/bin/clangd", "-header-insertion=never" },
@@ -65,6 +66,101 @@ return {
             },
           },
         },
+      }
+
+      ---@type vim.lsp.ClientConfig
+      opts.servers.zls = {
+        cmd = { "zls" },
+        mason = false,
+        on_init = function(client)
+          local function zls_auto_code_actions()
+            -- Get all diagnostics for the current buffer
+            local diagnostics_ = vim.diagnostic.get(0) or {}
+            ---@type lsp.Diagnostic[]
+            local diagnostics = vim.lsp.diagnostic.from(diagnostics_)
+
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+
+            ---@type lsp.CodeActionParams
+            local params = {
+              textDocument = vim.lsp.util.make_text_document_params(0),
+              range = {
+                start = { line = line, character = col },
+                ["end"] = { line = line, character = col },
+              },
+              context = {
+                diagnostics = diagnostics,
+              },
+            }
+
+            ---@type table<integer, { error: (lsp.ResponseError)?, result: lsp.CodeAction[] }>?
+            local clients_to_actions = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+
+            if clients_to_actions == nil then
+              print("ZlsCodeActions could not obtain a list of code actions")
+              return
+            end
+
+            local fix_all_available = false
+            local organize_imports_available = false
+
+            for client_id, actions in pairs(clients_to_actions) do
+              if client_id ~= client.id then
+                goto continue
+              end
+
+              if actions.error then
+                print("Actions error: " .. vim.inspect(actions.error))
+                goto continue
+              end
+
+              for _, action in ipairs(actions.result) do
+                if action.kind == "source.fixAll" then
+                  fix_all_available = true
+                elseif action.kind == "source.organizeImports" then
+                  organize_imports_available = true
+                end
+
+                if fix_all_available and organize_imports_available then
+                  goto end_loops
+                end
+              end
+
+              ::continue::
+            end
+            ::end_loops::
+
+            if fix_all_available then
+              vim.lsp.buf.code_action({
+                context = {
+                  diagnostics = diagnostics,
+                  only = { "source.fixAll" },
+                  triggerKind = 2, -- Automatic
+                },
+                apply = true,
+              })
+            end
+
+            -- Reenable when this code action isn't always available
+            -- if organize_imports_available then
+            --   vim.lsp.buf.code_action({
+            --     context = {
+            --       diagnostics = diagnostics,
+            --       only = { "source.organizeImports" },
+            --       triggerKind = 2, -- Automatic
+            --     },
+            --     apply = true,
+            --   })
+            -- end
+          end
+
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            pattern = { "*.zig", "*.zon" },
+            callback = function()
+              zls_auto_code_actions()
+            end,
+          })
+        end,
       }
     end,
   },
