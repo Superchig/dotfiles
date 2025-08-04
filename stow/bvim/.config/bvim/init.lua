@@ -1,4 +1,4 @@
-vim.cmd("colorscheme vim")
+-- vim.cmd("colorscheme vim")
 -- vim.cmd("colorscheme slate")
 -- vim.cmd("colorscheme sorbet")
 -- vim.cmd("colorscheme unokai")
@@ -10,8 +10,9 @@ vim.o.clipboard = "unnamedplus"
 vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.wrap = false
+vim.o.cursorline = true
 
-vim.opt.completeopt = { "menuone", "noselect", "popup" }
+vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 
 -- See :help base-directories for more
 local config = vim.fn.stdpath("config") -- E.g., ~/.config/bvim/
@@ -211,7 +212,7 @@ if dir_empty(luals_path) then
   vim.system({ "tar", "xvf", archive, "--directory", luals_path }, {}, function(completed)
     if completed.code ~= 0 then
       error("Failed to extract LuaLS, exit code: " ..
-      completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr)
+        completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr)
     else
       print("Finished extracting LuaLS")
     end
@@ -220,23 +221,106 @@ end
 
 vim.env.PATH = vim.env.PATH .. ":" .. luals_path .. "/bin"
 
-local ctrl_x_ctrl_o = vim.api.nvim_replace_termcodes("<C-x><C-o>", true, true, true)
-local function show_completion_menu()
-  vim.api.nvim_feedkeys(ctrl_x_ctrl_o, "n", false)
+---@type integer?
+local completion_menu_win = nil
+local completion_index = 1
+local completions = { "foo", "bar", "baz" }
+local completion_ns = vim.api.nvim_create_namespace("bcomplete")
+---@type integer?
+local completion_extmark_id = nil
+
+local function completion_menu_draw()
+  if completion_menu_win == nil then
+    print("Can't draw completion menu if it hasn't been created")
+    return
+  end
+
+  local buf = vim.api.nvim_win_get_buf(completion_menu_win)
+
+  local completion = completions[completion_index]
+  local linenum = completion_index - 1
+
+  completion_extmark_id = vim.api.nvim_buf_set_extmark(
+    buf,
+    completion_ns,
+    linenum,
+    0,
+    {
+      end_col = #completion,
+      hl_group = "Visual",
+      id = completion_extmark_id,
+    }
+  )
 end
 
-local ctrl_n = vim.api.nvim_replace_termcodes("<C-n>", true, true, true)
+local function show_completion_menu()
+  local max_completion_len = 0
+
+  for _, completion in ipairs(completions) do
+    if #completion > max_completion_len then
+      max_completion_len = #completion
+    end
+  end
+
+  local buf = vim.api.nvim_create_buf(false, false)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, true, completions)
+
+  completion_menu_win = vim.api.nvim_open_win(buf, false, {
+    relative = "cursor",
+    width = max_completion_len,
+    height = #completions,
+    row = 1,
+    col = 0,
+    style = "minimal",
+  })
+
+  -- vim.api.nvim_set_option_value("filetype", "bcompletemenu", { win = completion_menu_win })
+
+  completion_index = 1
+
+  completion_menu_draw()
+end
+
 local function completion_menu_down()
- vim.api.nvim_feedkeys(ctrl_n, "n", false)
+  if completion_menu_win == nil then
+    print("Can't move down on completion menu when it isn't open")
+    return
+  end
+
+  completion_index = completion_index + 1
+  if completion_index > #completions then
+    completion_index = #completions
+  end
+
+  completion_menu_draw()
+end
+
+local function completion_menu_close()
+  if completion_menu_win == nil then
+    print("Can't close completion menu if it isn't open")
+    return
+  end
+
+  vim.api.nvim_win_close(completion_menu_win, true)
+  completion_menu_win = nil
 end
 
 local function tab_wrapper()
-  if vim.fn.pumvisible() ~= 1 then
-    show_completion_menu()
-  else
+  if completion_menu_win ~= nil then
     completion_menu_down()
+  else
+    show_completion_menu()
   end
   -- vim.lsp.buf_request_sync(0, "textDocument/cabbrev")
+end
+
+local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
+local function esc_wrapper()
+  if completion_menu_win ~= nil then
+    completion_menu_close()
+  else
+    vim.api.nvim_feedkeys(esc, "n", false)
+  end
 end
 
 vim.lsp.config["luals"] = {
@@ -258,16 +342,17 @@ vim.lsp.config["luals"] = {
 
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition (LSP)" })
     vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "View references (LSP)" })
-    vim.keymap.set("n", "gh", vim.lsp.buf.signature_help, { desc = "Hover information (LSP)" })
+    vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover information (LSP)" })
+
     vim.keymap.set("n", "<Leader>=", vim.lsp.buf.format, { desc = "Format buffer (LSP)" })
     vim.keymap.set("n", "<Leader>cr", vim.lsp.buf.rename, { desc = "Rename symbol (LSP)" })
     vim.keymap.set("n", "<Leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics in floating window" })
     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { desc = "Handle code actions if available" })
+
     vim.keymap.set("i", "<Tab>", tab_wrapper, { desc = "Get completion" })
+    vim.keymap.set("i", "<Esc>", esc_wrapper, { desc = "Get completion" })
   end,
 }
-
-Foo = vim.env.VIMRUNTIME
 
 vim.cmd([[autocmd FileType lua lua vim.lsp.enable("luals")]])
 
