@@ -23,6 +23,7 @@ local cache = vim.fn.stdpath("cache")   -- E.g., ~/.cache/bvim
 local init_file = config .. "/init.lua"
 
 vim.cmd([[autocmd FileType lua setlocal expandtab shiftwidth=2 tabstop=2]])
+vim.cmd([[autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup='Visual', timeout=100}]])
 vim.cmd("cabbrev ev e" .. init_file)
 
 vim.cmd([[
@@ -126,7 +127,7 @@ local function auto_pairs()
     { '{', '}' },
     { '[', ']' },
     { '"', '"' },
-    { "'", "'" },
+    -- { "'", "'" },
   }
 
   local pairs = Pairs
@@ -223,11 +224,16 @@ vim.env.PATH = vim.env.PATH .. ":" .. luals_path .. "/bin"
 
 ---@type integer?
 local completion_menu_win = nil
+local completion_top_index = 1
+local completions_height = 8
 local completion_index = 1
-local completions = { "foo", "bar", "baz" }
+---@type string[]
+local completions = {}
 local completion_ns = vim.api.nvim_create_namespace("bcomplete")
 ---@type integer?
-local completion_extmark_id = nil
+local completion_bg_extmark_id = nil
+---@type integer?
+local completion_sel_extmark_id = nil
 
 local function completion_menu_draw()
   if completion_menu_win == nil then
@@ -235,25 +241,63 @@ local function completion_menu_draw()
     return
   end
 
+  -- Ensure that internal state is valid
+
+  if completion_index < 1 then
+    completion_index = 1
+  end
+  if completion_index > #completions then
+    completion_index = #completions
+  end
+
+  if completion_index >= completion_top_index + completions_height then
+    local bot_index = completion_index
+    completion_top_index = bot_index - completions_height + 1
+  end
+
+  -- Draw actual floating window
+
   local buf = vim.api.nvim_win_get_buf(completion_menu_win)
 
   local completion = completions[completion_index]
-  local linenum = completion_index - 1
+  local linenum = completion_index - completion_top_index
+  local displayed_completions = vim.list_slice(
+    completions, completion_top_index,
+    completion_top_index + completions_height - 1
+  )
 
-  completion_extmark_id = vim.api.nvim_buf_set_extmark(
+  vim.api.nvim_buf_set_lines(buf, 0, -1, true, displayed_completions)
+
+  local win_config = vim.api.nvim_win_get_config(completion_menu_win)
+
+  completion_bg_extmark_id = vim.api.nvim_buf_set_extmark(
+    buf,
+    completion_ns,
+    0,
+    0,
+    {
+      end_row = win_config.height,
+      end_col = win_config.width,
+      strict = false,
+      hl_group = "Pmenu",
+      id = completion_bg_extmark_id,
+    }
+  )
+
+  completion_sel_extmark_id = vim.api.nvim_buf_set_extmark(
     buf,
     completion_ns,
     linenum,
     0,
     {
       end_col = #completion,
-      hl_group = "Visual",
-      id = completion_extmark_id,
+      hl_group = "PmenuSel",
+      id = completion_sel_extmark_id,
     }
   )
 end
 
-local function show_completion_menu()
+local function completion_menu_show()
   local max_completion_len = 0
 
   for _, completion in ipairs(completions) do
@@ -263,22 +307,112 @@ local function show_completion_menu()
   end
 
   local buf = vim.api.nvim_create_buf(false, false)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, true, completions)
 
   completion_menu_win = vim.api.nvim_open_win(buf, false, {
     relative = "cursor",
     width = max_completion_len,
-    height = #completions,
+    height = completions_height,
     row = 1,
     col = 0,
     style = "minimal",
   })
 
-  -- vim.api.nvim_set_option_value("filetype", "bcompletemenu", { win = completion_menu_win })
-
+  completion_top_index = 1
   completion_index = 1
 
   completion_menu_draw()
+end
+
+---@class LspResponse
+---@field err lsp.ResponseError
+---@field result any
+---@field ctx lsp.HandlerContext
+
+local function display_completions()
+  -- local line = 
+
+  -- local new_completions = {}
+  -- for _, completion in ipairs(completions) do
+  --   string.find(completion, )
+  -- end
+
+  -- local clients = vim.lsp.get_clients({ bufnr = 0 })
+  -- local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  -- local text_document = vim.lsp.util.make_text_document_params(0)
+  --
+  -- ---@type table<integer, LspResponse>
+  -- local responses = {}
+  --
+  -- for i, client in ipairs(clients) do
+  --   ---@type lsp.CompletionParams
+  --   local params = {
+  --     textDocument = text_document,
+  --     position = {
+  --       line = line,
+  --       character = col,
+  --     },
+  --   }
+  --   if client.capabilities.textDocument.completion.contextSupport then
+  --     params.context = {
+  --       triggerKind = 1,
+  --     }
+  --   end
+  --   local status_or_request_id = client:request("textDocument/completion", params, function(err, result, ctx)
+  --     responses[i] = {
+  --       err = err,
+  --       result = result,
+  --       ctx = ctx,
+  --     }
+  --   end)
+  --   if not status_or_request_id then
+  --     vim.notify("Failed to make textDocument/completion request to LSP client " .. client.id, vim.log.levels.ERROR)
+  --   end
+  -- end
+  --
+  -- for i, client in ipairs(clients) do
+  --   local wait_result, reason = vim.wait(1000, function()
+  --     return responses[i] ~= nil
+  --   end, 10)
+  --   if not wait_result and reason == -1 then
+  --     vim.notify(
+  --       "textDocument/completion request to " .. client.id ..
+  --       " failed to complete because it never returned true",
+  --       vim.log.levels.ERROR
+  --     )
+  --   end
+  -- end
+  --
+  -- for _, response in pairs(responses) do
+  --   local ctx = response.ctx
+  --
+  --   if response ~= nil and response.err ~= nil then
+  --     vim.notify(
+  --       "textDocument/completion request to " ..
+  --       ctx.client_id .. " failed with error: " .. vim.inspect(response.err)
+  --     )
+  --     goto continue
+  --   end
+  --
+  --   if response.result == nil then
+  --     goto continue
+  --   end
+  --
+  --   local result = response.result
+  --   if result.isIncomplete ~= nil then
+  --     ---@type lsp.CompletionList
+  --     local completion_list = result
+  --     -- TODO(Chris): Handle applyKind?, itemDefaults?, and isIncomplete
+  --     for _, item in ipairs(completion_list.items) do
+  --       table.insert(completions, item.label)
+  --     end
+  --   end
+  --
+  --   ::continue::
+  -- end
+  --
+  -- if #completions > 0 and completion_menu_win == nil then
+  --   completion_menu_show()
+  -- end
 end
 
 local function completion_menu_down()
@@ -288,9 +422,6 @@ local function completion_menu_down()
   end
 
   completion_index = completion_index + 1
-  if completion_index > #completions then
-    completion_index = #completions
-  end
 
   completion_menu_draw()
 end
@@ -301,25 +432,38 @@ local function completion_menu_close()
     return
   end
 
+  local buf = vim.api.nvim_win_get_buf(completion_menu_win)
+
   vim.api.nvim_win_close(completion_menu_win, true)
   completion_menu_win = nil
+
+  vim.api.nvim_buf_delete(buf, { force = true })
 end
 
 local function tab_wrapper()
   if completion_menu_win ~= nil then
     completion_menu_down()
   else
-    show_completion_menu()
+    display_completions()
   end
-  -- vim.lsp.buf_request_sync(0, "textDocument/cabbrev")
 end
 
 local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
 local function esc_wrapper()
   if completion_menu_win ~= nil then
     completion_menu_close()
+  end
+  vim.api.nvim_feedkeys(esc, "n", false)
+end
+
+local cr = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
+local function cr_wrapper()
+  if completion_menu_win ~= nil then
+    local completion = completions[completion_index]
+    completion_menu_close()
+    vim.api.nvim_paste(completion, false, -1)
   else
-    vim.api.nvim_feedkeys(esc, "n", false)
+    vim.api.nvim_feedkeys(cr, "n", false)
   end
 end
 
@@ -350,7 +494,15 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { desc = "Handle code actions if available" })
 
     vim.keymap.set("i", "<Tab>", tab_wrapper, { desc = "Get completion" })
-    vim.keymap.set("i", "<Esc>", esc_wrapper, { desc = "Get completion" })
+    vim.keymap.set("i", "<Esc>", esc_wrapper, { desc = "Exit completion" })
+    vim.keymap.set("i", "<CR>", cr_wrapper, { desc = "Accept completion" })
+
+    vim.api.nvim_create_autocmd("TextChangedI", {
+      pattern = "*", -- Apply to all buffers
+      callback = function()
+        vim.schedule(display_completions)
+      end,
+    })
   end,
 }
 
