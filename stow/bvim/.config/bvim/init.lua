@@ -160,9 +160,11 @@ local luals_path = bin_path .. "/LuaLS"
 
 local download_url = ""
 if jit.os == "Linux" then
-  download_url = "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz"
+  download_url =
+  "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz"
 else
-  download_url = "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-darwin-arm64.tar.gz"
+  download_url =
+  "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-darwin-arm64.tar.gz"
 end
 
 local archive_name = ""
@@ -244,11 +246,61 @@ local completion_bg_extmark_id = nil
 ---@type integer?
 local completion_sel_extmark_id = nil
 
-local function completion_menu_draw()
+local function completion_menu_show()
+  local max_completion_len = 0
+
+  for _, completion in ipairs(completions) do
+    if #completion > max_completion_len then
+      max_completion_len = #completion
+    end
+  end
+
+  local buf = vim.api.nvim_create_buf(false, false)
+
+  completion_menu_win = vim.api.nvim_open_win(buf, false, {
+    relative = "cursor",
+    width = max_completion_len,
+    height = completions_height,
+    row = 1,
+    col = 0,
+    style = "minimal",
+  })
+
+  completion_top_index = 1
+  completion_index = 1
+end
+
+
+local function completion_menu_close()
   if completion_menu_win == nil then
-    print("Can't draw completion menu if it hasn't been created")
+    print("Can't close completion menu if it isn't open")
     return
   end
+
+  local buf = vim.api.nvim_win_get_buf(completion_menu_win)
+
+  vim.api.nvim_win_close(completion_menu_win, true)
+  completion_menu_win = nil
+
+  vim.api.nvim_buf_delete(buf, { force = true })
+end
+
+local function completion_menu_draw()
+  -- Close if no more valid completions
+
+  if #completions == 0 then
+    if completion_menu_win ~= nil then
+      completion_menu_close()
+    end
+    return
+  end
+
+  -- Open if valid completions
+
+  if completion_menu_win == nil then
+    completion_menu_show()
+  end
+  assert(completion_menu_win ~= nil)
 
   -- Ensure that internal state is valid
 
@@ -306,126 +358,101 @@ local function completion_menu_draw()
   )
 end
 
-local function completion_menu_show()
-  local max_completion_len = 0
-
-  for _, completion in ipairs(completions) do
-    if #completion > max_completion_len then
-      max_completion_len = #completion
-    end
-  end
-
-  local buf = vim.api.nvim_create_buf(false, false)
-
-  completion_menu_win = vim.api.nvim_open_win(buf, false, {
-    relative = "cursor",
-    width = max_completion_len,
-    height = completions_height,
-    row = 1,
-    col = 0,
-    style = "minimal",
-  })
-
-  completion_top_index = 1
-  completion_index = 1
-
-  completion_menu_draw()
-end
-
 ---@class LspResponse
 ---@field err lsp.ResponseError
 ---@field result any
 ---@field ctx lsp.HandlerContext
 
-local function display_completions()
-  -- local line = vim.api.nvim_get_current_line()
-  -- local word
-  -- for part_ in string.gmatch(line, "([^ ]+)") do
-  --   word = part_
-  -- end
-  --
-  -- local new_completions = {}
-  -- for _, completion in ipairs(completions) do
-  --   string.find(completion, word)
-  -- end
+---@return lsp.CompletionItem[]
+local function get_lsp_completion_items()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local text_document = vim.lsp.util.make_text_document_params(0)
 
-  -- local clients = vim.lsp.get_clients({ bufnr = 0 })
-  -- local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  -- local text_document = vim.lsp.util.make_text_document_params(0)
-  --
-  -- ---@type table<integer, LspResponse>
-  -- local responses = {}
-  --
-  -- for i, client in ipairs(clients) do
-  --   ---@type lsp.CompletionParams
-  --   local params = {
-  --     textDocument = text_document,
-  --     position = {
-  --       line = line,
-  --       character = col,
-  --     },
-  --   }
-  --   if client.capabilities.textDocument.completion.contextSupport then
-  --     params.context = {
-  --       triggerKind = 1,
-  --     }
-  --   end
-  --   local status_or_request_id = client:request("textDocument/completion", params, function(err, result, ctx)
-  --     responses[i] = {
-  --       err = err,
-  --       result = result,
-  --       ctx = ctx,
-  --     }
-  --   end)
-  --   if not status_or_request_id then
-  --     vim.notify("Failed to make textDocument/completion request to LSP client " .. client.id, vim.log.levels.ERROR)
-  --   end
-  -- end
-  --
-  -- for i, client in ipairs(clients) do
-  --   local wait_result, reason = vim.wait(1000, function()
-  --     return responses[i] ~= nil
-  --   end, 10)
-  --   if not wait_result and reason == -1 then
-  --     vim.notify(
-  --       "textDocument/completion request to " .. client.id ..
-  --       " failed to complete because it never returned true",
-  --       vim.log.levels.ERROR
-  --     )
-  --   end
-  -- end
-  --
-  -- for _, response in pairs(responses) do
-  --   local ctx = response.ctx
-  --
-  --   if response ~= nil and response.err ~= nil then
-  --     vim.notify(
-  --       "textDocument/completion request to " ..
-  --       ctx.client_id .. " failed with error: " .. vim.inspect(response.err)
-  --     )
-  --     goto continue
-  --   end
-  --
-  --   if response.result == nil then
-  --     goto continue
-  --   end
-  --
-  --   local result = response.result
-  --   if result.isIncomplete ~= nil then
-  --     ---@type lsp.CompletionList
-  --     local completion_list = result
-  --     -- TODO(Chris): Handle applyKind?, itemDefaults?, and isIncomplete
-  --     for _, item in ipairs(completion_list.items) do
-  --       table.insert(completions, item.label)
-  --     end
-  --   end
-  --
-  --   ::continue::
-  -- end
-  --
-  -- if #completions > 0 and completion_menu_win == nil then
-  --   completion_menu_show()
-  -- end
+  ---@type table<integer, LspResponse>
+  local responses = {}
+
+  for i, client in ipairs(clients) do
+    ---@type lsp.CompletionParams
+    local params = {
+      textDocument = text_document,
+      position = {
+        line = line,
+        character = col,
+      },
+    }
+    if client.capabilities.textDocument.completion.contextSupport then
+      params.context = {
+        triggerKind = 1,
+      }
+    end
+    local status_or_request_id = client:request("textDocument/completion", params, function(err, result, ctx)
+      responses[i] = {
+        err = err,
+        result = result,
+        ctx = ctx,
+      }
+    end)
+    if not status_or_request_id then
+      vim.notify("Failed to make textDocument/completion request to LSP client " .. client.id, vim.log.levels.ERROR)
+    end
+  end
+
+  for i, client in ipairs(clients) do
+    local wait_result, reason = vim.wait(1000, function()
+      return responses[i] ~= nil
+    end, 10)
+    if not wait_result and reason == -1 then
+      vim.notify(
+        "textDocument/completion request to " .. client.id ..
+        " failed to complete because it never returned true",
+        vim.log.levels.ERROR
+      )
+    end
+  end
+
+  ---@type lsp.CompletionItem[]
+  local completion_items = {}
+  for _, response in pairs(responses) do
+    local ctx = response.ctx
+
+    if response ~= nil and response.err ~= nil then
+      vim.notify(
+        "textDocument/completion request to " ..
+        ctx.client_id .. " failed with error: " .. vim.inspect(response.err)
+      )
+      goto continue
+    end
+
+    if response.result == nil then
+      goto continue
+    end
+
+    local result = response.result
+    if result.isIncomplete ~= nil then
+      ---@type lsp.CompletionList
+      local completion_list = result
+      -- TODO(Chris): Handle applyKind?, itemDefaults?, and isIncomplete
+      for _, item in ipairs(completion_list.items) do
+        table.insert(completion_items, item)
+      end
+    end
+
+    ::continue::
+  end
+
+  return completion_items
+end
+
+local function display_completions()
+  completions = {}
+
+  local completion_items = get_lsp_completion_items()
+  for _, item in ipairs(completion_items) do
+    table.insert(completions, item.label)
+  end
+
+  completion_menu_draw()
 end
 
 local function completion_menu_down()
@@ -439,18 +466,34 @@ local function completion_menu_down()
   completion_menu_draw()
 end
 
-local function completion_menu_close()
-  if completion_menu_win == nil then
-    print("Can't close completion menu if it isn't open")
+local function completion_on_text_change()
+  local line = vim.api.nvim_get_current_line()
+  local word
+  for part in string.gmatch(line, "([^ ]+)") do
+    word = part
+  end
+
+  if word == nil then
     return
   end
 
-  local buf = vim.api.nvim_win_get_buf(completion_menu_win)
+  local new_completions = {}
+  for _, completion in ipairs(completions) do
+    if string.find(completion, word) ~= nil then
+      table.insert(new_completions, completion)
+    end
+  end
+  completions = new_completions
 
-  vim.api.nvim_win_close(completion_menu_win, true)
-  completion_menu_win = nil
+  if completion_menu_win == nil then
+    if #completions > 0 then
+      completion_menu_show()
+    end
+  else
+    completion_menu_draw()
+  end
 
-  vim.api.nvim_buf_delete(buf, { force = true })
+  vim.schedule(display_completions)
 end
 
 local function tab_wrapper()
@@ -510,12 +553,10 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("i", "<Esc>", esc_wrapper, { desc = "Exit completion" })
     vim.keymap.set("i", "<CR>", cr_wrapper, { desc = "Accept completion" })
 
-    vim.api.nvim_create_autocmd("TextChangedI", {
-      pattern = "*", -- Apply to all buffers
-      callback = function()
-        vim.schedule(display_completions)
-      end,
-    })
+    -- vim.api.nvim_create_autocmd("TextChangedI", {
+    --   pattern = "*", -- Apply to all buffers
+    --   callback = completion_on_text_change,
+    -- })
   end,
 }
 
