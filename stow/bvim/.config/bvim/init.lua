@@ -157,8 +157,18 @@ local util = require("util")
 local file_exists = util.file_exists
 
 local luals_path = bin_path .. "/LuaLS"
-local download_url =
-"https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-darwin-arm64.tar.gz"
+
+local download_url = ""
+if jit.os == "Linux" then
+  download_url = "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz"
+else
+  download_url = "https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-darwin-arm64.tar.gz"
+end
+
+local archive_name = ""
+for part in string.gmatch(download_url, "[^/]+") do
+  archive_name = part
+end
 
 -- TODO(Chris): Refactor this to be recursive
 local function mkdir_p(path)
@@ -187,7 +197,7 @@ end
 mkdir_p(download_path)
 mkdir_p(luals_path)
 
-local archive = download_path .. "/lua-language-server-3.15.0-darwin-arm64.tar.gz"
+local archive = download_path .. "/" .. archive_name
 
 if not file_exists(archive) then
   local function after_download(completed)
@@ -199,7 +209,7 @@ if not file_exists(archive) then
   end
 
   print("Downloading LuaLS")
-  vim.system({ "curl", "-L", "-o", archive, download_url }, {}, after_download)
+  vim.system({ "curl", "-L", "-o", archive, download_url }, {}, after_download):wait()
 end
 
 local function dir_empty(path)
@@ -210,14 +220,13 @@ end
 if dir_empty(luals_path) then
   print("Extracting LuaLS")
 
-  vim.system({ "tar", "xvf", archive, "--directory", luals_path }, {}, function(completed)
-    if completed.code ~= 0 then
-      error("Failed to extract LuaLS, exit code: " ..
-        completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr)
-    else
-      print("Finished extracting LuaLS")
-    end
-  end)
+  local completed = vim.system({ "tar", "xvf", archive, "--directory", luals_path }, {}):wait()
+  if completed.code ~= 0 then
+    error("Failed to extract LuaLS, exit code: " ..
+      completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr)
+  else
+    print("Finished extracting LuaLS")
+  end
 end
 
 vim.env.PATH = vim.env.PATH .. ":" .. luals_path .. "/bin"
