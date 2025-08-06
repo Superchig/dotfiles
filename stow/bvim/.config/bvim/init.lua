@@ -172,7 +172,6 @@ for part in string.gmatch(download_url, "[^/]+") do
   archive_name = part
 end
 
--- TODO(Chris): Refactor this to be recursive
 local function mkdir_p(path)
   local parts = util.split(path, util.path_separator)
   local parts_cumulative = {}
@@ -432,10 +431,15 @@ local function get_lsp_completion_items()
     if result.isIncomplete ~= nil then
       ---@type lsp.CompletionList
       local completion_list = result
-      -- TODO(Chris): Handle applyKind?, itemDefaults?, and isIncomplete
+      -- TODO(Chris): Handle applyKind?, itemDefaults?
       for _, item in ipairs(completion_list.items) do
         table.insert(completion_items, item)
       end
+    else
+      vim.notify(
+        "We haven't implemented handler code for a textDocument/completion response: " .. vim.inspect(result),
+        vim.log.levels.ERROR
+      )
     end
 
     ::continue::
@@ -469,7 +473,7 @@ end
 local function completion_on_text_change()
   local line = vim.api.nvim_get_current_line()
   local word
-  for part in string.gmatch(line, "([^ ]+)") do
+  for part in string.gmatch(line, "([^ .]+)") do
     word = part
   end
 
@@ -552,6 +556,8 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("i", "<Tab>", tab_wrapper, { desc = "Get completion" })
     vim.keymap.set("i", "<Esc>", esc_wrapper, { desc = "Exit completion" })
     vim.keymap.set("i", "<CR>", cr_wrapper, { desc = "Accept completion" })
+
+    -- print(vim.inspect(client.capabilities.textDocument.completion))
 
     -- vim.api.nvim_create_autocmd("TextChangedI", {
     --   pattern = "*", -- Apply to all buffers
