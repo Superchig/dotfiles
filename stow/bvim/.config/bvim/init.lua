@@ -233,21 +233,23 @@ vim.env.PATH = vim.env.PATH .. ":" .. luals_path .. "/bin"
 local completion_menu_win = nil
 local completion_top_index = 1
 local completions_height = 8
-local completion_index = 1
----@type string[]
+local completion_index = 0
+---@type lsp.CompletionItem[]
 local completions = {}
 local completion_ns = vim.api.nvim_create_namespace("bcomplete")
 ---@type integer?
 local completion_bg_extmark_id = nil
 ---@type integer?
 local completion_sel_extmark_id = nil
+local completion_menu_skip_next_show = false
 
 local function completion_menu_show()
-  local max_completion_len = 0
+  local max_completion_label_len = 0
 
   for _, completion in ipairs(completions) do
-    if #completion > max_completion_len then
-      max_completion_len = #completion
+    local label = completion.label
+    if #label > max_completion_label_len then
+      max_completion_label_len = #label
     end
   end
 
@@ -255,7 +257,7 @@ local function completion_menu_show()
 
   completion_menu_win = vim.api.nvim_open_win(buf, false, {
     relative = "cursor",
-    width = max_completion_len,
+    width = max_completion_label_len,
     height = completions_height,
     row = 1,
     col = 0,
@@ -263,9 +265,8 @@ local function completion_menu_show()
   })
 
   completion_top_index = 1
-  completion_index = 1
+  completion_index = 0
 end
-
 
 local function completion_menu_close()
   if completion_menu_win == nil then
@@ -294,14 +295,20 @@ local function completion_menu_draw()
   -- Open if valid completions
 
   if completion_menu_win == nil then
+    if completion_menu_skip_next_show then
+      print("Skipped")
+      completion_menu_skip_next_show = false
+      return
+    end
+
     completion_menu_show()
   end
   assert(completion_menu_win ~= nil)
 
   -- Ensure that internal state is valid
 
-  if completion_index < 1 then
-    completion_index = 1
+  if completion_index < 0 then
+    completion_index = 0 -- Special null value
   end
   if completion_index > #completions then
     completion_index = #completions
@@ -316,16 +323,23 @@ local function completion_menu_draw()
 
   local buf = vim.api.nvim_win_get_buf(completion_menu_win)
 
-  local completion = completions[completion_index]
-  local linenum = completion_index - completion_top_index
-  local displayed_completions = vim.list_slice(
-    completions, completion_top_index,
-    completion_top_index + completions_height - 1
-  )
-
-  vim.api.nvim_buf_set_lines(buf, 0, -1, true, displayed_completions)
-
   local win_config = vim.api.nvim_win_get_config(completion_menu_win)
+
+  local completion = completions[completion_index]
+  ---@type string[]
+  local displayed_labels = {}
+  for _, completion_item in ipairs(vim.list_slice(
+    completions,
+    completion_top_index,
+    completion_top_index + completions_height - 1
+  )) do
+    table.insert(displayed_labels, completion_item.label)
+  end
+  while #displayed_labels < win_config.height do
+    table.insert(displayed_labels, string.rep(" ", win_config.width))
+  end
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, true, displayed_labels)
 
   completion_bg_extmark_id = vim.api.nvim_buf_set_extmark(
     buf,
@@ -341,17 +355,24 @@ local function completion_menu_draw()
     }
   )
 
-  completion_sel_extmark_id = vim.api.nvim_buf_set_extmark(
-    buf,
-    completion_ns,
-    linenum,
-    0,
-    {
-      end_col = #completion,
-      hl_group = "PmenuSel",
-      id = completion_sel_extmark_id,
-    }
-  )
+  if completion_index > 0 then
+    -- Draw selection highlight
+    local linenum = completion_index - completion_top_index
+    local label = completion.label
+    completion_sel_extmark_id = vim.api.nvim_buf_set_extmark(
+      buf,
+      completion_ns,
+      linenum,
+      0,
+      {
+        end_col = #label,
+        hl_group = "PmenuSel",
+        id = completion_sel_extmark_id,
+      }
+    )
+
+    -- Change current line
+  end
 end
 
 ---@class LspResponse
@@ -362,8 +383,7 @@ end
 ---@return lsp.CompletionItem[]
 local function get_lsp_completion_items()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  local text_document = vim.lsp.util.make_text_document_params(0)
+  local position_params = vim.lsp.util.make_position_params(0, "utf-8")
 
   ---@type table<integer, LspResponse>
   local responses = {}
@@ -371,11 +391,8 @@ local function get_lsp_completion_items()
   for i, client in ipairs(clients) do
     ---@type lsp.CompletionParams
     local params = {
-      textDocument = text_document,
-      position = {
-        line = line,
-        character = col,
-      },
+      textDocument = position_params.textDocument,
+      position = position_params.position,
     }
     if client.capabilities.textDocument.completion.contextSupport then
       params.context = {
@@ -450,7 +467,7 @@ local function display_completions()
 
   local completion_items = get_lsp_completion_items()
   for _, item in ipairs(completion_items) do
-    table.insert(completions, item.label)
+    table.insert(completions, item)
   end
 
   completion_menu_draw()
@@ -467,32 +484,30 @@ local function completion_menu_down()
   completion_menu_draw()
 end
 
-local function completion_on_text_change()
+local function get_completion_word()
   local line = vim.api.nvim_get_current_line()
   local word
   for part in string.gmatch(line, "([^ .]+)") do
     word = part
   end
+  return word
+end
 
+local function completion_on_text_change()
+  local word = get_completion_word()
   if word == nil then
     return
   end
 
   local new_completions = {}
   for _, completion in ipairs(completions) do
-    if string.find(completion, word) ~= nil then
+    if string.find(completion.label, word) ~= nil then
       table.insert(new_completions, completion)
     end
   end
   completions = new_completions
 
-  if completion_menu_win == nil then
-    if #completions > 0 then
-      completion_menu_show()
-    end
-  else
-    completion_menu_draw()
-  end
+  completion_menu_draw()
 
   vim.schedule(display_completions)
 end
@@ -523,11 +538,64 @@ local function cr_wrapper()
 
   if completion_menu_win ~= nil then
     local completion = completions[completion_index]
+
     completion_menu_close()
-    vim.api.nvim_paste(completion, false, -1)
+
+    local buf = vim.api.nvim_get_current_buf()
+
+    if completion.textEdit ~= nil then
+      if completion.textEdit.range ~= nil then
+        local text_edit = completion.textEdit
+        print("Applying text edits")
+        ---@cast text_edit lsp.TextEdit
+        vim.lsp.util.apply_text_edits({ text_edit }, buf, "utf-8")
+      else
+        vim.notify(
+          "We have not yet implemented insertion with lsp.InsertReplaceEdit",
+          vim.log.levels.ERROR
+        )
+      end
+    else
+      if completion.insertTextFormat == vim.lsp.protocol.InsertTextFormat.PlainText then
+        local cursor_pos = vim.api.nvim_win_get_cursor(0)
+        local line = cursor_pos[1]
+        local col = cursor_pos[2]
+
+        local word = completion.filterText or get_completion_word() or completion.label
+        local start_pos = { line - 1, col - #word } -- For LSP
+        local end_pos = { line - 1, col }           -- For LSP
+
+        vim.api.nvim_buf_set_text(
+          buf,
+          start_pos[1], start_pos[2],
+          end_pos[1], end_pos[2],
+          {}
+        )
+
+        local insert_text = completion.insertText or completion.label
+        vim.api.nvim_paste(insert_text, false, -1)
+
+        completion_menu_skip_next_show = true
+      else
+        vim.notify(
+          "We have not yet implemented insertion of completions with this format: " .. completion.insertTextFormat,
+          vim.log.levels.ERROR
+        )
+      end
+    end
   else
     vim.api.nvim_feedkeys(cr, "n", false)
   end
+end
+
+local ctrl_n = vim.api.nvim_replace_termcodes("<C-N>", true, true, true)
+local function ctrl_n_wrapper()
+  if vim.fn.pumvisible() == 1 then
+    vim.api.nvim_feedkeys(ctrl_n, "n", false)
+    return
+  end
+
+  tab_wrapper()
 end
 
 vim.lsp.config["luals"] = {
@@ -544,9 +612,7 @@ vim.lsp.config["luals"] = {
       },
     },
   },
-  on_attach = function(client, bufnr)
-    vim.lsp.completion.enable(true, client.id, bufnr)
-
+  on_attach = function()
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition (LSP)" })
     vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "View references (LSP)" })
     vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover information (LSP)" })
@@ -556,16 +622,21 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("n", "<Leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics in floating window" })
     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { desc = "Handle code actions if available" })
 
-    vim.keymap.set("i", "<Tab>", tab_wrapper, { desc = "Get completion" })
+    vim.keymap.set("i", "<Tab>", tab_wrapper, { desc = "Get/next completion" })
     vim.keymap.set("i", "<Esc>", esc_wrapper, { desc = "Exit completion" })
     vim.keymap.set("i", "<CR>", cr_wrapper, { desc = "Accept completion" })
+    vim.keymap.set("i", "<C-N>", ctrl_n_wrapper, { desc = "Get/next completion" })
+
+    vim.o.omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
-    -- vim.api.nvim_create_autocmd("TextChangedI", {
-    --   pattern = "*", -- Apply to all buffers
-    --   callback = completion_on_text_change,
-    -- })
+    local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
+    vim.api.nvim_create_autocmd("TextChangedI", {
+      pattern = "*", -- Apply to all buffers
+      callback = completion_on_text_change,
+      group = augroup_id,
+    })
   end,
 }
 
