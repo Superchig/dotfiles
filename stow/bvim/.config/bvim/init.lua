@@ -453,15 +453,35 @@ local function get_lsp_completion_items()
     ::continue::
   end
 
+  table.sort(completion_items, function(a, b)
+    local a_sort_text = a.sortText or a.label
+    local b_sort_text = b.sortText or b.label
+    return a_sort_text <= b_sort_text
+  end)
+
   return completion_items
+end
+
+local function get_completion_word()
+  local line = vim.api.nvim_get_current_line()
+  local word
+  for part in string.gmatch(line, "[%w_]+") do
+    word = part
+  end
+  return word
 end
 
 local function display_completions()
   completions = {}
 
   local completion_items = get_lsp_completion_items()
-  for _, item in ipairs(completion_items) do
-    table.insert(completions, item)
+  local fallback_word = get_completion_word()
+  for _, completion in ipairs(completion_items) do
+    local word = completion.filterText or fallback_word
+
+    if string.find(completion.label, word) ~= nil then
+      table.insert(completions, completion)
+    end
   end
 
   completion_menu_draw()
@@ -478,16 +498,11 @@ local function completion_menu_down()
   completion_menu_draw()
 end
 
-local function get_completion_word()
-  local line = vim.api.nvim_get_current_line()
-  local word
-  for part in string.gmatch(line, "[%w_]+") do
-    word = part
-  end
-  return word
+local function get_word_from_completion_item(completion)
+  return completion.filterText or get_completion_word() or completion.label
 end
 
-local function completion_on_text_change()
+local function complete_on_text_change()
   if completion_menu_skip_next then
     completion_menu_skip_next = false
     return
@@ -498,13 +513,13 @@ local function completion_on_text_change()
     return
   end
 
-  local new_completions = {}
-  for _, completion in ipairs(completions) do
-    if string.find(completion.label, word) ~= nil then
-      table.insert(new_completions, completion)
-    end
-  end
-  completions = new_completions
+  -- local new_completions = {}
+  -- for _, completion in ipairs(completions) do
+  --   if string.find(completion.label, word) ~= nil then
+  --     table.insert(new_completions, completion)
+  --   end
+  -- end
+  -- completions = new_completions
 
   completion_menu_draw()
 
@@ -559,7 +574,7 @@ local function cr_wrapper()
         local line = cursor_pos[1]
         local col = cursor_pos[2]
 
-        local word = completion.filterText or get_completion_word() or completion.label
+        local word = get_word_from_completion_item(completion)
         local start_pos = { line - 1, col - #word } -- For LSP
         local end_pos = { line - 1, col }           -- For LSP
 
@@ -632,7 +647,7 @@ vim.lsp.config["luals"] = {
     local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
     vim.api.nvim_create_autocmd("TextChangedI", {
       pattern = "*", -- Apply to all buffers
-      callback = completion_on_text_change,
+      callback = complete_on_text_change,
       group = augroup_id,
     })
   end,
