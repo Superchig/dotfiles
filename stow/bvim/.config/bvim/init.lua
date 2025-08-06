@@ -526,3 +526,11 @@ vim.keymap.set(
   function() vim.api.nvim_buf_delete(0, {}) end,
   { desc = "Delete (unload) buffer" }
 )
+vim.keymap.set("n", "<C-J>", "<C-W>j", { desc = "Switch to window downwards" })
+vim.keymap.set("n", "<C-K>", "<C-W>k", { desc = "Switch to window upwards" })
+vim.keymap.set("n", "<C-H>", "<C-W>h", { desc = "Switch to window leftwards" })
+vim.keymap.set("n", "<C-L>", "<C-W>l", { desc = "Switch to window rightwards" })
+vim.keymap.set("n", "<C-S-J>", "<C-W>J", { desc = "Move window downwards" })
+vim.keymap.set("n", "<C-S-K>", "<C-W>K", { desc = "Move window upwards" })
+vim.keymap.set("n", "<C-S-H>", "<C-W>H", { desc = "Move window leftwards" })
+vim.keymap.set("n", "<C-S-L>", "<C-W>L", { desc = "Move window rightwards" })
