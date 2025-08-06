@@ -63,8 +63,6 @@ function InsertTwin(ch)
 end
 
 function InsertPair(opener, closer)
-  -- print("opener " .. opener .. " .. closer " .. closer)
-
   if opener == closer then
     InsertTwin(opener)
   end
@@ -108,15 +106,11 @@ function DeleteCloser(pairs)
     local left_ch = surrounding_ch[1]
     local right_ch = surrounding_ch[2]
 
-    -- print("left_ch " .. left_ch .. ", right_ch: " .. right_ch)
-
     if left_ch == opener and right_ch == closer then
-      -- print("Closer found")
       return "<ESC>xa<BS>"
     end
   end
 
-  -- print("Closer not found")
   return "<BS>"
 end
 
@@ -203,13 +197,13 @@ local archive = download_path .. "/" .. archive_name
 if not file_exists(archive) then
   local function after_download(completed)
     if completed.code ~= 0 then
-      error("Failed to download LuaLS, exit code: " .. completed.code)
+      vim.notify("Failed to download LuaLS, exit code: " .. completed.code, vim.log.levels.ERROR)
     else
-      print("Finished downloading LuaLS")
+      vim.notify("Finished downloading LuaLS", vim.log.levels.INFO)
     end
   end
 
-  print("Downloading LuaLS")
+  vim.notify("Downloading LuaLS", vim.log.levels.INFO)
   vim.system({ "curl", "-L", "-o", archive, download_url }, {}, after_download):wait()
 end
 
@@ -219,14 +213,17 @@ local function dir_empty(path)
 end
 
 if dir_empty(luals_path) then
-  print("Extracting LuaLS")
+  vim.notify("Extracting LuaLS", vim.log.levels.ERROR)
 
   local completed = vim.system({ "tar", "xvf", archive, "--directory", luals_path }, {}):wait()
   if completed.code ~= 0 then
-    error("Failed to extract LuaLS, exit code: " ..
-      completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr)
+    vim.notify(
+      "Failed to extract LuaLS, exit code: " ..
+      completed.code .. "\nStdout: " .. completed.stdout .. "\nStderr: " .. completed.stderr,
+      vim.log.levels.ERROR
+    )
   else
-    print("Finished extracting LuaLS")
+    vim.notify("Finished extracting LuaLS", vim.log.levels.INFO)
   end
 end
 
@@ -272,7 +269,7 @@ end
 
 local function completion_menu_close()
   if completion_menu_win == nil then
-    print("Can't close completion menu if it isn't open")
+    vim.notify("Can't close completion menu if it isn't open", vim.log.levels.ERROR)
     return
   end
 
@@ -461,7 +458,7 @@ end
 
 local function completion_menu_down()
   if completion_menu_win == nil then
-    print("Can't move down on completion menu when it isn't open")
+    vim.notify("Can't move down on completion menu when it isn't open", vim.log.levels.ERROR)
     return
   end
 
