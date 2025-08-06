@@ -481,7 +481,7 @@ end
 local function get_completion_word()
   local line = vim.api.nvim_get_current_line()
   local word
-  for part in string.gmatch(line, "([^ .]+)") do
+  for part in string.gmatch(line, "[%w_]+") do
     word = part
   end
   return word
@@ -489,7 +489,6 @@ end
 
 local function completion_on_text_change()
   if completion_menu_skip_next then
-    print("Skipped")
     completion_menu_skip_next = false
     return
   end
@@ -546,7 +545,6 @@ local function cr_wrapper()
     if completion.textEdit ~= nil then
       if completion.textEdit.range ~= nil then
         local text_edit = completion.textEdit
-        print("Applying text edits")
         ---@cast text_edit lsp.TextEdit
         vim.lsp.util.apply_text_edits({ text_edit }, buf, "utf-8")
       else
