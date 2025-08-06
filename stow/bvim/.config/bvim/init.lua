@@ -241,7 +241,7 @@ local completion_ns = vim.api.nvim_create_namespace("bcomplete")
 local completion_bg_extmark_id = nil
 ---@type integer?
 local completion_sel_extmark_id = nil
-local completion_menu_skip_next_show = false
+local completion_menu_skip_next = false
 
 local function completion_menu_show()
   local max_completion_label_len = 0
@@ -295,12 +295,6 @@ local function completion_menu_draw()
   -- Open if valid completions
 
   if completion_menu_win == nil then
-    if completion_menu_skip_next_show then
-      print("Skipped")
-      completion_menu_skip_next_show = false
-      return
-    end
-
     completion_menu_show()
   end
   assert(completion_menu_win ~= nil)
@@ -494,6 +488,12 @@ local function get_completion_word()
 end
 
 local function completion_on_text_change()
+  if completion_menu_skip_next then
+    print("Skipped")
+    completion_menu_skip_next = false
+    return
+  end
+
   local word = get_completion_word()
   if word == nil then
     return
@@ -575,7 +575,7 @@ local function cr_wrapper()
         local insert_text = completion.insertText or completion.label
         vim.api.nvim_paste(insert_text, false, -1)
 
-        completion_menu_skip_next_show = true
+        completion_menu_skip_next = true
       else
         vim.notify(
           "We have not yet implemented insertion of completions with this format: " .. completion.insertTextFormat,
