@@ -514,7 +514,13 @@ local function esc_wrapper()
 end
 
 local cr = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
+local ctrl_y = vim.api.nvim_replace_termcodes("<C-Y>", true, true, true)
 local function cr_wrapper()
+  if vim.fn.pumvisible() == 1 then
+    vim.api.nvim_feedkeys(ctrl_y, "n", false)
+    return
+  end
+
   if completion_menu_win ~= nil then
     local completion = completions[completion_index]
     completion_menu_close()
