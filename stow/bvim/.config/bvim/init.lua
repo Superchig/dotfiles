@@ -338,11 +338,15 @@ end
 ---@field ctx lsp.HandlerContext
 
 local function display_completions()
-  -- local line = 
-
+  -- local line = vim.api.nvim_get_current_line()
+  -- local word
+  -- for part_ in string.gmatch(line, "([^ ]+)") do
+  --   word = part_
+  -- end
+  --
   -- local new_completions = {}
   -- for _, completion in ipairs(completions) do
-  --   string.find(completion, )
+  --   string.find(completion, word)
   -- end
 
   -- local clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -516,6 +520,11 @@ vim.lsp.config["luals"] = {
 }
 
 vim.cmd([[autocmd FileType lua lua vim.lsp.enable("luals")]])
+
+vim.diagnostic.config({
+  virtual_text = true,
+  underline = true,
+})
 
 vim.g.mapleader = " "
 
