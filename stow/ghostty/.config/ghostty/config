@@ -1242,6 +1242,7 @@ working-directory = home
 # Ghostty will attempt to request these permissions. If the permissions are
 # not granted, the keybind will not work. On macOS, you can find these
 # permissions in System Preferences -> Privacy & Security -> Accessibility.
+keybind = clear
 keybind = ctrl+comma=open_config
 keybind = shift+insert=paste_from_selection
 keybind = ctrl+page_down=next_tab
@@ -1270,7 +1271,7 @@ keybind = ctrl+shift+w=close_tab
 keybind = shift+end=scroll_to_bottom
 keybind = ctrl+zero=reset_font_size
 keybind = alt+three=goto_tab:3
-keybind = ctrl+shift+j=write_screen_file:paste
+# keybind = ctrl+shift+j=write_screen_file:paste
 keybind = ctrl+enter=toggle_fullscreen
 keybind = ctrl+page_up=previous_tab
 keybind = shift+right=adjust_selection:right
@@ -1291,7 +1292,7 @@ keybind = super+ctrl+shift+right=resize_split:right,10
 keybind = ctrl+plus=increase_font_size:1
 keybind = alt+four=goto_tab:4
 keybind = ctrl+insert=copy_to_clipboard
-keybind = ctrl+shift+e=new_split:down
+# keybind = ctrl+shift+e=new_split:down
 keybind = ctrl+alt+right=goto_split:right
 keybind = alt+f4=close_window
 keybind = alt+one=goto_tab:1
