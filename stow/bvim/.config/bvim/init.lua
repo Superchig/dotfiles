@@ -807,30 +807,35 @@ vim.api.nvim_create_autocmd(
 ---@field name string
 ---@field url string
 
-local bpack_path = vim.o.packpath .. "," .. data .. "/bpack"
+local bpack_path = data .. "/bpack"
 
 mkdir_p(bpack_path)
 
 ---@type BPackage[]
-local packages = {
+local bpackages = {
   {
     name = "dracula.nvim",
     url = "https://github.com/Mofiqul/dracula.nvim",
   },
+  {
+    name = "catppuccin",
+    url = "https://github.com/catppuccin/nvim.git",
+  },
 }
 
-for _, package in ipairs(packages) do
-  local name = package.name
-  local url = package.url
+for _, bpackage in ipairs(bpackages) do
+  local name = bpackage.name
+  local url = bpackage.url
 
-  local package_path = bpack_path .. "/" .. name
-  if not file_exists(package_path) then
-    local completed = vim.system({ "git", "clone", url, package_path }):wait()
+  local bpackage_path = bpack_path .. "/" .. name
+  if not file_exists(bpackage_path) then
+    local completed = vim.system({ "git", "clone", url, bpackage_path }):wait()
     if completed.code ~= 0 then
       error("Failed to git clone " .. name)
     end
   end
-  vim.opt.rtp:prepend(vim.o.packpath .. "," .. package_path)
+  vim.opt.rtp:prepend(vim.o.packpath .. "," .. bpackage_path)
 end
 
 vim.cmd("colorscheme dracula")
+-- local lualine_dracula = require("lualine.themes.dracula-nvim")
