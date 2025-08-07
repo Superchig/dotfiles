@@ -789,17 +789,34 @@ vim.keymap.set("n", "<C-S-H>", "<C-W>H", { desc = "Move window leftwards" })
 vim.keymap.set("n", "<C-S-L>", "<C-W>L", { desc = "Move window rightwards" })
 
 -- Treesitter
-vim.treesitter.language.add("lua")
-vim.api.nvim_create_autocmd(
-  "FileType",
-  {
-    desc = "Lua treesitter bvim",
-    pattern = "lua",
-    callback = function(args)
-      vim.treesitter.start(args.buf, "lua")
-    end
-  }
-)
+
+-- ---@class TreesitterParser
+-- ---@field name string
+-- ---@field ft? string
+--
+-- ---@type TreesitterParser[]
+-- local treesitter_parsers = {
+--   {
+--     name = "lua",
+--   },
+-- }
+--
+-- for _, parser in ipairs(treesitter_parsers) do
+--   local name = parser.name
+--   local ft = parser.ft or parser.name
+--
+--   vim.treesitter.language.add(name)
+--   vim.api.nvim_create_autocmd(
+--     "FileType",
+--     {
+--       desc = "treesitter bvim " .. name,
+--       pattern = ft,
+--       callback = function(args)
+--         vim.treesitter.start(args.buf, name)
+--       end
+--     }
+--   )
+-- end
 
 -- Package manager
 
