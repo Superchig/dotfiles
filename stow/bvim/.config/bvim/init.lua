@@ -119,6 +119,7 @@ local statusline_parts = {
 }
 vim.o.statusline = table.concat(statusline_parts, "")
 vim.o.showmode = false
+vim.o.laststatus = 3
 
 -- See :help base-directories for more
 local config = vim.fn.stdpath("config") -- E.g., ~/.config/bvim/
