@@ -747,6 +747,9 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("i", "<C-N>", ctrl_n_wrapper, { desc = "Get/next completion" })
 
     vim.o.omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.o.foldmethod = "expr"
+    vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+    vim.o.foldlevel = 1000
 
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
