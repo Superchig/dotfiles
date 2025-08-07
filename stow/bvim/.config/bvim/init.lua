@@ -783,3 +783,16 @@ vim.keymap.set("n", "<C-S-J>", "<C-W>J", { desc = "Move window downwards" })
 vim.keymap.set("n", "<C-S-K>", "<C-W>K", { desc = "Move window upwards" })
 vim.keymap.set("n", "<C-S-H>", "<C-W>H", { desc = "Move window leftwards" })
 vim.keymap.set("n", "<C-S-L>", "<C-W>L", { desc = "Move window rightwards" })
+
+-- Treesitter
+vim.treesitter.language.add("lua")
+vim.api.nvim_create_autocmd(
+  "FileType",
+  {
+    desc = "Lua treesitter bvim",
+    pattern = "lua",
+    callback = function(args)
+      vim.treesitter.start(args.buf, "lua")
+    end
+  }
+)
