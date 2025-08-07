@@ -21,7 +21,7 @@ vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 function StatuslineMode()
   local mode_info = vim.api.nvim_get_mode()
   local current_mode = mode_info.mode
- if current_mode == "n" then
+  if current_mode == "n" then
     return "Normal"
   elseif current_mode == "i" then
     return "Insert"
@@ -98,14 +98,14 @@ local statusline_parts = {
 
   "%{v:lua.StatuslineDiagnostics()}",
 
-  "%<",  -- Truncate line at start
-  "%f ", -- Path to file in buffer, as typed or relative to cwd
-  "%h",  -- Help buffer flag, text is "[help]"
-  "%w",  -- Preview window flag, text is "[Preview]"
-  "%m",  -- Modified flag, text is "[+]"; "[-]" if 'modifiable' is off
-  "%r",  -- Readonly flag, text is "[RO]".
+  "%<",    -- Truncate line at start
+  "%f ",   -- Path to file in buffer, as typed or relative to cwd
+  "%h",    -- Help buffer flag, text is "[help]"
+  "%w",    -- Preview window flag, text is "[Preview]"
+  "%m",    -- Modified flag, text is "[+]"; "[-]" if 'modifiable' is off
+  "%r",    -- Readonly flag, text is "[RO]".
 
-  "%=",  -- Separator for a new section
+  "%=",    -- Separator for a new section
 
   "%-4.P", -- Percentage through file of displayed window.  This is like the percentage described for 'ruler'
   " ",
@@ -800,3 +800,37 @@ vim.api.nvim_create_autocmd(
     end
   }
 )
+
+-- Package manager
+
+---@class BPackage
+---@field name string
+---@field url string
+
+local bpack_path = vim.o.packpath .. "," .. data .. "/bpack"
+
+mkdir_p(bpack_path)
+
+---@type BPackage[]
+local packages = {
+  {
+    name = "dracula.nvim",
+    url = "https://github.com/Mofiqul/dracula.nvim",
+  },
+}
+
+for _, package in ipairs(packages) do
+  local name = package.name
+  local url = package.url
+
+  local package_path = bpack_path .. "/" .. name
+  if not file_exists(package_path) then
+    local completed = vim.system({ "git", "clone", url, package_path }):wait()
+    if completed.code ~= 0 then
+      error("Failed to git clone " .. name)
+    end
+  end
+  vim.opt.rtp:prepend(vim.o.packpath .. "," .. package_path)
+end
+
+vim.cmd("colorscheme dracula")
