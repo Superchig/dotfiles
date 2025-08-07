@@ -13,6 +13,7 @@ vim.o.wrap = false
 vim.o.cursorline = true
 vim.o.smartcase = true
 vim.o.ignorecase = true
+vim.o.updatetime = 200
 
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 
@@ -752,6 +753,10 @@ vim.lsp.config["luals"] = {
     vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
     vim.o.foldlevel = 1000
 
+    -- vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
+    -- vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
+    -- vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
+
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
     local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
@@ -822,7 +827,7 @@ vim.keymap.set("n", "<C-S-L>", "<C-W>L", { desc = "Move window rightwards" })
 
 ---@class BPackage
 ---@field name string
----@field url string
+---@field url? string
 
 local bpack_path = data .. "/bpack"
 
@@ -831,12 +836,14 @@ mkdir_p(bpack_path)
 ---@type BPackage[]
 local bpackages = {
   {
-    name = "dracula.nvim",
-    url = "https://github.com/Mofiqul/dracula.nvim",
+    name = "Mofiqul/dracula.nvim",
   },
   {
     name = "catppuccin",
     url = "https://github.com/catppuccin/nvim.git",
+  },
+  {
+    name = "loctvl842/monokai-pro.nvim",
   },
 }
 
@@ -844,15 +851,35 @@ for _, bpackage in ipairs(bpackages) do
   local name = bpackage.name
   local url = bpackage.url
 
+  if url == nil then
+    if string.find(name, "/") ~= nil then
+      url = "https://github.com/" .. name .. ".git"
+    else
+      goto continue
+    end
+  end
+  assert(url ~= nil)
+
   local bpackage_path = bpack_path .. "/" .. name
   if not file_exists(bpackage_path) then
+    vim.notify("Downloading " .. name, vim.log.levels.INFO)
     local completed = vim.system({ "git", "clone", url, bpackage_path }):wait()
     if completed.code ~= 0 then
       error("Failed to git clone " .. name)
     end
   end
   vim.opt.rtp:prepend(vim.o.packpath .. "," .. bpackage_path)
+
+  ::continue::
 end
 
+local dracula = require("dracula")
+dracula.setup({
+  overrides = {
+    LspReferenceText = { bg = "#4e5567" },
+    LspReferenceRead = { link = "LspReferenceText" },
+    LspReferenceWrite = { link = "LspReferenceRead" },
+  },
+})
 vim.cmd("colorscheme dracula")
 -- local lualine_dracula = require("lualine.themes.dracula-nvim")
