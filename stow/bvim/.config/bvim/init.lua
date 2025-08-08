@@ -154,11 +154,6 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("n", "<Leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics in floating window" })
     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { desc = "Handle code actions if available" })
 
-    vim.keymap.set("i", "<Tab>", bcomplete.tab_wrapper, { desc = "Get/next completion" })
-    vim.keymap.set("i", "<Esc>", bcomplete.esc_wrapper, { desc = "Exit completion" })
-    vim.keymap.set("i", "<CR>", bcomplete.cr_wrapper, { desc = "Accept completion" })
-    vim.keymap.set("i", "<C-N>", bcomplete.ctrl_n_wrapper, { desc = "Get/next completion" })
-
     vim.o.omnifunc = "v:lua.vim.lsp.omnifunc"
     vim.o.foldmethod = "expr"
     -- vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
@@ -170,12 +165,19 @@ vim.lsp.config["luals"] = {
 
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
-    local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
-    vim.api.nvim_create_autocmd("TextChangedI", {
-      pattern = "*", -- Apply to all buffers
-      callback = bcomplete.complete_on_text_change,
-      group = augroup_id,
-    })
+    if false then
+      vim.keymap.set("i", "<Tab>", bcomplete.tab_wrapper, { desc = "Get/next completion" })
+      vim.keymap.set("i", "<Esc>", bcomplete.esc_wrapper, { desc = "Exit completion" })
+      vim.keymap.set("i", "<CR>", bcomplete.cr_wrapper, { desc = "Accept completion" })
+      vim.keymap.set("i", "<C-N>", bcomplete.ctrl_n_wrapper, { desc = "Get/next completion" })
+
+      local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
+      vim.api.nvim_create_autocmd("TextChangedI", {
+        pattern = "*", -- Apply to all buffers
+        callback = bcomplete.complete_on_text_change,
+        group = augroup_id,
+      })
+    end
   end,
 }
 
