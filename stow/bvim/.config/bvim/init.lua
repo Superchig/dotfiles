@@ -28,7 +28,7 @@ vim.cmd([[
 
 vim.cmd([[autocmd BufEnter init_lua setlocal foldexpr=InitLuaFold()]])
 vim.cmd([[autocmd FileType lua setlocal expandtab shiftwidth=2 tabstop=2]])
-vim.cmd([[autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup='Visual', timeout=100}]])
+vim.cmd([[autocmd TextYankPost * silent! lua vim.hl.on_yank()]])
 vim.cmd([[
 	augroup vimrc-incsearch-highlight
 	  autocmd!
