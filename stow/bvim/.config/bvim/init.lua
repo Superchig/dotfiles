@@ -39,12 +39,9 @@ vim.cmd([[
 vim.cmd("cabbrev ev e" .. init_file)
 
 vim.keymap.set("n", "<C-S>", "<cmd>write<CR>", { desc = "Save current buffer" })
-vim.keymap.set(
-  "n",
-  "<Leader>bd",
-  function() vim.api.nvim_buf_delete(0, {}) end,
-  { desc = "Delete (unload) buffer" }
-)
+vim.keymap.set("n", "<Leader>bd", function()
+  vim.api.nvim_buf_delete(0, {})
+end, { desc = "Delete (unload) buffer" })
 vim.keymap.set("n", "<C-J>", "<C-W>j", { desc = "Switch to window downwards" })
 vim.keymap.set("n", "<C-K>", "<C-W>k", { desc = "Switch to window upwards" })
 vim.keymap.set("n", "<C-H>", "<C-W>h", { desc = "Switch to window leftwards" })
@@ -54,7 +51,6 @@ vim.keymap.set("n", "<C-S-K>", "<C-W>K", { desc = "Move window upwards" })
 vim.keymap.set("n", "<C-S-H>", "<C-W>H", { desc = "Move window leftwards" })
 
 vim.keymap.set("n", "<Leader><Leader>", ":ls<Cr>:b ", { desc = "Switch buffers" })
-
 
 --- bpack
 local bpack = require("bpack")
@@ -154,6 +150,11 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("n", "<Leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics in floating window" })
     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { desc = "Handle code actions if available" })
 
+    vim.keymap.set("i", "<Tab>", bcomplete.tab_wrapper, { desc = "Get/next completion", expr = true, silent = true })
+    vim.keymap.set("i", "<Esc>", bcomplete.esc_wrapper, { desc = "Exit completion", expr = true, silent = true })
+    vim.keymap.set("i", "<CR>", bcomplete.cr_wrapper, { desc = "Accept completion", expr = true, silent = true })
+    vim.keymap.set("i", "<C-N>", bcomplete.ctrl_n_wrapper, { desc = "Get/next completion", expr = true, silent = true })
+
     vim.o.omnifunc = "v:lua.vim.lsp.omnifunc"
     vim.o.foldmethod = "expr"
     -- vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
@@ -165,11 +166,8 @@ vim.lsp.config["luals"] = {
 
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
-    if false then
-      vim.keymap.set("i", "<Tab>", bcomplete.tab_wrapper, { desc = "Get/next completion" })
-      vim.keymap.set("i", "<Esc>", bcomplete.esc_wrapper, { desc = "Exit completion" })
-      vim.keymap.set("i", "<CR>", bcomplete.cr_wrapper, { desc = "Accept completion" })
-      vim.keymap.set("i", "<C-N>", bcomplete.ctrl_n_wrapper, { desc = "Get/next completion" })
+    if vim.env.BCOMPLETE then
+      vim.keymap.set("i", "jk", "<Esc>", { desc = "Escape from insert mode" })
 
       local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
       vim.api.nvim_create_autocmd("TextChangedI", {
