@@ -170,8 +170,6 @@ vim.lsp.config["luals"] = {
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
     if vim.env.BCOMPLETE then
-      vim.keymap.set("i", "jk", "<Esc>", { desc = "Escape from insert mode" })
-
       local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
       vim.api.nvim_create_autocmd("TextChangedI", {
         pattern = "*", -- Apply to all buffers
