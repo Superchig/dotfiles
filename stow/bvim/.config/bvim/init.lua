@@ -85,6 +85,9 @@ bpack.setup({
   {
     name = "loctvl842/monokai-pro.nvim",
   },
+  {
+    name = "folke/tokyonight.nvim",
+  },
 })
 
 --- Color scheme
