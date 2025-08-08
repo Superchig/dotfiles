@@ -7,6 +7,12 @@ if M.is_windows == true then
 	M.path_separator = "\\"
 end
 
+-- See :help base-directories for more
+M.config = vim.fn.stdpath("config") -- E.g., ~/.config/bvim/
+M.data = vim.fn.stdpath("data")     -- E.g., ~/.local/share/bvim/
+M.state = vim.fn.stdpath("state")   -- E.g., ~/.local/state/bvim/
+M.cache = vim.fn.stdpath("cache")   -- E.g., ~/.cache/bvim
+
 ---Split string into a table of strings using a separator.
 ---@param inputString string The string to split.
 ---@param sep string The separator to use.
@@ -52,6 +58,35 @@ end
 M.file_exists = function(name)
 	local f = io.open(name, "r")
 	return f ~= nil and io.close(f)
+end
+
+function M.mkdir_p(path)
+  local parts = M.split(path, M.path_separator)
+  local parts_cumulative = {}
+
+  if vim.fn.has("unix") then
+    table.insert(parts_cumulative, "/")
+  end
+
+  for _, part in ipairs(parts) do
+    table.insert(parts_cumulative, part)
+    table.insert(parts_cumulative, "/")
+
+    local path_cumulative = M.path_join(unpack(parts_cumulative))
+
+    if not M.file_exists(path_cumulative) then
+      local completed = vim.system({ "mkdir", path_cumulative }):wait()
+      if completed.code ~= 0 then
+        error("Failed to create directory: " .. path_cumulative)
+      end
+    end
+  end
+end
+
+---@param path string
+function M.dir_empty(path)
+  local file_names = vim.system({ "ls", path }):wait()
+  return file_names.stdout == ""
 end
 
 return M
