@@ -89,4 +89,20 @@ function M.dir_empty(path)
   return file_names.stdout == ""
 end
 
+---@param t1 any[]
+---@param t2 any[]
+function M.subtract_tables(t1, t2)
+  local lookup = {}
+  for _, v in ipairs(t2) do
+    lookup[v] = true
+  end
+
+  for i = #t1, 1, -1 do
+    if lookup[t1[i]] then
+      table.remove(t1, i)
+    end
+  end
+  return t1
+end
+
 return M

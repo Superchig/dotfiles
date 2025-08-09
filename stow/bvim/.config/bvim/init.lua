@@ -69,6 +69,10 @@ bpack.setup({
     type = "vendored",
   },
   {
+    name = "bpickle",
+    type = "vendored",
+  },
+  {
     name = "bcomplete",
     type = "vendored",
   },
@@ -118,6 +122,9 @@ require("bpairs").setup({
 
 --- bmason
 require("bmason").setup()
+
+--- bpickle
+require("bpickle").setup()
 
 --- bcomplete
 local bcomplete = require("bcomplete")
