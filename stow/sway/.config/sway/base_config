@@ -197,6 +197,12 @@ bindsym $mod+o mode "launch"
 bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy --type image/png
 bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy --type image/png
 
+# Multimedia keys
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
 #
 # Resizing containers:
 #
