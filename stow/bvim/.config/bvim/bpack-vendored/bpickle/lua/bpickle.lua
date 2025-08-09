@@ -5,7 +5,8 @@ local M = {}
 local util = require("util")
 
 local line = 0
-local buf = 0
+---@type integer
+local buf = nil
 local accepting = false
 local orig_colorscheme = ""
 local pickle_colorscheme = ""
@@ -20,7 +21,7 @@ function M.pick()
   local colorschemes = vim.fn.getcompletion("", "color")
   colorschemes = util.subtract_tables(colorschemes, exclude)
 
-  if buf == 0 then
+  if buf == nil or not vim.api.nvim_buf_is_valid(buf) then
     buf = vim.api.nvim_create_buf(false, false)
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, colorschemes)
     vim.api.nvim_buf_set_name(buf, "bpickle")
@@ -73,6 +74,7 @@ function M.pick()
   vim.keymap.set(
     "n",
     "<CR>",
+    ---@return string
     function()
       local cursor = vim.api.nvim_win_get_cursor(0)
       local col = cursor[2]
@@ -82,17 +84,20 @@ function M.pick()
         local line_text = vim.api.nvim_buf_get_lines(0, curr_line - 1, curr_line, true)[1]
 
         vim.o.background = target_background
+        orig_colorscheme = ""
+        pickle_colorscheme = ""
+        target_background = ""
         vim.cmd("colorscheme " .. line_text)
 
-        print(line_text)
-
         accepting = true
-        vim.api.nvim_buf_delete(buf, {})
-        buf = 0
+        return "<C-^>"
+      else
+        return ""
       end
     end,
     {
       buffer = buf,
+      expr = true,
     }
   )
 
