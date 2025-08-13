@@ -7,6 +7,7 @@ vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.wrap = false
 vim.o.cursorline = true
+vim.o.hlsearch = false
 vim.o.smartcase = true
 vim.o.ignorecase = true
 vim.o.updatetime = 200
