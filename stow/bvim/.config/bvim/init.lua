@@ -12,6 +12,10 @@ vim.o.smartcase = true
 vim.o.ignorecase = true
 vim.o.updatetime = 200
 
+if jit.os == "OSX" then
+  vim.o.shell = "fish"
+end
+
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 
 vim.g.mapleader = " "
