@@ -1,5 +1,5 @@
 #!/bin/sh
-for i in /sys/class/drm/card*/device; do
+for i in /sys/class/drm/card?/device; do
   echo "Card: $(basename $(dirname $i))"
   if [ -f "$i/vendor" ] && [ -f "$i/device" ]; then
     echo "GPU: $(cat $i/vendor) $(cat $i/device)"
