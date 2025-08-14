@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 import subprocess
 import sys
+import glob
 
 
 def dbus_update_activation_environment() -> None:
@@ -58,6 +59,17 @@ def sway() -> None:
 
 
 def plasma() -> None:
+    connected = 0
+    for status_path in glob.glob("/sys/class/drm/card?-*/status"):
+        with open(status_path, "r") as file:
+            status = file.read().strip()
+            print(status)
+            if status == "connected":
+                connected += 1
+
+    if os.environ["HOST"] == "msi" and connected >= 2:
+        os.environ["KWIN_DRM_DEVICES"] = "/dev/dri/card1"  # Nvidia card
+
     os.environ["PLASMA_USE_QT_SCALING"] = "1"
     subprocess.run(
         ["/usr/lib/plasma-dbus-run-session-if-needed", "startplasma-wayland"]
