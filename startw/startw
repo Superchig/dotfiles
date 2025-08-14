@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import glob
+import platform
 
 
 def dbus_update_activation_environment() -> None:
@@ -63,11 +64,10 @@ def plasma() -> None:
     for status_path in glob.glob("/sys/class/drm/card?-*/status"):
         with open(status_path, "r") as file:
             status = file.read().strip()
-            print(status)
             if status == "connected":
                 connected += 1
 
-    if os.environ["HOST"] == "msi" and connected >= 2:
+    if platform.node() == "msi" and connected >= 2:
         os.environ["KWIN_DRM_DEVICES"] = "/dev/dri/card1"  # Nvidia card
 
     os.environ["PLASMA_USE_QT_SCALING"] = "1"
