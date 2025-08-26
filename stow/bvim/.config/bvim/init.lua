@@ -97,6 +97,11 @@ bpack.setup({
   {
     name = "folke/tokyonight.nvim",
   },
+
+  --- Neorg (for syntax highlighting)
+  {
+    name = "nvim-neorg/neorg",
+  },
 })
 
 --- Color scheme
@@ -200,6 +205,12 @@ vim.diagnostic.config({
 })
 
 -- Treesitter
+
+local success = vim.treesitter.language.add("norg", { path = "/Users/cchang/.local/share/bvim/btreesitter/src/tree-sitter-norg/src/norg.dylib" })
+if not success then
+  vim.notify("Unable to load norg treesitter parser", vim.log.levels.ERROR)
+end
+vim.treesitter.language.register("norg", "norg")
 
 -- ---@class TreesitterParser
 -- ---@field name string
