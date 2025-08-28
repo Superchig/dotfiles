@@ -36,12 +36,15 @@ vim.cmd([[autocmd Filetype fish setlocal shiftwidth=4]])
 
 vim.cmd([[autocmd BufNewFile,BufRead *.cls setlocal filetype=apex]])
 
+vim.cmd([[autocmd Filetype norg setlocal textwidth=80 noautoindent nosmartindent]])
+vim.cmd([[autocmd Filetype norg lua vim.b.completion = false]])
+
 vim.cmd(
   [[autocmd BufNewFile,BufRead *.templ setlocal filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]]
 )
 
 -- NOTE(Chris): Not sure where else to put this
-if vim.loop.os_uname().sysname == "Darwin" then
+if jit.os == "OSX" then
   vim.cmd([[let $CC = "gcc"]])
 
   -- NOTE(Chris): This will disable transparency in the autocomplete drop-down menu
