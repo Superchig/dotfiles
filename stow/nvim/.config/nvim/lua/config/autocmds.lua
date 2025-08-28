@@ -216,3 +216,9 @@ function QuickfixToDiagnostics()
     vim.diagnostic.set(ns, bufnr, diag_list, {})
   end
 end
+
+if vim.env.SUPERCHIG_LAZYVIM_CMD ~= nil then
+  vim.schedule(function()
+    vim.cmd(vim.env.SUPERCHIG_LAZYVIM_CMD)
+  end)
+end
