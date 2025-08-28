@@ -36,9 +36,9 @@ vim.cmd([[autocmd Filetype fish setlocal shiftwidth=4]])
 
 vim.cmd([[autocmd BufNewFile,BufRead *.cls setlocal filetype=apex]])
 
-vim.cmd([[autocmd Filetype norg setlocal textwidth=80 colorcolumn=+0 noautoindent nosmartindent]])
+vim.cmd([[autocmd Filetype norg setlocal textwidth=80 noautoindent nosmartindent]])
 
-vim.cmd([[autocmd Filetype org setlocal textwidth=80 colorcolumn=+0 foldlevel=1000]])
+vim.cmd([[autocmd Filetype org setlocal textwidth=80 foldlevel=1000]])
 
 vim.cmd(
   [[autocmd BufNewFile,BufRead *.templ setlocal filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]]
