@@ -68,7 +68,7 @@ def plasma() -> None:
                 connected += 1
 
     if platform.node() == "msi" and connected >= 2:
-        os.environ["KWIN_DRM_DEVICES"] = "/dev/dri/card1"  # Nvidia card
+        os.environ["KWIN_DRM_DEVICES"] = "/dev/dri/card0"  # Nvidia card
 
     os.environ["PLASMA_USE_QT_SCALING"] = "1"
     subprocess.run(
