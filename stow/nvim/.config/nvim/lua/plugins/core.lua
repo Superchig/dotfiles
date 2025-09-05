@@ -49,4 +49,11 @@ return {
   {
     "ChrisWellsWood/roc.vim",
   },
+
+  {
+    "stevearc/oil.nvim",
+    opts = {
+      default_file_explorer = false,
+    },
+  },
 }
