@@ -59,16 +59,45 @@ def sway() -> None:
     subprocess.run(["sway", "--unsupported-gpu"])
 
 
+# From /usr/share/hwdata/pci.ids AKA pci.ids(5)
+pci_vendor = {
+    "0x8086": "Intel Corporation",
+    "0x10de": "NVIDIA Corporation",
+}
+
+pci_device = {
+    "0x3e9b": "CoffeeLake-H GT2 [UHD Graphics 630]",
+    "0x1f11": "TU106M [GeForce RTX 2060 Mobile]",
+}
+
+
 def plasma() -> None:
     connected = 0
-    for status_path in glob.glob("/sys/class/drm/card?-*/status"):
+    card_path = ""
+    for path in glob.glob("/sys/class/drm/card?-*"):
+        status_path = f"{path}/status"
         with open(status_path, "r") as file:
             status = file.read().strip()
             if status == "connected":
                 connected += 1
+        # e.g., /sys/class/drm/card0-DP-1/device/device (with two /device directors)
+        device_path = f"{path}/device/device"
+        device_file_path = f"{device_path}/device"
+        vendor_file_path = f"{device_path}/vendor"
+        if os.path.exists(device_file_path) and os.path.exists(vendor_file_path):
+            vendor_value = read_file(vendor_file_path).strip()
+            device_value = read_file(device_file_path).strip()
 
-    if platform.node() == "msi" and connected >= 2:
-        os.environ["KWIN_DRM_DEVICES"] = "/dev/dri/card0"  # Nvidia card
+            if (
+                pci_vendor[vendor_value] == "NVIDIA Corporation"
+                and pci_device[device_value] == "TU106M [GeForce RTX 2060 Mobile]"
+            ):
+                card_dir = Path(path).parts[4]  # e.g., "card0-DP-1"
+                base_card_dir = card_dir.split("-")[0]  # e.g., "card0"
+                card_path = f"/dev/dri/{base_card_dir}"
+
+    if platform.node() == "msi" and connected >= 2 and card_path != "":
+        os.environ["KWIN_DRM_DEVICES"] = card_path  # Nvidia card
 
     os.environ["PLASMA_USE_QT_SCALING"] = "1"
     subprocess.run(
@@ -97,6 +126,11 @@ def print_help() -> None:
         "\tswitch-to <option> - This will switch you to a different DE/compositor, once you've exited your current one."
     )
     print("\thelp - Print this help.")
+
+
+def read_file(path: str) -> str:
+    with open(path, "r", encoding="utf-8") as file:
+        return file.read()
 
 
 if __name__ == "__main__":
