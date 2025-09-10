@@ -1,0 +1,6 @@
+#!/bin/sh
+
+INPUT_FILE="$1"
+OUTPUT_FILE="$2"
+
+ffmpeg -i "$INPUT_FILE" -c:a copy -c:v copy -disposition:v:0 attached_pic "$OUTPUT_FILE"

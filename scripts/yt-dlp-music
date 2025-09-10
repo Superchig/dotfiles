@@ -1,0 +1,9 @@
+#!/bin/sh
+
+yt-dlp \
+  -f bestaudio \
+  -o "%(title)s.%(ext)s" \
+  --add-metadata \
+  --parse-metadata \
+  "playlist_index:%(track_number)s" \
+  "$@"
