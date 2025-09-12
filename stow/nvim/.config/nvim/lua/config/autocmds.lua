@@ -26,6 +26,8 @@ vim.cmd([[autocmd Filetype make setlocal shiftwidth=4 tabstop=4]])
 
 vim.cmd([[autocmd Filetype go setlocal shiftwidth=4 tabstop=4]])
 
+vim.cmd([[autocmd Filetype cs setlocal shiftwidth=4 tabstop=4]])
+
 vim.cmd([[autocmd Filetype js,json setlocal shiftwidth=2 tabstop=2]])
 
 vim.cmd([[autocmd Filetype odin setlocal noexpandtab tabstop=4 shiftwidth=4]])
