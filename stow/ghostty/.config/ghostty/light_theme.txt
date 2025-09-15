@@ -1,0 +1,27 @@
+This contains information on a light theme, based off of the VS Code light
+colors.
+
+background feffff
+foreground 323232
+
+cursor_foreground 323232
+cursor_background feffff
+
+faint_text       50%
+minimum_contrast 60%
+
+        dark   light
+black   000000 656565
+red     bc3f38 bc3f38
+green   54b936 5fca3f
+yellow  94972e b5b93a
+blue    214f9f 214f9f
+magenta ac24b5 ac24b5
+cyan    4395b7 4395b7
+white   555555 a5a5a5
+
+# Selection
+background b5d4fb
+foreground 000000
+
+search_results ffffff00
