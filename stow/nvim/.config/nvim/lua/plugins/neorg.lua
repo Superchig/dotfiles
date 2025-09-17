@@ -1,3 +1,12 @@
+---@return string
+local function default_workspace_path()
+  if jit.os == "OSX" then
+    return "~/tmp"
+  else
+    return "~/Dropbox/norg"
+  end
+end
+
 return {
   "nvim-neorg/neorg",
   lazy = true,
@@ -11,7 +20,7 @@ return {
         config = {
           default_workspace = "tmp",
           workspaces = {
-            tmp = "~/tmp",
+            tmp = default_workspace_path(),
           },
         },
       },
