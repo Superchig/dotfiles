@@ -341,7 +341,7 @@ grapheme-width-method = unicode
 #   * `autohint` - Use the freetype auto-hinter. Enabled by default.
 # 
 # Example: `hinting`, `no-hinting`, `force-autohint`, `no-force-autohint`
-freetype-load-flags = hinting,force-autohint,monochrome,autohint
+freetype-load-flags = hinting,force-autohint,monochrome
 
 # A theme to use. This can be a built-in theme name, a custom theme
 # name, or an absolute path to a custom theme file. Ghostty also supports
@@ -397,7 +397,8 @@ freetype-load-flags = hinting,force-autohint,monochrome,autohint
 # 
 #   - macOS: titlebar tabs style is not updated when switching themes.
 # 
-theme = TokyoNight Moon
+# theme = TokyoNight Moon
+theme = tokyonight_moon
 
 # Background color for the window.
 # Specified as either hex (`#RRGGBB` or `RRGGBB`) or a named X11 color.
