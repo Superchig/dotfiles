@@ -69,6 +69,11 @@ return {
       }
 
       ---@type vim.lsp.ClientConfig
+      opts.servers.omnisharp = {
+        cmd = { "OmniSharp" },
+      }
+
+      ---@type vim.lsp.ClientConfig
       opts.servers.zls = {
         cmd = { "zls" },
         mason = false,
