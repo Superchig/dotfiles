@@ -2,6 +2,7 @@
 
 import sys
 import subprocess
+import os
 from pathlib import Path
 
 audio_extensions = [".mp3", ".flac", "webm", ".ogg", ".opus"]
@@ -9,9 +10,18 @@ audio_extensions = [".mp3", ".flac", "webm", ".ogg", ".opus"]
 path = Path(sys.argv[1])
 suffix = path.suffix
 
-if suffix == ".pdf":
-    subprocess.run(["open", "-a", "floorp", path])
-elif suffix in audio_extensions:
-    subprocess.run(["mpv", path])
-else:
-    subprocess.run(["open", path])
+with open(os.devnull, "w") as devnull:
+    if suffix == ".pdf":
+        subprocess.run(["open", "-a", "floorp", path])
+    elif suffix in audio_extensions:
+        subprocess.Popen(
+            ["mpv", path],
+            start_new_session=True,
+            stdout=devnull,
+            stdin=devnull,
+            stderr=devnull,
+        )
+    elif suffix == ".lrc":
+        subprocess.run(["music-cs", "edit-lrc", path])
+    else:
+        subprocess.run(["open", path])
