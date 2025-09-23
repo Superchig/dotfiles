@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+import sys
+import subprocess
+from pathlib import Path
+
+audio_extensions = [".mp3", ".flac", "webm", ".ogg", ".opus"]
+
+path = Path(sys.argv[1])
+suffix = path.suffix
+
+if suffix == ".pdf":
+    subprocess.run(["open", "-a", "floorp", path])
+elif suffix in audio_extensions:
+    subprocess.run(["mpv", path])
+else:
+    subprocess.run(["open", path])
