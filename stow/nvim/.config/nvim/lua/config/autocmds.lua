@@ -38,7 +38,8 @@ vim.cmd([[autocmd Filetype fish setlocal shiftwidth=4]])
 
 vim.cmd([[autocmd BufNewFile,BufRead *.cls setlocal filetype=apex]])
 
-vim.cmd([[autocmd Filetype norg setlocal textwidth=80 noautoindent nosmartindent]])
+vim.cmd([[autocmd Filetype norg setlocal textwidth=80 noautoindent nosmartindent shiftwidth=1 tabstop=4]])
+vim.cmd([[autocmd Filetype norg lua Snacks.indent.disable()]])
 
 vim.cmd([[autocmd Filetype org setlocal textwidth=80 foldlevel=1000]])
 

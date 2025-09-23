@@ -1,7 +1,11 @@
 ---@return string
 local function default_workspace_path()
   if jit.os == "OSX" then
-    return "~/tmp"
+    if vim.env.TERM == "xterm-ghostty" then
+      return "~/tmp/Dropbox (Maestral)/norg"
+    else
+      return "~/tmp/work-norg"
+    end
   else
     return "~/Dropbox/norg"
   end
