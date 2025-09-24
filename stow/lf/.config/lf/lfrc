@@ -110,9 +110,15 @@ map K push 5k
 map - $$HOME/.config/lf/draw_img.sh $f
 
 # Open with <enter>
-# map <enter> open
-map <enter> synchronous-open
-cmd synchronous-open $$OPENER $fx
+map <enter> ${{
+  if [ "$(uname)" = "Darwin" ]; then
+    $OPENER $fx
+  else
+    $OPENER $fx &
+    disown
+  fi
+}}
+# map <enter> $$OPENER $fx
 
 # Show hidden files
 set hidden
