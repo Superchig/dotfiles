@@ -56,6 +56,9 @@ def gnome() -> None:
 def sway() -> None:
     os.environ["XDG_SESSION_TYPE"] = "wayland"
     os.environ["XDG_CURRENT_DESKTOP"] = "sway"
+    # os.environ["XMODIFIERS"] = "@im=fcitx"
+    # os.environ["GTK_IM_MODULE"] = "fcitx"
+    # os.environ["QT_IM_MODULE"] = "fcitx"
     subprocess.run(["sway", "--unsupported-gpu"])
 
 

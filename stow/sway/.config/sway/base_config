@@ -270,6 +270,7 @@ for_window [app_id="anki"] floating enable
 exec mako
 exec dropbox
 exec waybar
+exec fcitx5
 exec swaybg -c "#3f3f3f"
 
 # announce a running sway session to systemd
