@@ -265,6 +265,8 @@ mode "launch" {
 #     }
 # }
 
+for_window [app_id="anki"] floating enable
+
 exec mako
 exec dropbox
 exec waybar
