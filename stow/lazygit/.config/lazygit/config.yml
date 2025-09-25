@@ -5,3 +5,7 @@ gui:
       - reverse
     selectedRangeBgColor:
       - reverse
+keybinding:
+  universal:
+    return: q
+quitOnTopLevelReturn: true
