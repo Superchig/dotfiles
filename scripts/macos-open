@@ -24,4 +24,4 @@ with open(os.devnull, "w") as devnull:
     elif suffix == ".lrc":
         subprocess.run(["music-cs", "edit-lrc", path])
     else:
-        subprocess.run(["open", path])
+        subprocess.run(["open"] + sys.argv[1:])
