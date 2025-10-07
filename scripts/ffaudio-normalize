@@ -1,0 +1,124 @@
+#!/bin/sh
+
+usage() {
+  echo "Usage: $0 [-d|--dry-run] <input_file>"
+}
+
+# Initialize variables
+DRY_RUN_VALUE=""
+TEMP_ARGS=""
+
+# Parse command line arguments
+while [ "$#" -gt 0 ]; do
+  case $1 in
+  -d | --dry-run)
+    # Check if next argument exists and isn't another flag
+    # if [ "$#" -gt 1 ] && ! echo "$2" | grep -q "^-"; then
+    #   DRY_RUN_VALUE="$2"
+    #   shift 2
+    # else
+    #   DRY_RUN_VALUE="true"
+    #   shift
+    # fi
+    DRY_RUN_VALUE="true"
+    shift
+    ;;
+  -h | --help)
+    usage
+    ;;
+  -*)
+    echo "Unknown option: $1"
+    usage
+    exit 1
+    ;;
+  *)
+    # Collect positional arguments
+    TEMP_ARGS="$TEMP_ARGS \"$1\""
+    shift
+    ;;
+  esac
+done
+
+eval set -- $TEMP_ARGS
+
+if [ "$#" -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+INPUT="$1"
+
+# Check if input file exists
+if [ ! -f "$INPUT" ]; then
+  echo "Error: File '$INPUT' not found"
+  exit 1
+fi
+
+# Extract filename without extension and the extension
+BASENAME="${INPUT%.*}"
+EXTENSION="${INPUT##*.}"
+
+# Determine output filename
+if [ "$EXTENSION" = "flac" ]; then
+  OUTPUT="${BASENAME}_normalized.flac"
+else
+  OUTPUT="${BASENAME}_normalized (originally ${EXTENSION}).flac"
+fi
+
+echo "Normalizing: $INPUT"
+echo "Output will be: $OUTPUT"
+
+# Based off of Qobuz's flac of TWICE's Strategy feat. Megan Thee Stallion
+TARGET_I="-6.11"  # Loudness in LUFS
+TARGET_TP="-2"    # True peak level in dBTP (to avoid clipping)
+TARGET_LRA="3.90" # Loudness range/dynamics in LU (higher is more range, lower is more compression)
+
+if [ "$(echo "$TARGET_TP > 0" | bc)" -eq 1 ]; then
+  TARGET_TP="0"
+fi
+
+# First pass: Analyze audio and get measurements in JSON format
+echo "Pass 1: Analyzing audio..."
+ANALYSIS_RAW=$(ffmpeg -i "$INPUT" -af loudnorm=I=$TARGET_I:TP=$TARGET_TP:LRA=$TARGET_LRA:print_format=json -f null - 2>&1)
+# echo "$ANALYSIS_RAW"
+ANALYSIS=$(echo "$ANALYSIS_RAW" | awk '/^\{/,/^\}/')
+
+# Extract values from JSON output
+INPUT_I=$(echo "$ANALYSIS" | grep "input_i" | awk -F'"' '{print $4}')
+INPUT_TP=$(echo "$ANALYSIS" | grep "input_tp" | awk -F'"' '{print $4}')
+INPUT_LRA=$(echo "$ANALYSIS" | grep "input_lra" | awk -F'"' '{print $4}')
+INPUT_THRESH=$(echo "$ANALYSIS" | grep "input_thresh" | awk -F'"' '{print $4}')
+TARGET_OFFSET=$(echo "$ANALYSIS" | grep "target_offset" | awk -F'"' '{print $4}')
+
+# Check if we got valid measurements
+if [ -z "$INPUT_I" ]; then
+  echo "Error: Failed to analyze audio. Make sure FFmpeg is installed and the file is valid."
+  exit 1
+fi
+
+echo "Measurements:"
+echo "  Input I: $INPUT_I LUFS"
+echo "  Input TP: $INPUT_TP dBTP"
+echo "  Input LRA: $INPUT_LRA LU"
+echo "  Input Thresh: $INPUT_THRESH LUFS"
+echo "  Target Offset: $TARGET_OFFSET LU"
+
+if [ "$DRY_RUN_VALUE" ]; then
+  exit 0
+fi
+
+# Second pass: Apply normalization
+echo "Pass 2: Applying normalization..."
+ffmpeg -i "$INPUT" \
+  -af loudnorm=I=$TARGET_I:TP=$TARGET_TP:LRA=$TARGET_LRA:measured_I=${INPUT_I}:measured_TP=${INPUT_TP}:measured_LRA=${INPUT_LRA}:measured_thresh=${INPUT_THRESH}:offset=${TARGET_OFFSET}:linear=true \
+  -hide_banner -loglevel error \
+  -c:a flac \
+  -map_metadata 0 \
+  "$OUTPUT"
+
+if [ $? -eq 0 ]; then
+  echo "Success! Normalized file saved as: $OUTPUT"
+else
+  echo "Error: Normalization failed"
+  exit 1
+fi
