@@ -12,7 +12,7 @@ suffix = path.suffix
 
 with open(os.devnull, "w") as devnull:
     if suffix == ".pdf":
-        subprocess.run(["open", "-a", "floorp", path])
+        subprocess.run(["open", "-a", "microsoft edge", path])
     elif suffix in audio_extensions:
         subprocess.Popen(
             ["mpv", path],
