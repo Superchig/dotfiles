@@ -6,11 +6,17 @@ usage() {
 
 # Initialize variables
 DRY_RUN_VALUE=""
+TARGET_I="-8" # Loudness in LUFS
+DIRECTORY_VALUE=""
 TEMP_ARGS=""
 
 # Parse command line arguments
 while [ "$#" -gt 0 ]; do
   case $1 in
+  -h | --help)
+    usage
+    exit
+    ;;
   -d | --dry-run)
     # Check if next argument exists and isn't another flag
     # if [ "$#" -gt 1 ] && ! echo "$2" | grep -q "^-"; then
@@ -23,8 +29,13 @@ while [ "$#" -gt 0 ]; do
     DRY_RUN_VALUE="true"
     shift
     ;;
-  -h | --help)
-    usage
+  -I | --target_i)
+    TARGET_I="$2"
+    shift 2
+    ;;
+  --directory)
+    DIRECTORY_VALUE="$2"
+    shift 2
     ;;
   -*)
     echo "Unknown option: $1"
@@ -65,13 +76,17 @@ else
   OUTPUT="${BASENAME}_normalized (originally ${EXTENSION}).flac"
 fi
 
+if [ "$DIRECTORY_VALUE" ]; then
+  mkdir "$DIRECTORY_VALUE"
+  OUTPUT="$DIRECTORY_VALUE/$OUTPUT"
+fi
+
 echo "Normalizing: $INPUT"
 echo "Output will be: $OUTPUT"
 
 # Based off of Qobuz's flac of TWICE's Strategy feat. Megan Thee Stallion
-TARGET_I="-6.11"  # Loudness in LUFS
-TARGET_TP="-2"    # True peak level in dBTP (to avoid clipping)
-TARGET_LRA="3.90" # Loudness range/dynamics in LU (higher is more range, lower is more compression)
+TARGET_TP="-2"  # True peak level in dBTP (to avoid clipping)
+TARGET_LRA="10" # Loudness range/dynamics in LU (higher is more range, lower is more compression)
 
 if [ "$(echo "$TARGET_TP > 0" | bc)" -eq 1 ]; then
   TARGET_TP="0"
