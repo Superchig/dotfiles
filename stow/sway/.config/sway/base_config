@@ -247,6 +247,11 @@ mode "launch" {
      bindsym $mod+o mode "default"
 }
 
+bindsym ctrl+alt+1 exec fcitx5-remote -s keyboard-us
+bindsym ctrl+alt+2 exec fcitx5-remote -s pinyin
+bindsym ctrl+alt+3 exec fcitx5-remote -s cangjie5
+bindsym ctrl+alt+4 exec fcitx5-remote -s m17n_zh_pinyin
+
 #
 # Status Bar:
 #
