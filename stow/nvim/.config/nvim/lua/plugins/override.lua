@@ -264,7 +264,7 @@ return {
           injected = { options = { ignore_errors = true } },
           ["csharpier-client"] = {
             command = "csharpier-client",
-            args = { "$FILENAME" },
+            args = { "--quiet", "$FILENAME" },
           },
           -- # Example of using dprint only when a dprint.json file is present
           -- dprint = {
