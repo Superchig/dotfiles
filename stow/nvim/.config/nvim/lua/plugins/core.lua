@@ -56,4 +56,12 @@ return {
       default_file_explorer = false,
     },
   },
+
+  {
+    dir = "~/.config/nvim/custom-plugins/vanjs-import",
+    config = function()
+      local vanjs = require("vanjs-import")
+      vim.keymap.set("n", "<leader>vi", vanjs.add_vanjs_import, { desc = "Add VanJS import" })
+    end,
+  },
 }
