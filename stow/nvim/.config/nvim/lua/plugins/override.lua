@@ -18,10 +18,10 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-
-      keys[#keys + 1] = { "K", false }
-      keys[#keys + 1] = { "J", false }
+      opts.servers["*"].keys = {
+        { "K", false },
+        { "J", false },
+      }
 
       opts.setup.tailwindcss = function(_, tailwindcss_opts)
         local default_filetypes = require("lspconfig").tailwindcss.config_def.default_config.filetypes
@@ -182,7 +182,7 @@ return {
   },
 
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "lua-language-server",
