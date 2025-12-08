@@ -18,10 +18,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      opts.servers["*"].keys = {
-        { "K", false },
-        { "J", false },
-      }
+      opts.servers["*"].keys["K"] = false
+      opts.servers["*"].keys["J"] = false
 
       opts.setup.tailwindcss = function(_, tailwindcss_opts)
         local default_filetypes = require("lspconfig").tailwindcss.config_def.default_config.filetypes
