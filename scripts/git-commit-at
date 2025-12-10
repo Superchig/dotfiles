@@ -30,6 +30,70 @@ def convert_to_datetime(
     return result
 
 
+def get_random_timestamp(lower_bound: datetime, upper_bound: datetime) -> datetime:
+    latest_commit_time = datetime.fromisoformat(
+        subprocess.run(
+            ["git", "log", "-1", "--format=%cI"], capture_output=True, text=True
+        ).stdout.strip()
+    )
+
+    print("latest_commit_time:", latest_commit_time)
+
+    if lower_bound < latest_commit_time:
+        print(
+            f"Error: The lower bound is before the latest commit time: {lower_bound} < {latest_commit_time}"
+        )
+        exit(1)
+
+    if upper_bound < latest_commit_time:
+        print(
+            f"Error: The upper bound is before the latest commit time: {upper_bound} < {latest_commit_time}"
+        )
+        exit(1)
+
+    if upper_bound < lower_bound:
+        print(
+            f"Error: The upper bound is before the lower bound: {upper_bound} < {lower_bound}"
+        )
+        exit(1)
+
+    shortstat = subprocess.run(
+        ["git", "diff", "--shortstat"], capture_output=True, text=True
+    ).stdout.strip()
+    match = re.match(r".*(\d+) insertion.* (\d+) deletion", shortstat)
+
+    assert match is not None
+
+    insertions = int(match[1])
+    deletions = int(match[2])
+    changes = insertions + deletions
+
+    print("changes:", changes)
+
+    if changes > 100:
+        min_minutes = 30
+    elif changes > 1000:
+        min_minutes = 90
+    else:
+        min_minutes = 1
+
+    range_size = 10 + math.floor(math.sqrt(min_minutes))
+
+    random_timestamp = max(latest_commit_time, lower_bound) + timedelta(
+        minutes=randrange(min_minutes, min_minutes + range_size),
+        seconds=randrange(60),
+        microseconds=randrange(1_000_000),
+    )
+
+    if random_timestamp > upper_bound:
+        print(
+            f"Error: random_timestamp was greater than the upper_bound. {random_timestamp} > {upper_bound}. Consider using a new upper_bound"
+        )
+        exit(1)
+
+    return random_timestamp
+
+
 result = subprocess.run(
     ["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True
 )
@@ -87,39 +151,7 @@ if upper_bound < lower_bound:
     )
     exit(1)
 
-shortstat = subprocess.run(
-    ["git", "diff", "--shortstat"], capture_output=True, text=True
-).stdout.strip()
-match = re.match(r".*(\d+) insertion.* (\d+) deletion", shortstat)
-
-assert match is not None
-
-insertions = int(match[1])
-deletions = int(match[2])
-changes = insertions + deletions
-
-print("changes:", changes)
-
-if changes > 100:
-    min_minutes = 30
-elif changes > 1000:
-    min_minutes = 90
-else:
-    min_minutes = 1
-
-range_size = 10 + math.floor(math.sqrt(min_minutes))
-
-random_timestamp = latest_commit_time + timedelta(
-    minutes=randrange(min_minutes, min_minutes + range_size),
-    seconds=randrange(60),
-    microseconds=randrange(1_000_000),
-)
-
-if random_timestamp > upper_bound:
-    print(
-        f"Error: random_timestamp was greater than the upper_bound. {random_timestamp} > {upper_bound}. Consider using a new upper_bound"
-    )
-    exit(1)
+random_timestamp = get_random_timestamp(lower_bound, upper_bound)
 
 print("random_timestamp:", random_timestamp)
 
