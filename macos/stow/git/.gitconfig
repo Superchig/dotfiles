@@ -43,6 +43,7 @@
 	required = true
 [commit]
 	verbose = true
+	cleanup = scissors
 
 [include]
   path = ~/.gitconfig-local
