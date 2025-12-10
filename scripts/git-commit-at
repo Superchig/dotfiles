@@ -1,0 +1,129 @@
+#!/usr/bin/env python
+
+import math
+import subprocess
+import tomllib
+import os
+import re
+from random import randrange
+from datetime import date, datetime, time, timedelta
+
+
+def convert_to_datetime(
+    val: date | datetime | time, end_of_day: bool = False
+) -> datetime:
+    if type(val) is date:
+        result = datetime(val.year, val.month, val.day)
+        if end_of_day:
+            result += timedelta(days=1, microseconds=-1)
+    elif type(val) is time:
+        result = datetime.combine(date.today(), val)
+    elif type(val) is datetime:
+        result = val
+    else:
+        raise RuntimeError
+
+    if result.tzinfo is None:
+        local_tzinfo = datetime.now().astimezone().tzinfo
+        result = result.replace(tzinfo=local_tzinfo)
+
+    return result
+
+
+result = subprocess.run(
+    ["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True
+)
+
+repo_root_dir = result.stdout.strip()
+
+with open(f"{repo_root_dir}/.git/commit-at.toml", "rb") as f:
+    config = tomllib.load(f)
+
+lower_bound_inclusive: date | datetime | time | None = config.get(
+    "lower_bound_inclusive"
+)
+upper_bound_inclusive: date | datetime | time | None = config.get(
+    "upper_bound_inclusive"
+)
+
+lower_bound: date | datetime | time | None = config.get("lower_bound")
+upper_bound: date | datetime | time | None = config.get("upper_bound")
+
+if lower_bound is not None:
+    lower_bound = convert_to_datetime(lower_bound)
+else:
+    lower_bound = convert_to_datetime(datetime.today())
+if upper_bound is not None:
+    upper_bound = convert_to_datetime(upper_bound, end_of_day=True)
+else:
+    upper_bound = convert_to_datetime(datetime.today(), end_of_day=True)
+
+print("lower_bound:", lower_bound)
+print("upper_bound:", upper_bound)
+
+latest_commit_time = datetime.fromisoformat(
+    subprocess.run(
+        ["git", "log", "-1", "--format=%cI"], capture_output=True, text=True
+    ).stdout.strip()
+)
+
+print("latest_commit_time:", latest_commit_time)
+
+if lower_bound < latest_commit_time:
+    print(
+        f"Error: The lower bound is before the latest commit time: {lower_bound} < {latest_commit_time}"
+    )
+    exit(1)
+
+if upper_bound < latest_commit_time:
+    print(
+        f"Error: The upper bound is before the latest commit time: {upper_bound} < {latest_commit_time}"
+    )
+    exit(1)
+
+if upper_bound < lower_bound:
+    print(
+        f"Error: The upper bound is before the lower bound: {upper_bound} < {lower_bound}"
+    )
+    exit(1)
+
+shortstat = subprocess.run(
+    ["git", "diff", "--shortstat"], capture_output=True, text=True
+).stdout.strip()
+match = re.match(r".*(\d+) insertion.* (\d+) deletion", shortstat)
+
+assert match is not None
+
+insertions = int(match[1])
+deletions = int(match[2])
+changes = insertions + deletions
+
+print("changes:", changes)
+
+if changes > 100:
+    min_minutes = 30
+elif changes > 1000:
+    min_minutes = 90
+else:
+    min_minutes = 1
+
+range_size = 10 + math.floor(math.sqrt(min_minutes))
+
+random_timestamp = latest_commit_time + timedelta(
+    minutes=randrange(min_minutes, min_minutes + range_size),
+    seconds=randrange(60),
+    microseconds=randrange(1_000_000),
+)
+
+if random_timestamp > upper_bound:
+    print(
+        f"Error: random_timestamp was greater than the upper_bound. {random_timestamp} > {upper_bound}. Consider using a new upper_bound"
+    )
+    exit(1)
+
+print("random_timestamp:", random_timestamp)
+
+subprocess_env = os.environ.copy()
+subprocess_env["GIT_COMMITTER_DATE"] = str(random_timestamp)
+
+subprocess.run(["git", "commit", "--date", str(random_timestamp)], env=subprocess_env)
