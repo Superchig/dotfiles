@@ -49,7 +49,9 @@
 # 
 # Changing this configuration at runtime will only affect new terminals, i.e.
 # new windows, tabs, etc.
-font-family = CodeNewRoman Nerd Font
+# font-family = CodeNewRoman Nerd Font
+
+font-family = PragmataProComfy Mono
 
 font-family-bold = 
 font-family-italic = 
