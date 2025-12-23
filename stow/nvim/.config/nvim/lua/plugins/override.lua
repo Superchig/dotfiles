@@ -33,21 +33,26 @@ return {
         { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
         {
           "K",
-          function()
-            if vim.o.keywordprg == ":Man" then
-              local smods = {}
-              local width = vim.api.nvim_win_get_width(0)
-              if width > 160 then
-                smods.vertical = true
-              end
-
-              require("man").open_page(0, smods, {})
-            else
-              vim.api.nvim_feedkeys("K", "n", true)
-            end
-          end,
-          desc = "Open :Man page if applicable",
+          "K",
+          desc = "Use the default K command",
         },
+        -- {
+        --   "K",
+        --   function()
+        --     if vim.o.keywordprg == ":Man" then
+        --       local smods = {}
+        --       local width = vim.api.nvim_win_get_width(0)
+        --       if width > 160 then
+        --         smods.vertical = true
+        --       end
+        --
+        --       require("man").open_page(0, smods, {})
+        --     else
+        --       vim.api.nvim_feedkeys("K", "n", true)
+        --     end
+        --   end,
+        --   desc = "Open :Man page if applicable",
+        -- },
         -- {
         --   "K",
         --   function()
