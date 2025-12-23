@@ -18,8 +18,125 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      opts.servers["*"].keys["K"] = false
-      opts.servers["*"].keys["J"] = false
+      opts.servers["*"].keys = {
+        {
+          "<leader>cl",
+          function()
+            Snacks.picker.lsp_config()
+          end,
+          desc = "Lsp Info",
+        },
+        { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+        { "gr", vim.lsp.buf.references, desc = "References", nowait = true },
+        { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
+        { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
+        { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
+        {
+          "K",
+          function()
+            if vim.o.keywordprg == ":Man" then
+              local smods = {}
+              local width = vim.api.nvim_win_get_width(0)
+              if width > 160 then
+                smods.vertical = true
+              end
+
+              require("man").open_page(0, smods, {})
+            else
+              vim.api.nvim_feedkeys("K", "n", true)
+            end
+          end,
+          desc = "Open :Man page if applicable",
+        },
+        -- {
+        --   "K",
+        --   function()
+        --     return vim.lsp.buf.hover()
+        --   end,
+        --   desc = "Hover",
+        -- },
+        {
+          "gK",
+          function()
+            return vim.lsp.buf.signature_help()
+          end,
+          desc = "Signature Help",
+          has = "signatureHelp",
+        },
+        {
+          "<c-k>",
+          function()
+            return vim.lsp.buf.signature_help()
+          end,
+          mode = "i",
+          desc = "Signature Help",
+          has = "signatureHelp",
+        },
+        { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "x" }, has = "codeAction" },
+        { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "x" }, has = "codeLens" },
+        {
+          "<leader>cC",
+          vim.lsp.codelens.refresh,
+          desc = "Refresh & Display Codelens",
+          mode = { "n" },
+          has = "codeLens",
+        },
+        {
+          "<leader>cR",
+          function()
+            Snacks.rename.rename_file()
+          end,
+          desc = "Rename File",
+          mode = { "n" },
+          has = { "workspace/didRenameFiles", "workspace/willRenameFiles" },
+        },
+        { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
+        { "<leader>cA", LazyVim.lsp.action.source, desc = "Source Action", has = "codeAction" },
+        {
+          "]]",
+          function()
+            Snacks.words.jump(vim.v.count1)
+          end,
+          has = "documentHighlight",
+          desc = "Next Reference",
+          enabled = function()
+            return Snacks.words.is_enabled()
+          end,
+        },
+        {
+          "[[",
+          function()
+            Snacks.words.jump(-vim.v.count1)
+          end,
+          has = "documentHighlight",
+          desc = "Prev Reference",
+          enabled = function()
+            return Snacks.words.is_enabled()
+          end,
+        },
+        {
+          "<a-n>",
+          function()
+            Snacks.words.jump(vim.v.count1, true)
+          end,
+          has = "documentHighlight",
+          desc = "Next Reference",
+          enabled = function()
+            return Snacks.words.is_enabled()
+          end,
+        },
+        {
+          "<a-p>",
+          function()
+            Snacks.words.jump(-vim.v.count1, true)
+          end,
+          has = "documentHighlight",
+          desc = "Prev Reference",
+          enabled = function()
+            return Snacks.words.is_enabled()
+          end,
+        },
+      }
 
       opts.setup.tailwindcss = function(_, tailwindcss_opts)
         local default_filetypes = require("lspconfig").tailwindcss.config_def.default_config.filetypes
