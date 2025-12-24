@@ -3,9 +3,10 @@
 -- Add any additional options here
 
 vim.o.timeoutlen = 0
+vim.o.spelllang = "en,cjk"
+vim.o.completeopt = "menuone,noinsert,noselect"
+vim.o.hlsearch = false
 
-vim.opt.completeopt = "menuone,noinsert,noselect"
-vim.opt.hlsearch = false
-vim.opt.conceallevel = 0
+vim.o.conceallevel = 0
 
 vim.g.autoformat = true
