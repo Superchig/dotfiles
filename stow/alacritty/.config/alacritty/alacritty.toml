@@ -1,0 +1,166 @@
+[colors.bright]
+black = "0x928374"
+blue = "0x83a598"
+cyan = "0x8ec07c"
+green = "0xb8bb26"
+magenta = "0xd3869b"
+red = "0xfb4934"
+white = "0xebdbb2"
+yellow = "0xfabd2f"
+
+[colors.normal]
+black = "0x282828"
+blue = "0x458588"
+cyan = "0x689d6a"
+green = "0x98971a"
+magenta = "0xb16286"
+red = "0xcc241d"
+white = "0xa89984"
+yellow = "0xd79921"
+
+[colors.primary]
+background = "0x282828"
+foreground = "0xebdbb2"
+
+[font]
+font_face = "Inconsolata"
+size = 12
+
+[font.bold]
+family = "Inconsolata"
+
+[font.italic]
+family = "Inconsolata"
+
+[font.normal]
+family = "Inconsolata"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "ScrollPageUp"
+key = "U"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ScrollPageDown"
+key = "D"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ScrollLineUp"
+key = "K"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ScrollLineDown"
+key = "J"
+mods = "Control|Shift"
+
+[schemes.gruv_dark.bright]
+black = "0x928374"
+blue = "0x83a598"
+cyan = "0x8ec07c"
+green = "0xb8bb26"
+magenta = "0xd3869b"
+red = "0xfb4934"
+white = "0xebdbb2"
+yellow = "0xfabd2f"
+
+[schemes.gruv_dark.normal]
+black = "0x282828"
+blue = "0x458588"
+cyan = "0x689d6a"
+green = "0x98971a"
+magenta = "0xb16286"
+red = "0xcc241d"
+white = "0xa89984"
+yellow = "0xd79921"
+
+[schemes.gruv_dark.primary]
+background = "0x282828"
+foreground = "0xebdbb2"
+
+[schemes.monokai_pro.bright]
+black = "0x727072"
+blue = "0xFC9867"
+cyan = "0x78DCE8"
+green = "0xA9DC76"
+magenta = "0xAB9DF2"
+red = "0xFF6188"
+white = "0xFCFCFA"
+yellow = "0xFFD866"
+
+[schemes.monokai_pro.normal]
+black = "0x403E41"
+blue = "0xFC9867"
+cyan = "0x78DCE8"
+green = "0xA9DC76"
+magenta = "0xAB9DF2"
+red = "0xFF6188"
+white = "0xFCFCFA"
+yellow = "0xFFD866"
+
+[schemes.monokai_pro.primary]
+background = "0x2D2A2E"
+foreground = "0xFCFCFA"
+
+[schemes.sol_dark.bright]
+black = "0x002b36"
+blue = "0x839496"
+cyan = "0x93a1a1"
+green = "0x586e75"
+magenta = "0x6c71c4"
+red = "0xcb4b16"
+white = "0xfdf6e3"
+yellow = "0x657b83"
+
+[schemes.sol_dark.cursor]
+cursor = "0x839496"
+text = "0x002b36"
+
+[schemes.sol_dark.normal]
+black = "0x073642"
+blue = "0x268bd2"
+cyan = "0x2aa198"
+green = "0x859900"
+magenta = "0xd33682"
+red = "0xdc322f"
+white = "0xeee8d5"
+yellow = "0xb58900"
+
+[schemes.sol_dark.primary]
+background = "0x002b36"
+foreground = "0x839496"
+
+[schemes.sol_light.bright]
+black = "0x002b36"
+blue = "0x839496"
+cyan = "0x93a1a1"
+green = "0x586e75"
+magenta = "0x6c71c4"
+red = "0xcb4b16"
+white = "0xfdf6e3"
+yellow = "0x657b83"
+
+[schemes.sol_light.cursor]
+cursor = "0x657b83"
+text = "0xfdf6e3"
+
+[schemes.sol_light.normal]
+black = "0x073642"
+blue = "0x268bd2"
+cyan = "0x2aa198"
+green = "0x859900"
+magenta = "0xd33682"
+red = "0xdc322f"
+white = "0xeee8d5"
+yellow = "0xb58900"
+
+[schemes.sol_light.primary]
+background = "0xfdf6e3"
+foreground = "0x657b83"
+
+[window]
+opacity = 0.85
+
+[keyboard]
