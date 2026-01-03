@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
+from typing import Union
 import os
 import subprocess
 import sys
@@ -74,7 +75,7 @@ pci_device = {
 }
 
 
-def plasma() -> None:
+def infer_drm_device_path() -> Union[str, None]:
     connected = 0
     card_path = ""
     for path in glob.glob("/sys/class/drm/card?-*"):
@@ -100,7 +101,15 @@ def plasma() -> None:
                 card_path = f"/dev/dri/{base_card_dir}"
 
     if platform.node() == "msi" and connected >= 2 and card_path != "":
-        os.environ["KWIN_DRM_DEVICES"] = card_path  # Nvidia card
+        return card_path  # Nvidia card
+
+    return None
+
+
+def plasma() -> None:
+    drm_device_path = infer_drm_device_path()
+    if drm_device_path:
+        os.environ["KWIN_DRM_DEVICES"] = drm_device_path
 
     os.environ["PLASMA_USE_QT_SCALING"] = "1"
     subprocess.run(
@@ -108,8 +117,15 @@ def plasma() -> None:
     )
 
 
+def cosmic() -> None:
+    subprocess.run(["start-cosmic"])
+
+
 def hyprland() -> None:
-    subprocess.run(["Hyprland"])
+    drm_device_path = infer_drm_device_path()
+    if drm_device_path:
+        os.environ["AQ_DRM_DEVICES"] = drm_device_path
+    subprocess.run(["start-hyprland"])
 
 
 def weston() -> None:
@@ -118,6 +134,10 @@ def weston() -> None:
 
 def labwc() -> None:
     subprocess.run(["labwc"])
+
+
+def niri() -> None:
+    subprocess.run(["niri-session"])
 
 
 def print_help() -> None:
@@ -169,12 +189,16 @@ if __name__ == "__main__":
                 gnome()
             case "plasma":
                 plasma()
+            case "cosmic":
+                cosmic()
             case "hyprland":
                 hyprland()
             case "weston":
                 weston()
             case "labwc":
                 labwc()
+            case "niri":
+                niri()
             case "switch-to":
                 compositor = sys.argv[2]
                 match compositor:
