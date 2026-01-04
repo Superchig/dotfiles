@@ -1,5 +1,10 @@
 # vim: sw=2
 
+if [ "$TERM" = "vt102" ]; then
+  export TERM="xterm-256color"
+  echo "Detected TERM vt102. Switching to xterm-256color."
+fi
+
 if [ -f "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
   BREW_PREFIX="$(brew --prefix)"

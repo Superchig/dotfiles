@@ -157,6 +157,12 @@ def read_file(path: str) -> str:
 
 
 if __name__ == "__main__":
+    if os.environ["TERM"] != "linux":
+        print(
+            f"Error: {sys.argv[0]} should only be run from a Linux framebuffer console."
+        )
+        exit(1)
+
     data_dir_path = os.environ["HOME"] + "/.local/state"
     if "XDG_STATE_HOME" in os.environ:
         data_dir_path = os.environ["XDG_STATE_HOME"]
