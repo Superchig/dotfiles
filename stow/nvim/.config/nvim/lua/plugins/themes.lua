@@ -49,6 +49,12 @@ return {
           return "tokyonight"
         end
 
+        if vim.env.TERM == "linux" then
+          vim.o.termguicolors = false
+
+          return "vim"
+        end
+
         if vim.loop.os_uname().sysname == "Darwin" then
           if vim.env.TERM == "xterm-ghostty" then
             vim.o.background = "dark"

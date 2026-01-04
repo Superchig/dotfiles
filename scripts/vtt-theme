@@ -1,0 +1,419 @@
+#!/usr/bin/env python3
+
+"""
+Color Scheme Manager for Linux Virtual Console
+Uses setterm and console escape sequences to configure colors
+"""
+
+import sys
+import os
+import subprocess
+import re
+from pathlib import Path
+
+import tomllib
+
+
+class ConsoleColorScheme:
+    """Color scheme manager for Linux virtual console"""
+
+    # Default VGA colors for reset
+    DEFAULT_COLORS = {
+        0: "000000",  # Black
+        1: "aa0000",  # Red
+        2: "00aa00",  # Green
+        3: "aa5500",  # Yellow/Brown
+        4: "0000aa",  # Blue
+        5: "aa00aa",  # Magenta
+        6: "00aaaa",  # Cyan
+        7: "aaaaaa",  # White/Gray
+        8: "555555",  # Bright Black
+        9: "ff5555",  # Bright Red
+        10: "55ff55",  # Bright Green
+        11: "ffff55",  # Bright Yellow
+        12: "5555ff",  # Bright Blue
+        13: "ff55ff",  # Bright Magenta
+        14: "55ffff",  # Bright Cyan
+        15: "ffffff",  # Bright White
+    }
+
+    COLOR_NAMES = [
+        "black",
+        "red",
+        "green",
+        "yellow",
+        "blue",
+        "magenta",
+        "cyan",
+        "white",
+    ]
+
+    def __init__(self, scheme_name=None):
+        self.tty_device = None
+        self.is_virtual_console = False
+        self.scheme_name = scheme_name if scheme_name else "Unknown"
+        self.colors = {}
+        self.foreground = "white"
+        self.background = "black"
+        self._check_environment()
+
+        if scheme_name:
+            config_file = self._find_config_file(scheme_name)
+            self._load_config(config_file)
+
+    def _map_color_value(self, color_value):
+        """Map color value (color name or colorN) to setterm color name"""
+        # Check if it's in the format "colorN" where N is 0-15
+        if isinstance(color_value, str) and color_value.startswith("color"):
+            try:
+                # Extract the part after "color"
+                num_str = color_value[5:]
+
+                # Parse as integer, supporting decimal, hex (0x), and leading zeros
+                if num_str.startswith("0x") or num_str.startswith("0X"):
+                    # Hexadecimal
+                    color_num = int(num_str, 16)
+                else:
+                    # Decimal (handles leading zeros automatically)
+                    color_num = int(num_str, 10)
+
+                if 0 <= color_num <= 15:
+                    # Map to standard/bright color names
+                    if color_num < 8:
+                        return self.COLOR_NAMES[color_num]
+                    else:
+                        # Bright colors (8-15) map to same names but will be handled by setterm
+                        return self.COLOR_NAMES[color_num - 8]
+            except (ValueError, IndexError):
+                pass
+
+        # Return as-is if it's already a color name
+        return color_value
+
+    def _find_config_file(self, scheme_name):
+        """Find the config file for a given scheme name"""
+        # Get config directory from XDG_CONFIG_HOME or default to ~/.config
+        xdg_config = os.environ.get("XDG_CONFIG_HOME")
+        if xdg_config:
+            config_base = Path(xdg_config)
+        else:
+            config_base = Path.home() / ".config"
+
+        # Look in vtt-theme/themes subdirectory
+        themes_dir = config_base / "vtt-theme" / "themes"
+        config_file = themes_dir / f"{scheme_name}.toml"
+
+        if not config_file.exists():
+            raise FileNotFoundError(
+                f"Color scheme '{scheme_name}' not found.\n"
+                f"Looked in: {config_file}\n"
+                f"Please ensure the file exists in {themes_dir}"
+            )
+
+        return config_file
+
+    def _load_config(self, config_file):
+        """Load color scheme from TOML file"""
+        config_path = Path(config_file)
+
+        if not config_path.exists():
+            raise FileNotFoundError(f"Config file not found: {config_file}")
+
+        try:
+            with open(config_path, "rb") as f:
+                config = tomllib.load(f)
+
+            # Load palette colors (0-15) from top level
+            for i in range(16):
+                key = f"color{i}"
+                if key in config:
+                    color = config[key].lstrip("#")
+                    if len(color) != 6 or not all(
+                        c in "0123456789abcdefABCDEF" for c in color
+                    ):
+                        raise ValueError(
+                            f"Invalid color format for {key}: {config[key]}"
+                        )
+                    self.colors[i] = color.lower()
+
+            if not self.colors:
+                raise ValueError(
+                    "No palette colors (color0-color15) found in TOML file"
+                )
+
+            # Load foreground and background settings from top level
+            # Support both color names (e.g., "white") and colorN references (e.g., "color15")
+            fg_value = config.get("foreground", "white")
+            bg_value = config.get("background", "black")
+
+            self.foreground = self._map_color_value(fg_value)
+            self.background = self._map_color_value(bg_value)
+
+            print(f"Loaded color scheme: {self.scheme_name}")
+            print(f"Colors loaded: {len(self.colors)}")
+
+        except tomllib.TOMLDecodeError as e:
+            raise ValueError(f"Invalid TOML file: {e}")
+        except Exception as e:
+            raise ValueError(f"Error loading config: {e}")
+
+    def _check_environment(self):
+        """Check if running in a terminal and if it's a virtual console"""
+        if not sys.stdout.isatty():
+            return False
+
+        try:
+            # Get the current tty device
+            self.tty_device = os.ttyname(sys.stdout.fileno())
+
+            # Virtual consoles are typically /dev/tty[0-9]+
+            if re.match(r"^/dev/tty\d+$", self.tty_device):
+                self.is_virtual_console = True
+
+        except (OSError, AttributeError):
+            pass
+
+        return True
+
+    def check_virtual_console(self):
+        """Check if running on a virtual console and warn if not"""
+        if not sys.stdout.isatty():
+            print("Error: Not running in a terminal.", file=sys.stderr)
+            return False
+
+        if not self.is_virtual_console:
+            print(
+                "Warning: This script is designed for Linux virtual consoles (tty1-tty6)."
+            )
+            print(f"You appear to be in: {self.tty_device}")
+            print("setterm may not work correctly in terminal emulators.")
+            print()
+
+            try:
+                response = input("Continue anyway? (y/N) ").strip().lower()
+                if response not in ("y", "yes"):
+                    return False
+            except (EOFError, KeyboardInterrupt):
+                print()
+                return False
+
+        return True
+
+    def _set_palette_color(self, color_num, hex_color):
+        """Set a palette color using console escape sequence"""
+        # Format: ESC]P<n><rrggbb> where n is hex color index
+        sys.stdout.write(f"\033]P{color_num:X}{hex_color}")
+        sys.stdout.flush()
+
+    def _run_setterm(self, *args):
+        """Run setterm command with given arguments"""
+        try:
+            cmd = ["setterm"] + list(args)
+            subprocess.run(cmd, check=True, capture_output=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Warning: setterm command failed: {e}", file=sys.stderr)
+        except FileNotFoundError:
+            print(
+                "Error: setterm command not found. Is this a Linux system?",
+                file=sys.stderr,
+            )
+
+    def apply_colors(self):
+        """Apply color scheme to the console"""
+        if not self.colors:
+            raise ValueError("No colors loaded. Please provide a config file.")
+
+        print(f"Applying {self.scheme_name} color scheme to virtual console...")
+        print()
+
+        # Set default foreground and background using setterm
+        self._run_setterm("--foreground", self.foreground, "--store")
+        self._run_setterm("--background", self.background, "--store")
+
+        # Clear screen
+        self._run_setterm("--clear", "all", "--store")
+
+        print("Reprogramming console color palette...")
+
+        # Reprogram all palette colors
+        for color_num, hex_color in self.colors.items():
+            self._set_palette_color(color_num, hex_color)
+
+        # Clear screen to show new colors
+        os.system("clear")
+
+        print(f"{self.scheme_name} color scheme applied!")
+        print()
+        print("Colors have been set and stored for this console.")
+        print("To make permanent across reboots, add this script to your boot scripts.")
+
+    def reset_colors(self):
+        """Reset console colors to defaults"""
+        print("Resetting console colors to defaults...")
+
+        # Reset to default using setterm
+        self._run_setterm("--foreground", "white", "--store")
+        self._run_setterm("--background", "black", "--store")
+
+        # Reset palette to default VGA colors
+        for color_num, hex_color in self.DEFAULT_COLORS.items():
+            self._set_palette_color(color_num, hex_color)
+
+        # Clear screen
+        os.system("clear")
+
+        print("Console colors reset to defaults.")
+
+    def show_colors(self):
+        """Display color test pattern"""
+        print("Console Color Test")
+        print("=" * 18)
+        print()
+
+        print("Standard colors:")
+        for i in range(8):
+            # Use ANSI escape codes for colored output
+            print(f"\033[4{i}m  {i}  \033[0m", end="")
+        print()
+        print()
+
+        print("Bright colors:")
+        for i in range(8, 16):
+            # For bright colors, use 10x series
+            color_code = 100 + (i - 8)
+            print(f"\033[{color_code}m  {i}  \033[0m", end="")
+        print()
+        print()
+
+        # Text samples
+        print("Text samples:")
+
+        color_codes = {
+            "red": 31,
+            "green": 32,
+            "yellow": 33,
+            "blue": 34,
+            "magenta": 35,
+            "cyan": 36,
+            "white": 37,
+        }
+
+        for name, code in color_codes.items():
+            print(f"\033[{code}m{name.capitalize()} text\033[0m")
+
+        print()
+
+        # Bright colors
+        for name, code in color_codes.items():
+            bright_code = code + 60  # Bright versions are +60
+            print(f"\033[1;{bright_code}mBright {name.capitalize()} text\033[0m")
+
+    def show_permanent_instructions(self):
+        """Show instructions for making colors permanent"""
+        script_path = Path(__file__).resolve()
+
+        print("To make these colors permanent across reboots, you can:")
+        print()
+        print("1. Add this script to /etc/rc.local (if it exists):")
+        print(f"   echo '{script_path} apply' >> /etc/rc.local")
+        print()
+        print("2. Create a systemd service:")
+        print("   sudo systemctl edit --force --full console-colors.service")
+        print("   Then add the following content:")
+        print("   ---")
+        print("   [Unit]")
+        print("   Description=Console Color Scheme")
+        print("   After=systemd-vconsole-setup.service")
+        print()
+        print("   [Service]")
+        print("   Type=oneshot")
+        print(f"   ExecStart={script_path} apply")
+        print("   StandardOutput=tty")
+        print("   TTYPath=/dev/tty1")
+        print()
+        print("   [Install]")
+        print("   WantedBy=multi-user.target")
+        print("   ---")
+        print("   Then enable it: sudo systemctl enable console-colors.service")
+        print()
+        print("3. Add to your shell profile (e.g., ~/.bash_profile):")
+        print(f'   [ "$(tty)" = "/dev/tty1" ] && {script_path} apply')
+        print()
+        print("Note: You may need root privileges for system-wide changes.")
+
+
+def main():
+    """Main entry point"""
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Console Color Scheme Setter (reads from TOML config)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s apply gruvbox-dark           # Apply 'gruvbox-dark' color scheme
+  %(prog)s show gruvbox-dark            # Show color test with scheme loaded
+  %(prog)s reset                        # Reset to defaults
+  %(prog)s show                         # Show color test without loading scheme
+
+Color schemes are loaded from:
+  $XDG_CONFIG_HOME/vtt-theme/themes/<scheme_name>.toml
+  or ~/.config/vtt-theme/themes/<scheme_name>.toml
+
+Note: This script is designed for Linux virtual consoles (tty1-tty6).
+      It uses setterm and console escape sequences.
+        """,
+    )
+
+    parser.add_argument(
+        "command",
+        choices=["apply", "reset", "show", "permanent"],
+        help="Command to execute",
+    )
+
+    parser.add_argument(
+        "scheme_name",
+        nargs="?",
+        help="Color scheme name (required for 'apply' and 'show' with a scheme)",
+    )
+
+    args = parser.parse_args()
+
+    # Validate that scheme_name is provided for apply command
+    if args.command == "apply" and not args.scheme_name:
+        parser.error("'apply' command requires a color scheme name")
+
+    try:
+        console = ConsoleColorScheme(scheme_name=args.scheme_name)
+    except Exception as e:
+        if args.scheme_name:  # Only error if we tried to load a scheme
+            print(f"Error loading config: {e}", file=sys.stderr)
+            sys.exit(1)
+        # For commands that don't need a scheme, create console without one
+        console = ConsoleColorScheme()
+
+    try:
+        if args.command == "apply":
+            if console.check_virtual_console():
+                console.apply_colors()
+
+        elif args.command == "reset":
+            if console.check_virtual_console():
+                console.reset_colors()
+
+        elif args.command == "show":
+            console.show_colors()
+
+        elif args.command == "permanent":
+            console.show_permanent_instructions()
+
+    except KeyboardInterrupt:
+        print("\nOperation cancelled.")
+        sys.exit(130)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

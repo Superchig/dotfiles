@@ -107,7 +107,7 @@ fi
 bindkey -e
 
 alias ls='ls --color=auto -F'
-if command -v eza > /dev/null; then
+if command -v eza > /dev/null && [[ "$TTY" != "/dev/tty"* ]]; then
   alias l='eza -la --group-directories-first'
 else
   alias l='ls -lah'
@@ -208,35 +208,37 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 export GROFF_NO_SGR=1
 
 # Light/dark theme settings
-if [ "$UNAME" = "Darwin" ] && [ "$TERM" != "xterm-ghostty" ]; then
-  echo "should not be in ghostty" > /tmp/ghostty.log
+if [[ "$TTY" == "/dev/tty"* ]]; then
+  if [ "$UNAME" = "Darwin" ] && [ "$TERM" != "xterm-ghostty" ]; then
+    echo "should not be in ghostty" > /tmp/ghostty.log
 
-  export BAT_THEME="gruvbox-light"
-  export MCFLY_LIGHT="TRUE"
-  if command -v vivid 2>&1 > /dev/null; then
-    export LS_COLORS="$(vivid generate one-light-modified)"
+    export BAT_THEME="gruvbox-light"
+    export MCFLY_LIGHT="TRUE"
+    if command -v vivid 2>&1 > /dev/null; then
+      export LS_COLORS="$(vivid generate one-light-modified)"
+    fi
+  elif [ "$UNAME" = "Darwin" ] && [ "$TERM" = "xterm-ghostty" ]; then
+    export BAT_THEME="ansi"
+    if command -v vivid 2>&1 > /dev/null; then
+      export LS_COLORS="$(vivid generate tokyonight-moon)"
+    fi
+  elif [ "$UNAME" = "Linux" ]; then
+    case "$TERM" in
+      "xterm-kitty")
+        export BAT_THEME="gruvbox-dark"
+        # export MCFLY_LIGHT="TRUE"
+        if command -v vivid 2>&1 > /dev/null; then
+          export LS_COLORS="$(vivid generate gruvbox-dark)"
+        fi
+        ;;
+      "xterm-ghostty")
+        export BAT_THEME="ansi"
+        if command -v vivid 2>&1 > /dev/null; then
+          export LS_COLORS="$(vivid generate tokyonight-storm)"
+        fi
+        ;;
+    esac
   fi
-elif [ "$UNAME" = "Darwin" ] && [ "$TERM" = "xterm-ghostty" ]; then
-  export BAT_THEME="ansi"
-  if command -v vivid 2>&1 > /dev/null; then
-    export LS_COLORS="$(vivid generate tokyonight-moon)"
-  fi
-elif [ "$UNAME" = "Linux" ]; then
-  case "$TERM" in
-    "xterm-kitty")
-      export BAT_THEME="gruvbox-dark"
-      # export MCFLY_LIGHT="TRUE"
-      if command -v vivid 2>&1 > /dev/null; then
-        export LS_COLORS="$(vivid generate gruvbox-dark)"
-      fi
-      ;;
-    "xterm-ghostty")
-      export BAT_THEME="ansi"
-      if command -v vivid 2>&1 > /dev/null; then
-        export LS_COLORS="$(vivid generate tokyonight-storm)"
-      fi
-      ;;
-  esac
 fi
 
 if [ "$UNAME" = "Darwin" ]; then
