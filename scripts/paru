@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Have you considered using yay?"
+exit 1
