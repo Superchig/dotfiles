@@ -200,6 +200,8 @@ alias cgr="RUST_BACKTRACE=1 cargo run"
 alias cgt="RUST_BACKTRACE=1 cargo test"
 alias cgd="PURE_PYTHON=1 CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER=rust-gdb cargo test"
 
+alias kmscon="kmscon --login -- /bin/zsh"
+
 export MANPATH="$MANPATH:/home/chiggie/.ghcup/share/man"
 
 # Colored man output
