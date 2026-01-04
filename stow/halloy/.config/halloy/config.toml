@@ -1,0 +1,28 @@
+# Halloy config.
+#
+# For a complete list of available options,
+# please visit https://halloy.chat/configuration.html
+
+[servers.superchig]
+nickname = "superchig"
+server = "irc.superchig.com"
+
+[servers.superchig.sasl.plain]
+username = "superchig"
+# Password stored with interactive `secret-tool store --label soju searchable-label soju`
+password_command = "secret-tool lookup searchable-label soju"
+
+[actions.buffer]
+click_channel_name = "replace-pane"
+click_highlight = "replace-pane"
+click_username = "replace-pane"
+local = "replace-pane"
+message_channel = "replace-pane"
+message_user = "replace-pane"
+
+[actions.sidebar]
+buffer = "replace-pane"
+focused_buffer = "close-pane"
+
+[font]
+size = 16
