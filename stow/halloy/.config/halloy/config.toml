@@ -26,3 +26,6 @@ focused_buffer = "close-pane"
 
 [font]
 size = 16
+
+[buffer.timestamp]
+format = "%I:%M %p"
