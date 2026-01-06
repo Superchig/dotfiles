@@ -44,3 +44,5 @@ else
 fi
 
 music-cs prepare "$OUTPUT_FILE"
+
+rm "$DOWNLOADED_FILE"
