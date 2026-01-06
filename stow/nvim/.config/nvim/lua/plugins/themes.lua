@@ -40,7 +40,7 @@ return {
         if vim.g.neovide then
           -- vim.g.neovide_transparency = 0.8
 
-          if vim.loop.os_uname().sysname == "Linux" then
+          if jit.os == "Linux" then
             vim.o.guifont = "Iosevka Nerd Font:h12,Consolas:h12,Inconsolata:h12"
           else
             vim.o.guifont = "Iosevka Nerd Font:h12"
@@ -55,7 +55,7 @@ return {
           return "vim"
         end
 
-        if vim.loop.os_uname().sysname == "Darwin" then
+        if jit.os == "OSX" then
           if vim.env.TERM == "xterm-ghostty" then
             vim.o.background = "dark"
             return "tokyonight"
@@ -66,7 +66,7 @@ return {
             vim.o.background = "light"
           end
           return "vscode"
-        elseif vim.loop.os_uname().sysname == "Linux" then
+        elseif jit.os == "Linux" then
           if vim.env.TERM == "xterm-kitty" then
             return "gruvbox"
           elseif vim.env.TERM == "xterm-ghostty" then
