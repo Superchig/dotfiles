@@ -29,6 +29,10 @@ return {
     "Mofiqul/vscode.nvim",
   },
 
+  {
+    "p00f/alabaster.nvim",
+  },
+
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
@@ -58,14 +62,14 @@ return {
         if jit.os == "OSX" then
           if vim.env.TERM == "xterm-ghostty" then
             vim.o.background = "dark"
-            return "tokyonight"
+            return "alabaster"
           elseif vim.env.TERM == "rio" then
             vim.o.background = "dark"
             return "dracula"
           else
             vim.o.background = "light"
+            return "alabaster"
           end
-          return "vscode"
         elseif jit.os == "Linux" then
           if vim.env.TERM == "xterm-kitty" then
             return "gruvbox"
