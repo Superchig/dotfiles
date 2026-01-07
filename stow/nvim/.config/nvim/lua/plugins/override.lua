@@ -197,6 +197,11 @@ return {
       opts.servers.zls = {
         cmd = { "zls" },
         mason = false,
+        settings = {
+          zls = {
+            build_on_save_args = { "-fincremental" },
+          },
+        },
         on_init = function(client)
           local function zls_auto_code_actions()
             -- Get all diagnostics for the current buffer
