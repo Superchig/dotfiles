@@ -20,6 +20,14 @@ return {
     opts = function(_, opts)
       opts.servers["*"].keys = {
         {
+          "<leader>ci",
+          function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
+          end,
+          desc = "Toggle inlay hints",
+        },
+
+        {
           "<leader>cl",
           function()
             Snacks.picker.lsp_config()
