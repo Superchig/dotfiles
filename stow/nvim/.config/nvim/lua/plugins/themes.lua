@@ -68,7 +68,7 @@ return {
             return "dracula"
           else
             vim.o.background = "light"
-            return "alabaster"
+            return "vscode"
           end
         elseif jit.os == "Linux" then
           if vim.env.TERM == "xterm-kitty" then
