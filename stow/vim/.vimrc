@@ -4,8 +4,7 @@ syntax on
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-set ttimeout
-set ttimeoutlen=50
+set timeout ttimeout timeoutlen=0 ttimeoutlen=50
 
 set incsearch
 
@@ -17,3 +16,10 @@ set hidden
 let mapleader = " "
 
 nnoremap <leader><leader> :ls<cr>:e
+
+autocmd FileType json setlocal expandtab softtabstop=2 shiftwidth=2
+autocmd FileType json setlocal autoindent nosmartindent nocindent
+autocmd FileType json if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
+
+autocmd FileType pdf setlocal expandtab softtabstop=2 shiftwidth=2
+autocmd FileType pdf setlocal autoindent nosmartindent nocindent
