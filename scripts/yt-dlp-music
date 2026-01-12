@@ -1,48 +1,56 @@
 #!/bin/sh
 
+process_file() {
+  FILE="$1"
+
+  tput setaf 13 bold # Bright purple
+  echo "====Processing ${FILE}"
+  tput sgr0 # Resets color to default
+
+  # Download audio with yt-dlp
+  echo "Downloading audio..."
+  DOWNLOADED_FILE=$(yt-dlp \
+    -f bestaudio \
+    -o "%(title)s.%(ext)s" \
+    --add-metadata \
+    --parse-metadata "playlist_index:%(track_number)s" \
+    --print after_move:filepath \
+    "$FILE")
+
+  # Check if download was successful
+  if [ $? -ne 0 ] || [ -z "$DOWNLOADED_FILE" ]; then
+    echo "Error: Download failed"
+    exit 1
+  fi
+
+  echo "Downloaded: $DOWNLOADED_FILE"
+
+  # Convert to ogg
+  echo "Converting to ogg..."
+  FILENAME_WITHOUT_EXTENSION="${DOWNLOADED_FILE%.*}"
+  OUTPUT_FILE="$FILENAME_WITHOUT_EXTENSION.ogg"
+
+  ffmpeg -i "$DOWNLOADED_FILE" -c:a copy -c:v copy -disposition:v:0 attached_pic "$OUTPUT_FILE"
+
+  # Check if conversion was successful
+  if [ $? -eq 0 ]; then
+    echo "Conversion complete: $OUTPUT_FILE"
+  else
+    echo "Error: Conversion failed"
+    exit 1
+  fi
+
+  music-cs prepare "$OUTPUT_FILE"
+
+  rm "$DOWNLOADED_FILE"
+}
+
+if [ "$#" -eq 0 ]; then
+  echo "Usage: $0 <youtube-url> ..."
+  exit 1
+fi
+
 # Check if URL is provided
-if [ -z "$1" ]; then
-  echo "Usage: $0 <youtube-url>"
-  exit 1
-fi
-
-# Download audio with yt-dlp
-echo "Downloading audio..."
-DOWNLOADED_FILE=$(yt-dlp \
-  -f bestaudio \
-  -o "%(title)s.%(ext)s" \
-  --add-metadata \
-  --parse-metadata "playlist_index:%(track_number)s" \
-  --print after_move:filepath \
-  "$@")
-
-# Check if download was successful
-if [ $? -ne 0 ] || [ -z "$DOWNLOADED_FILE" ]; then
-  echo "Error: Download failed"
-  exit 1
-fi
-
-echo "Downloaded: $DOWNLOADED_FILE"
-
-# Convert to ogg
-echo "Converting to ogg..."
-FILENAME_WITHOUT_EXTENSION="${DOWNLOADED_FILE%.*}"
-OUTPUT_FILE="$FILENAME_WITHOUT_EXTENSION.ogg"
-
-ffmpeg -i "$DOWNLOADED_FILE" -c:a copy -c:v copy -disposition:v:0 attached_pic "$OUTPUT_FILE"
-
-# Check if conversion was successful
-if [ $? -eq 0 ]; then
-  echo "Conversion complete: $OUTPUT_FILE"
-
-  # Optional: Remove original file
-  # Uncomment the next line if you want to delete the downloaded file after conversion
-  # rm "$DOWNLOADED_FILE"
-else
-  echo "Error: Conversion failed"
-  exit 1
-fi
-
-music-cs prepare "$OUTPUT_FILE"
-
-rm "$DOWNLOADED_FILE"
+for FILE in "$@"; do
+  process_file "$FILE"
+done
