@@ -44,8 +44,11 @@ return {
         if vim.g.neovide then
           -- vim.g.neovide_transparency = 0.8
 
+          -- To see possible fonts, use `set guifont=*`
           if jit.os == "Linux" then
             vim.o.guifont = "Iosevka Nerd Font:h12,Consolas:h12,Inconsolata:h12"
+          elseif jit.os == "OSX" then
+            vim.o.guifont = "PragmataProComfy Mono Liga:h16"
           else
             vim.o.guifont = "Iosevka Nerd Font:h12"
           end
