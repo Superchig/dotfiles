@@ -131,6 +131,10 @@ alias grep='grep --color=auto'
 
 alias fzf="fzf --color='hl:yellow' --color='hl+:bright-yellow:bold'"
 
+if command -v neovide > /dev/null; then
+  alias nv=neovide
+fi
+
 if command -v helix > /dev/null; then
   alias hx='helix'
 fi
@@ -200,7 +204,11 @@ alias cgr="RUST_BACKTRACE=1 cargo run"
 alias cgt="RUST_BACKTRACE=1 cargo test"
 alias cgd="PURE_PYTHON=1 CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER=rust-gdb cargo test"
 
+alias c="claude"
+
 alias kmscon="kmscon --login -- /bin/zsh"
+
+export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
 
 export MANPATH="$MANPATH:/home/chiggie/.ghcup/share/man"
 
@@ -417,9 +425,9 @@ if command -v mise 2>&1 > /dev/null; then
   fi
 fi
 
-# if command -v rbenv 2>&1 > /dev/null; then
-#   eval "$(rbenv init - zsh)"
-# fi
+if [ -e "${HOME}/.iterm2_shell_integration.zsh" ]; then
+  source "${HOME}/.iterm2_shell_integration.zsh"
+fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # if [ -f "$HOME/.rvm/scripts/rvm" ]; then
