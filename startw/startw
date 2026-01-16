@@ -93,7 +93,9 @@ def infer_drm_device_path() -> Union[str, None]:
             device_value = read_file(device_file_path).strip()
 
             if (
-                pci_vendor[vendor_value] == "NVIDIA Corporation"
+                vendor_value in pci_vendor
+                and pci_vendor[vendor_value] == "NVIDIA Corporation"
+                and device_value in pci_device
                 and pci_device[device_value] == "TU106M [GeForce RTX 2060 Mobile]"
             ):
                 card_dir = Path(path).parts[4]  # e.g., "card0-DP-1"
