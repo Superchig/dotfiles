@@ -137,7 +137,7 @@ require("bmason").setup()
 require("bpickle").setup()
 
 --- bcomplete
-local bcomplete = require("bcomplete")
+-- local bcomplete = require("bcomplete")
 
 --- LSP Config
 
@@ -170,10 +170,10 @@ vim.lsp.config["luals"] = {
     vim.keymap.set("n", "<Leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics in floating window" })
     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { desc = "Handle code actions if available" })
 
-    vim.keymap.set("i", "<Tab>", bcomplete.tab_wrapper, { desc = "Get/next completion", expr = true, silent = true })
-    vim.keymap.set("i", "<Esc>", bcomplete.esc_wrapper, { desc = "Exit completion", expr = true, silent = true })
-    vim.keymap.set("i", "<CR>", bcomplete.cr_wrapper, { desc = "Accept completion", expr = true, silent = true })
-    vim.keymap.set("i", "<C-N>", bcomplete.ctrl_n_wrapper, { desc = "Get/next completion", expr = true, silent = true })
+    -- vim.keymap.set("i", "<Tab>", bcomplete.tab_wrapper, { desc = "Get/next completion", expr = true, silent = true })
+    -- vim.keymap.set("i", "<Esc>", bcomplete.esc_wrapper, { desc = "Exit completion", expr = true, silent = true })
+    -- vim.keymap.set("i", "<CR>", bcomplete.cr_wrapper, { desc = "Accept completion", expr = true, silent = true })
+    -- vim.keymap.set("i", "<C-N>", bcomplete.ctrl_n_wrapper, { desc = "Get/next completion", expr = true, silent = true })
 
     vim.o.omnifunc = "v:lua.vim.lsp.omnifunc"
     vim.o.foldmethod = "expr"
@@ -186,14 +186,14 @@ vim.lsp.config["luals"] = {
 
     -- print(vim.inspect(client.capabilities.textDocument.completion))
 
-    if vim.env.BCOMPLETE then
-      local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
-      vim.api.nvim_create_autocmd("TextChangedI", {
-        pattern = "*", -- Apply to all buffers
-        callback = bcomplete.complete_on_text_change,
-        group = augroup_id,
-      })
-    end
+    -- if vim.env.BCOMPLETE then
+    --   local augroup_id = vim.api.nvim_create_augroup("bcomplete", {})
+    --   vim.api.nvim_create_autocmd("TextChangedI", {
+    --     pattern = "*", -- Apply to all buffers
+    --     callback = bcomplete.complete_on_text_change,
+    --     group = augroup_id,
+    --   })
+    -- end
   end,
 }
 
@@ -204,13 +204,34 @@ vim.diagnostic.config({
   underline = true,
 })
 
+local function measure_on_i()
+---@diagnostic disable-next-line: undefined-field
+  local time = vim.uv.hrtime()
+  vim.schedule(function()
+---@diagnostic disable-next-line: undefined-field
+    local duration = 0.000001 * (vim.loop.hrtime() - time)
+    print(vim.inspect(duration))
+  end)
+  return "i"
+end
+
+local latency_measuring_enabled = false
+
+function Toggle_input_latency_measure()
+  if latency_measuring_enabled then
+    vim.keymap.del("i", "i")
+  else
+    vim.keymap.set("i", "i", measure_on_i, { expr = true })
+  end
+end
+
 -- Treesitter
 
-local success = vim.treesitter.language.add("norg", { path = "/Users/cchang/.local/share/bvim/btreesitter/src/tree-sitter-norg/src/norg.dylib" })
-if not success then
-  vim.notify("Unable to load norg treesitter parser", vim.log.levels.ERROR)
-end
-vim.treesitter.language.register("norg", "norg")
+-- local success = vim.treesitter.language.add("norg", { path = "/Users/cchang/.local/share/bvim/btreesitter/src/tree-sitter-norg/src/norg.dylib" })
+-- if not success then
+--   vim.notify("Unable to load norg treesitter parser", vim.log.levels.ERROR)
+-- end
+-- vim.treesitter.language.register("norg", "norg")
 
 -- ---@class TreesitterParser
 -- ---@field name string
