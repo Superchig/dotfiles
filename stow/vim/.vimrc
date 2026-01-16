@@ -16,6 +16,7 @@ set hidden
 let mapleader = " "
 
 nnoremap <leader><leader> :ls<cr>:e
+nnoremap Y y$
 
 autocmd FileType json setlocal expandtab softtabstop=2 shiftwidth=2
 autocmd FileType json setlocal autoindent nosmartindent nocindent
@@ -23,3 +24,6 @@ autocmd FileType json if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
 
 autocmd FileType pdf setlocal expandtab softtabstop=2 shiftwidth=2
 autocmd FileType pdf setlocal autoindent nosmartindent nocindent
+
+autocmd FileType zig setlocal expandtab softtabstop=4 shiftwidth=4
+autocmd FileType zig setlocal autoindent nosmartindent nocindent
