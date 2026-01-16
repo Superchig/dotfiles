@@ -65,7 +65,7 @@ return {
         if jit.os == "OSX" then
           if vim.env.TERM == "xterm-ghostty" then
             vim.o.background = "dark"
-            return "alabaster"
+            return "tokyonight-moon"
           elseif vim.env.TERM == "rio" then
             vim.o.background = "dark"
             return "dracula"
@@ -76,7 +76,7 @@ return {
         elseif jit.os == "Linux" then
           if vim.env.TERM == "xterm-kitty" then
             if vim.env.XDG_CURRENT_DESKTOP == "KDE" then
-              return "alabaster"
+              return "tokyonight-moon"
             else
               return "gruvbox"
             end
