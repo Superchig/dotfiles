@@ -271,6 +271,7 @@ bindsym ctrl+alt+4 exec fcitx5-remote -s m17n_zh_pinyin
 # }
 
 for_window [app_id="anki"] floating enable
+for_window [app_id="naps2"] floating enable
 
 exec mako
 exec dropbox
