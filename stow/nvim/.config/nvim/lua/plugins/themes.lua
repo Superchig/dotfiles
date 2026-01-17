@@ -15,6 +15,24 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = false,
+    config = function()
+      --- From https://github.com/folke/tokyonight.nvim/discussions/685
+      local styles = require("tokyonight.colors").styles
+      styles.moon = vim.tbl_extend("force", styles.moon --[[@as Palette]], {
+        customized_style = "moon",
+      })
+      require("tokyonight").setup({
+        on_highlights = function(highlights, colors)
+          local style_name = colors["customized_style"]
+          if style_name == "moon" then
+            highlights.Comment = {
+              fg = "#ffd8ab",
+              bold = true,
+            }
+          end
+        end,
+      })
+    end,
   },
 
   {
