@@ -12,6 +12,8 @@ packages = [
   "fuse",
   # Fonts
   "ttf-ubuntu-font-family",
+  # Security
+  "ufw",
   # Terminal-related
   ## Terminals
   "alacritty, xterm, kitty, kitty-terminfo",
@@ -28,7 +30,7 @@ packages = [
   # Desktop Suite
   ## Packages For Any Desktop
   "pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks, gnome-clocks",
-  "cups, cups-pdf",
+  "cups, cups-pdf, system-config-printer",
   ## Gnome Desktop
   "gnome-shell, gnome-control-center, gnome-backgrounds",
   ## Mega-Customized Desktop (Xorg)
