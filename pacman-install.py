@@ -21,7 +21,7 @@ packages = [
   "vim, vi, git, neovim, xsel, gcc, clang, wget, curl, perl-file-mimeinfo",
   "mlocate, inetutils, tree",
   ## Terminal utilities
-  "fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp",
+  "lf, fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp",
   "shellcheck, fzf, highlight, mediainfo, jq, dua-cli,",
   "tokei",
   ## Shell-boosters
