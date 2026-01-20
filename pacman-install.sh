@@ -7,24 +7,21 @@ IFS=$'\n\t'
 
 ORIGDIR=$(pwd)
 
-sudo pacman --needed -S nushell
+./pacman-install.py
 
-nu pacman-install.nu
-
-# Install paru
-if ! command -v paru 2>&1; then
+# Install yay
+if ! command -v yay 2>&1; then
   if [ ! -d "$HOME"/Downloads ]; then
     mkdir "$HOME"/Downloads
   fi
 
   cd "$HOME"/Downloads
-  git clone https://aur.archlinux.org/paru-bin.git
-  cd paru
+  git clone https://aur.archlinux.org/yay-bin.git
+  cd yay-bin
   makepkg -si
 fi
 
-paru --needed -S dropbox xcwd-git lf-bin polybar-git zsh-theme-powerlevel10k-git noisetorch-bin \
-  frum-bin fnm-bin extension-manager
+yay --needed -S dropbox zsh-theme-powerlevel10k-git
 
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of

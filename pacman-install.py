@@ -20,7 +20,7 @@ packages = [
   "mlocate, inetutils, tree",
   ## Terminal utilities
   "fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp",
-  "neofetch, shellcheck, fzf, highlight, mediainfo, jq, dua-cli,",
+  "shellcheck, fzf, highlight, mediainfo, jq, dua-cli,",
   "tokei",
   ## Shell-boosters
   "fish, zsh, mcfly, zoxide",
@@ -35,14 +35,14 @@ packages = [
   "i3-gaps, autorandr, xdotool, wmctrl, xorg-xrandr, rofi, picom, redshift",
   "xss-lock, network-manager-applet, xorg-xinput, arandr, feh, xfce4-notifyd",
   ## Mega-Customized Desktop (Sway)
-  "sway, swaybg, waybar, mako, wlroots, wl-clipboard, kanshi, egl-wayland, bemenu-wayland",
+  "sway, swaybg, waybar, mako, wl-clipboard, kanshi, egl-wayland, bemenu-wayland",
   "slurp, grim",
   ## Tools For Any Desktop
   "firefox, sxiv, mpv, vlc, pavucontrol, discord, seahorse, qalculate-gtk",
   "zathura, zathura-pdf-poppler, code, audacity, gimp",
   ## Fonts
   "adobe-source-han-sans-otc-fonts, adobe-source-han-serif-otc-fonts",
-  "noto-fonts-emoji, ttf-joypixels, ttf-inconsolata",
+  "noto-fonts-emoji, ttf-inconsolata",
 ]
 
 individual_packages = []
