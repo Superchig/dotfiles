@@ -49,6 +49,19 @@ echo "Enabling ufw"
 sudo ufw enable
 sudo systemctl enable ufw.service # Make it available on boot
 
+echo "Checking that the Gnome Keyring is automatically unlocked"
+
+if ! grep -q "auth       optional     pam_gnome_keyring.so" /etc/pam.d/login; then
+  echo "auth       optional     pam_gnome_keyring.so" | sudo tee -a /etc/pam.d/login >/dev/null
+fi
+if ! grep -q "session    optional     pam_gnome_keyring.so auto_start" /etc/pam.d/login; then
+  echo "session    optional     pam_gnome_keyring.so auto_start" | sudo tee -a /etc/pam.d/login >/dev/null
+fi
+
+echo "Enabling gcr-ssh-agent.socket to use Gnome Keyring for ssh-agent"
+
+systemctl enable --user --now gcr-ssh-agent.socket
+
 echo "Enabling printers with CUPS"
 
 sudo systemctl enable --now cups.service
