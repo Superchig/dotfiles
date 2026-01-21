@@ -16,7 +16,7 @@ vim.cmd([[autocmd BufWritePost *.d silent !dfmt -i <afile>]])
 vim.cmd([[autocmd BufWritePost *.d lua RunMakeAsync()]])
 vim.cmd([[autocmd QuickfixCmdPost make cwindow]])
 
-vim.cmd([[autocmd Filetype zig setlocal makeprg=zig\ build\ -Dno-bin\ -fincremental]])
+vim.cmd([[autocmd BufWritePost *.zig lua FormatZigUnlessLsp()]])
 
 vim.cmd([[autocmd Filetype shaderslang setlocal shiftwidth=4 tabstop=4]])
 
@@ -224,4 +224,13 @@ if vim.env.SUPERCHIG_LAZYVIM_CMD ~= nil then
   vim.schedule(function()
     vim.cmd(vim.env.SUPERCHIG_LAZYVIM_CMD)
   end)
+end
+
+function FormatZigUnlessLsp()
+  local zls_clients = vim.lsp.get_clients({ bufnr = 0, name = "zls" })
+  if #zls_clients >= 1 then
+    return
+  end
+
+  vim.cmd([[silent !zig fmt %]])
 end

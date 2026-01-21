@@ -216,6 +216,11 @@ return {
         },
         on_init = function(client)
           local function zls_auto_code_actions()
+            local zls_clients = vim.lsp.get_clients({ bufnr = 0, name = "zls" })
+            if #zls_clients <= 0 then
+              return
+            end
+
             -- Get all diagnostics for the current buffer
             local diagnostics_ = vim.diagnostic.get(0) or {}
             ---@type lsp.Diagnostic[]
