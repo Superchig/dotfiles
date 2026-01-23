@@ -370,6 +370,9 @@ return {
       enabled = function()
         return not vim.tbl_contains({ "norg", "org", "markdown" }, vim.bo.filetype) and vim.bo.buftype ~= "prompt"
       end,
+      fuzzy = {
+        implementation = "lua",
+      },
     },
   },
 
