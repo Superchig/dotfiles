@@ -14,6 +14,13 @@ if [ -f "/usr/local/bin/brew" ]; then
   BREW_PREFIX="$(brew --prefix)"
 fi
 
+# Source any local (machine-specific) configuration files that may print something
+if [ -d "$HOME/.config/zsh/early-local" ]; then
+  for FILE in $HOME/.config/zsh/early-local/*(D); do
+    source $FILE
+  done
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
