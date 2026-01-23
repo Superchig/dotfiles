@@ -70,3 +70,11 @@ sudo systemctl enable --now avahi-daemon.service
 echo "Enabling periodic fstrim for the SSD"
 
 sudo systemctl enable --now fstrim.timer
+
+echo "Stowing dotfiles"
+
+./stow_dotfiles
+
+echo "Symlinking custom fonts directory"
+
+ln -s "$HOME/Dropbox/fonts" "$HOME/.local/state/fonts"
