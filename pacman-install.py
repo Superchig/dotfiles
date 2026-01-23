@@ -41,10 +41,10 @@ packages = [
   "slurp, grim",
   ## Tools For Any Desktop
   "firefox, sxiv, mpv, vlc, pavucontrol, discord, seahorse, qalculate-gtk",
-  "zathura, zathura-pdf-poppler, code, audacity, gimp",
+  "zathura, zathura-pdf-poppler, code, audacity, gimp, neovide, halloy",
   ## Fonts
   "adobe-source-han-sans-otc-fonts, adobe-source-han-serif-otc-fonts",
-  "noto-fonts-emoji, ttf-inconsolata",
+  "noto-fonts-emoji, ttf-inconsolata, ttf-iosevka-nerd",
 ]
 
 individual_packages = []
