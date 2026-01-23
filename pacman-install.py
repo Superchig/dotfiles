@@ -58,4 +58,4 @@ cmd = ["sudo", "pacman", "--needed", "-S"] + individual_packages
 
 print(" ".join(cmd))
 
-subprocess.run(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+subprocess.run(cmd)
