@@ -78,3 +78,7 @@ echo "Stowing dotfiles"
 echo "Symlinking custom fonts directory"
 
 ln -s "$HOME/Dropbox/fonts" "$HOME/.local/state/fonts"
+
+echo "Enabling Bluetooth"
+
+sudo systemctl enable --now bluetooth.service
