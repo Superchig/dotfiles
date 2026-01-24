@@ -23,7 +23,7 @@ packages = [
   ## Terminal utilities
   "lf, fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp",
   "shellcheck, fzf, highlight, mediainfo, jq, dua-cli,",
-  "tokei",
+  "tokei, just",
   ## Shell-boosters
   "fish, zsh, mcfly, zoxide",
   "zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search",
