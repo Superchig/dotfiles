@@ -43,6 +43,8 @@ vim.cmd([[autocmd Filetype norg lua Snacks.indent.disable()]])
 
 vim.cmd([[autocmd Filetype org setlocal textwidth=80 foldlevel=1000]])
 
+vim.cmd([[autocmd BufRead,BufNewFile *.html setlocal filetype=html]])
+
 vim.cmd(
   [[autocmd BufNewFile,BufRead *.templ setlocal filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]]
 )
