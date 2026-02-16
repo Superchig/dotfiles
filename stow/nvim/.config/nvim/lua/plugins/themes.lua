@@ -7,6 +7,7 @@ return {
         LspReferenceText = { bg = "#57514e" },
         LspReferenceRead = { bg = "#57514e" },
         LspReferenceWrite = { bg = "#57514e" },
+        ["@comment"] = { link = "GruvboxYellowBold" },
       },
     },
   },
