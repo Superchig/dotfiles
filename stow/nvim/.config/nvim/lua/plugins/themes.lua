@@ -36,7 +36,12 @@ return {
   },
 
   {
-    "dracula/vim",
+    "Mofiqul/dracula.nvim",
+    opts = {
+      overrides = {
+        Comment = { fg = "#FFFFA5", bold = true },
+      },
+    },
   },
 
   {
