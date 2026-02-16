@@ -94,7 +94,7 @@ return {
         elseif jit.os == "Linux" then
           if vim.env.TERM == "xterm-kitty" then
             if vim.env.XDG_CURRENT_DESKTOP == "KDE" then
-              return "tokyonight-moon"
+              return "dracula"
             else
               return "gruvbox"
             end
