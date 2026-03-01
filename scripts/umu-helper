@@ -14,13 +14,14 @@ RESET = "\033[0m"
 
 
 def print_cmd(cmd: list[str]) -> None:
-    print(f"{PURPLE}==== {' '.join(cmd)}{RESET}", file=sys.stderr)
+    print(f"{PURPLE}===={' '.join(cmd)}{RESET}", file=sys.stderr)
 
 
 def find_steam_proton_dir(start: Path) -> Path:
     """Recurse upwards from start until we find a steam_proton directory."""
     current = start
     while True:
+        print(f"current: {current}")
         candidate = current / "steam_proton"
         if candidate.is_dir():
             return candidate
@@ -33,16 +34,28 @@ def find_steam_proton_dir(start: Path) -> Path:
         current = parent
 
 
-def find_config_toml(steam_proton_dir: Path) -> Path:
+def find_config_toml(start: Path) -> Path:
     """Search one level of subdirectories inside steam_proton_dir for a config.toml."""
-    for child in steam_proton_dir.iterdir():
-        if child.is_dir():
-            config = child / "config.toml"
-            if config.is_file():
-                return config
-    raise FileNotFoundError(
-        f"No config.toml found in any subdirectory of: {steam_proton_dir}"
-    )
+    current = start
+    while True:
+        print(f"current: {current}")
+
+        if current.parts[-2] == "steam_proton":
+            break
+
+        if len(current.parts) < 3:
+            raise FileNotFoundError(
+                "Could not find 'steam_proton' directory in any ancestor of:"
+                + str(start)
+            )
+        current = current.parent
+
+    config_path = current.joinpath("config.toml")
+
+    if not config_path.is_file():
+        raise FileNotFoundError(f"No config.toml found at: {config_path}")
+
+    return config_path
 
 
 def load_config(config_path: Path) -> dict:
@@ -50,7 +63,7 @@ def load_config(config_path: Path) -> dict:
         return tomllib.load(f)
 
 
-def cmd_game(args: argparse.Namespace, config_path: Path, _config: dict) -> int:
+def cmd_game(args: argparse.Namespace, config_path: Path) -> int:
     """Run umu-run with the config.toml file."""
     cmd = ["umu-run", "--config", str(config_path)] + args.extra
     print_cmd(cmd)
@@ -69,9 +82,11 @@ def cmd_exe(args: argparse.Namespace, config: dict) -> int:
         return 1
 
     env = os.environ.copy()
-    env["WINEPREFIX"] = str(prefix)
-    env["PROTONPATH"] = str(proton)
-    env["GAMEID"] = umu_section.get("id", "0")
+    wineprefix = env["WINEPREFIX"] = str(prefix)
+    protonpath = env["PROTONPATH"] = str(proton)
+    gameid = env["GAMEID"] = umu_section.get("id", "0")
+
+    print(f"WINEPREFIX={wineprefix} PROTONPATH={protonpath} GAMEID={gameid}")
 
     if not args.extra:
         print("Error: exe subcommand requires an executable path.", file=sys.stderr)
@@ -114,13 +129,8 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        steam_proton_dir = find_steam_proton_dir(Path(os.getenv("PWD") or ""))
-    except FileNotFoundError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        return 1
-
-    try:
-        config_path = find_config_toml(steam_proton_dir)
+        config_path = find_config_toml(Path(os.getenv("PWD") or ""))
+        print(f"config_path={config_path}")
     except FileNotFoundError as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1
@@ -128,7 +138,7 @@ def main() -> int:
     config = load_config(config_path)
 
     if args.subcommand == "game":
-        return cmd_game(args, config_path, config)
+        return cmd_game(args, config_path)
     elif args.subcommand == "exe":
         return cmd_exe(args, config)
 
