@@ -1,0 +1,8 @@
+#!/bin/sh
+
+sync &
+while [ "$(awk '/Dirty:/{print $2}' /proc/meminfo)" -gt 0 ]; do
+  grep Dirty /proc/meminfo
+  sleep 0.5
+  clear
+done
