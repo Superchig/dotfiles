@@ -1,8 +1,63 @@
-#!/bin/sh
+#!/usr/bin/env python3
 
-sync &
-while [ "$(awk '/Dirty:/{print $2}' /proc/meminfo)" -gt 0 ]; do
-  grep Dirty /proc/meminfo
-  sleep 0.5
-  clear
-done
+"""Wait for sync to complete, displaying elapsed time with ANSI output."""
+
+import subprocess
+import time
+import sys
+
+
+# ANSI codes
+CLEAR_LINE  = "\033[2K\r"
+BOLD        = "\033[1m"
+DIM         = "\033[2m"
+GREEN       = "\033[32m"
+YELLOW      = "\033[33m"
+CYAN        = "\033[36m"
+RESET       = "\033[0m"
+CURSOR_HIDE = "\033[?25l"
+CURSOR_SHOW = "\033[?25h"
+
+SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+
+
+def main():
+    sys.stdout.write(CURSOR_HIDE)
+    sys.stdout.flush()
+
+    try:
+        print(f"{BOLD}Starting sync…{RESET}\n")
+
+        proc       = subprocess.Popen(["sync"])
+        start_time = time.monotonic()
+        tick       = 0
+
+        while proc.poll() is None:
+            elapsed = time.monotonic() - start_time
+            spinner = SPINNER[tick % len(SPINNER)]
+            tick   += 1
+
+            sys.stdout.write(
+                f"{CLEAR_LINE}  {CYAN}{spinner}{RESET}  "
+                f"syncing…  {DIM}elapsed: {elapsed:.1f}s{RESET}"
+            )
+            sys.stdout.flush()
+            time.sleep(0.1)
+
+        elapsed = time.monotonic() - start_time
+        sys.stdout.write(
+            f"{CLEAR_LINE}{GREEN}{BOLD}✓ Sync complete{RESET} "
+            f"in {elapsed:.1f}s\n"
+        )
+        sys.stdout.flush()
+
+    except KeyboardInterrupt:
+        sys.stdout.write(f"\n{YELLOW}Interrupted.{RESET}\n")
+        sys.stdout.flush()
+    finally:
+        sys.stdout.write(CURSOR_SHOW)
+        sys.stdout.flush()
+
+
+if __name__ == "__main__":
+    main()
