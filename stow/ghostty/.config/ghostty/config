@@ -52,6 +52,17 @@
 # font-family = CodeNewRoman Nerd Font
 
 font-family = PragmataProComfy Mono
+freetype-load-flags = hinting,no-force-autohint,no-monochrome,autohint
+
+# Available flags for freetype-load-flags:
+# 
+#   * `hinting` - Enable or disable hinting, enabled by default.
+#   * `force-autohint` - Use the freetype auto-hinter rather than the
+#     font's native hinter. Enabled by default.
+#   * `monochrome` - Instructs renderer to use 1-bit monochrome
+#     rendering. This option doesn't impact the hinter.
+#     Enabled by default.
+#   * `autohint` - Use the freetype auto-hinter. Enabled by default.
 
 font-family-bold = 
 font-family-italic = 
@@ -343,7 +354,7 @@ grapheme-width-method = unicode
 #   * `autohint` - Use the freetype auto-hinter. Enabled by default.
 # 
 # Example: `hinting`, `no-hinting`, `force-autohint`, `no-force-autohint`
-freetype-load-flags = hinting,force-autohint,monochrome
+# freetype-load-flags = hinting,force-autohint,monochrome
 
 # A theme to use. This can be a built-in theme name, a custom theme
 # name, or an absolute path to a custom theme file. Ghostty also supports
@@ -399,8 +410,8 @@ freetype-load-flags = hinting,force-autohint,monochrome
 # 
 #   - macOS: titlebar tabs style is not updated when switching themes.
 # 
-# theme = TokyoNight Moon
-theme = tokyonight_moon
+theme = TokyoNight Moon
+# theme = tokyonight_moon
 
 # Background color for the window.
 # Specified as either hex (`#RRGGBB` or `RRGGBB`) or a named X11 color.
