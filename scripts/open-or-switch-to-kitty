@@ -1,0 +1,13 @@
+#!/bin/sh
+
+KITTY_WINDOW_ID="$(kdotool search --classname kitty)"
+ACTIVE_WINDOW_ID="$(kdotool getactivewindow)"
+
+if ! [ -n "$KITTY_WINDOW_ID" ]; then
+  kitty &> /dev/null &
+  return
+fi
+
+if ! [ "$KITTY_WINDOW_ID" = "$ACTIVE_WINDOW_ID" ]; then
+  kdotool windowactivate "$KITTY_WINDOW_ID"
+fi
