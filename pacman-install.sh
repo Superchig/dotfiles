@@ -22,7 +22,7 @@ if ! command -v yay 2>&1; then
 fi
 
 # https://gist.github.com/progzone122/0b4e2a85ea44d0dc1e74fc16ee4d9700
-yay --needed -S dropbox zsh-theme-powerlevel10k-git epson-inkjet-printer-escpr
+yay --needed -S dropbox zsh-theme-powerlevel10k-git epson-inkjet-printer-escpr kdotool-bin
 
 # Enable git integration with gnome-keyring
 # Remember to modify /etc/pam.d/login and /etc/pam.d/passwd based off of
@@ -77,8 +77,14 @@ echo "Stowing dotfiles"
 
 echo "Symlinking custom fonts directory"
 
-ln -s "$HOME/Dropbox/fonts" "$HOME/.local/state/fonts"
+ln -s "$HOME/Dropbox/fonts" "$HOME/.local/share/fonts"
+
+fc-cache -fv
 
 echo "Enabling Bluetooth"
 
 sudo systemctl enable --now bluetooth.service
+
+echo "Enabling periodic cleaning of package cache"
+
+sudo systemctl enable paccache.timer
