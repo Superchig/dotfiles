@@ -23,7 +23,7 @@ packages = [
   ## Terminal utilities
   "lf, fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp",
   "shellcheck, fzf, highlight, mediainfo, jq, dua-cli,",
-  "tokei, just",
+  "tokei, just, aerc",
   ## Shell-boosters
   "fish, zsh, mcfly, zoxide",
   "zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search",
@@ -34,7 +34,7 @@ packages = [
   ## Gnome Desktop
   "gnome-shell, gnome-control-center, gnome-backgrounds",
   ## Mega-Customized Desktop (Xorg)
-  "i3-gaps, autorandr, xdotool, wmctrl, xorg-xrandr, rofi, picom, redshift",
+  "i3-gaps, autorandr, xdotool, wmctrl, xorg-xrandr, redshift",
   "xss-lock, network-manager-applet, xorg-xinput, arandr, feh, xfce4-notifyd",
   ## Mega-Customized Desktop (Sway)
   "sway, swaybg, waybar, mako, wl-clipboard, kanshi, egl-wayland, bemenu-wayland",
