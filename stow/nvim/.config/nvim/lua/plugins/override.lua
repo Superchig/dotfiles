@@ -1,6 +1,6 @@
 return {
   -- The next three plugins modify the behavior of f and s
-  { "ggandor/leap.nvim", enabled = false },
+  { "https://codeberg.org/andyg/leap.nvim.git", enabled = false },
   { "ggandor/flit.nvim", enabled = false },
   { "folke/flash.nvim", enabled = false },
   -- I haven't taken the time to rebind this plugin to correspond to the
