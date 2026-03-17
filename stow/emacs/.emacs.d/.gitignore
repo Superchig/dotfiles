@@ -7,3 +7,4 @@ tutorial/
 ido.last
 recentf
 tramp
+*.sqlite

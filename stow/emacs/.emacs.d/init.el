@@ -114,6 +114,10 @@
   :config
   (transient-bind-q-to-quit))
 
+(use-package forge
+  :ensure t
+  :after magit cond-let)
+
 (use-package git-gutter
   :ensure t
   :config
