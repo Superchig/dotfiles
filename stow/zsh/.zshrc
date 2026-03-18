@@ -107,6 +107,7 @@ export PAGER='less -S' # Useful for the pager in psql
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/Applications/Neovide.app/Contents/MacOS"
 
 # Set up gcr-ssh-agent
 # Requires `systemctl enable --user gcr-ssh-agent.socket`
@@ -177,7 +178,6 @@ if command -v pacman-less 2>&1 > /dev/null; then
 fi
 
 alias pe="ps -e | grep"
-alias pi="pacman -Qi | grep Description"
 alias sps="sudo pacman -S"
 alias spr="sudo pacman -R"
 alias spk="sudo pacman -D --asexplicit"
