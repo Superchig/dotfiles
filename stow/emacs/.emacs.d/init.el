@@ -200,11 +200,27 @@
 (use-package elfeed
   :ensure t
   :config
+  ;; https://campaignwiki.org/osr/
+  ;; https://rootr.ing/
   ;; https://www.newskeeper.io/tools/youtube-rss
   (setq elfeed-feeds
-	'("https://beyondfomalhaut.blogspot.com/rss.xml"
-	  "https://alldeadgenerations.blogspot.com/rss.xml"))
+	'("https://beyondfomalhaut.blogspot.com/feeds/posts/default"
+	  "https://arbiterofworlds.substack.com/feed"
 
+	  "https://alldeadgenerations.blogspot.com/feeds/posts/default"
+	  "https://www.bastionland.com/rss.xml"
+	  "https://widdershinswanderings.bearblog.dev/feed/"
+	  "https://www.prismaticwasteland.com/?format=rss"
+
+	  "https://goblinpunch.blogspot.com/feeds/posts/default"
+	  "https://grognardia.blogspot.com/feeds/posts/default"
+	  "https://dreamingdragonslayer.wordpress.com/feed"))
+
+  (face-remap-set-base 'shr-text)
+
+  (setq elfeed-db-directory "~/Documents/usb/Ventoy/elfeed")
+
+  ;; The filter should by default show all articles
   (setq elfeed-search-filter ""))
 
 (use-package evil
