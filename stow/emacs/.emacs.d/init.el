@@ -3,6 +3,9 @@
 ;; (toggle-scroll-bar -1)
 (blink-cursor-mode -1)
 
+(add-to-list 'default-frame-alist
+             '(vertical-scroll-bars . nil))
+
 (global-display-line-numbers-mode 1)
 (electric-pair-mode 1)
 
