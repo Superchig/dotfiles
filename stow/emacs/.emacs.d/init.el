@@ -36,12 +36,17 @@
       (insert font)
       (insert "\n"))))
 
-;; On macOS, you can also use change Emacs' font rendering with:
-;; `defaults write org.gnu.Emacs AppleFontSmoothing -int 0'
-;; `defaults delete org.gnu.Emacs AppleFontSmoothing'
-;; Remember to restart
-(cond ((eq system-type 'darwin) (set-frame-font "MesloLGM Nerd Font Mono 14"))
-      ((eq system-type 'gnu/linux) (set-frame-font "Iosevka Nerd Font Mono 12")))
+(defvar my-monospace-font
+  ;; On macOS, you can also use change Emacs' font rendering with:
+  ;; `defaults write org.gnu.Emacs AppleFontSmoothing -int 0'
+  ;; `defaults delete org.gnu.Emacs AppleFontSmoothing'
+  ;; Remember to restart
+  (cond
+   ;; ((eq system-type 'darwin) "MesloLGM Nerd Font Mono 14")
+   ((eq system-type 'darwin) "Iosevka Nerd Font Mono 16")
+   ((eq system-type 'gnu/linux) "Iosevka Nerd Font Mono 12")))
+
+(set-frame-font my-monospace-font)
 
 (setq scroll-preserve-screen-position t)
 (setq help-window-select t)
@@ -216,7 +221,20 @@
 	  "https://grognardia.blogspot.com/feeds/posts/default"
 	  "https://dreamingdragonslayer.wordpress.com/feed"))
 
-  (face-remap-set-base 'shr-text)
+  ;; (set-face-font 'shr-text my-monospace-font)
+  ;; (set-face-font 'shr-h3 "Times New Roman")
+
+  (setq browse-url-browser-function 'browse-url-generic)
+  (setq browse-url-generic-program (cond ((eq system-type 'darwin)) "waterfox"
+					 ((eq system-type 'gnu/linux)) "firefox"))
+
+  (keymap-set elfeed-search-mode-map "j" 'next-line)
+  (keymap-set elfeed-search-mode-map "k" 'previous-line)
+  (keymap-set elfeed-search-mode-map "/" 'isearch-forward)
+  (keymap-set elfeed-search-mode-map "?" 'isearch-backward)
+  (keymap-set elfeed-search-mode-map "n" 'isearch-repeat-forward)
+  (keymap-set elfeed-search-mode-map "N" 'isearch-repeat-backward)
+  ;; (keymap-set elfeed-search-mode-map "/" 'isearch-forward)
 
   (setq elfeed-db-directory "~/Documents/usb/Ventoy/elfeed")
 
