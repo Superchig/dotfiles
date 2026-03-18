@@ -15,6 +15,14 @@
 
 (setq mac-command-modifier 'meta)
 
+(setq scroll-conservatively 10000)
+(setq scroll-step 1)
+
+(keymap-global-set "C-c i"
+		   (lambda ()
+		     (interactive)
+		     (find-file "~/.emacs.d/init.el")))
+
 ;; (ido-mode 1)
 
 (defun insert-available-fonts ()
@@ -87,9 +95,14 @@
 				       (custom-available-themes))))))
     (disable-all-themes)
     (load-theme theme t))
-  
-  (cond ((eq system-type 'darwin) (print "No theme set in macOS"))
-	((eq system-type 'gnu/linux) (load-theme 'doom-one t))))
+
+  (defvar my-emacs-theme
+    (cond ((eq system-type 'darwin) 'doom-badger)
+	  ((eq system-type 'gnu/linux) 'doom-badger)))
+
+  (defvar my-emacs-evil-theme 'doom-one)
+
+  (load-theme my-emacs-theme))
 
 (use-package which-key
   :ensure t
@@ -101,6 +114,11 @@
   :ensure t
   :config
   (vertico-mode))
+
+(use-package hotfuzz
+  :ensure t
+  :config
+  (setq completion-styles '(hotfuzz)))
 
 (use-package ace-window
   :ensure t
@@ -178,6 +196,40 @@
 (use-package geiser-guile
   :ensure t
   :after geiser)
+
+(use-package elfeed
+  :ensure t
+  :config
+  ;; https://www.newskeeper.io/tools/youtube-rss
+  (setq elfeed-feeds
+	'("https://beyondfomalhaut.blogspot.com/rss.xml"
+	  "https://alldeadgenerations.blogspot.com/rss.xml"))
+
+  (setq elfeed-search-filter ""))
+
+(use-package evil
+  :ensure t
+  :after doom-themes
+  :config
+
+  (add-hook 'evil-mode-hook 'my-evil-mode-hook)
+
+  (defun my-evil-mode-hook ()
+    (dolist (theme custom-enabled-themes)
+      (disable-theme theme))
+    (if evil-mode
+	(load-theme my-emacs-evil-theme t)
+      (load-theme my-emacs-theme t)))
+  
+  (keymap-global-set "C-c v"
+		     (lambda () (interactive) (evil-mode 1)))
+  (keymap-global-set "C-c e"
+		     (lambda () (interactive) (evil-mode -1))))
+
+(use-package rg
+  :ensure t
+  :config
+  (rg-enable-default-bindings))
 
 ;; (defun scroll-half-page-down ()
 ;;   "Scroll down half the page."
