@@ -64,15 +64,15 @@ local function md5sum(str)
 end
 
 ---@param path string
----@return string
+---@return string?, string
 local function read_file(path)
 	local file = io.open(path, "r") -- Open file in read mode
 	if not file then
-		error("Could not open file: " .. path)
+		return "Could not open file: " .. path, ""
 	end
 	local content = file:read("*a") -- "*a" reads the entire file
 	file:close()
-	return content
+	return nil, content
 end
 
 local function lines(s)
@@ -116,7 +116,10 @@ local function on_load()
 	)
 	local hash = md5sum(path)
 	local watch_later_file_path = utils.join_path(watch_later_dir, hash)
-	local content = read_file(watch_later_file_path)
+	local err, content = read_file(watch_later_file_path)
+	if err ~= nil then
+		return
+	end
 
 	for line in lines(content) do
 		if #line <= 0 or line:sub(1, 1) == "#" then
