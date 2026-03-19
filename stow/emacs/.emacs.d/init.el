@@ -225,8 +225,8 @@
   ;; (set-face-font 'shr-h3 "Times New Roman")
 
   (setq browse-url-browser-function 'browse-url-generic)
-  (setq browse-url-generic-program (cond ((eq system-type 'darwin)) "waterfox"
-					 ((eq system-type 'gnu/linux)) "firefox"))
+  (setq browse-url-generic-program (cond ((eq system-type 'darwin) "waterfox")
+					 ((eq system-type 'gnu/linux) "firefox")))
 
   (keymap-set elfeed-search-mode-map "j" 'next-line)
   (keymap-set elfeed-search-mode-map "k" 'previous-line)
