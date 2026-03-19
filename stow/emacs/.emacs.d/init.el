@@ -102,10 +102,10 @@
     (load-theme theme t))
 
   (defvar my-emacs-theme
-    (cond ((eq system-type 'darwin) 'doom-badger)
-	  ((eq system-type 'gnu/linux) 'doom-badger)))
+    (cond ((eq system-type 'darwin) 'doom-one)
+	  ((eq system-type 'gnu/linux) 'doom-one)))
 
-  (defvar my-emacs-evil-theme 'doom-one)
+  (defvar my-emacs-evil-theme 'doom-badger)
 
   (load-theme my-emacs-theme))
 
