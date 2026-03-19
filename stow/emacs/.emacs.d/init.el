@@ -241,6 +241,43 @@
   ;; The filter should by default show all articles
   (setq elfeed-search-filter ""))
 
+(use-package minimail
+  :ensure t
+  :config
+  (setq mail-user-agent 'minimail)
+
+  (defvar my-minimail-accounts-file
+    (concat (file-name-directory user-init-file)
+	    "minimail-accounts.el"))
+
+  (if (file-exists-p my-minimail-accounts-file)
+      (setq minimail-accounts
+	    (with-temp-buffer
+	      (insert-file-contents my-minimail-accounts-file)
+	      (let (($contents (buffer-string)))
+		(eval (car (read-from-string $contents)))))))
+  
+  ;; https://www.emoses.org/posts/emacs-custom-auth-source/
+  ;; (setq minimail-accounts
+  ;; 	'((gmail ;; This can be any symbol you like to identify the account
+  ;;        :mail-address "somebody@gmail.com"
+  ;;        :incoming-url "imaps://imap.gmail.com"
+  ;;        :outgoing-url "smtps://smtp.gmail.com")
+  ;;       (work ;; Assuming Evil Corp. uses "Google Workspace" as email provider
+  ;;        :mail-address "webmaster@evilcorp.com"
+  ;;        :incoming-url "imaps://imap.gmail.com"
+  ;;        :outgoing-url "smtps://smtp.gmail.com"
+  ;;        :signature (file "~/work/.signature"))
+  ;;       (uni
+  ;;        :mail-address "somebody@math.niceuni.edu"
+  ;;        ;; Include a username in the server URLs if it doesn't match
+  ;;        ;; your email address.
+  ;;        ;; Use `imap' and `smtp' as URL scheme if your server only
+  ;;        ;; supports STARTTLS.
+  ;;        :incoming-url "imap://username@imap.niceuni.edu"
+  ;;        :outgoing-url "smtp://username@smtp.niceuni.edu")))
+  )
+
 (use-package evil
   :ensure t
   :after doom-themes

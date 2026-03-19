@@ -8,6 +8,7 @@
 .emacs.d/el-get
 .emacs.d/recentf
 .emacs.d/tramp
+minimail-accounts.el
 .DS_STORE
 
 stow/kitty/.config/kitty/device-specific.conf
