@@ -254,11 +254,18 @@
     (if evil-mode
 	(load-theme my-emacs-evil-theme t)
       (load-theme my-emacs-theme t)))
+
+  (defun enable-evil-mode ()
+    (interactive)
+    (evil-mode 1))
+
+  (defun disable-evil-mode ()
+    (interactive)
+    (evil-mode -1))
   
-  (keymap-global-set "C-c v"
-		     (lambda () (interactive) (evil-mode 1)))
-  (keymap-global-set "C-c e"
-		     (lambda () (interactive) (evil-mode -1))))
+  (keymap-global-set "C-c v" 'enable-evil-mode)
+   
+  (keymap-global-set "C-c e" 'disable-evil-mode))
 
 (use-package rg
   :ensure t
