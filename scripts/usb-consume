@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import json
+import subprocess
+
+with open("/usr/local/mnt/Ventoy/mpv/watch_history.jsonl") as f:
+    lines = f.readlines()
+
+last_line = lines[len(lines) - 1]
+
+most_recent_vid = json.loads(last_line)
+
+path = most_recent_vid["path"]
+
+subprocess.run(["mpv", path])
