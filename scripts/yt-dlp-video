@@ -1,0 +1,7 @@
+#!/bin/sh
+
+yt-dlp \
+  -o "%(release_date,upload_date)s %(release_timestamp,timestamp)s %(title)s [%(duration_string)s] [%(id)s].%(ext)s" \
+  --cookies-from-browser=firefox \
+  --mark-watched \
+  "$@"
