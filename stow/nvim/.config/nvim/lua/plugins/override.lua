@@ -309,6 +309,13 @@ return {
           })
         end,
       }
+
+      if jit.os == "Linux" then
+        ---@type vim.lsp.ClientConfig
+        opts.servers.ruby_lsp = {
+          cmd = { "ruby-lsp" },
+        }
+      end
     end,
   },
 
