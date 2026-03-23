@@ -204,6 +204,9 @@
   :ensure t
   :after geiser)
 
+(use-package sicp
+  :ensure t)
+
 (use-package elfeed
   :ensure t
   :config
