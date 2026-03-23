@@ -169,6 +169,7 @@ alias en="e ~/tmp/zoom_items.md"
 alias ecl="emacsclient"
 alias ea="e ~/.config/awesome/rc.lua"
 alias eh="e ~/.config/hypr/hyprland.conf"
+alias et="e /usr/local/mnt/Ventoy/TODO.txt"
 
 alias fr="history | sk | cut -c 8-"
 alias lg="lazygit"
@@ -190,10 +191,9 @@ fi
 
 alias gimme="sudo chown ${USER} *"
 
-alias cdc="cd $HOME/Documents/CPSC_Courses/cpsc231_a1/"
 alias cdo="cd $HOME/Downloads"
 alias cdd="cd $HOME/dotfiles"
-alias cds="cd $HOME/school/sophomore_fall"
+alias cdvv="cd /usr/local/mnt/Ventoy/videos/"
 
 alias activate="source env/bin/activate"
 alias sz='source ~/.zshrc'
