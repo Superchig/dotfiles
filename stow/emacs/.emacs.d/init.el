@@ -18,6 +18,8 @@
 (setq scroll-conservatively 10000)
 (setq scroll-step 1)
 
+(setq inhibit-startup-screen t)
+
 (keymap-global-set "C-c i"
 		   (lambda ()
 		     (interactive)
