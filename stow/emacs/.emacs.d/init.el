@@ -25,6 +25,15 @@
 		     (interactive)
 		     (find-file "~/.emacs.d/init.el")))
 
+(use-package org
+  :config
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-agenda-files (list (concat org-directory "/agenda/")
+			     org-default-notes-file)))
+
+
+(keymap-global-set "C-c c" 'org-capture)
+
 ;; (ido-mode 1)
 
 (defun insert-available-fonts ()
