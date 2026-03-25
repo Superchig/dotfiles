@@ -213,6 +213,10 @@
   :ensure t
   :after geiser)
 
+(use-package geiser-chez
+  :ensure t
+  :after geiser)
+
 (use-package sicp
   :ensure t)
 
