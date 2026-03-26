@@ -258,7 +258,7 @@
   (keymap-set elfeed-search-mode-map "N" 'isearch-repeat-backward)
   ;; (keymap-set elfeed-search-mode-map "/" 'isearch-forward)
 
-  (setq elfeed-db-directory "/usr/local/mnt/Ventoy/")
+  (setq elfeed-db-directory "/usr/local/mnt/Ventoy/elfeed/")
 
   ;; The filter should by default show all articles
   (setq elfeed-search-filter ""))
