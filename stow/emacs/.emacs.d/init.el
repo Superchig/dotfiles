@@ -202,8 +202,12 @@
     (sly-compile-defun))
   
   (keymap-set sly-editing-mode-map "C-c C-c" 'my/sly-save-and-compile)
-  (setq sly-lisp-implementations
-	'((qlot-ros-sbcl ("qlot" "exec" "ros" "run" "--" "--dynamic-space-size" "4Gb"))))
+  (when (locate-file "sbcl" exec-path)
+    (add-to-list 'sly-lisp-implementations
+		 '((sbcl ("sbcl")))))
+  (when (locate-file "qlot" exec-path)
+    (add-to-list 'sly-lisp-implementations
+		 '((qlot-ros-sbcl ("qlot" "exec" "ros" "run" "--" "--dynamic-space-size" "4Gb")))))
   (setq sly-description-autofocus t))
 
 (use-package geiser
