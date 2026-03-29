@@ -67,6 +67,7 @@
 
 (add-hook 'prog-mode-hook 'hl-line-mode)
 (add-hook 'text-mode-hook 'hl-line-mode)
+(add-hook 'text-mode-hook 'auto-fill-mode)
 
 (defun my/term-mode-hook ()
   (display-line-numbers-mode -1)
