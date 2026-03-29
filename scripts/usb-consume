@@ -2,6 +2,7 @@
 
 import json
 import subprocess
+from pathlib import Path
 
 with open("/usr/local/mnt/Ventoy/mpv/watch_history.jsonl") as f:
     lines = f.readlines()
@@ -11,5 +12,7 @@ last_line = lines[len(lines) - 1]
 most_recent_vid = json.loads(last_line)
 
 path = most_recent_vid["path"]
+
+print(f"Parent directory: {Path(path).parent}")
 
 subprocess.run(["mpv", path])
