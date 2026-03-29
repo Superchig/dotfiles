@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Prints a cheatsheet of pacman commands
+
+echo "pacman -Ql <package> # List all files in package"
+echo "pacman -Qo <file>    # Find package which contains file"
