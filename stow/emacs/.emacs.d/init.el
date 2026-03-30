@@ -253,18 +253,69 @@
   (setq browse-url-generic-program (cond ((eq system-type 'darwin) "waterfox")
 					 ((eq system-type 'gnu/linux) "firefox")))
 
-  (keymap-set elfeed-search-mode-map "j" 'next-line)
-  (keymap-set elfeed-search-mode-map "k" 'previous-line)
-  (keymap-set elfeed-search-mode-map "/" 'isearch-forward)
-  (keymap-set elfeed-search-mode-map "?" 'isearch-backward)
-  (keymap-set elfeed-search-mode-map "n" 'isearch-repeat-forward)
-  (keymap-set elfeed-search-mode-map "N" 'isearch-repeat-backward)
-  ;; (keymap-set elfeed-search-mode-map "/" 'isearch-forward)
+  (keymap-set elfeed-search-mode-map "<return>" 'my-elfeed-open-html-in-browser)
+  (keymap-set elfeed-search-mode-map "C-<return>" 'elfeed-search-show-entry)
 
   (setq elfeed-db-directory "/usr/local/mnt/Ventoy/elfeed/")
 
   ;; The filter should by default show all articles
-  (setq elfeed-search-filter ""))
+  (setq elfeed-search-filter "")
+
+  (defvar my-elfeed-temporary-files nil)
+
+  (defun my-elfeed-rm-temporary-files ()
+    (interactive)
+    "Remove all temporary files described in `my-elfeed-temporary-files'"
+    (while-let ((file (pop my-elfeed-temporary-files)))
+      (delete-file file)))
+
+  (defun my-elfeed-html-template (body title)
+    (concat
+     "<!DOCTYPE html>"
+     "<html lang=\"en-US\">"
+     
+     "<head>"
+     "<meta charset=\"utf-8\" />"
+     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+     "<title>"
+     title
+     "</title>"
+     "
+<style>
+body {
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+
+  // line-height: 1.5rem;
+}
+</style>
+"
+     "</head>"
+
+     "<body>"
+     body
+     "</body>"
+     
+     "</html>"))
+
+  (add-hook 'kill-emacs-hook 'my-elfeed-rm-temporary-files)
+
+  (defun my-elfeed-open-html-in-browser (entry)
+    "Open this Elfeed HTML article in your browser."
+    (interactive (list (elfeed-search-selected :ignore-region)))
+    (when (elfeed-entry-p entry)
+      (with-temp-buffer	
+	(let* ((sha (elfeed-ref-id (elfeed-entry-content entry)))
+	       (first-two (substring sha 0 2))
+	       (html-body (elfeed-slurp
+			   (concat elfeed-db-directory "data/" first-two "/" sha)))
+	       (_ (insert (my-elfeed-html-template html-body
+						   (elfeed-entry-title entry))))
+	       (tmp-file-name
+		(make-temp-file "article" nil ".html" (buffer-string)))
+	       (_ (add-to-list 'my-elfeed-temporary-files tmp-file-name))
+	       (_ (browse-url tmp-file-name))))))))
 
 (use-package minimail
   :ensure t
