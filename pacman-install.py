@@ -28,7 +28,7 @@ packages = [
     "fish, zsh, mcfly, zoxide",
     "zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search",
     ## Development
-    "xh, docker, docker-buildx, cmake, ninja",
+    "xh, docker, docker-buildx, docker-compose, cmake, ninja",
     # Desktop Suite
     ## Packages For Any Desktop
     "pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks, gnome-clocks",
