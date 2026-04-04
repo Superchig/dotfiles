@@ -42,7 +42,7 @@ packages = [
     "sway, swaybg, waybar, mako, wl-clipboard, kanshi, egl-wayland, bemenu-wayland",
     "slurp, grim",
     ## Tools For Any Desktop
-    "firefox, sxiv, mpv, vlc, pavucontrol, discord, seahorse, qalculate-gtk",
+    "firefox, sxiv, mpv, mpv-mpris, vlc, pavucontrol, discord, seahorse, qalculate-gtk",
     "zathura, zathura-pdf-poppler, code, audacity, gimp, neovide, halloy",
     ## Fonts
     "adobe-source-han-sans-otc-fonts, adobe-source-han-serif-otc-fonts",
