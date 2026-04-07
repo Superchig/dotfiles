@@ -2,6 +2,7 @@
 
 yt-dlp \
   -o "%(release_date,upload_date)s %(release_timestamp,timestamp)s %(title)s [%(duration_string)s] [%(id)s].%(ext)s" \
+  -S "+res:1080" \
   --cookies-from-browser=firefox \
   --mark-watched \
   "$@"
