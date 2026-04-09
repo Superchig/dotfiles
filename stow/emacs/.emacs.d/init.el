@@ -385,6 +385,9 @@ body {
   :config
   (rg-enable-default-bindings))
 
+(use-package ghostel
+  :ensure t)
+
 ;; (defun scroll-half-page-down ()
 ;;   "Scroll down half the page."
 ;;   (interactive)
