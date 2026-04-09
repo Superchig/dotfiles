@@ -169,7 +169,7 @@ alias en="e ~/tmp/zoom_items.md"
 alias ecl="emacsclient"
 alias ea="e ~/.config/awesome/rc.lua"
 alias eh="e ~/.config/hypr/hyprland.conf"
-alias et="e /usr/local/mnt/Ventoy/TODO.txt"
+alias et="e /run/media/chiggie/Ventoy/TODO.txt"
 
 alias fr="history | sk | cut -c 8-"
 alias lg="lazygit"
