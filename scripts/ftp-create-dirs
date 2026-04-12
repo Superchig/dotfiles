@@ -1,0 +1,369 @@
+#!/usr/bin/env python3
+"""
+Recursively creates directories a-z on an SFTP server up to a configurable
+depth, using a pool of concurrent SFTP connections for speed.
+
+Concurrency strategy (barrier-per-level):
+  At each depth level, the 26 letters are divided evenly across connections.
+  All connections must finish creating their slice before any connection moves
+  on to the next level. This guarantees every parent exists before any child
+  mkdir is attempted.
+
+  Example with 3 connections at depth 2 inside /uploads:
+    Round 1 — create depth-1 dirs (barrier):
+      conn-1: /uploads/a … /uploads/i
+      conn-2: /uploads/j … /uploads/r
+      conn-3: /uploads/s … /uploads/z
+    --- barrier: all depth-1 dirs confirmed present ---
+    Round 2 — create depth-2 dirs inside each depth-1 dir (barrier):
+      conn-1: /uploads/a/a…z, /uploads/b/a…z, … /uploads/i/a…z
+      conn-2: /uploads/j/a…z, … /uploads/r/a…z
+      conn-3: /uploads/s/a…z, … /uploads/z/a…z
+
+Requires paramiko:
+    pip install paramiko
+"""
+
+import argparse
+import math
+import string
+import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor, wait
+from queue import Queue
+
+try:
+    import paramiko
+except ImportError:
+    print(
+        "Error: paramiko is required. Install it with:  pip install paramiko",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+# ── connection pool ───────────────────────────────────────────────────────────
+
+
+class SFTPPool:
+    """Thread-safe pool of persistent (SSHClient, SFTPClient) pairs."""
+
+    def __init__(
+        self,
+        size: int,
+        host: str,
+        port: int,
+        username: str,
+        password: str | None,
+        pkey: paramiko.PKey | None,
+    ) -> None:
+        self._pool: Queue = Queue()
+        self._clients: list[paramiko.SSHClient] = []
+        for _ in range(size):
+            ssh = _open_ssh(host, port, username, password, pkey)
+            sftp = ssh.open_sftp()
+            self._clients.append(ssh)
+            self._pool.put(sftp)
+
+    def acquire(self) -> paramiko.SFTPClient:
+        return self._pool.get()
+
+    def release(self, sftp: paramiko.SFTPClient) -> None:
+        self._pool.put(sftp)
+
+    def close_all(self) -> None:
+        for ssh in self._clients:
+            try:
+                ssh.close()
+            except Exception:
+                pass
+
+
+# ── helpers ───────────────────────────────────────────────────────────────────
+
+
+def _load_pkey(key_path: str, password: str | None) -> paramiko.PKey:
+    for cls in (
+        paramiko.Ed25519Key,
+        paramiko.RSAKey,
+        paramiko.ECDSAKey,
+        paramiko.DSSKey,
+    ):
+        try:
+            return cls.from_private_key_file(key_path, password=password)
+        except paramiko.SSHException:
+            continue
+    raise ValueError(f"Could not load private key from '{key_path}'")
+
+
+def _open_ssh(
+    host: str,
+    port: int,
+    username: str,
+    password: str | None,
+    pkey: paramiko.PKey | None,
+) -> paramiko.SSHClient:
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(
+        hostname=host,
+        port=port,
+        username=username,
+        password=password if not pkey else None,
+        pkey=pkey,
+        timeout=30,
+        look_for_keys=(pkey is None),
+        allow_agent=(pkey is None),
+    )
+    return ssh
+
+
+def _mkdirs(sftp: paramiko.SFTPClient, path: str) -> None:
+    """mkdir -p on a remote path."""
+    parts = [p for p in path.replace("\\", "/").split("/") if p]
+    current = "/"
+    for part in parts:
+        current = f"{current}/{part}".lstrip("/")
+        try:
+            sftp.mkdir(current)
+        except OSError:
+            pass
+
+
+def _existing(sftp: paramiko.SFTPClient, path: str) -> set:
+    try:
+        return {e.filename for e in sftp.listdir_attr(path)}
+    except OSError:
+        return set()
+
+
+def _chunk(items: list, n: int) -> list[list]:
+    """Split *items* into *n* roughly equal chunks."""
+    size = math.ceil(len(items) / n)
+    return [items[i : i + size] for i in range(0, len(items), size)]
+
+
+# ── barrier-per-level logic ───────────────────────────────────────────────────
+
+
+def _create_dirs_in_parents(
+    pool: SFTPPool, parents: list[str], print_lock: threading.Lock, counters: dict
+) -> list[str]:
+    """
+    Create a–z inside every path in *parents*, returning the full list of
+    child paths (whether newly created or already existing) for the next level.
+
+    The 26*len(parents) mkdir calls are divided across all pool connections
+    and executed concurrently.  This function blocks until every future is done
+    (the barrier).
+    """
+    # Build the flat list of (parent, letter) tasks and chunk by pool size
+    tasks: list[tuple[str, str]] = [
+        (parent, letter) for parent in parents for letter in string.ascii_lowercase
+    ]
+    n_conns = len(pool._clients)
+    chunks = _chunk(tasks, n_conns)
+
+    lock = threading.Lock()
+    local_created: list[int] = [0]
+    local_skipped: list[int] = [0]
+
+    def worker(chunk: list[tuple[str, str]]) -> None:
+        sftp = pool.acquire()
+        try:
+            for parent, letter in chunk:
+                path = f"{parent}/{letter}"
+                existing = _existing(sftp, parent)
+                if letter in existing:
+                    with lock:
+                        local_skipped[0] += 1
+                else:
+                    try:
+                        sftp.mkdir(path)
+                        with lock:
+                            local_created[0] += 1
+                        with print_lock:
+                            print(f"  Created: {path}")
+                    except OSError as exc:
+                        with print_lock:
+                            print(
+                                f"  Warning: could not create '{path}' — {exc}",
+                                file=sys.stderr,
+                            )
+        finally:
+            pool.release(sftp)
+
+    with ThreadPoolExecutor(max_workers=n_conns) as executor:
+        futures = [executor.submit(worker, chunk) for chunk in chunks if chunk]
+        wait(futures)  # ← barrier: all dirs at this level done before returning
+        for f in futures:
+            if f.exception():
+                print(f"  Error in worker: {f.exception()}", file=sys.stderr)
+
+    counters["created"] += local_created[0]
+    counters["skipped"] += local_skipped[0]
+
+    # Return all child paths (regardless of created/skipped) for next level
+    return [
+        f"{parent}/{letter}" for parent in parents for letter in string.ascii_lowercase
+    ]
+
+
+# ── public entry point ────────────────────────────────────────────────────────
+
+
+def create_alpha_dirs(
+    host: str,
+    username: str,
+    password: str | None,
+    target_dir: str,
+    port: int = 22,
+    depth: int = 1,
+    key_path: str | None = None,
+    connections: int = 10,
+) -> None:
+    """
+    Connect to an SFTP server and create a–z directories up to *depth* levels
+    deep inside *target_dir*, using barrier-synchronised concurrent connections.
+    """
+    if not 1 <= depth <= 3:
+        print("Error: --depth must be between 1 and 3.", file=sys.stderr)
+        sys.exit(1)
+    if not 1 <= connections <= 10:
+        print("Error: --connections must be between 1 and 10.", file=sys.stderr)
+        sys.exit(1)
+
+    total_dirs = sum(26**d for d in range(1, depth + 1))
+    print(f"Connecting to {host}:{port} …")
+    print(f"Depth       : {depth}  (will create up to {total_dirs:,} directories)")
+    print(f"Connections : {connections}")
+
+    pkey = None
+    if key_path:
+        try:
+            pkey = _load_pkey(key_path, password)
+        except Exception as exc:
+            print(f"Error loading private key: {exc}", file=sys.stderr)
+            sys.exit(1)
+
+    # One bootstrap connection to ensure target_dir exists
+    try:
+        bootstrap_ssh = _open_ssh(host, port, username, password, pkey)
+    except paramiko.AuthenticationException:
+        print("Error: Authentication failed.", file=sys.stderr)
+        sys.exit(1)
+    except (paramiko.SSHException, OSError) as exc:
+        print(f"Connection error: {exc}", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"Logged in as '{username}'.")
+
+    try:
+        with bootstrap_ssh.open_sftp() as sftp:
+            target_dir = "/" + target_dir.strip("/")
+            try:
+                sftp.stat(target_dir)
+                print(f"Using existing directory: {target_dir}\n")
+            except OSError:
+                print(f"Directory '{target_dir}' not found — creating it …")
+                _mkdirs(sftp, target_dir)
+                print(f"Created directory: {target_dir}\n")
+    finally:
+        bootstrap_ssh.close()
+
+    # Open the persistent connection pool
+    pool = SFTPPool(connections, host, port, username, password, pkey)
+    print_lock = threading.Lock()
+    counters = {"created": 0, "skipped": 0}
+
+    try:
+        # Start with just the target dir as the single "parent" and iterate
+        # level by level, waiting for the full level to complete (barrier)
+        # before moving on.
+        current_parents = [target_dir]
+        for level in range(1, depth + 1):
+            print(
+                f"--- Depth {level} "
+                f"({len(current_parents) * 26} directories across "
+                f"{connections} connection(s)) ---"
+            )
+            current_parents = _create_dirs_in_parents(
+                pool, current_parents, print_lock, counters
+            )
+    finally:
+        pool.close_all()
+
+    print("\n--- Summary ---")
+    print(f"Created : {counters['created']:>6,}")
+    print(f"Skipped : {counters['skipped']:>6,}  (already existed)")
+    print(f"Total   : {counters['created'] + counters['skipped']:>6,}")
+
+
+# ── CLI ───────────────────────────────────────────────────────────────────────
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Recursively create directories a–z on an SFTP server. "
+            "Uses barrier-synchronised concurrent connections: all dirs at "
+            "each depth level are created before moving to the next."
+        )
+    )
+    parser.add_argument("host", help="SFTP server hostname or IP")
+    parser.add_argument("username", help="SSH username")
+    parser.add_argument(
+        "target_dir", help="Remote directory to create the a–z tree inside"
+    )
+    parser.add_argument(
+        "--password",
+        default=None,
+        help="SSH password (omit to use key auth via agent or default keys)",
+    )
+    parser.add_argument(
+        "--key",
+        dest="key_path",
+        default=None,
+        metavar="PATH",
+        help="Path to a private key file (e.g. ~/.ssh/id_rsa)",
+    )
+    parser.add_argument("--port", type=int, default=22, help="SSH port (default: 22)")
+    parser.add_argument(
+        "--depth",
+        type=int,
+        default=1,
+        choices=range(1, 4),
+        metavar="DEPTH",
+        help="Recursion depth: 1–3 (default: 1).",
+    )
+    parser.add_argument(
+        "--connections",
+        type=int,
+        default=10,
+        choices=range(1, 11),
+        metavar="N",
+        help="Concurrent SFTP connections: 1–10 (default: 10).",
+    )
+
+    args = parser.parse_args()
+
+    if not args.password and not args.key_path:
+        print(
+            "Note: no --password or --key provided; "
+            "will attempt SSH agent / default key authentication.\n"
+        )
+
+    create_alpha_dirs(
+        host=args.host,
+        username=args.username,
+        password=args.password,
+        target_dir=args.target_dir,
+        port=args.port,
+        depth=args.depth,
+        key_path=args.key_path,
+        connections=args.connections,
+    )
+
+
+if __name__ == "__main__":
+    main()
