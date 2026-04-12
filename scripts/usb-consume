@@ -4,7 +4,7 @@ import json
 import subprocess
 from pathlib import Path
 
-with open("/usr/local/mnt/Ventoy/mpv/watch_history.jsonl") as f:
+with open("/run/media/chiggie/Ventoy/mpv/watch_history.jsonl") as f:
     lines = f.readlines()
 
 last_line = lines[len(lines) - 1]
