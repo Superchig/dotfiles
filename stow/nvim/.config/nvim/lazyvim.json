@@ -1,7 +1,8 @@
 {
   "extras": [
     "lazyvim.plugins.extras.coding.mini-surround",
-    "lazyvim.plugins.extras.lang.typst"
+    "lazyvim.plugins.extras.lang.typst",
+    "lazyvim.plugins.extras.lang.vue"
   ],
   "install_version": 7,
   "news": {
