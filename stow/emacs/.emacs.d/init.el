@@ -234,17 +234,29 @@
   ;; https://rootr.ing/
   ;; https://www.newskeeper.io/tools/youtube-rss
   (setq elfeed-feeds
-	'("https://beyondfomalhaut.blogspot.com/feeds/posts/default"
-	  "https://arbiterofworlds.substack.com/feed"
+	'(("https://beyondfomalhaut.blogspot.com/feeds/posts/default" right-wing osr)
+	  ("https://arbiterofworlds.substack.com/feed" right-wing osr)
 
-	  "https://alldeadgenerations.blogspot.com/feeds/posts/default"
-	  "https://www.bastionland.com/rss.xml"
-	  "https://widdershinswanderings.bearblog.dev/feed/"
-	  "https://www.prismaticwasteland.com/?format=rss"
+	  ("https://alldeadgenerations.blogspot.com/feeds/posts/default" left-wing osr)
+	  ("https://www.bastionland.com/rss.xml" left-wing osr)
+	  ("https://widdershinswanderings.bearblog.dev/feed/" left-wing osr)
+	  ("https://www.prismaticwasteland.com/?format=rss" left-wing osr)
 
-	  "https://goblinpunch.blogspot.com/feeds/posts/default"
-	  "https://grognardia.blogspot.com/feeds/posts/default"
-	  "https://dreamingdragonslayer.wordpress.com/feed"))
+	  ("https://goblinpunch.blogspot.com/feeds/posts/default" osr)
+	  ("https://grognardia.blogspot.com/feeds/posts/default" osr)
+	  ("https://dreamingdragonslayer.wordpress.com/feed" osr)
+
+ 	  ("https://www.peoplespolicyproject.org/feed/" politics left-wing)
+	  ("https://jacobin.com/feed" politics left-wing)
+	  ("https://www.theupandup.us/feed" politics left-wing)
+	  ("https://www.slowboring.com/feed" politics left-wing)
+	  ("https://www.theargumentmag.com/feed" politics left-wing)
+	  ("https://www.vox.com/rss/index.xml" politics left-wing)
+	  
+	  ("https://www.richardhanania.com/feed" politics right-wing)
+
+	  ("https://garymarcus.substack.com/feed.xml" ai)
+	  ("https://idiallo.com/feed.rss" ai)))
 
   ;; (set-face-font 'shr-text my-monospace-font)
   ;; (set-face-font 'shr-h3 "Times New Roman")
@@ -256,10 +268,12 @@
   (keymap-set elfeed-search-mode-map "<return>" 'my-elfeed-open-html-in-browser)
   (keymap-set elfeed-search-mode-map "C-<return>" 'elfeed-search-show-entry)
 
-  (setq elfeed-db-directory "/usr/local/mnt/Ventoy/elfeed/")
+  (setq elfeed-db-directory "/run/media/chiggie/Ventoy/elfeed/")
 
-  ;; The filter should by default show all articles
-  (setq elfeed-search-filter "")
+  ;; The filter should by default hide read posts, paid posts, and podcasts
+  ;; You can add a filter for specific podcasts e.g., via "=arbiter"
+  ;; You can add a tag to an article by pressing "+"
+  (setq elfeed-search-filter "-paid -podcast +unread")
 
   (defvar my-elfeed-temporary-files nil)
 
