@@ -215,6 +215,7 @@
   :config
   (add-hook 'lisp-mode-hook 'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
   
   (keymap-set paredit-mode-map "C-<left>" 'paredit-backward-slurp-sexp)
   (keymap-set paredit-mode-map "C-<right>" 'paredit-forward-slurp-sexp)
@@ -258,6 +259,10 @@
   :after geiser)
 
 (use-package geiser-chez
+  :ensure t
+  :after geiser)
+
+(use-package geiser-racket
   :ensure t
   :after geiser)
 
