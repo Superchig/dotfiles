@@ -6,5 +6,6 @@ yt-dlp \
   --cookies-from-browser=firefox \
   --mark-watched \
   --embed-chapters \
+  --embed-thumbnail \
   --no-playlist \
   "$@"
