@@ -129,15 +129,57 @@
   (setq which-key-idle-delay 0.5)
   (which-key-mode))
 
+;; This and related packages described in:
+;; https://www.reddit.com/r/emacs/comments/117zdnu/what_are_the_benefits_of_vertico_over_helm_or_ivy/
+
+;; Show completion options vertically in minibuffer
 (use-package vertico
   :ensure t
   :config
   (vertico-mode))
 
-(use-package hotfuzz
+;; Allows for easier searching in minibuffer and in completions
+(use-package orderless
   :ensure t
   :config
-  (setq completion-styles '(hotfuzz)))
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-overrides '((file (styles partial-completion))))
+  (setq completion-pcm-leading-wildcard t))
+
+;; Show annotations alongside minibuffer options and completions
+(use-package marginalia
+  :ensure t
+  ;; Bind `marginalia-cycle' locally in the minibuffer. To make the
+  ;; binding available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+	      ("M-A" . marginalia-cycle)
+	      :map completion-list-mode-map
+	      ("M-A" . marginalia-cycle))
+  :init
+  ;; Marginalia must be activated in the :init section of use-package
+  ;; such that the mode gets enabled right away. Note that this forces
+  ;; loading the package.
+  (marginalia-mode))
+
+;; Provide a bunch of handy commands to provide better interactive
+;; search and navigation functionality
+(use-package consult
+  :ensure t
+  :config
+
+  (keymap-global-set "C-x b" #'consult-buffer)
+  (keymap-global-set "M-g g" #'consult-goto-line)
+  (keymap-global-set "M-g M-g" #'consult-goto-line)
+  
+  (setq completion-in-region-function #'consult-completion-in-region))
+
+;; Until (if) I figure out how to configure Corfu, I'll stick with
+;; company, which has nice defaults.
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode 1))
 
 (use-package ace-window
   :ensure t
@@ -167,11 +209,6 @@
   :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-
-(use-package company
-  :ensure t
-  :config
-  (global-company-mode 1))
 
 (use-package paredit
   :ensure t
