@@ -1,3 +1,47 @@
+(defvar elpaca-installer-version 0.12)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1 :inherit ignore
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca-activate)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-sources-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (<= emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
+
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable use-package :ensure support for Elpaca.
+  (elpaca-use-package-mode))
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 ;; (toggle-scroll-bar -1)
@@ -74,26 +118,26 @@
   (hl-line-mode -1))
 (add-hook 'term-mode-hook 'my/term-mode-hook)
 
-(defun install-straight-el ()
-  (interactive)
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-	 (expand-file-name
-          "straight/repos/straight.el/bootstrap.el"
-          (or (bound-and-true-p straight-base-dir)
-              user-emacs-directory)))
-	(bootstrap-version 7))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage)))
+;; (defun install-straight-el ()
+;;   (interactive)
+;;   (defvar bootstrap-version)
+;;   (let ((bootstrap-file
+;; 	 (expand-file-name
+;;           "straight/repos/straight.el/bootstrap.el"
+;;           (or (bound-and-true-p straight-base-dir)
+;;               user-emacs-directory)))
+;; 	(bootstrap-version 7))
+;;     (unless (file-exists-p bootstrap-file)
+;;       (with-current-buffer
+;;           (url-retrieve-synchronously
+;;            "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+;;            'silent 'inhibit-cookies)
+;; 	(goto-char (point-max))
+;; 	(eval-print-last-sexp)))
+;;     (load bootstrap-file nil 'nomessage)))
 
-(install-straight-el)
-(setq straight-use-package-by-default t)
+;; (install-straight-el)
+;; (setq straight-use-package-by-default t)
 
 (use-package doom-themes
   :ensure t
@@ -191,8 +235,12 @@
   :config
   (keycast-tab-bar-mode 1))
 
+(use-package transient
+  :ensure t)
+
 (use-package magit
   :ensure t
+  :after transient
   :config
   (transient-bind-q-to-quit))
 
@@ -262,11 +310,14 @@
   :ensure t
   :after geiser)
 
-(use-package geiser-racket
-  :ensure t
-  :after geiser)
+;; (use-package geiser-racket
+;;   :ensure t
+;;   :after geiser)
 
 (use-package sicp
+  :ensure t)
+
+(use-package cider
   :ensure t)
 
 (use-package elfeed
@@ -373,43 +424,6 @@ body {
 	       (_ (add-to-list 'my-elfeed-temporary-files tmp-file-name))
 	       (_ (browse-url tmp-file-name))))))))
 
-(use-package minimail
-  :ensure t
-  :config
-  (setq mail-user-agent 'minimail)
-
-  (defvar my-minimail-accounts-file
-    (concat (file-name-directory user-init-file)
-	    "minimail-accounts.el"))
-
-  (if (file-exists-p my-minimail-accounts-file)
-      (setq minimail-accounts
-	    (with-temp-buffer
-	      (insert-file-contents my-minimail-accounts-file)
-	      (let (($contents (buffer-string)))
-		(eval (car (read-from-string $contents)))))))
-  
-  ;; https://www.emoses.org/posts/emacs-custom-auth-source/
-  ;; (setq minimail-accounts
-  ;; 	'((gmail ;; This can be any symbol you like to identify the account
-  ;;        :mail-address "somebody@gmail.com"
-  ;;        :incoming-url "imaps://imap.gmail.com"
-  ;;        :outgoing-url "smtps://smtp.gmail.com")
-  ;;       (work ;; Assuming Evil Corp. uses "Google Workspace" as email provider
-  ;;        :mail-address "webmaster@evilcorp.com"
-  ;;        :incoming-url "imaps://imap.gmail.com"
-  ;;        :outgoing-url "smtps://smtp.gmail.com"
-  ;;        :signature (file "~/work/.signature"))
-  ;;       (uni
-  ;;        :mail-address "somebody@math.niceuni.edu"
-  ;;        ;; Include a username in the server URLs if it doesn't match
-  ;;        ;; your email address.
-  ;;        ;; Use `imap' and `smtp' as URL scheme if your server only
-  ;;        ;; supports STARTTLS.
-  ;;        :incoming-url "imap://username@imap.niceuni.edu"
-  ;;        :outgoing-url "smtp://username@smtp.niceuni.edu")))
-  )
-
 (use-package evil
   :ensure t
   :after doom-themes
@@ -435,14 +449,6 @@ body {
   (keymap-global-set "C-c v" 'enable-evil-mode)
    
   (keymap-global-set "C-c e" 'disable-evil-mode))
-
-(use-package rg
-  :ensure t
-  :config
-  (rg-enable-default-bindings))
-
-(use-package ghostel
-  :ensure t)
 
 ;; (defun scroll-half-page-down ()
 ;;   "Scroll down half the page."
