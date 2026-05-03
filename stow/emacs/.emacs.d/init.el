@@ -454,18 +454,8 @@ body {
    
   (keymap-global-set "C-c e" 'disable-evil-mode))
 
-;; (defun scroll-half-page-down ()
-;;   "Scroll down half the page."
-;;   (interactive)
-;;   (scroll-down (/ (window-text-height) 2)p))
-
-;; (defun scroll-half-page-up ()
-;;   "Scroll up half the page."
-;;   (interactive)
-;;   (scroll-up (/ (window-text-height) 2)))
-
-;; (global-set-key (kbd "C-v") 'scroll-half-page-up)
-;; (global-set-key (kbd "M-v") 'scroll-half-page-down)
+(global-set-key (kbd "C-v") 'evil-scroll-down)
+(global-set-key (kbd "M-v") 'evil-scroll-up)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
