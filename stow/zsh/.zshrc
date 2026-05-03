@@ -414,10 +414,13 @@ fi
 # Add to path for flutterfire
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+if [ -d "$HOME/.roswell/bin" ]; then
+  export PATH="$PATH:$HOME/.roswell/bin"
+fi
+
 if command -v rockie 2>&1 > /dev/null; then
   eval "$(rockie env)"
 fi
-
 
 if command -v mise 2>&1 > /dev/null; then
   if [ "$UNAME" = "Darwin" ]; then
