@@ -13,3 +13,5 @@ url/
 *.sqlite
 bookmarks
 projects
+
+racket-mode/input-history-Racket-REPL
