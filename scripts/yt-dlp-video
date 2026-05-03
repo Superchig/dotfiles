@@ -7,5 +7,7 @@ yt-dlp \
   --mark-watched \
   --embed-chapters \
   --embed-thumbnail \
+  --embed-metadata \
   --no-playlist \
+  --print after_move:filepath \
   "$@"
