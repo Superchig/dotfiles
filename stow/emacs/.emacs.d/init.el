@@ -295,14 +295,16 @@
     (save-buffer)
     (sly-compile-defun))
   
-  (keymap-set sly-editing-mode-map "C-c C-c" 'my/sly-save-and-compile)
+  ;; (keymap-set sly-editing-mode-map "C-c C-c" 'my/sly-save-and-compile)
   (when (locate-file "sbcl" exec-path)
     (add-to-list 'sly-lisp-implementations
 		 '(sbcl ("sbcl"))))
   (when (locate-file "qlot" exec-path)
     (add-to-list 'sly-lisp-implementations
 		 '(qlot-ros-sbcl ("qlot" "exec" "ros" "run" "--" "--dynamic-space-size" "4Gb"))))
-  (setq sly-description-autofocus t))
+  
+  (setq sly-description-autofocus t)
+  (setq common-lisp-hyperspec-root (format "file://%s/docs/HyperSpec/" (getenv "HOME"))))
 
 (use-package geiser
   :ensure t)
