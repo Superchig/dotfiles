@@ -66,10 +66,12 @@
 
 (setq inhibit-startup-screen t)
 
-(keymap-global-set "C-c i"
-		   (lambda ()
-		     (interactive)
-		     (find-file "~/.emacs.d/init.el")))
+(defun edit-init-el ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+(keymap-global-set "C-c i" #'edit-init-el)
+(keymap-global-set "<f12>" #'edit-init-el)
 
 (setq Info-default-directory-list '("~/.emacs.d/info"))
 
