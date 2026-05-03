@@ -472,6 +472,25 @@ body {
   (global-set-key (kbd "C-v") #'evil-scroll-down)
   (global-set-key (kbd "M-v") #'evil-scroll-up))
 
+(defun search-elpaca-packages-doc ()
+  "Search Elpaca packages for README files."
+  (interactive)
+  (let* ((sources-dir (cl-concatenate 'string
+				      (getenv "HOME")
+				      "/dotfiles/stow/emacs/.emacs.d/elpaca/sources/"))
+	 (package-dirs (seq-filter (lambda (filename)
+				     (file-directory-p (cl-concatenate 'string sources-dir filename)))
+				   (directory-files sources-dir)))
+	 (package (completing-read "Elpaca package:" package-dirs))
+	 (package-path (cl-concatenate 'string sources-dir package))
+	 (readme-files (seq-filter (lambda (filename)
+				     (string-prefix-p "README" filename 't))
+				   (directory-files package-path)))
+	 (first-readme-file (car readme-files)))
+    (if first-readme-file
+	(find-file (cl-concatenate 'string package-path "/" first-readme-file))
+      (message "Unable to find README file for package."))))
+
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (keymap-set help-mode-map "b" 'help-go-back)
