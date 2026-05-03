@@ -324,12 +324,16 @@
   :ensure t
   :after geiser)
 
-;; (use-package geiser-racket
-;;   :ensure t
-;;   :after geiser)
-
 (use-package sicp
   :ensure t)
+
+(use-package racket-mode
+  :ensure t
+  :config
+  (use-package paredit
+    :defer t
+    :config
+    (add-hook 'racket-mode-hook #'enable-paredit-mode)))
 
 (use-package cider
   :ensure t)
