@@ -180,15 +180,20 @@
 ;; This and related packages described in:
 ;; https://www.reddit.com/r/emacs/comments/117zdnu/what_are_the_benefits_of_vertico_over_helm_or_ivy/
 
+(use-package compat
+  :ensure t)
+
 ;; Show completion options vertically in minibuffer
 (use-package vertico
   :ensure t
+  :after compat
   :config
   (vertico-mode))
 
 ;; Allows for easier searching in minibuffer and in completions
 (use-package orderless
   :ensure t
+  :after compat
   :config
   (setq completion-styles '(orderless basic))
   (setq completion-category-overrides '((file (styles partial-completion))))
@@ -197,6 +202,7 @@
 ;; Show annotations alongside minibuffer options and completions
 (use-package marginalia
   :ensure t
+  :after compat
   ;; Bind `marginalia-cycle' locally in the minibuffer. To make the
   ;; binding available in the *Completions* buffer, add it to the
   ;; `completion-list-mode-map'.
@@ -214,6 +220,7 @@
 ;; search and navigation functionality
 (use-package consult
   :ensure t
+  :after compat
   :config
 
   (keymap-global-set "C-x b" #'consult-buffer)
