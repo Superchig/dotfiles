@@ -66,6 +66,8 @@
 
 (setq inhibit-startup-screen t)
 
+(setq make-backup-files nil)
+
 (defun edit-init-el ()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
