@@ -460,12 +460,11 @@ body {
     (interactive)
     (evil-mode -1))
   
-  (keymap-global-set "C-c v" 'enable-evil-mode)
-   
-  (keymap-global-set "C-c e" 'disable-evil-mode))
+  (keymap-global-set "C-c v" 'enable-evil-mode)   
+  (keymap-global-set "C-c e" 'disable-evil-mode)
 
-(global-set-key (kbd "C-v") 'evil-scroll-down)
-(global-set-key (kbd "M-v") 'evil-scroll-up)
+  (global-set-key (kbd "C-v") #'evil-scroll-down)
+  (global-set-key (kbd "M-v") #'evil-scroll-up))
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
