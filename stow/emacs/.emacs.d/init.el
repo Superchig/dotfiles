@@ -315,6 +315,12 @@
   (setq sly-description-autofocus t)
   (setq common-lisp-hyperspec-root (format "file://%s/docs/HyperSpec/" (getenv "HOME"))))
 
+(use-package sly-asdf
+  :ensure t
+  :after sly
+  :config
+  (add-to-list 'sly-contribs 'sly-asdf))
+
 (use-package geiser
   :ensure t)
 
@@ -471,6 +477,9 @@ body {
 
   (global-set-key (kbd "C-v") #'evil-scroll-down)
   (global-set-key (kbd "M-v") #'evil-scroll-up))
+
+(use-package ghostel
+  :ensure t)
 
 (defun search-elpaca-packages-doc ()
   "Search Elpaca packages for README files."
