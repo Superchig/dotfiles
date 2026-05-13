@@ -9,5 +9,6 @@ yt-dlp \
   --embed-thumbnail \
   --embed-metadata \
   --no-playlist \
-  --print after_move:filepath \
+  --no-overwrites \
+  --sponsorblock-mark default \
   "$@"
