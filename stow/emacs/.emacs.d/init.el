@@ -1,3 +1,5 @@
+;;; ...  -*- lexical-binding: t -*-
+
 ;; Use M-\ to do `delete-horizontal-space'.
 
 (defvar elpaca-installer-version 0.12)
@@ -332,6 +334,10 @@
   :ensure t
   :after geiser)
 
+(use-package geiser-hoot
+  :ensure (:host "codeberg.org" :repo "spritely/geiser-hoot")
+  :after geiser)
+
 (use-package sicp
   :ensure t)
 
@@ -349,6 +355,11 @@
 (use-package elfeed
   :ensure t
   :config
+
+  ;; - `s' to search
+  ;; - `+' to add a tag
+  ;; - `r' to mark read
+  
   ;; https://campaignwiki.org/osr/
   ;; https://rootr.ing/
   ;; https://www.newskeeper.io/tools/youtube-rss
@@ -387,7 +398,7 @@
   (keymap-set elfeed-search-mode-map "<return>" 'my-elfeed-open-html-in-browser)
   (keymap-set elfeed-search-mode-map "C-<return>" 'elfeed-search-show-entry)
 
-  (setq elfeed-db-directory "/run/media/chiggie/Ventoy/elfeed/")
+  (setq elfeed-db-directory "~/quasi-Ventoy/elfeed/")
 
   ;; The filter should by default hide read posts, paid posts, and podcasts
   ;; You can add a filter for specific podcasts e.g., via "=arbiter"
@@ -479,6 +490,9 @@ body {
   (global-set-key (kbd "M-v") #'evil-scroll-up))
 
 (use-package ghostel
+  :ensure t)
+
+(use-package plz
   :ensure t)
 
 (defun search-elpaca-packages-doc ()
