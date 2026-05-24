@@ -208,6 +208,13 @@ return {
       }
 
       ---@type vim.lsp.ClientConfig
+      opts.servers.lesser_yls = {
+        cmd = { "yls" },
+        mason = false,
+        filetypes = { "zig" },
+      }
+
+      ---@type vim.lsp.ClientConfig
       opts.servers.zls = {
         cmd = { "zls" },
         mason = false,
