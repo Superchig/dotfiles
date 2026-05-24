@@ -236,16 +236,3 @@ function FormatZigUnlessLsp()
 
   vim.cmd([[silent !zig fmt %]])
 end
-
--- Also worth looking at override.lua's lesser_yls
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    if vim.bo[args.buf].filetype ~= "zig" then
-      return
-    end
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client then
-      client.server_capabilities.completionProvider = nil
-    end
-  end,
-})
