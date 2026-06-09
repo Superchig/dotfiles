@@ -1,0 +1,3 @@
+#!/bin/sh
+
+kscreen-doctor config output.DP-3.disable output.DP-4.enable
