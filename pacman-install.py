@@ -34,8 +34,9 @@ packages = [
     "pipewire-pulse, pipewire-alsa, gnome-keyring, gnome-tweaks, gnome-clocks",
     "cups, cups-pdf, system-config-printer",
     ## Gnome Desktop
-    "gnome-shell, gnome-control-center, gnome-backgrounds, gnome-tweaks,",
+    "gnome-shell, gnome-control-center, gnome-backgrounds, gnome-tweaks, extension-manager",
     "xdg-desktop-portal-gnome, xdg-user-dirs-gtk",
+    "gnome-shell-extension-appindicator, gnome-shell-extension-arc-menu, gnome-shell-extension-caffeine, gnome-shell-extension-dash-to-panel",
     ## Mega-Customized Desktop (Xorg)
     "i3-gaps, autorandr, xdotool, wmctrl, xorg-xrandr, redshift",
     "xss-lock, network-manager-applet, xorg-xinput, arandr, feh, xfce4-notifyd",
