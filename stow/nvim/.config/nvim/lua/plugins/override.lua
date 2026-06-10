@@ -384,7 +384,7 @@ return {
     opts = {
       --- From https://www.reddit.com/r/neovim/comments/1hz43t8/help_disabling_blink_for_certain_file_types_in/
       enabled = function()
-        return not vim.tbl_contains({ "norg", "org", "markdown", "zig" }, vim.bo.filetype)
+        return not vim.tbl_contains({ "norg", "org", "markdown", "zig", "txt", "" }, vim.bo.filetype)
           and vim.bo.buftype ~= "prompt"
       end,
       fuzzy = {
