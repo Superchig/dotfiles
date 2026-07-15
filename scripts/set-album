@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+"""
+set_album.py — Set the ALBUM tag on every audio file in a directory.
+
+Usage:
+    python set_album.py "My Album Name" [directory]
+
+If [directory] is omitted, the current directory is used.
+Supports: mp3, flac, m4a/mp4/aac, ogg/oga, opus, wma.
+
+Requires: mutagen
+    pip install mutagen
+"""
+
+import sys
+import argparse
+from pathlib import Path
+
+from mutagen import File as MutagenFile
+
+AUDIO_EXTENSIONS = {
+    ".mp3",
+    ".flac",
+    ".m4a",
+    ".mp4",
+    ".aac",
+    ".ogg",
+    ".oga",
+    ".opus",
+    ".wma",
+    ".wav",
+}
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Set the album tag on all audio files in a directory."
+    )
+    parser.add_argument("album", help="Album name to set")
+    parser.add_argument(
+        "directory",
+        nargs="?",
+        default=".",
+        help="Directory containing audio files (default: current directory)",
+    )
+    parser.add_argument(
+        "-r",
+        "--recursive",
+        action="store_true",
+        help="Recurse into subdirectories",
+    )
+    args = parser.parse_args()
+
+    directory = Path(args.directory).expanduser().resolve()
+    if not directory.is_dir():
+        print(f"Error: {directory} is not a directory")
+        sys.exit(1)
+
+    pattern = "**/*" if args.recursive else "*"
+    files = [
+        f
+        for f in directory.glob(pattern)
+        if f.is_file() and f.suffix.lower() in AUDIO_EXTENSIONS
+    ]
+
+    if not files:
+        print(f"No audio files found in {directory}")
+        sys.exit(0)
+
+    print(f"Setting album to '{args.album}' on {len(files)} file(s) in {directory}\n")
+
+    for i, f in enumerate(sorted(files)):
+        audio = MutagenFile(f, easy=True)
+        audio["album"] = args.album
+        audio["tracknumber"] = str(i + 1)
+        audio["tracktotal"] = str(len(files))
+        if "CC Custom" not in audio:
+            audio["albumartist"] = "CC Custom"
+        audio.save()
+        print(f"  ✓ {f.name}")
+
+
+if __name__ == "__main__":
+    main()
