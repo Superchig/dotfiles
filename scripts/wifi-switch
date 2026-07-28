@@ -1,0 +1,74 @@
+#!/bin/bash
+
+set -euo pipefail
+
+disable_iwd() {
+  sudo systemctl disable --now iwd.service
+}
+
+disable_systemd_networkd() {
+  sudo systemctl stop systemd-networkd.service systemd-networkd-varlink.socket systemd-networkd-varlink-metrics.socket systemd-networkd.socket systemd-networkd-resolve-hook.socket
+  sudo systemctl disable systemd-networkd.service systemd-networkd-varlink.socket systemd-networkd-varlink-metrics.socket systemd-networkd.socket systemd-networkd-resolve-hook.socket
+}
+
+disable_systemd_resolved() {
+  sudo systemctl stop systemd-resolved.service systemd-resolved-varlink.socket systemd-resolved-monitor.socket
+  sudo systemctl disable systemd-resolved.service systemd-resolved-varlink.socket systemd-resolved-monitor.socket
+}
+
+disable_network_manager() {
+  sudo systemctl disable --now NetworkManager.service
+}
+
+rm_resolv_conf() {
+  sudo rm -f /etc/resolv.conf
+}
+
+enable_iwd() {
+  sudo systemctl enable --now iwd.service
+}
+
+enable_systemd_networkd() {
+  sudo systemctl enable --now systemd-networkd.service
+}
+
+enable_systemd_resolved() {
+  sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+  sudo systemctl enable --now systemd-resolved.service
+}
+
+enable_network_manager() {
+  sudo systemctl enable --now NetworkManager.service
+}
+
+disable_all_wifi() {
+  disable_iwd
+  disable_systemd_networkd
+  disable_systemd_resolved
+  disable_network_manager
+  rm_resolv_conf
+}
+
+switch_to_nm() {
+  disable_all_wifi
+  sudo iw phy phy0 interface add wlan0 type managed
+  enable_network_manager
+  echo "If you're having trouble connecting to any networks, consider the following commands:"
+  echo "> nmcli device status"
+  echo "> nmcli connection show"
+  echo "> nmcli device wifi list"
+  echo "> rfkill list"
+  echo "Followed by this command:"
+  echo "> nmcli device wifi connect 'YOUR_SSID' --ask"
+}
+
+switch_to_systemd() {
+  disable_all_wifi
+  enable_systemd_resolved
+  enable_systemd_networkd
+  enable_iwd
+}
+
+echo "Running command: $@"
+
+"$@"
