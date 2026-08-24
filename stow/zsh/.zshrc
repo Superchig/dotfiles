@@ -215,6 +215,8 @@ alias c="claude"
 
 alias kmscon="kmscon --login -- /bin/zsh"
 
+alias aria2c="aria2c -Z -j 1 --enable-rpc --rpc-listen-port=6800"
+
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
 
 export MANPATH="$MANPATH:/home/chiggie/.ghcup/share/man"
