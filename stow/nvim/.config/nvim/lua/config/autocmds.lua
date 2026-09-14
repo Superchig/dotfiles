@@ -49,6 +49,8 @@ vim.cmd(
   [[autocmd BufNewFile,BufRead *.templ setlocal filetype=templ commentstring=//\ %s autoindent cindent nosmartindent]]
 )
 
+vim.cmd([[autocmd BufRead,BufNewFile *.txt setlocal nospell]])
+
 -- NOTE(Chris): Not sure where else to put this
 if jit.os == "OSX" then
   vim.cmd([[let $CC = "gcc"]])
