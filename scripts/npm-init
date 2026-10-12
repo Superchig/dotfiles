@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -euo pipefail
+
+LATEST_NODE_LTS="$(curl https://nodejs.org/download/release/index.json | mlr -i json cut -f version,lts then filter '$lts != false' then head -n 1 then put -q 'print $version')"
+
+mise install "node@$LATEST_NODE_LTS"
+
+mise use "node@$LATEST_NODE_LTS"
+
+NPM() {
+  mise exec --cd "$PWD" -- npm "$@"
+}
+
+NPM init \
+  -y \
+  --init-type module
+
+NPM install -D oxfmt oxlint
