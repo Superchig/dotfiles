@@ -1,0 +1,7 @@
+#!/usr/bin/env ysh
+
+# Prints a cheatsheet of git commands
+
+write -n '''
+git log --graph --oneline --decorate $(git fsck --no-reflog | awk '/dangling commit/ {print $NF}')  # Show dropped git stash commits
+'''
