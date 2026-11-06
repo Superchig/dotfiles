@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+
+set build_zig (awk '
+! /^.*\/\/.*$/ { print }
+$0 == "    run_cmd.addPassthruArgs();" {
+  print ""
+  print "    const exe_check = b.addExecutable(.{ .name = exe.name, .root_module = exe.root_module });"
+  print "    const check = b.step(\"check\", \"Check if the project compiles\");"
+  print "    check.dependOn(&exe_check.step);"
+}
+' build.zig | string split0)
+
+echo $build_zig >build.zig
+
+echo '
+watch:
+    zig build check --watch
+' >Justfile
