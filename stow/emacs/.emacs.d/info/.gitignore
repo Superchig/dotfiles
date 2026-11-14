@@ -1,1 +1,3 @@
 dir
+*.info*
+*.tar.gz
