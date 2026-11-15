@@ -244,9 +244,7 @@
 ;; Until (if) I figure out how to configure Corfu, I'll stick with
 ;; company, which has nice defaults.
 (use-package company
-  :ensure t
-  :config
-  (global-company-mode 1))
+  :ensure t)
 
 (use-package ace-window
   :ensure t
