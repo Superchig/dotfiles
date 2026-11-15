@@ -85,6 +85,11 @@
   (setq org-agenda-files (list (concat org-directory "/agenda/")
 			       org-default-notes-file)))
 
+(use-package info
+  :config
+  (progn
+    (keymap-set Info-mode-map "b" #'Info-history-back)
+    (keymap-set Info-mode-map "f" #'Info-history-forward)))
 
 (keymap-global-set "C-c c" 'org-capture)
 
@@ -120,6 +125,9 @@
 (add-hook 'prog-mode-hook 'hl-line-mode)
 (add-hook 'text-mode-hook 'hl-line-mode)
 (add-hook 'text-mode-hook 'auto-fill-mode)
+
+(keymap-set help-mode-map "b" 'help-go-back)
+(keymap-set help-mode-map "f" 'help-go-forward)
 
 (defun my/term-mode-hook ()
   (display-line-numbers-mode -1)
@@ -515,9 +523,6 @@ body {
       (message "Unable to find README file for package."))))
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(keymap-set help-mode-map "b" 'help-go-back)
-(keymap-set help-mode-map "f" 'help-go-forward)
 
 ;; (add-hook 'prog-mode-hook
 ;; 	  (lambda ()
