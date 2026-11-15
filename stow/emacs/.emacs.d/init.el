@@ -98,9 +98,9 @@
 (defun insert-available-fonts ()
   "Insert a list of available fonts after the cursor, starting with a newline."
   (interactive)
-  (let ((sorted-fonts (sort
-		       (font-family-list)
-		       #'string<)))
+  (let ((sorted-fonts (seq-uniq (sort
+				 (font-family-list)
+				 #'string<))))
     (insert "\n")
     (dolist (font sorted-fonts)
       (insert font)
