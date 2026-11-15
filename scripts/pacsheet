@@ -4,3 +4,7 @@
 
 echo "pacman -Ql <package> # List all files in package"
 echo "pacman -Qo <file>    # Find package which contains file"
+
+echo
+
+echo "yay -Gp <file> # Print PKGBUILD"
