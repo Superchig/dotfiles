@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if ! command -v kdotool > /dev/null 2>&1; then
+  notify-send "open-or-switch-to-kitty require kdotool"
+  exit 1
+fi
+
 KITTY_WINDOW_ID="$(kdotool search --classname kitty)"
 ACTIVE_WINDOW_ID="$(kdotool getactivewindow)"
 
