@@ -13,5 +13,7 @@ url/
 *.sqlite
 bookmarks
 projects
+games
+*.eld
 
 racket-mode/input-history-Racket-REPL
