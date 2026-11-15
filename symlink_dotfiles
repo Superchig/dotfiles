@@ -2,6 +2,8 @@
 
 DOTFILES=$(pwd)
 
+mkdir -p ~/.config
+
 mkdir ~/.config/fish
 ln -st ~/.config/fish "$DOTFILES"/.config/fish/config.fish
 ln -st ~/.config/fish "$DOTFILES"/.config/fish/functions
