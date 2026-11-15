@@ -23,7 +23,7 @@ packages = [
     ## Terminal utilities
     "lf, fd, exa, visidata, htop, btop, lazygit, stow, bat, yt-dlp",
     "shellcheck, fzf, highlight, mediainfo, jq, dua-cli,",
-    "tokei, just, aerc",
+    "tokei, just, aerc, rlwrap",
     ## Shell-boosters
     "fish, zsh, mcfly, zoxide",
     "zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search",
@@ -49,6 +49,15 @@ packages = [
     ## Fonts
     "adobe-source-han-sans-otc-fonts, adobe-source-han-serif-otc-fonts",
     "noto-fonts-emoji, ttf-inconsolata, ttf-iosevka-nerd",
+    # Programming
+    ## Common Lisp
+    "sbcl, ecl, roswell",
+    ## Graphics Programming
+    "renderdoc",
+    ## Android
+    "scrcpy",
+    ## Documentation
+    "rfc, vulkan-html-docs, opengl-man-pages",
 ]
 
 individual_packages = []
