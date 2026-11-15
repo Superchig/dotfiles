@@ -99,7 +99,7 @@ return {
           end
         elseif jit.os == "Linux" then
           if vim.env.TERM == "xterm-kitty" then
-            if vim.env.XDG_CURRENT_DESKTOP == "KDE" then
+            if vim.env.XDG_CURRENT_DESKTOP == "KDE" and vim.uv.os_gethostname() ~= "msi" then
               return "dracula"
             else
               return "gruvbox"
