@@ -498,7 +498,10 @@ body {
   (global-set-key (kbd "M-v") #'evil-scroll-up))
 
 (use-package ghostel
-  :ensure t)
+  :ensure t
+  :config
+  (if (eq system-type 'darwin)
+      (setq ghostel-shell (executable-find "fish"))))
 
 (use-package plz
   :ensure t)
