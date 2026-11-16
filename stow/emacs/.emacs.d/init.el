@@ -113,7 +113,7 @@
   ;; Remember to restart
   (cond
    ;; ((eq system-type 'darwin) "MesloLGM Nerd Font Mono 14")
-   ((eq system-type 'darwin) "Iosevka Nerd Font Mono 16")
+   ((eq system-type 'darwin) "PragmataProComfy Mono 16")
    ((eq system-type 'gnu/linux) "Iosevka Nerd Font Mono 12")))
 
 (set-frame-font my-monospace-font)
@@ -176,7 +176,7 @@
     (load-theme theme t))
 
   (defvar my-emacs-theme
-    (cond ((eq system-type 'darwin) 'doom-one)
+    (cond ((eq system-type 'darwin) 'modus-vivendi-tinted)
 	  ((eq system-type 'gnu/linux) 'doom-one)))
 
   (defvar my-emacs-evil-theme 'doom-badger)
