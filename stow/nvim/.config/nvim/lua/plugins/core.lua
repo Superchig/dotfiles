@@ -64,4 +64,8 @@ return {
       vim.keymap.set("n", "<leader>vi", vanjs.add_vanjs_import, { desc = "Add VanJS import" })
     end,
   },
+
+  {
+    "vlime/vlime",
+  },
 }
