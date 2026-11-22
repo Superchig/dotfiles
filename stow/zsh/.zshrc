@@ -139,6 +139,8 @@ alias grep='grep --color=auto'
 
 alias fzf="fzf --color='hl:yellow' --color='hl+:bright-yellow:bold'"
 
+alias sbcl="rlwrap sbcl"
+
 if command -v neovide > /dev/null; then
   alias nv=neovide
 fi
